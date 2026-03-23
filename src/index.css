@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Disable zoom: prevent pinch-zoom and double-tap zoom on touch devices */
+html, body {
+  touch-action: pan-x pan-y;
+  -ms-touch-action: pan-x pan-y;
+}

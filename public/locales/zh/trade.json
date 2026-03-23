@@ -1,0 +1,1337 @@
+{
+  "loaderMessageModal": {
+    "processing": "处理中...",
+    "success": "成功",
+    "somethingWentWrong": "出了点问题"
+  },
+  "tabs": {
+    "overview": "总览",
+    "funding": "资金",
+    "futures": "合约",
+    "spot": "现货",
+    "tradfi": "传统金融"
+  },
+  "assets": {
+    "totalValue": "总资产估值",
+    "currency": "USDT",
+    "approx": "{{value}}",
+    "loading": "加载中...",
+    "hideBalanceAriaLabel": "隐藏余额",
+    "showBalanceAriaLabel": "显示余额",
+    "deposit": "充值",
+    "withdraw": "提现",
+    "transfer": "划转",
+    "stats": {
+      "signUpQty": "总注册数",
+      "participateQty": "活跃团队",
+      "circulation": "总收入",
+      "personal": "交易收益",
+      "personalIncome": "交易收益",
+      "teamIncome": "团队收益"
+    },
+    "cards": {
+      "gameHistoryTitle": "游戏记录",
+      "gameHistorySubtitle": "我的游戏记录",
+      "transactionTitle": "交易记录",
+      "transactionSubtitle": "我的交易记录",
+      "depositTitle": "充值记录",
+      "depositSubtitle": "我的充值记录",
+      "withdrawTitle": "提现记录",
+      "withdrawSubtitle": "我的提现记录"
+    },
+    "options": {
+      "notification": "通知",
+      "telegramChannel": "电报频道",
+      "telegramGroup": "电报群组",
+      "language": "语言",
+      "currentLanguage": "中文"
+    },
+    "serviceCenterTitle": "服务中心",
+    "serviceCenter": {
+      "profile": "个人资料",
+      "feedback": "意见反馈",
+      "announcement": "公告",
+      "customerService": "客服",
+      "beginnerGuide": "新手指南",
+      "aboutUs": "关于我们"
+    },
+    "listTabs": {
+      "account": "账户",
+      "symbol": "交易对"
+    }
+  },
+  "common": {
+    "ok": "确定",
+    "cancel": "取消",
+    "confirm": "确认",
+    "pleaseWait": "请稍候...",
+    "closeAriaLabel": "关闭",
+    "decreaseAriaLabel": "减少",
+    "increaseAriaLabel": "增加"
+  },
+  "auth": {
+    "login": {
+      "title": "密码登录",
+      "emailTab": "邮箱",
+      "mobileTab": "手机",
+      "emailPlaceholder": "输入邮箱地址",
+      "mobilePlaceholder": "输入手机号码",
+      "passwordPlaceholder": "输入密码",
+      "signingIn": "登录中...",
+      "confirm": "确认",
+      "support": "支持？",
+      "forgotPassword": "忘记密码？",
+      "verifyEmailInfo": "请先验证您的邮箱以继续。",
+      "emailVerifiedSuccess": "邮箱验证成功，请登录。",
+      "success": "登录成功",
+      "failed": "登录失败，请重试。",
+      "googleLoginComingSoon": "Google 登录即将推出",
+      "termsPrefix": "注册/登录即表示您同意我们的",
+      "termsOfService": "服务条款",
+      "and": "和",
+      "privacyPolicy": "隐私政策",
+      "termsSuffix": "。"
+    },
+    "signup": {
+      "fullNamePlaceholder": "输入姓名",
+      "emailPlaceholder": "输入邮箱地址",
+      "mobilePlaceholder": "输入手机号码",
+      "passwordPlaceholder": "输入密码",
+      "referralPlaceholder": "填写推荐码",
+      "referralCodeLabel": "推荐码",
+      "passwordReqLength": "8-30 个字符",
+      "passwordReqUpper": "至少一个大写字母",
+      "passwordReqLower": "至少一个小写字母",
+      "passwordReqNumber": "至少一个数字",
+      "creatingAccount": "创建账户中...",
+      "confirm": "确认",
+      "googleSignupComingSoon": "Google 注册即将推出",
+      "registrationFailed": "注册失败，请重试。",
+      "registrationSuccess": "注册成功，请查收邮件完成验证。"
+    },
+    "forgotPassword": {
+      "emailPlaceholder": "输入邮箱地址",
+      "mobilePlaceholder": "输入手机号码",
+      "verificationCodePlaceholder": "验证码",
+      "newPasswordPlaceholder": "输入新密码",
+      "emailVerificationLabel": "邮箱验证",
+      "newPasswordLabel": "新密码",
+      "sending": "发送中...",
+      "sendCode": "发送验证码",
+      "otpVerified": "验证成功，请设置新密码。",
+      "resetSuccess": "密码重置成功，请登录。",
+      "codeSent": "验证码已发送。"
+    },
+    "changePassword": {
+      "currentPasswordLabel": "当前密码",
+      "newPasswordLabel": "新密码",
+      "confirmPasswordLabel": "确认新密码",
+      "updating": "更新中...",
+      "submitButton": "修改密码",
+      "failed": "修改密码失败"
+    },
+    "validation": {
+      "emailRequired": "请输入邮箱",
+      "passwordRequired": "请输入密码",
+      "mobileRequired": "请输入手机号",
+      "emailInvalid": "请输入有效的邮箱地址",
+      "mobileInvalid": "请输入有效的手机号码",
+      "passwordMinLength": "密码至少 6 个字符",
+      "emailMaxLength": "邮箱不能超过 100 个字符",
+      "fullNameRequired": "请输入姓名",
+      "referralCodeRequired": "请输入推荐码",
+      "fullNameLettersOnly": "姓名只能包含字母和空格",
+      "passwordStrength": "密码须包含至少一个大写字母、一个小写字母和一个数字",
+      "verificationCodeRequired": "请输入验证码",
+      "newPasswordRequired": "请输入新密码",
+      "currentPasswordRequired": "请输入当前密码",
+      "confirmPasswordRequired": "请确认新密码",
+      "passwordsMustMatch": "两次密码须一致"
+    }
+  },
+  "trade": {
+    "amountLabel": "数量",
+    "durationLabel": "时长",
+    "confirmTradeTitle": "确认交易",
+    "confirmTradeDescription": "以 {{amount}} USDT 在 {{pair}} 上押{{direction}}，时长 {{duration}}？",
+    "directionUp": "涨",
+    "directionDown": "跌",
+    "placing": "下单中...",
+    "loading": "加载中...",
+    "indicatorsTooltip": "指标",
+    "screenshotTooltip": "截图"
+  },
+  "rewardHubDeposit": {
+    "networkBsc": "BSC（币安智能链）",
+    "networkEth": "ETH（以太坊）",
+    "networkPolygon": "POLYGON"
+  },
+  "menu": {
+    "switchAccount": "切换账户",
+    "recommendedFeaturesTitle": "推荐功能",
+    "commonFunctionsTitle": "常用功能",
+    "recommended": {
+      "deposit": "充值",
+      "trade": "交易",
+      "language": "语言",
+      "copy": "复制",
+      "market": "行情",
+      "twoFA": "二次验证",
+      "couponCenter": "券中心",
+      "more": "更多"
+    },
+    "common": {
+      "rewardsHub": "奖励中心",
+      "accountSecurity": "账户与安全",
+      "settings": "设置",
+      "network": "网络"
+    },
+    "footerVersion": "BLOCK APP v1.0.0"
+  },
+  "bottomNav": {
+    "home": "首页",
+    "market": "行情",
+    "trade": "交易",
+    "promotion": "活动",
+    "asset": "资产",
+    "signupBannerText": "注册即可领取新用户奖励！",
+    "signupCta": "立即注册"
+  },
+  "bottomNavMlm": {
+    "home": "首页",
+    "team": "团队",
+    "reporting": "报表",
+    "wallet": "钱包"
+  },
+  "landing": {
+    "depositBanner": {
+      "title": "充值 100 USDT",
+      "subtitlePrefix": "最高可获得 ",
+      "subtitleHighlight": "50 USDT 奖励",
+      "cta": "立即充值"
+    },
+    "registerTitle": "注册即可领取",
+    "registerSubtitle": "新用户奖励！",
+    "auth": {
+      "login": "登录",
+      "signUp": "注册"
+    },
+    "badgeNew": "新",
+    "featureShortcuts": {
+      "rewards": "赚取中心",
+      "copy": "跟单",
+      "referral": "推荐",
+      "2fa": "2FA",
+      "more": "更多"
+    },
+    "tabs": {
+      "favorites": "自选",
+      "coin": "币种",
+      "hot": "热门",
+      "gainers": "涨幅",
+      "losers": "跌幅",
+      "volume": "成交量"
+    },
+    "viewAll": "查看全部",
+    "marketTable": {
+      "tradingPairs": "交易对",
+      "lastPrice": "最新价",
+      "change24h": "24 小时涨跌",
+      "noResults": "未找到结果"
+    },
+    "hero": {
+      "cards": {
+        "1": {
+          "title": "全球推荐奖励活动",
+          "description": "邀请好友获 10% 交易奖励",
+          "label": "新"
+        },
+        "2": {
+          "title": "神秘奖励盲盒",
+          "description": "聪明交易 • 赢取大奖 — 1,000,000 USDT",
+          "label": "新"
+        },
+        "3": {
+          "title": "USDT 充值奖励活动",
+          "description": "🎁 充值即可获得 5% 奖励",
+          "label": "新"
+        },
+        "4": {
+          "title": "赚取中心 – 日收益 1–3%",
+          "description": "简单系统 + 额外奖励",
+          "label": "新"
+        }
+      }
+    },
+    "features": {
+      "1": {
+        "title": "安全为先",
+        "description": "邮箱与手机多重验证，结合智能合约保护资产安全。"
+      },
+      "2": {
+        "title": "全球通行",
+        "description": "无国界交易，全球用户均可便捷接入。"
+      },
+      "3": {
+        "title": "便捷交易",
+        "description": "界面简洁，上手快速，新手也能轻松使用。"
+      },
+      "4": {
+        "title": "公平透明",
+        "description": "费率公开透明，没有隐藏费用。"
+      },
+      "5": {
+        "title": "贴心服务",
+        "description": "每一笔交易都有专属客服为你护航。"
+      }
+    },
+    "community": {
+      "title": "全球用户社区",
+      "desc1": "加入不断壮大的智能交易者全球社区",
+      "desc2": "体验强大、现代的交易",
+      "stats": {
+        "totalUsers": "总用户数",
+        "newUsers": "新用户数"
+      }
+    }
+  },
+  "profile": {
+    "title": "用户中心",
+    "loggedOut": "已退出登录",
+    "uid": "UID",
+    "fullName": "姓名",
+    "identityVerification": "身份验证",
+    "verified": "已验证",
+    "unverified": "未验证",
+    "twoFactorAuth": "两步验证",
+    "twoFactor": {
+      "enabled": "已启用",
+      "disabled": "未启用"
+    },
+    "changePassword": "修改密码",
+    "switchAccount": "切换账户",
+    "logoutCurrent": "退出当前账户"
+  },
+  "twoFactor": {
+    "title": "双因素认证",
+    "intro": "为您的账户增加一层安全保护。启用后，登录或执行敏感操作时需输入密码及认证应用中的验证码。",
+    "errors": {
+      "loadProfile": "加载个人资料失败",
+      "startSetupFailed": "启动双因素认证设置失败",
+      "invalidCodeShort": "请输入认证应用中的 6 位验证码。",
+      "missingSetupData": "设置数据缺失，请重新开始设置。",
+      "invalidCode": "验证码错误，请重试。",
+      "disableCodeRequired": "请输入当前 6 位双因素验证码以关闭。",
+      "disableFailed": "关闭双因素认证失败。"
+    },
+    "success": {
+      "enabled": "双因素认证已成功开启。",
+      "disabled": "双因素认证已关闭。"
+    },
+    "status": {
+      "disabled": "状态：未开启",
+      "enabled": "状态：已开启"
+    },
+    "disabled": {
+      "description": "开启双因素认证以保护您的账户。"
+    },
+    "enabled": {
+      "description": "双因素认证正在保护您的账户。若要关闭，请在下方输入当前双因素验证码。",
+      "codeLabel": "输入当前 6 位验证码",
+      "codePlaceholder": "000000"
+    },
+    "actions": {
+      "loading": "加载中...",
+      "enable": "开启双因素认证",
+      "cancel": "取消",
+      "verifyEnable": "验证并开启",
+      "disable": "关闭双因素认证"
+    },
+    "setup": {
+      "scanTitle": "扫描二维码",
+      "scanDescription": "使用认证应用（如 Google 身份验证器、Authy 等）扫描此二维码。",
+      "manualLabel": "或手动输入此密钥：",
+      "codeLabel": "输入 6 位验证码",
+      "codePlaceholder": "000000",
+      "qrCodeAlt": "双因素认证二维码"
+    }
+  },
+  "promotion": {
+    "header": {
+      "title": "推广"
+    },
+    "errors": {
+      "loadFailed": "加载推广数据失败"
+    },
+    "loading": "加载中...",
+    "totalCommission": "累计佣金",
+    "yesterdayCommissionLabel": "昨日总佣金",
+    "upgradeHint": "提升等级可获得更高的佣金收入",
+    "subordinateTabs": {
+      "direct": "直推用户",
+      "team": "团队用户"
+    },
+    "subordinateStats": {
+      "registerCount": "注册人数",
+      "depositCount": "充值次数",
+      "depositAmount": "充值总额",
+      "firstDepositCount": "首充人数"
+    },
+    "downloadQrCta": "下载二维码",
+    "menu": {
+      "Partner rewards": "合伙人奖励",
+      "Copy invitation code": "复制邀请码",
+      "Subordinate data": "下级数据",
+      "Commission detail": "佣金明细",
+      "Invitation rules": "邀请规则",
+      "Agent line customer service": "代理客服通道",
+      "Rebate ratio": "返佣比例"
+    },
+    "data": {
+      "title": "推广数据",
+      "thisWeek": "本周",
+      "total": "累计佣金",
+      "directSubordinate": "直推用户",
+      "totalTeamSubordinates": "团队总人数"
+    },
+    "partnerRewards": {
+      "title": "合伙人奖励",
+      "copySuccess": "邀请链接已复制",
+      "loadFailed": "加载合伙人奖励失败",
+      "inviteFriends": "邀请好友，获取最高奖励",
+      "invitationCount": "邀请人数",
+      "effectiveInvitationCount": "有效邀请人数",
+      "invitationTotalBonus": "邀请总奖励",
+      "invitationRecord": "邀请记录",
+      "invitationLink": "邀请链接",
+      "invitationRules": "邀请规则",
+      "ruleTitle": "🎉 充值即享10%推荐奖励",
+      "ruleInvite": "🔗 邀请好友注册 BT EXCHANGE",
+      "ruleMinDeposit": "💵 最低充值 10 USDT 即可获得奖励",
+      "ruleNoTurnover": "🎁 无流水要求",
+      "ruleAutoCredit": "⚡ 奖励自动到账",
+      "bonusExample": "奖励示例：",
+      "friendDeposits": "好友充值 {{amount}} USDT",
+      "youGetBonus": "您获得 {{bonus}} USDT 奖励（10%）",
+      "oneDepositOneBonus": "✅ 一次充值 = 一次奖励",
+      "unlimitedReferrals": "♾ 推荐人数不限 — 邀得多赚得多",
+      "cta": "BT EXCHANGE — 充值 10 USDT 即享 10% 推荐奖励。"
+    },
+    "commissionDetail": {
+      "title": "佣金明细",
+      "loadFailed": "加载佣金明细失败",
+      "types": {
+        "all": "全部",
+        "referral": "推荐",
+        "level": "等级",
+        "salary": "工资"
+      },
+      "dateFrom": "开始日期",
+      "dateTo": "结束日期",
+      "settlementTitle": "结算成功",
+      "settlementSubtitle": "佣金已自动计入您的余额",
+      "referralIncome": "推荐收入",
+      "levelIncome": "等级收入",
+      "salaryIncome": "工资收入",
+      "commissionPayout": "佣金发放",
+      "empty": "暂无佣金记录",
+      "rowType": "类型",
+      "rowTime": "时间",
+      "rowBalance": "余额",
+      "levelLabel": "等级 {{level}}",
+      "viewMore": "加载更多"
+    },
+    "subordinateData": {
+      "title": "下级数据",
+      "uidLabel": "UID",
+      "searchPlaceholder": "搜索下级 UID",
+      "loadFailed": "加载下级数据失败",
+      "empty": "暂无下级数据",
+      "copyUidSuccess": "UID 已复制",
+      "loadMore": "加载更多",
+      "types": {
+        "all": "全部",
+        "direct": "直推",
+        "team": "团队"
+      },
+      "yes": "是",
+      "no": "否",
+      "summaryFields": {
+        "depositNumber": "充值次数",
+        "depositAmount": "充值金额",
+        "numberOfBettors": "交易人数",
+        "totalBet": "总交易量",
+        "firstDepositCount": "首充人数",
+        "firstDepositAmount": "首充金额"
+      },
+      "subordinateFields": {
+        "level": "等级",
+        "depositAmount": "充值金额",
+        "betAmount": "投注金额",
+        "commission": "佣金",
+        "time": "时间",
+        "totalDeposited": "充值金额",
+        "fullName": "姓名",
+        "hasDeposited": "已充值"
+      }
+    },
+    "agentService": {
+      "title": "代理客服通道",
+      "subtitle": "联系官方 Telegram 账号获取一对一支持。",
+      "description": "可协助入驻、推广及账户相关问题。",
+      "telegram": "Telegram",
+      "imageAlt": "代理客服通道",
+      "accounts": {
+        "agent": "BT GLOBAL AGENT",
+        "agency": "BT GLOBAL AGENCY"
+      }
+    },
+    "rebateRatio": {
+      "title": "返佣比例",
+      "loadFailed": "加载返佣比例失败",
+      "bannerTitle": "BT EXCHANGE – 佣金与返佣体系",
+      "bannerIntro": "在 BT Exchange，您不仅可交易，还可从下级网络的交易活动中获得佣金。",
+      "bannerRefer": "当您推荐用户至 BT Exchange 并产生交易时，您将按其交易手续费的一定比例获得佣金。",
+      "structureTitle": "多级佣金结构：",
+      "empty": "暂无返佣比例数据",
+      "tableLevel": "等级",
+      "tableCommission": "佣金 %",
+      "levelRow": "等级 {{level}}",
+      "ctaTitle": "团队越大，被动收入潜力越高。",
+      "bullet1": "无需额外投入",
+      "bullet2": "佣金自动到账",
+      "bullet3": "体系完全透明",
+      "bullet4": "收益实时追踪",
+      "ctaTagline": "聪明交易，拓展网络，赚取更多 — 尽在 BT EXCHANGE。"
+    },
+    "rulesPage": {
+      "title": "邀请规则",
+      "sectionTitle": "邀请规则",
+      "point1": "将您的邀请码或推荐链接分享给亲友。",
+      "point2": "对方使用您的邀请码注册后，即成为您的直推下级。",
+      "point3": "直推下级充值后，您可获得推荐奖励。",
+      "point4": "团队（最多 6 级）产生交易时，您可获得层级收益。",
+      "point5": "升级等级可提高佣金收入。",
+      "point6": "邀请码可在推广页面复制。",
+      "note": "详细条款与条件请联系客服。"
+    }
+  },
+  "rewardHub": {
+    "home": {
+      "searchPlaceholder": "搜索",
+      "totalAssetsLabel": "总资产 (USDT)",
+      "loading": "加载中...",
+      "totalIncomeLabel": "总收益：${{value}}",
+      "depositCta": "充值",
+      "quickActions": {
+        "hot": "HOT",
+        "main": "主页",
+        "deposit": "充值",
+        "withdraw": "提现",
+        "trade": "交易",
+        "referral": "邀请"
+      },
+      "referralCard": {
+        "alt": "邀请",
+        "title": "邀请返佣计划",
+        "subtitle": "赚取 FUNN"
+      },
+      "marketsTitle": "市场",
+      "marketError": "市场数据加载失败",
+      "volume24h": "24 小时成交量",
+      "marketCap": "市值",
+      "high24h": "24 小时最高价",
+      "low24h": "24 小时最低价"
+    },
+    "invitePoster": {
+      "title": "邀请",
+      "backAriaLabel": "返回",
+      "swipeHint": "请左右滑动选择您喜欢的海报",
+      "posterBrandExchange": "交易所",
+      "posterReferral": "邀请",
+      "scanToRegister": "扫码注册",
+      "loadingLink": "加载中...",
+      "downloadFilename": "邀请海报.png",
+      "fairJustice": "公平公正",
+      "openTransparent": "公开透明",
+      "fullOddsBonusRate": "全额赔率奖金率",
+      "financialSecurity": "资金安全",
+      "quickWithdrawal": "快速提现",
+      "permanentCommission": "永久佣金高达 {{percent}}%",
+      "qrAlt": "推荐二维码",
+      "inviteIncomeLineBefore": "邀请好友收入 ",
+      "inviteIncomeLineAfter": " 佣金",
+      "downloadPoster": "下载二维码",
+      "preparing": "准备中…",
+      "copyLink": "复制邀请链接",
+      "copied": "已复制！",
+      "snackbar": {
+        "linkCopied": "邀请链接已复制",
+        "copyFailed": "无法复制；链接已在提示中显示",
+        "posterNotReady": "海报未就绪",
+        "qrNotReady": "二维码尚未就绪",
+        "posterDownloaded": "海报已下载",
+        "downloadFailed": "下载失败"
+      }
+    },
+    "team": {
+      "teamStatsTitle": "团队统计",
+      "referral": "推荐",
+      "group": "团队",
+      "rankStatus": "等级状态",
+      "directReferrals": "直推列表",
+      "noDirectReferralsYet": "暂无直推",
+      "uidLabel": "UID：",
+      "avatarAlt": "头像",
+      "level": "等级：",
+      "name": "姓名：",
+      "email": "邮箱",
+      "depositAmount": "充值金额：",
+      "tradeAmount": "交易金额：",
+      "commission": "佣金：",
+      "time": "加入时间：",
+      "userCount": "用户数量",
+      "totalBusiness": "团队业绩",
+      "uidShort": "UID",
+      "status": "状态",
+      "statusActive": "已激活",
+      "statusInactive": "未激活",
+      "rankLabel": "等级",
+      "rankIncome": "等级收益",
+      "directUsers": "直推人数",
+      "directBusiness": "直推业绩",
+      "teamCount": "团队人数",
+      "teamBusiness": "团队业绩"
+    },
+    "reporting": {
+      "title": "报表",
+      "subtitle": "查看您的收益报表",
+      "reportTypeLabel": "报表类型",
+      "startDate": "开始日期",
+      "endDate": "结束日期",
+      "loading": "加载报表中...",
+      "noData": "暂无数据",
+      "type": {
+        "all": "全部",
+        "LEVEL": "等级收益",
+        "RANK": "排名收益",
+        "ROI": "ROI",
+        "DAILY_ROI": "每日 ROI",
+        "LEVEL_INCOME": "等级收益",
+        "RANK_INCOME": "排名收益",
+        "SAME_RANK_INCOME": "同排名收益",
+        "other": "收益"
+      },
+      "pagination": {
+        "previous": "上一页",
+        "next": "下一页",
+        "pageOf": "第 {{current}} 页，共 {{total}} 页"
+      }
+    },
+    "deposit": {
+      "title": "充值",
+      "selectNetwork": "选择网络",
+      "depositAddressLabel": "充值地址",
+      "qrAlt": "充值地址二维码",
+      "networkNote": "此地址只支持 {{chain}} 网络",
+      "addressLoading": "加载中...",
+      "tipsTitle": "重要提示",
+      "tips": {
+        "min": "最低充值：{{amount}} {{currency}}",
+        "confirmations": "充值确认：2 次网络确认",
+        "assetWarning": "请勿向此地址充值 {{chain}} 上除 {{currency}} 以外的资产，否则可能导致资产丢失。",
+        "security": "请确保您的设备安全，以防被篡改或泄露。"
+      },
+      "shareButton": "分享地址",
+      "verifyHelperHint": "仅在您的充值在网络确认后仍未到账时使用验证功能。",
+      "verifyCta": "验证交易",
+      "shareTitle": "{{chain}} 充值地址",
+      "shareText": "向以下地址充值 {{chain}}：\n{{address}}",
+      "errors": {
+        "fetchFailed": "获取充值地址失败"
+      }
+    },
+    "verifyDeposit": {
+      "title": "验证充值",
+      "backAriaLabel": "返回",
+      "networkLabel": "网络",
+      "txHashLabel": "交易哈希",
+      "txHashPlaceholder": "0x...",
+      "help": "粘贴您的充值交易哈希以验证充值。",
+      "verifyButton": "验证交易",
+      "verifiedTitle": "已提交验证",
+      "viewExplorer": "在区块链浏览器查看",
+      "goToHistory": "充值记录",
+      "success": "交易已提交验证。",
+      "errors": {
+        "invalidInput": "请输入有效的交易哈希并选择网络。",
+        "failed": "验证失败。请检查交易哈希后重试。"
+      }
+    },
+    "withdraw": {
+      "title": "提现",
+      "backAriaLabel": "返回",
+      "capitalWithdrawAriaLabel": "本金提现",
+      "capitalWithdrawButton": "本金提现",
+      "historyAriaLabel": "提现记录",
+      "withdrawableBalance": "可提现余额",
+      "amountLabel": "金额 (USDT)",
+      "max": "最大",
+      "addressLabel": "提现地址 (USDT 钱包)",
+      "addressPlaceholder": "0x...",
+      "networkLabel": "网络",
+      "selectNetworkPlaceholder": "选择网络",
+      "chains": {
+        "BSC": "BSC (币安智能链)",
+        "ETH": "ETH (以太坊)",
+        "POLYGON": "POLYGON"
+      },
+      "twoFactorLabel": "2FA 验证码",
+      "twoFactorPlaceholder": "000000",
+      "notice": "提现将发送至区块链。请确保地址和网络与您的 USDT 钱包一致。提交前请仔细核对。",
+      "submitButton": "提交提现",
+      "errors": {
+        "loadFailed": "加载余额失败",
+        "invalidAmount": "请输入有效金额。",
+        "amountExceeded": "金额不能超过可提现余额。",
+        "invalidAddress": "请输入有效的钱包地址。",
+        "twoFactorRequired": "请输入您的 2FA 验证码。",
+        "failed": "提现失败，请重试。"
+      },
+      "success": {
+        "default": "提现已成功处理。"
+      }
+    },
+    "capitalWithdraw": {
+      "title": "本金提现",
+      "backAriaLabel": "返回",
+      "regularWithdrawButton": "普通提现",
+      "regularWithdrawAriaLabel": "普通提现",
+      "historyAriaLabel": "提现记录",
+      "loading": "加载投资中...",
+      "totalCapitalBalance": "总本金余额",
+      "maxWithdrawable": "最大可提现金额",
+      "amountLabel": "提现金额 (USDT)",
+      "amountPlaceholder": "请输入金额",
+      "maxButton": "全部提现",
+      "earnedRoi": "累计 ROI 收益",
+      "penaltyNote": "提前提现罚金",
+      "selectInvestment": "选择要提现的投资",
+      "investedAt": "投资时间",
+      "penaltyApplied": "罚金",
+      "addressLabel": "提现地址 (USDT 钱包)",
+      "addressPlaceholder": "0x...",
+      "networkLabel": "网络",
+      "chains": { "BSC": "BSC (币安智能链)", "ETH": "ETH (以太坊)", "POLYGON": "POLYGON" },
+      "twoFactorLabel": "2FA 验证码",
+      "twoFactorPlaceholder": "000000",
+      "receiveLabel": "您将收到",
+      "penaltyDeducted": "预计罚金",
+      "penaltyDetailsTitle": "罚金明细",
+      "penaltyPercentageLabel": "罚金比例",
+      "totalInvestmentLabel": "总投资金额",
+      "totalRoiLabel": "总 ROI 收益",
+      "penaltyExplain": "由于您的 ROI 尚未达到免罚金条件，因此本次提现将收取一定罚金。",
+      "notice": "本金提现将把所选投资的全部金额发送至您的钱包。当累计 ROI 覆盖提现金额时无需罚金。请确保地址和网络与您的 USDT 钱包一致。",
+      "submitButton": "提现本金",
+      "errors": {
+        "loadFailed": "加载有效投资失败",
+        "selectInvestment": "请选择要提现的投资。",
+        "invalidAmount": "请输入有效金额。",
+        "amountExceedsMax": "金额不能超过最大可提现金额。",
+        "nothingToWithdraw": "当前暂无可提现金额。",
+        "invalidAddress": "请输入有效的钱包地址。",
+        "twoFactorRequired": "请输入您的 2FA 验证码。",
+        "failed": "本金提现失败，请重试。"
+      },
+      "success": {
+        "default": "本金提现成功。",
+        "netAmount": "净额",
+        "viewExplorer": "在区块链浏览器查看"
+      },
+      "empty": {
+        "title": "暂无有效投资",
+        "description": "您暂无符合本金提现条件的有效投资。",
+        "depositCta": "充值"
+      }
+    },
+    "profile": {
+      "title": "用户中心",
+      "loggedOut": "已退出登录",
+      "rows": {
+        "uid": "UID",
+        "fullName": "姓名",
+        "identityVerification": "身份认证",
+        "identityVerified": "已认证",
+        "identityUnverified": "未认证",
+        "twoFactor": "两步验证",
+        "twoFactorEnabled": "已开启",
+        "twoFactorDisabled": "未开启",
+        "changePassword": "修改密码",
+        "switchAccount": "切换账号",
+        "logout": "退出当前账号"
+      }
+    }
+  },
+  "notificationsPage": {
+    "title": "通知",
+    "hero": {
+      "title": "更新与公告",
+      "subtitle": "平台重要资讯、维护窗口及服务消息。"
+    },
+    "errors": {
+      "loadFailed": "加载通知失败"
+    },
+    "actions": {
+      "retry": "重试",
+      "viewDetails": "查看详情",
+      "openLinkAria": "打开链接"
+    },
+    "empty": {
+      "title": "暂无通知",
+      "subtitle": "重要更新与公告将显示在这里。"
+    },
+    "pastTitle": "历史通知",
+    "fallbackTitle": "通知",
+    "date": {
+      "today": "今天",
+      "yesterday": "昨天"
+    }
+  },
+  "deposit": {
+    "header": {
+      "title": "充值"
+    },
+    "selectCoinLabel": "选择币种",
+    "addressLabel": "充值地址",
+    "onlySupport": "仅支持 {{chain}}",
+    "loading": "加载中...",
+    "tipsTitle": "提示",
+    "tips": {
+      "minimum": "最低充值：1 USDT",
+      "confirmations": "充值确认：2 个网络确认",
+      "onlyThisAsset": "请勿向上述地址充值 {{chain}} 以外的资产，否则可能导致资产损失。",
+      "security": "请确保移动设备安全，防止信息被篡改或泄露"
+    },
+    "shareCta": "分享地址",
+    "verifyHelperHint": "仅在您的充值在网络确认后仍未到账时使用验证功能。",
+    "share": {
+      "title": "{{chain}} 充值地址",
+      "text": "向此地址充值 {{chain}}：\n{{address}}"
+    },
+    "verifyDeposit": {
+      "title": "验证充值（人工协助）",
+      "backAriaLabel": "返回",
+      "networkLabel": "网络",
+      "txHashLabel": "交易哈希",
+      "txHashPlaceholder": "0x...",
+      "help": "仅在您的充值在区块链上已确认但账户未到账时使用本功能。粘贴充值交易哈希以提交人工审核。",
+      "verifyButton": "验证交易",
+      "verifiedTitle": "已提交验证申请",
+      "viewExplorer": "在区块浏览器查看",
+      "goToHistory": "充值记录",
+      "success": "交易已提交人工验证。",
+      "errors": {
+        "invalidInput": "请输入有效的交易哈希并选择网络。",
+        "failed": "验证失败。请检查交易哈希后重试。"
+      }
+    },
+    "errors": {
+      "fetchFailed": "获取充值地址失败"
+    },
+    "backAriaLabel": "返回",
+    "qrCodeAlt": "二维码",
+    "chains": {
+      "BSC": {
+        "label": "BSC (币安智能链)"
+      },
+      "ETH": {
+        "label": "ETH (以太坊)"
+      },
+      "POLYGON": {
+        "label": "POLYGON"
+      }
+    }
+  },
+  "depositHistory": {
+    "title": "充值记录",
+    "errors": {
+      "fetchFailed": "获取充值记录失败"
+    },
+    "actions": {
+      "retry": "重试"
+    },
+    "empty": {
+      "title": "暂无充值记录",
+      "description": "充值确认后将显示在此处"
+    },
+    "card": {
+      "amount": "金额",
+      "network": "网络",
+      "date": "日期",
+      "txHash": "交易哈希",
+      "viewOnExplorer": "在区块浏览器中查看"
+    }
+  },
+  "withdraw": {
+    "headerTitle": "提现",
+    "backAriaLabel": "返回",
+    "placeholder": "请输入金额",
+    "currentAvailable": "可提现余额",
+    "all": "全部",
+    "amountReceived": "预计到账金额",
+    "historyLink": "提现记录",
+    "needToTradeBefore": "需交易 ",
+    "needToTradeAfter": " 方可提现",
+    "chains": { "BSC": "BSC (币安智能链)", "ETH": "ETH (以太坊)", "POLYGON": "POLYGON" },
+    "tabs": { "withdraw": "提现", "history": "历史" },
+    "types": {
+      "winnings": { "menuLabel": "提现盈利", "description": "已解锁可提现的交易盈利。" },
+      "working": { "menuLabel": "提现劳动收入", "description": "推荐、等级及工资等可提现收入。" }
+    },
+    "status": { "winningsUnlocked": "盈利已解锁", "winningsLocked": "盈利已锁定", "workingUnlocked": "劳动收入已解锁", "workingLocked": "劳动收入已锁定" },
+    "available": "可用：{{amount}} USDT",
+    "form": { "amountLabel": "金额 (USDT)", "max": "最大", "enterAddress": "输入您的地址", "walletLabel": "USDT 钱包地址", "networkLabel": "网络", "comingSoon": " (即将推出)", "twofaLabel": "2FA 验证码", "twofaPlaceholder": "000000", "twofaHelp": "请输入验证器应用中的 6 位验证码。" },
+    "errors": { "winningsLocked": "您的盈利尚未解锁。请增加交易量。", "workingLocked": "您暂无法提现劳动收入。至少交易 $2 即可解锁。", "invalidAmount": "请输入有效的提现金额。", "amountTooHigh": "金额不能超过可用余额。", "invalidAddress": "请输入有效的钱包地址。", "selectNetwork": "请选择网络。", "invalid2fa": "请输入验证器应用中的 6 位验证码。" },
+    "notice": { "processing": "提现由管理员人工处理。余额将立即扣除，状态将随处理进度更新。" },
+    "actions": { "submit": "提交提现", "withdraw": "提现" },
+    "rules": { "ariaLabel": "提现规则", "instant": "即时到账", "amountRange": "提现金额范围 $1.00-$100,000.00", "amountRangeHighlight": "$1.00-$100,000.00", "confirmBeneficiary": "请确认您的收款账户信息正确。若信息有误，本公司不承担由此造成的损失。", "contactService": "若收款信息有误，请联系客服。" },
+    "twofaDialog": { "title": "双因素认证", "description": "请输入您验证器应用中的 6 位验证码。", "label": "验证码", "cancel": "取消", "verify": "验证" },
+    "overview": { "title": "提现概览", "withdrawableWinnings": "可提现盈利", "winningsStatusUnlocked": "已解锁", "winningsStatusLocked": "锁定至 成交量 ≥ 充值额", "workingIncome": "劳动收入", "workingStatusEligible": "已达标", "workingStatusLocked": "至少交易 $2 解锁", "hint": "当您的总交易量大于或等于总充值额时，盈利将自动解锁。交易至少 $2 后劳动收入即可提现。" },
+    "history": { "title": "提现记录", "emptyTitle": "暂无提现记录", "emptyDescription": "提交提现申请后将在此显示。", "amount": "金额", "type": "类型", "status": "状态", "date": "日期", "viewOnExplorer": "在区块浏览器中查看", "walletLabel": "钱包：", "networkLabel": "网络：", "typeWinnings": "盈利", "typeWorking": "劳动收入", "statusRequested": "待处理", "statusConfirmed": "已确认", "statusSent": "已发送", "statusFailed": "失败" },
+    "fetchHistoryFailed": "获取提现记录失败",
+    "submitSuccess": "提现申请已提交成功。",
+    "submitFailed": "提交提现失败，请检查信息后重试。"
+  },
+  "gameHistory": {
+    "title": "交易记录",
+    "back": "返回",
+    "refresh": "刷新",
+    "loadingShort": "加载中...",
+    "currencyUsdt": "USDT",
+    "summary": {
+      "totalPnl": "总盈亏",
+      "today": "今天",
+      "yesterday": "昨天",
+      "monthly": "本月",
+      "all": "全部",
+      "totalProfit": "总盈利",
+      "totalLoss": "总亏损",
+      "contracts": "合约数",
+      "profitableContracts": "盈利合约",
+      "contractAmount": "合约金额",
+      "closedPositions": "已平仓"
+    },
+    "notLoggedIn": {
+      "title": "连接账户以查看您的交易记录",
+      "subtitle": "登录后即可查看已完成交易的列表。"
+    },
+    "filters": {
+      "status": "状态",
+      "statusAll": "全部",
+      "statusWin": "盈利",
+      "statusLose": "亏损",
+      "pairPlaceholder": "交易对（例如 BTC-USD）",
+      "apply": "应用"
+    },
+    "loading": "正在加载交易记录...",
+    "empty": {
+      "title": "暂时还没有交易记录",
+      "subtitle": "当您完成交易后，记录会显示在这里。"
+    },
+    "pagination": {
+      "previous": "上一页",
+      "page": "第 {{page}} 页",
+      "next": "下一页"
+    },
+    "table": {
+      "Time": "时间",
+      "Pair": "交易对",
+      "Direction": "方向",
+      "Amount": "金额 (USDT)",
+      "PnlRate": "盈亏率",
+      "EntryPrice": "开仓价",
+      "OpenTime": "开仓时间",
+      "RemainingTime": "剩余时间",
+      "CloseTime": "平仓时间",
+      "Entry": "开仓价",
+      "Exit": "平仓价",
+      "StatusLabel": "状态",
+      "StatusOpen": "持仓中",
+      "StatusWin": "盈利",
+      "StatusLose": "亏损",
+      "Payout": "收益"
+    }
+  },
+  "transactionHistory": {
+    "title": "交易流水",
+    "errors": {
+      "fetchFailed": "加载交易流水失败"
+    },
+    "filters": {
+      "pairPlaceholder": "交易对（例如 BTC-USD）",
+      "type": "类型",
+      "status": "状态",
+      "chain": "链",
+      "startDate": "开始日期",
+      "endDate": "结束日期",
+      "apply": "应用",
+      "sort": "排序",
+      "sortNewest": "最新优先",
+      "sortOldest": "最旧优先",
+      "sortAmountHigh": "金额从高到低",
+      "sortAmountLow": "金额从低到高",
+      "selectType": "选择类型",
+      "typeOption": {
+        "all": "全部",
+        "DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE": "全部",
+        "DEPOSIT": "充值",
+        "WITHDRAWAL": "提现",
+        "WITHDRAW_WINNINGS": "提现盈利",
+        "WITHDRAW_WORKING": "提现工作收入",
+        "TRADE": "交易",
+        "REFERRAL_BONUS": "推荐奖励",
+        "LEVEL_INCOME": "等级收益",
+        "SALARY_INCOME": "薪资收益"
+      },
+      "statusOption": {
+        "all": "全部状态",
+        "REQUESTED": "已申请",
+        "SENT": "已发送",
+        "PENDING": "待处理",
+        "CONFIRMED": "已确认",
+        "SUCCESS": "成功",
+        "FAILED": "失败",
+        "OPEN": "进行中",
+        "WIN": "赢",
+        "LOSS": "输"
+      },
+      "chainOption": {
+        "all": "全部链",
+        "BSC": "BSC",
+        "ETH": "ETH",
+        "POLYGON": "POLYGON"
+      }
+    },
+    "empty": {
+      "title": "暂时还没有交易记录",
+      "subtitle": "您的统一交易流水会显示在这里。"
+    },
+    "refreshAriaLabel": "刷新",
+    "pagination": {
+      "previous": "上一页",
+      "summary": "第 {{page}} / {{totalPages}} 页（共 {{total}} 条）",
+      "next": "下一页"
+    },
+    "card": {
+      "detail": "详情",
+      "time": "时间",
+      "balance": "余额",
+      "salary": "薪资",
+      "remarks": "备注",
+      "noRemark": "无备注",
+      "entryExit": "入场 {{entry}} \u2192 出场 {{exit}}",
+      "payout": "赔付",
+      "gross": "总额",
+      "fee": "手续费",
+      "txPrefix": "Tx：",
+      "direction": {
+        "UP": "看涨",
+        "DOWN": "看跌",
+        "BUY": "买入",
+        "SELL": "卖出"
+      }
+    }
+  },
+  "market": {
+    "topTabs": {
+      "favorites": "自选",
+      "favourites": "自选",
+      "market": "行情",
+      "insights": "洞察"
+    },
+    "subTabs": {
+      "futures": "合约",
+      "spot": "现货",
+      "tradfi": "传统金融",
+      "trading pair list": "交易对列表"
+    },
+    "categories": {
+      "all": "全部",
+      "top": "热门币种",
+      "tradable coin": "可交易币种",
+      "ai": "AI",
+      "defi": "DeFi",
+      "lsd": "LSD",
+      "layer1": "Layer 1 / Layer 2"
+    },
+    "overview": {
+      "title": "市场总览",
+      "fearGreed": "恐惧与贪婪指数",
+      "fearGreedLabel": "中性",
+      "marketCap": "总市值",
+      "volume24h": "24 小时成交量"
+    },
+    "performance": {
+      "title": "市场表现",
+      "rise": "上涨 {{count}}",
+      "fall": "下跌 {{count}}"
+    },
+    "copyTrading": {
+      "title": "跟单机会",
+      "copyButton": "跟单",
+      "roi30Label": "30 日收益率",
+      "aumLabel": "管理资产 AUM",
+      "daysRegisteredLabel": "注册天数",
+      "winRateLabel": "胜率",
+      "profitShareRatioLabel": "分润比例",
+      "detail": {
+        "title": "合约跟单交易",
+        "infoAriaLabel": "更多信息",
+        "profileName": "牛夫人的鎏金岁月",
+        "followIntro": "跟我的单,请注意以下几点:",
+        "point1": "1.仅做以太和比特。",
+        "point2": "2.我是用仓位控制强平而非定额止损,多空双开。如果有套单我是会处理的,不影响开新仓。",
+        "point3": "3.跟单盈利到自己比较满意也可以手动止盈,因为我有时候单子会拿得跌宕起伏,或者拿长一些做趋势波段。",
+        "point4": "4.周末我一般开单很少。",
+        "loading": "加载中...",
+        "empty": "暂无交易数据",
+        "loadFailed": "加载交易数据失败",
+        "direction": {
+          "buy": "买",
+          "sell": "卖",
+          "long": "多",
+          "short": "空",
+          "down": "空"
+        },
+        "fields": {
+          "pair": "交易对",
+          "direction": "方向",
+          "status": "状态",
+          "amount": "金额 (USDT)",
+          "grossAmount": "总金额 (USDT)",
+          "feeAmount": "手续费 (USDT)",
+          "netTradeAmount": "净交易金额 (USDT)",
+          "entryPrice": "开仓价格 (USDT)",
+          "exitPrice": "平仓价格 (USDT)",
+          "rewardRate": "奖励比例",
+          "payout": "收益 (USDT)",
+          "startTime": "开始时间",
+          "expiryTime": "到期时间",
+          "settlementTime": "结算时间",
+          "openingPrice": "开仓价",
+          "buyAmount": "买入金额",
+          "period": "周期",
+          "closingPrice": "平仓价",
+          "transactionFee": "手续费 (1%)"
+        }
+      }
+    },
+    "rankings": {
+      "title": "市场排行榜"
+    },
+    "search": "搜索"
+  },
+  "feedback": {
+    "title": "意见反馈",
+    "imageAlt": "反馈插图",
+    "errors": {
+      "empty": "提交前请描述您的问题或建议。"
+    },
+    "form": {
+      "placeholder": "欢迎反馈，请详细描述您遇到的问题。\n如有可能请附上截图，以便我们尽快处理您的反馈。"
+    },
+    "helper": {
+      "title": "发送有价值的反馈",
+      "subtitle": "有机会获得神秘奖励"
+    },
+    "actions": {
+      "submit": "提交"
+    }
+  },
+  "tradeTabs": {
+    "tabs": {
+      "liveTrades": "持仓中 ({{count}})",
+      "tradeHistory": "已平仓 ({{count}})"
+    },
+    "states": {
+      "liveNotLoggedIn": {
+        "title": "登录后查看持仓",
+        "subtitle": "登录并交易后可实时查看。"
+      },
+      "liveLoading": "加载持仓中...",
+      "liveEmpty": {
+        "title": "暂无持仓",
+        "subtitle": "开仓后将在此显示。"
+      },
+      "historyNotLoggedIn": {
+        "title": "登录后查看历史",
+        "subtitle": "登录后可查看已完成的交易。"
+      },
+      "historyLoading": "加载历史记录中...",
+      "historyEmpty": {
+        "title": "暂无历史记录",
+        "subtitle": "完成交易后将在此显示。"
+      }
+    }
+  },
+  "tradeTop": {
+    "pageTitle": "交易区",
+    "backAriaLabel": "返回",
+    "upLabel": "涨",
+    "downLabel": "跌",
+    "favoriteAriaLabel": "收藏",
+    "guideAriaLabel": "交易指南",
+    "favoriteError": "添加收藏交易对失败",
+    "pairMenu": {
+      "title": "交易对"
+    }
+  },
+  "tradeGuide": {
+    "title": "交易区指南",
+    "heroTitle": "如何交易",
+    "heroSubtitle": "按以下步骤进行预测交易并管理您的持仓。",
+    "tradeNow": "立即交易",
+    "items": {
+      "expiry": {
+        "label": "预测交易到期时间",
+        "description": "设置您的预测合约交易的到期时间。"
+      },
+      "investment": {
+        "label": "投资金额",
+        "description": "输入您要交易的金额以查看预估赔付和收益。"
+      },
+      "direction": {
+        "label": "选择方向",
+        "description": "根据您对涨跌的预测选择“涨”或“跌”。"
+      },
+      "positions": {
+        "label": "查看持仓",
+        "description": "下单成功后，您可在“未平仓”中查看持仓。交易到期后，请到“已平仓”查看结果。"
+      }
+    }
+  },
+  "tradingPane": {
+    "timeUnit": "时间单位",
+    "amount": "金额",
+    "avail": "可用",
+    "loading": "加载中...",
+    "upPayout": "涨赔付",
+    "downPayout": "跌赔付",
+    "up": "涨",
+    "down": "跌",
+    "balance": "余额",
+    "quantity": "数量",
+    "agreeRules": "我同意",
+    "presaleRules": "《预售规则》",
+    "cancel": "取消",
+    "placing": "下单中...",
+    "totalAmount": "合计 {{value}} {{currency}}",
+    "settlementAmount": "结算金额：",
+    "pleaseLogin": "请先登录后再交易。",
+    "enterAmountGreaterThanZero": "请输入大于零的金额。",
+    "tradePlaced": "下单成功",
+    "failedToPlaceTrade": "下单失败",
+    "multiplier": "X{{mult}}"
+  },
+  "announcement": {
+    "title": "公告",
+    "hero": {
+      "title": "BT EXCHANGE 中心",
+      "subtitle": "获取最新平台公告、充值提示和提现通知。"
+    },
+    "items": {
+      "welcome": {
+        "title": "欢迎使用 BT EXCHANGE",
+        "subtitle": "",
+        "points": [
+          "享受透明高效的交易系统，畅享顺畅交易体验。",
+          "全设备适配，界面简洁易用。",
+          "敬请关注最新更新和新功能。",
+          "感谢您选择 BT EXCHANGE。"
+        ]
+      },
+      "deposit": {
+        "title": "充值公告",
+        "subtitle": "7×24 小时快速安全充值。",
+        "points": [
+          "BT EXCHANGE 充值快速安全处理。",
+          "充值前请务必核对网络和地址。",
+          "若充值延迟，请联系客服并提供完整交易明细。",
+          "您的资金受我们的安全和风控系统保护。"
+        ]
+      },
+      "withdrawal": {
+        "title": "即时提现公告",
+        "subtitle": "审批通过后快速到账。",
+        "points": [
+          "审批通过后即时处理提现。",
+          "请确保提现信息正确，以免出现问题。",
+          "网络拥堵或第三方延迟可能影响到账时间。",
+          "享受 BT EXCHANGE 快速可靠的提现服务。"
+        ]
+      }
+    },
+    "footer": "以上公告仅供参考，最终详情请以 BT EXCHANGE 最新信息为准。"
+  },
+  "about": {
+    "headerTitle": "关于我们",
+    "hero": {
+      "title": "BT EXCHANGE 法务中心",
+      "description": "在同一页面查看我们的隐私、保密及风险条款。充分了解信息，自信安心地进行交易。"
+    },
+    "options": {
+      "privacy": {
+        "title": "隐私政策与保密协议"
+      },
+      "risk": {
+        "title": "风险披露与用户协议"
+      }
+    },
+    "documents": {
+      "privacy": {
+        "title": "隐私政策与保密协议",
+        "intro": "本隐私政策说明 BT EXCHANGE（「我们」）在您使用我们的网站、应用或服务时如何收集、使用、存储和保护您的信息。",
+        "sections": {
+          "0": { "heading": "1. 我们对您隐私的承诺", "body": { "0": "我们致力于保护您的隐私，并确保数据处理方式的透明度。" } },
+          "1": { "heading": "2. 解释与定义", "body": { "0": "首字母大写的词语具有以下条件所定义的含义。这些定义适用于单复数形式。" }, "bullets": { "0": "用户/您 – 访问或使用服务的个人。", "1": "公司 – BT EXCHANGE。", "2": "账户 – 为访问我们的服务而创建的专属账户。", "3": "网站 – BT EXCHANGE 官方平台。", "4": "服务 – BT EXCHANGE 提供的交易、投资及相关服务。", "5": "国家 – 根据适用法律的运营管辖地。", "6": "服务提供商 – 代表公司处理数据的任何第三方。", "7": "个人数据 – 可识别个人身份的任何信息。", "8": "使用数据 – 使用服务时自动收集的数据。" } },
+          "2": { "heading": "3. 我们收集的数据类型", "subheading": "3.1 个人数据", "body": { "0": "使用我们的服务时，我们可能要求您提供某些个人信息，包括但不限于：" }, "bullets": { "0": "电子邮箱地址", "1": "全名", "2": "电话号码", "3": "国家或城市信息", "4": "账户登录信息" } },
+          "3": { "subheading": "3.2 使用数据", "body": { "0": "使用数据为自动收集，可能包括：" }, "bullets": { "0": "IP 地址", "1": "设备类型与唯一设备 ID", "2": "浏览器类型与版本", "3": "访问页面、停留时间及活动记录" }, "extra": { "0": "通过移动端访问 BT EXCHANGE 时，可能收集额外设备相关数据以用于安全与性能优化。" } },
+          "4": { "heading": "4. Cookie 与追踪技术", "body": { "0": "BT EXCHANGE 使用 Cookie 及类似追踪技术以改善用户体验并分析平台表现。" }, "bullets": { "0": "必要 Cookie（会话 Cookie）– 用于账户登录、安全及基础平台功能。", "1": "接受 Cookie（持久 Cookie）– 存储您的 Cookie 同意偏好。", "2": "功能 Cookie（持久 Cookie）– 记住语言、登录信息及设置等偏好。" }, "extra": { "0": "您可在浏览器设置中禁用 Cookie，但部分功能可能无法正常运行。" } },
+          "5": { "heading": "5. 我们如何使用您的个人数据", "bullets": { "0": "提供并维护我们的服务。", "1": "管理并验证用户账户。", "2": "提升安全性并防止欺诈或滥用。", "3": "传达重要更新、通知及服务信息。", "4": "分析使用趋势以优化平台表现和用户体验。" } },
+          "6": { "heading": "6. 数据安全与保密", "body": { "0": "我们采取适当的技术与组织安全措施，保护您的数据免受未经授权的访问、丢失或滥用。", "1": "然而，没有任何系统是 100% 安全的。建议您使用强密码并启用所有可用安全功能。" } },
+          "7": { "heading": "7. 第三方服务提供商", "body": { "0": "我们可能与可信的第三方服务提供商共享有限数据， 用于：" }, "bullets": { "0": "服务维护及平台运营。", "1": "分析与性能监控。", "2": "安全验证及风险控制。" }, "extra": { "0": "我们不会将您的个人数据出售给第三方。" } },
+          "8": { "heading": "8. 您的隐私权", "body": { "0": "根据您的管辖地，您可能有权：" }, "bullets": { "0": "访问我们持有的您的个人数据。", "1": "请求更正或删除您的个人数据。", "2": "反对或限制特定类型的处理。", "3": "在基于同意的处理中随时撤回同意。" }, "extra": { "0": "可通过 BT EXCHANGE 官方客服渠道提出请求。" } },
+          "9": { "heading": "9. 本隐私政策的变更", "body": { "0": "BT EXCHANGE 保留随时更新本政策以反映法律、监管或运营要求变化的权利。", "1": "任何变更将发布在本页面，自发布之日起立即生效。" } },
+          "10": { "heading": "10. 联系我们", "body": { "0": "如对本隐私政策、保密或数据处理有任何疑问，请通过 BT EXCHANGE 官方客服渠道联系我们。" } }
+        }
+      },
+      "risk": {
+        "title": "风险披露与用户协议",
+        "intro": "请在使用 BT EXCHANGE 前仔细阅读本风险披露与用户协议。访问或使用我们的平台即表示您理解并同意以下条款与风险。",
+        "sections": {
+          "0": { "heading": "1. 协议接受", "bullets": { "0": "注册、登录或使用 BT EXCHANGE 即表示您确认已阅读、理解并同意本用户协议及所有适用规则。", "1": "您继续使用平台即构成对未来更新的接受。" } },
+          "1": { "heading": "2. 账户安全责任", "bullets": { "0": "您全权负责保管账户凭证（包括登录 ID 和密码）的机密性。", "1": "使用您账户进行的所有活动均视为经您授权。" }, "extra": { "0": "BT EXCHANGE 不对未经授权访问、凭证被盗或账户保护疏忽造成的损失负责。", "1": "强烈建议定期更新密码并启用所有可用安全功能。" } },
+          "2": { "heading": "3. 条款修改", "bullets": { "0": "BT EXCHANGE 保留随时修改本协议、平台规则或相关政策的权利，恕不另行通知。", "1": "修订条款自平台发布之日起立即生效。", "2": "公司保留对一切争议的最终解释与决定权。" } },
+          "3": { "heading": "4. 法定年龄要求", "bullets": { "0": "用户须达到其居住国家或地区的法定年龄方可访问或使用 BT EXCHANGE 服务。", "1": "未完成或未成功提交的交易或操作将被视为无效。" } },
+          "4": { "heading": "5. 技术与网络风险", "body": { "0": "数字平台受技术限制与外部因素影响。BT EXCHANGE 不对以下原因造成的损失负责：" }, "bullets": { "0": "网络中断或连接问题。", "1": "设备或硬件故障。", "2": "停电或不稳定供电。", "3": "系统延迟、中断或其他不可抗力。" }, "extra": { "0": "若用户在交易确认前断开连接，不会影响系统已记录的完成结果。" } },
+          "5": { "heading": "6. 交易与金融风险披露", "body": { "0": "交易及数字资产活动涉及重大风险。市场价格可能因经济、监管及市场因素波动，用户可能遭受部分或全部资金损失。", "1": "交易前请谨慎评估您的风险承受能力与财务状况。" }, "bullets": { "0": "理性交易，避免过度杠杆或投机。", "1": "仅使用您可承受损失的资金。", "2": "过往表现不保证未来结果。" }, "extra": { "0": "BT EXCHANGE 不保证盈利、固定收益或零损失。" } },
+          "6": { "heading": "7. 用户责任", "bullets": { "0": "所有交易决策均由用户独立做出。", "1": "您对平台上行为的收益、损失或法律后果负全部责任。", "2": "BT EXCHANGE 不对因用户行为、投资决策或对市场状况误解造成的直接或间接损失负责。" } },
+          "7": { "heading": "8. 最终决定权", "bullets": { "0": "在发生争议、系统错误、异常活动或涉嫌违规时，BT EXCHANGE 的决定具有最终约束力。" } },
+          "8": { "heading": "9. 免责声明", "body": { "0": "BT EXCHANGE 按「现状」和「可用性」提供。我们努力维护安全稳定的交易环境，但不保证平台不会中断、无错误或无风险。", "1": "使用 BT EXCHANGE 即表示您确认数字资产交易存在固有风险，并同意对您的参与承担全部责任。" } }
+        }
+      }
+    }
+  },
+  "copyTradeSetting": {
+    "title": "跟单设置",
+    "description": "该功能正在开发中。很快你就可以在这里配置跟单偏好设置。",
+    "comingSoon": "敬请期待"
+  },
+  "comingSoonPage": {
+    "title": "敬请期待",
+    "subtitle": "我们正在打造值得等待的内容。",
+    "backToHome": "返回首页"
+  }
+}
+

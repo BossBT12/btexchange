@@ -1,0 +1,1343 @@
+{
+  "loaderMessageModal": {
+    "processing": "Procesando...",
+    "success": "Éxito",
+    "somethingWentWrong": "Algo salió mal"
+  },
+  "tabs": {
+    "overview": "Resumen",
+    "funding": "Fondos",
+    "futures": "Futuros",
+    "spot": "Spot",
+    "tradfi": "TradFi"
+  },
+  "assets": {
+    "totalValue": "Valor total (est.)",
+    "currency": "USDT",
+    "approx": "{{value}}",
+    "loading": "Cargando...",
+    "hideBalanceAriaLabel": "Ocultar saldo",
+    "showBalanceAriaLabel": "Mostrar saldo",
+    "deposit": "Depósito",
+    "withdraw": "Retiro",
+    "transfer": "Transferir",
+    "stats": {
+      "signUpQty": "Total de registros",
+      "participateQty": "Equipo activo",
+      "circulation": "Ingresos totales",
+      "personal": "Ingresos por trading",
+      "personalIncome": "Ingresos por trading",
+      "teamIncome": "Ingresos del equipo"
+    },
+    "cards": {
+      "gameHistoryTitle": "Historial de juegos",
+      "gameHistorySubtitle": "Mi historial de juegos",
+      "transactionTitle": "Transacción",
+      "transactionSubtitle": "Mi historial de transacciones",
+      "depositTitle": "Depósito",
+      "depositSubtitle": "Mi historial de depósitos",
+      "withdrawTitle": "Retiro",
+      "withdrawSubtitle": "Mi historial de retiros"
+    },
+    "options": {
+      "notification": "Notificación",
+      "telegramChannel": "Canal de Telegram",
+      "telegramGroup": "Grupo de Telegram",
+      "language": "Idioma",
+      "currentLanguage": "Español"
+    },
+    "serviceCenterTitle": "Centro de servicio",
+    "serviceCenter": {
+      "profile": "Perfil",
+      "feedback": "Comentarios",
+      "announcement": "Anuncio",
+      "customerService": "Atención al cliente",
+      "beginnerGuide": "Guía para principiantes",
+      "aboutUs": "Sobre nosotros"
+    },
+    "listTabs": {
+      "account": "Cuenta",
+      "symbol": "Símbolo"
+    }
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "pleaseWait": "Espere...",
+    "closeAriaLabel": "Cerrar",
+    "decreaseAriaLabel": "Disminuir",
+    "increaseAriaLabel": "Aumentar"
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar sesión con contraseña",
+      "emailTab": "Correo",
+      "mobileTab": "Móvil",
+      "emailPlaceholder": "Introduce tu correo",
+      "mobilePlaceholder": "Introduce tu número de móvil",
+      "passwordPlaceholder": "Introduce tu contraseña",
+      "signingIn": "Iniciando sesión...",
+      "confirm": "Confirmar",
+      "support": "¿Soporte?",
+      "forgotPassword": "¿Olvidaste la contraseña?",
+      "verifyEmailInfo": "Verifica tu correo para continuar.",
+      "emailVerifiedSuccess": "Correo verificado. Inicia sesión.",
+      "success": "Sesión iniciada",
+      "failed": "Error al iniciar sesión. Inténtalo de nuevo.",
+      "googleLoginComingSoon": "Inicio con Google próximamente",
+      "termsPrefix": "Al registrarte/iniciar sesión aceptas nuestros",
+      "termsOfService": "Términos de Servicio",
+      "and": "y",
+      "privacyPolicy": "Política de Privacidad",
+      "termsSuffix": "."
+    },
+    "signup": {
+      "fullNamePlaceholder": "Nombre completo",
+      "emailPlaceholder": "Correo electrónico",
+      "mobilePlaceholder": "Número de móvil",
+      "passwordPlaceholder": "Contraseña",
+      "referralPlaceholder": "Código de referido",
+      "referralCodeLabel": "Código de referido",
+      "passwordReqLength": "8-30 caracteres",
+      "passwordReqUpper": "Al menos una mayúscula",
+      "passwordReqLower": "Al menos una minúscula",
+      "passwordReqNumber": "Al menos un número",
+      "creatingAccount": "Creando cuenta...",
+      "confirm": "Confirmar",
+      "googleSignupComingSoon": "Registro con Google próximamente",
+      "registrationFailed": "Error al registrarse. Inténtalo de nuevo.",
+      "registrationSuccess": "Registro correcto. Revisa tu correo para verificar."
+    },
+    "forgotPassword": {
+      "emailPlaceholder": "Correo electrónico",
+      "mobilePlaceholder": "Número de móvil",
+      "verificationCodePlaceholder": "Código de verificación",
+      "newPasswordPlaceholder": "Nueva contraseña",
+      "emailVerificationLabel": "Verificación de correo",
+      "newPasswordLabel": "Nueva contraseña",
+      "sending": "Enviando...",
+      "sendCode": "Enviar código",
+      "otpVerified": "Código verificado. Establece una nueva contraseña.",
+      "resetSuccess": "Contraseña restablecida. Inicia sesión.",
+      "codeSent": "Código enviado."
+    },
+    "changePassword": {
+      "currentPasswordLabel": "Contraseña actual",
+      "newPasswordLabel": "Nueva contraseña",
+      "confirmPasswordLabel": "Confirmar nueva contraseña",
+      "updating": "Actualizando...",
+      "submitButton": "Cambiar contraseña",
+      "failed": "Error al cambiar la contraseña"
+    },
+    "validation": {
+      "emailRequired": "El correo es obligatorio",
+      "passwordRequired": "La contraseña es obligatoria",
+      "mobileRequired": "El número de móvil es obligatorio",
+      "emailInvalid": "Introduce un correo válido",
+      "mobileInvalid": "Introduce un número de móvil válido",
+      "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+      "emailMaxLength": "El correo no puede superar 100 caracteres",
+      "fullNameRequired": "El nombre es obligatorio",
+      "referralCodeRequired": "El código de referido es obligatorio",
+      "fullNameLettersOnly": "El nombre solo puede contener letras y espacios",
+      "passwordStrength": "La contraseña debe contener mayúscula, minúscula y número",
+      "verificationCodeRequired": "El código de verificación es obligatorio",
+      "newPasswordRequired": "La nueva contraseña es obligatoria",
+      "currentPasswordRequired": "La contraseña actual es obligatoria",
+      "confirmPasswordRequired": "Confirma tu nueva contraseña",
+      "passwordsMustMatch": "Las contraseñas deben coincidir"
+    }
+  },
+  "trade": {
+    "amountLabel": "Cantidad",
+    "durationLabel": "Duración",
+    "confirmTradeTitle": "Confirmar operación",
+    "confirmTradeDescription": "¿Apostar {{direction}} en {{pair}} con {{amount}} USDT por {{duration}}?",
+    "directionUp": "Alza",
+    "directionDown": "Baja",
+    "placing": "Enviando...",
+    "loading": "Cargando...",
+    "indicatorsTooltip": "Indicadores",
+    "screenshotTooltip": "Captura"
+  },
+  "rewardHubDeposit": {
+    "networkBsc": "BSC (Binance Smart Chain)",
+    "networkEth": "ETH (Ethereum)",
+    "networkPolygon": "POLYGON"
+  },
+  "menu": {
+    "switchAccount": "Cambiar cuenta",
+    "recommendedFeaturesTitle": "Funciones recomendadas",
+    "commonFunctionsTitle": "Funciones comunes",
+    "recommended": {
+      "deposit": "Depósito",
+      "trade": "Operar",
+      "language": "Idioma",
+      "copy": "Copiar",
+      "market": "Mercado",
+      "twoFA": "2FA",
+      "couponCenter": "Centro de cupones",
+      "more": "Más"
+    },
+    "common": {
+      "rewardsHub": "Centro de recompensas",
+      "accountSecurity": "Cuenta y seguridad",
+      "settings": "Configuración",
+      "network": "Red"
+    },
+    "footerVersion": "BLOCK APP v1.0.0"
+  },
+  "bottomNav": {
+    "home": "Inicio",
+    "market": "Mercado",
+    "trade": "Operar",
+    "promotion": "Promociones",
+    "asset": "Activos",
+    "signupBannerText": "Regístrate para reclamar ahora tus recompensas de nuevo usuario",
+    "signupCta": "Regístrate"
+  },
+  "bottomNavMlm": {
+    "home": "Inicio",
+    "team": "Equipo",
+    "reporting": "Informes",
+    "wallet": "Billetera"
+  },
+  "landing": {
+    "depositBanner": {
+      "title": "Deposita 100 USDT",
+      "subtitlePrefix": "Obtén hasta ",
+      "subtitleHighlight": "50 USDT de bono",
+      "cta": "Depositar ahora"
+    },
+    "registerTitle": "Regístrate para reclamar",
+    "registerSubtitle": "¡Recompensas para nuevos usuarios!",
+    "auth": {
+      "login": "Iniciar sesión",
+      "signUp": "Crear cuenta"
+    },
+    "badgeNew": "NUEVO",
+    "featureShortcuts": {
+      "rewards": "Hub de ganancias",
+      "copy": "Copiar",
+      "referral": "Referidos",
+      "2fa": "2FA",
+      "more": "Más"
+    },
+    "tabs": {
+      "favorites": "Favoritos",
+      "coin": "Moneda",
+      "hot": "Tendencia",
+      "gainers": "Ganadores",
+      "losers": "Perdedores",
+      "volume": "Volumen"
+    },
+    "viewAll": "Ver todo",
+    "marketTable": {
+      "tradingPairs": "Pares de trading",
+      "lastPrice": "Último precio",
+      "change24h": "Cambio 24h",
+      "noResults": "No se encontraron resultados"
+    },
+    "hero": {
+      "cards": {
+        "1": {
+          "title": "Evento global de recompensas por referidos",
+          "description": "Invita amigos y obtén 10 % de bono de trading",
+          "label": "Nuevo"
+        },
+        "2": {
+          "title": "Caja de recompensas misterio",
+          "description": "Opera con inteligencia • Gana en grande — 1 000 000 USDT",
+          "label": "Nuevo"
+        },
+        "3": {
+          "title": "Evento de bono por depósito USDT",
+          "description": "🎁 Obtén 5 % de bono en tu depósito",
+          "label": "Nuevo"
+        },
+        "4": {
+          "title": "Earn Hub – 1–3 % de ganancias diarias",
+          "description": "Sistema sencillo + recompensas extra",
+          "label": "Nuevo"
+        }
+      }
+    },
+    "features": {
+      "1": {
+        "title": "Seguridad primero",
+        "description": "Registro seguro con correo y teléfono, verificación avanzada y smart contracts."
+      },
+      "2": {
+        "title": "Acceso global",
+        "description": "Trading sin fronteras, accesible en todo el mundo."
+      },
+      "3": {
+        "title": "Trading cómodo",
+        "description": "Experiencia de trading sencilla, rápida y amigable para principiantes."
+      },
+      "4": {
+        "title": "Justo y transparente",
+        "description": "Trading transparente y justo, sin comisiones ocultas."
+      },
+      "5": {
+        "title": "Servicio humanizado",
+        "description": "Soporte personalizado para cada transacción, siempre disponible."
+      }
+    },
+    "community": {
+      "title": "Comunidad global de usuarios",
+      "desc1": "Únete a una comunidad global en crecimiento de traders inteligentes",
+      "desc2": "Experiencia de trading potente y moderna",
+      "stats": {
+        "totalUsers": "Usuarios totales",
+        "newUsers": "Nuevos usuarios"
+      }
+    }
+  },
+  "profile": {
+    "title": "Centro de usuario",
+    "loggedOut": "Sesión cerrada",
+    "uid": "UID",
+    "fullName": "Nombre completo",
+    "identityVerification": "Verificación de identidad",
+    "verified": "Verificado",
+    "unverified": "No verificado",
+    "twoFactorAuth": "Autenticación de dos factores",
+    "twoFactor": {
+      "enabled": "Activada",
+      "disabled": "Desactivada"
+    },
+    "changePassword": "Cambiar contraseña",
+    "switchAccount": "Cambiar cuenta",
+    "logoutCurrent": "Cerrar sesión en esta cuenta"
+  },
+  "twoFactor": {
+    "title": "Autenticación de dos factores",
+    "intro": "Añade una capa extra de seguridad a tu cuenta. Cuando esté activada, necesitarás tu contraseña y un código de una app de autenticación para iniciar sesión o realizar acciones sensibles.",
+    "errors": {
+      "loadProfile": "Error al cargar el perfil",
+      "startSetupFailed": "Error al iniciar la configuración 2FA",
+      "invalidCodeShort": "Introduce el código de 6 dígitos de tu app de autenticación.",
+      "missingSetupData": "Faltan datos de configuración. Inicia la configuración de nuevo.",
+      "invalidCode": "Código no válido. Inténtalo de nuevo.",
+      "disableCodeRequired": "Introduce tu código 2FA actual de 6 dígitos para desactivar.",
+      "disableFailed": "Error al desactivar 2FA."
+    },
+    "success": {
+      "enabled": "Autenticación de dos factores activada correctamente.",
+      "disabled": "Autenticación de dos factores desactivada."
+    },
+    "status": {
+      "disabled": "Estado: Desactivada",
+      "enabled": "Estado: Activada"
+    },
+    "disabled": {
+      "description": "Activa 2FA para proteger tu cuenta."
+    },
+    "enabled": {
+      "description": "La autenticación de dos factores protege tu cuenta. Para desactivarla, introduce tu código 2FA actual abajo.",
+      "codeLabel": "Introduce el código actual de 6 dígitos",
+      "codePlaceholder": "000000"
+    },
+    "actions": {
+      "loading": "Cargando...",
+      "enable": "Activar autenticación de dos factores",
+      "cancel": "Cancelar",
+      "verifyEnable": "Verificar y activar",
+      "disable": "Desactivar autenticación de dos factores"
+    },
+    "setup": {
+      "scanTitle": "Escanear código QR",
+      "scanDescription": "Usa una app de autenticación (Google Authenticator, Authy, etc.) para escanear este código QR.",
+      "manualLabel": "O introduce esta clave manualmente:",
+      "codeLabel": "Introduce el código de 6 dígitos",
+      "codePlaceholder": "000000",
+      "qrCodeAlt": "Código QR 2FA"
+    }
+  },
+  "promotion": {
+    "header": {
+      "title": "Promociones"
+    },
+    "errors": {
+      "loadFailed": "Error al cargar los datos de promoción"
+    },
+    "loading": "Cargando...",
+    "totalCommission": "Comisión total",
+    "yesterdayCommissionLabel": "Comisión total de ayer",
+    "upgradeHint": "Sube de nivel para aumentar tus ingresos por comisiones",
+    "subordinateTabs": {
+      "direct": "Subordinados directos",
+      "team": "Subordinados del equipo"
+    },
+    "subordinateStats": {
+      "registerCount": "Número de registros",
+      "depositCount": "Número de depósitos",
+      "depositAmount": "Monto de depósitos",
+      "firstDepositCount": "Número de primeros depósitos"
+    },
+    "downloadQrCta": "Descargar código QR",
+    "menu": {
+      "Partner rewards": "Recompensas de socios",
+      "Copy invitation code": "Copiar código de invitación",
+      "Subordinate data": "Datos de subordinados",
+      "Commission detail": "Detalle de comisiones",
+      "Invitation rules": "Reglas de invitación",
+      "Agent line customer service": "Atención al cliente para agentes",
+      "Rebate ratio": "Tasa de reembolso"
+    },
+    "data": {
+      "title": "Datos de promoción",
+      "thisWeek": "Esta semana",
+      "total": "Comisión total",
+      "directSubordinate": "Subordinados directos",
+      "totalTeamSubordinates": "Número total de subordinados del equipo"
+    },
+    "partnerRewards": {
+      "title": "Recompensas de socios",
+      "copySuccess": "Enlace de invitación copiado",
+      "loadFailed": "Error al cargar las recompensas de socios",
+      "inviteFriends": "Invita a amigos y obtén recompensas máximas",
+      "invitationCount": "Número de invitaciones",
+      "effectiveInvitationCount": "Número de invitaciones efectivas",
+      "invitationTotalBonus": "Bono total por invitaciones",
+      "invitationRecord": "Registro de invitaciones",
+      "invitationLink": "Enlace de invitación",
+      "invitationRules": "Reglas de invitación",
+      "ruleTitle": "🎉 Obtén 10% de bono por referido en depósitos",
+      "ruleInvite": "🔗 Invita a tus amigos a BT EXCHANGE",
+      "ruleMinDeposit": "💵 El bono aplica desde un depósito mínimo de 10 USDT",
+      "ruleNoTurnover": "🎁 Sin condición de volumen",
+      "ruleAutoCredit": "⚡ Bono acreditado automáticamente",
+      "bonusExample": "Ejemplo de bono:",
+      "friendDeposits": "El amigo deposita {{amount}} USDT",
+      "youGetBonus": "Obtienes {{bonus}} USDT de bono (10%)",
+      "oneDepositOneBonus": "✅ Un depósito = un bono",
+      "unlimitedReferrals": "♾ Referidos ilimitados — invita más, gana más",
+      "cta": "BT EXCHANGE — Depósito de 10 USDT y 10% de bono por referido."
+    },
+    "commissionDetail": {
+      "title": "Detalle de comisiones",
+      "loadFailed": "Error al cargar el detalle de comisiones",
+      "types": {
+        "all": "Todos",
+        "referral": "Referido",
+        "level": "Nivel",
+        "salary": "Salario"
+      },
+      "dateFrom": "Desde",
+      "dateTo": "Hasta",
+      "settlementTitle": "Liquidación exitosa",
+      "settlementSubtitle": "La comisión se ha acreditado automáticamente en tu saldo",
+      "referralIncome": "Ingresos por referidos",
+      "levelIncome": "Ingresos por nivel",
+      "salaryIncome": "Ingresos por salario",
+      "commissionPayout": "Pago de comisión",
+      "empty": "No hay registros de comisión",
+      "rowType": "Tipo",
+      "rowTime": "Fecha y hora",
+      "rowBalance": "Saldo",
+      "levelLabel": "Nivel {{level}}",
+      "viewMore": "Ver más"
+    },
+    "subordinateData": {
+      "title": "Datos de subordinados",
+      "uidLabel": "UID",
+      "searchPlaceholder": "Buscar UID de subordinado",
+      "loadFailed": "Error al cargar subordinados",
+      "empty": "No se encontraron subordinados",
+      "copyUidSuccess": "UID copiado",
+      "loadMore": "Cargar más",
+      "types": {
+        "all": "Todos",
+        "direct": "Directo",
+        "team": "Equipo"
+      },
+      "yes": "Sí",
+      "no": "No",
+      "summaryFields": {
+        "depositNumber": "Número de depósitos",
+        "depositAmount": "Monto de depósitos",
+        "numberOfBettors": "Número de traders",
+        "totalBet": "Total de operaciones",
+        "firstDepositCount": "Número de personas con primer depósito",
+        "firstDepositAmount": "Monto del primer depósito"
+      },
+      "subordinateFields": {
+        "level": "Nivel",
+        "depositAmount": "Monto de depósitos",
+        "betAmount": "Monto de apuestas",
+        "commission": "Comisión",
+        "time": "Fecha",
+        "totalDeposited": "Monto depositado",
+        "fullName": "Nombre",
+        "hasDeposited": "Ha depositado"
+      }
+    },
+    "agentService": {
+      "title": "Atención al cliente para agentes",
+      "subtitle": "Contacta nuestras cuentas oficiales de Telegram para soporte 1:1.",
+      "description": "Disponibles para ayuda con incorporación, promociones y consultas de cuenta.",
+      "telegram": "Telegram",
+      "imageAlt": "Atención al cliente para agentes",
+      "accounts": {
+        "agent": "BT GLOBAL AGENT",
+        "agency": "BT GLOBAL AGENCY"
+      }
+    },
+    "rebateRatio": {
+      "title": "Tasa de reembolso",
+      "loadFailed": "Error al cargar la tasa de reembolso",
+      "bannerTitle": "BT EXCHANGE – Sistema de comisiones y reembolsos",
+      "bannerIntro": "En BT Exchange no solo operas: también ganas comisión por la actividad de trading de tu red.",
+      "bannerRefer": "Cuando refieres usuarios a BT Exchange y realizan operaciones, recibes un porcentaje de sus comisiones como comisión.",
+      "structureTitle": "Estructura de comisiones multinivel:",
+      "empty": "No hay datos de tasa de reembolso disponibles",
+      "tableLevel": "Nivel",
+      "tableCommission": "Comisión %",
+      "levelRow": "Nivel {{level}}",
+      "ctaTitle": "Cuanto más grande sea tu equipo, mayor será tu potencial de ingresos pasivos.",
+      "bullet1": "Sin inversión adicional requerida",
+      "bullet2": "Comisión acreditada automáticamente",
+      "bullet3": "Sistema totalmente transparente",
+      "bullet4": "Seguimiento de ganancias en tiempo real",
+      "ctaTagline": "Opera con inteligencia. Construye tu red. Gana más — con BT EXCHANGE."
+    },
+    "rulesPage": {
+      "title": "Reglas de invitación",
+      "sectionTitle": "Reglas de invitación",
+      "point1": "Comparte tu código de invitación o enlace de referido con amigos y familiares.",
+      "point2": "Cuando se registren con tu código, se convertirán en tu subordinado directo.",
+      "point3": "Gana bono por referido cuando tus subordinados directos hagan depósitos.",
+      "point4": "Gana ingresos por nivel cuando tu equipo (hasta 6 niveles) realice operaciones.",
+      "point5": "Sube de nivel para aumentar tus ingresos por comisiones.",
+      "point6": "El código de invitación se puede copiar desde la página de Promoción.",
+      "note": "Contacta a soporte para términos y condiciones detallados."
+    }
+  },
+  "rewardHub": {
+    "home": {
+      "searchPlaceholder": "Buscar",
+      "totalAssetsLabel": "Activos totales (USDT)",
+      "loading": "Cargando...",
+      "totalIncomeLabel": "Ingresos totales: ${{value}}",
+      "depositCta": "Depositar",
+      "quickActions": {
+        "hot": "HOT",
+        "main": "Principal",
+        "deposit": "Depositar",
+        "withdraw": "Retirar",
+        "trade": "Operar",
+        "referral": "Referidos"
+      },
+      "referralCard": {
+        "alt": "Referidos",
+        "title": "Programa de referidos",
+        "subtitle": "Gana FUNN"
+      },
+      "marketsTitle": "Mercados",
+      "marketError": "Error al cargar los datos del mercado",
+      "volume24h": "Volumen 24h",
+      "marketCap": "Capitalización de mercado",
+      "high24h": "Máximo 24h",
+      "low24h": "Mínimo 24h"
+    },
+    "invitePoster": {
+      "title": "Invitar",
+      "backAriaLabel": "Atrás",
+      "swipeHint": "Desliza izquierda - derecha para elegir tu póster favorito",
+      "posterBrandExchange": "Exchange",
+      "posterReferral": "Referidos",
+      "scanToRegister": "Escanear para registrarse",
+      "loadingLink": "Cargando...",
+      "downloadFilename": "poster-invitacion.png",
+      "fairJustice": "Justo y equitativo",
+      "openTransparent": "Abierto y transparente",
+      "fullOddsBonusRate": "Tasa de bono a cuota completa",
+      "financialSecurity": "Seguridad financiera",
+      "quickWithdrawal": "Retiro rápido",
+      "permanentCommission": "Comisión permanente hasta {{percent}}%",
+      "qrAlt": "QR de referido",
+      "inviteIncomeLineBefore": "Invita amigos Ingresos ",
+      "inviteIncomeLineAfter": " Comisión",
+      "downloadPoster": "Descargar código QR",
+      "preparing": "Preparando…",
+      "copyLink": "Copiar enlace de invitación",
+      "copied": "¡Copiado!",
+      "snackbar": {
+        "linkCopied": "Enlace de invitación copiado",
+        "copyFailed": "No se pudo copiar; el enlace se muestra en la alerta",
+        "posterNotReady": "Póster no listo",
+        "qrNotReady": "El código QR aún no está listo",
+        "posterDownloaded": "Póster descargado",
+        "downloadFailed": "Error al descargar"
+      }
+    },
+    "team": {
+      "teamStatsTitle": "Estadísticas del equipo",
+      "referral": "Referido",
+      "group": "Grupo",
+      "rankStatus": "Estado de rango",
+      "directReferrals": "Estructura de red",
+      "noDirectReferralsYet": "Aún no hay referidos directos",
+      "uidLabel": "UID:",
+      "avatarAlt": "Avatar",
+      "level": "Nivel:",
+      "name": "Nombre:",
+      "email": "Correo electrónico",
+      "depositAmount": "Importe del depósito:",
+      "tradeAmount": "Importe de operaciones:",
+      "commission": "Comisión:",
+      "time": "Fecha de alta:",
+      "userCount": "Número de usuarios",
+      "totalBusiness": "Negocio total",
+      "uidShort": "UID",
+      "status": "Estado",
+      "statusActive": "Activo",
+      "statusInactive": "Inactivo",
+      "rankLabel": "Rango",
+      "rankIncome": "Ingresos por rango",
+      "directUsers": "Directos",
+      "directBusiness": "Negocio directo",
+      "teamCount": "Equipo",
+      "teamBusiness": "Negocio del equipo"
+    },
+    "reporting": {
+      "title": "Informes",
+      "subtitle": "Consulta tus informes de ingresos",
+      "reportTypeLabel": "Tipo de informe",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha de fin",
+      "loading": "Cargando informes...",
+      "noData": "Sin datos",
+      "type": {
+        "all": "Todos",
+        "LEVEL": "Ingresos por nivel",
+        "RANK": "Ingresos por rango",
+        "ROI": "ROI",
+        "DAILY_ROI": "ROI diario",
+        "LEVEL_INCOME": "Ingresos por nivel",
+        "RANK_INCOME": "Ingresos por rango",
+        "SAME_RANK_INCOME": "Ingresos mismo rango",
+        "other": "Ingresos"
+      },
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "pageOf": "Página {{current}} de {{total}}"
+      }
+    },
+    "deposit": {
+      "title": "Depósito",
+      "selectNetwork": "Seleccionar red",
+      "depositAddressLabel": "Dirección de depósito",
+      "qrAlt": "Código QR de dirección de depósito",
+      "networkNote": "Solo se admite la red {{chain}} para esta dirección",
+      "addressLoading": "Cargando...",
+      "tipsTitle": "Importante",
+      "tips": {
+        "min": "Depósito mínimo: {{amount}} {{currency}}",
+        "confirmations": "Confirmación de depósito: 2 confirmaciones de red",
+        "assetWarning": "No envíes activos distintos de {{currency}} en {{chain}} a esta dirección o podrían perderse.",
+        "security": "Mantén tu dispositivo seguro para evitar manipulaciones o filtraciones."
+      },
+      "shareButton": "Compartir dirección",
+      "verifyHelperHint": "Usa la verificación solo si tu depósito no se ha acreditado después de la confirmación en la red.",
+      "verifyCta": "Verificar transacción",
+      "shareTitle": "Dirección de depósito de {{chain}}",
+      "shareText": "Deposita {{chain}} en esta dirección:\n{{address}}",
+      "errors": {
+        "fetchFailed": "No se pudo obtener la dirección de depósito"
+      }
+    },
+    "verifyDeposit": {
+      "title": "Verificar depósito",
+      "backAriaLabel": "Atrás",
+      "networkLabel": "Red",
+      "txHashLabel": "Hash de transacción",
+      "txHashPlaceholder": "0x...",
+      "help": "Pega el hash de tu transacción de depósito para verificar tu depósito.",
+      "verifyButton": "Verificar transacción",
+      "verifiedTitle": "Verificación solicitada",
+      "viewExplorer": "Ver en el explorador",
+      "goToHistory": "Historial de depósitos",
+      "success": "Transacción enviada para verificación.",
+      "errors": {
+        "invalidInput": "Introduce un hash válido y selecciona la red.",
+        "failed": "Falló la verificación. Revisa el hash e inténtalo de nuevo."
+      }
+    },
+    "withdraw": {
+      "title": "Retirar",
+      "backAriaLabel": "Atrás",
+      "capitalWithdrawAriaLabel": "Retiro de capital",
+      "capitalWithdrawButton": "Retiro de capital",
+      "historyAriaLabel": "Historial de retiros",
+      "withdrawableBalance": "Saldo retirable",
+      "amountLabel": "Cantidad (USDT)",
+      "max": "Máx",
+      "addressLabel": "Dirección de retiro (cartera USDT)",
+      "addressPlaceholder": "0x...",
+      "networkLabel": "Red",
+      "selectNetworkPlaceholder": "Seleccionar red",
+      "chains": {
+        "BSC": "BSC (Binance Smart Chain)",
+        "ETH": "ETH (Ethereum)",
+        "POLYGON": "POLYGON"
+      },
+      "twoFactorLabel": "Código 2FA",
+      "twoFactorPlaceholder": "000000",
+      "notice": "Los retiros se envían a la blockchain. Asegúrese de que la dirección y la red coincidan con su cartera USDT. Verifique antes de enviar.",
+      "submitButton": "Enviar retiro",
+      "errors": {
+        "loadFailed": "Error al cargar el saldo",
+        "invalidAmount": "Introduzca una cantidad válida.",
+        "amountExceeded": "La cantidad no puede superar su saldo retirable.",
+        "invalidAddress": "Introduzca una dirección de cartera válida.",
+        "twoFactorRequired": "Introduzca su código 2FA.",
+        "failed": "Retiro fallido. Inténtelo de nuevo."
+      },
+      "success": {
+        "default": "Retiro procesado correctamente."
+      }
+    },
+    "capitalWithdraw": {
+      "title": "Retiro de capital",
+      "backAriaLabel": "Atrás",
+      "regularWithdrawButton": "Retiro estándar",
+      "regularWithdrawAriaLabel": "Retiro estándar",
+      "historyAriaLabel": "Historial de retiros",
+      "loading": "Cargando inversiones...",
+      "totalCapitalBalance": "Saldo total de capital",
+      "maxWithdrawable": "Máximo retirable",
+      "amountLabel": "Importe de retiro (USDT)",
+      "amountPlaceholder": "Introduzca el importe",
+      "maxButton": "Usar máximo",
+      "earnedRoi": "ROI total ganado",
+      "penaltyNote": "Penalización por retiro anticipado",
+      "selectInvestment": "Seleccione la inversión a retirar",
+      "investedAt": "Invertido el",
+      "penaltyApplied": "Penalización",
+      "addressLabel": "Dirección de retiro (cartera USDT)",
+      "addressPlaceholder": "0x...",
+      "networkLabel": "Red",
+      "chains": { "BSC": "BSC (Binance Smart Chain)", "ETH": "ETH (Ethereum)", "POLYGON": "POLYGON" },
+      "twoFactorLabel": "Código 2FA",
+      "twoFactorPlaceholder": "000000",
+      "receiveLabel": "Recibirá",
+      "penaltyDeducted": "Penalización estimada",
+      "penaltyDetailsTitle": "Detalles de la penalización",
+      "penaltyPercentageLabel": "Porcentaje de penalización",
+      "totalInvestmentLabel": "Inversión total",
+      "totalRoiLabel": "ROI total",
+      "penaltyExplain": "Se aplica una penalización porque su ROI aún no cumple los requisitos para un retiro sin penalización.",
+      "notice": "El retiro de capital envía el monto total de la inversión seleccionada a su cartera. Sin penalización cuando su ROI ganado cubre el monto. Asegúrese de que la dirección y la red coincidan con su cartera USDT.",
+      "submitButton": "Retirar capital",
+      "errors": {
+        "loadFailed": "Error al cargar las inversiones activas",
+        "selectInvestment": "Seleccione una inversión para retirar.",
+        "invalidAmount": "Introduzca un importe válido.",
+        "amountExceedsMax": "El importe no puede superar el máximo retirable.",
+        "nothingToWithdraw": "No hay importe retirable en este momento.",
+        "invalidAddress": "Introduzca una dirección de cartera válida.",
+        "twoFactorRequired": "Introduzca su código 2FA.",
+        "failed": "Retiro de capital fallido. Inténtelo de nuevo."
+      },
+      "success": {
+        "default": "Retiro de capital exitoso.",
+        "netAmount": "Monto neto",
+        "viewExplorer": "Ver en el explorador"
+      },
+      "empty": {
+        "title": "Sin inversiones activas",
+        "description": "No tiene inversiones activas elegibles para retiro de capital.",
+        "depositCta": "Depositar"
+      }
+    },
+    "profile": {
+      "title": "Centro de usuario",
+      "loggedOut": "Sesión cerrada",
+      "rows": {
+        "uid": "UID",
+        "fullName": "Nombre completo",
+        "identityVerification": "Verificación de identidad",
+        "identityVerified": "Verificado",
+        "identityUnverified": "No verificado",
+        "twoFactor": "Autenticación de dos factores",
+        "twoFactorEnabled": "Activada",
+        "twoFactorDisabled": "Desactivada",
+        "changePassword": "Cambiar contraseña",
+        "switchAccount": "Cambiar cuenta",
+        "logout": "Cerrar sesión de la cuenta actual"
+      }
+    }
+  },
+  "notificationsPage": {
+    "title": "Notificaciones",
+    "hero": {
+      "title": "Actualizaciones y anuncios",
+      "subtitle": "Noticias importantes de la plataforma, ventanas de mantenimiento y mensajes de servicio."
+    },
+    "errors": {
+      "loadFailed": "Error al cargar las notificaciones"
+    },
+    "actions": {
+      "retry": "Reintentar",
+      "viewDetails": "Ver detalles",
+      "openLinkAria": "Abrir enlace"
+    },
+    "empty": {
+      "title": "Aún no hay notificaciones",
+      "subtitle": "Mostraremos aquí actualizaciones y anuncios importantes."
+    },
+    "pastTitle": "Notificaciones anteriores",
+    "fallbackTitle": "Notificación",
+    "date": {
+      "today": "Hoy",
+      "yesterday": "Ayer"
+    }
+  },
+  "deposit": {
+    "header": {
+      "title": "Depósito"
+    },
+    "selectCoinLabel": "Seleccionar moneda",
+    "addressLabel": "Dirección de depósito",
+    "onlySupport": "Solo soporta {{chain}}",
+    "loading": "Cargando...",
+    "tipsTitle": "Consejos",
+    "tips": {
+      "minimum": "Depósito mínimo: 1 USDT",
+      "confirmations": "Confirmación de depósito: 2 confirmaciones de red",
+      "onlyThisAsset": "Por favor no deposites activos que no sean {{chain}} en la dirección anterior, de lo contrario puede resultar en pérdida de activos.",
+      "security": "Por favor asegura la seguridad de tus dispositivos móviles para prevenir que la información sea manipulada o filtrada"
+    },
+    "shareCta": "Compartir dirección",
+    "verifyHelperHint": "Utiliza la verificación solo si tu depósito no se ha acreditado después de la confirmación en la red.",
+    "share": {
+      "title": "Dirección de depósito {{chain}}",
+      "text": "Deposita {{chain}} a esta dirección:\n{{address}}"
+    },
+    "verifyDeposit": {
+      "title": "Verificar depósito (ayuda manual)",
+      "backAriaLabel": "Atrás",
+      "networkLabel": "Red",
+      "txHashLabel": "Hash de transacción",
+      "txHashPlaceholder": "0x...",
+      "help": "Usa esto solo si tu depósito no se ha acreditado después de aparecer como confirmado en la blockchain. Pega el hash de tu transacción de depósito para enviar una revisión manual.",
+      "verifyButton": "Verificar transacción",
+      "verifiedTitle": "Verificación solicitada",
+      "viewExplorer": "Ver en el explorador",
+      "goToHistory": "Historial de depósitos",
+      "success": "Transacción enviada para verificación.",
+      "errors": {
+        "invalidInput": "Introduce un hash válido y selecciona la red.",
+        "failed": "Falló la verificación. Revisa el hash e inténtalo de nuevo."
+      }
+    },
+    "errors": {
+      "fetchFailed": "Error al obtener la dirección de depósito"
+    },
+    "backAriaLabel": "Atrás",
+    "qrCodeAlt": "Código QR",
+    "chains": {
+      "BSC": {
+        "label": "BSC (Binance Smart Chain)"
+      },
+      "ETH": {
+        "label": "ETH (Ethereum)"
+      },
+      "POLYGON": {
+        "label": "POLYGON"
+      }
+    }
+  },
+  "depositHistory": {
+    "title": "Historial de depósitos",
+    "errors": {
+      "fetchFailed": "No se pudo obtener el historial de depósitos"
+    },
+    "actions": {
+      "retry": "Intentar de nuevo"
+    },
+    "empty": {
+      "title": "Sin historial de depósitos",
+      "description": "Tus depósitos aparecerán aquí una vez confirmados"
+    },
+    "card": {
+      "amount": "Importe",
+      "network": "Red",
+      "date": "Fecha",
+      "txHash": "Hash de transacción",
+      "viewOnExplorer": "Ver en el explorador"
+    }
+  },
+  "withdraw": {
+    "headerTitle": "Retirar",
+    "backAriaLabel": "Atrás",
+    "placeholder": "Introduce el importe",
+    "currentAvailable": "Saldo retirable",
+    "all": "Todo",
+    "amountReceived": "Importe a recibir",
+    "historyLink": "Historial de retiros",
+    "needToTradeBefore": "Necesitas operar ",
+    "needToTradeAfter": " para poder retirar",
+    "chains": { "BSC": "BSC (Binance Smart Chain)", "ETH": "ETH (Ethereum)", "POLYGON": "POLYGON" },
+    "tabs": { "withdraw": "Retirar", "history": "Historial" },
+    "types": {
+      "winnings": { "menuLabel": "Retirar ganancias", "description": "Ganancias del trading desbloqueadas para retiro." },
+      "working": { "menuLabel": "Retirar ingresos por trabajo", "description": "Ingresos por referidos, nivel y salario disponibles para retirar." }
+    },
+    "status": { "winningsUnlocked": "Ganancias desbloqueadas", "winningsLocked": "Ganancias bloqueadas", "workingUnlocked": "Ingresos desbloqueados", "workingLocked": "Ingresos bloqueados" },
+    "available": "Disponible: {{amount}} USDT",
+    "form": { "amountLabel": "Importe (USDT)", "max": "Máx.", "enterAddress": "Introduce tu dirección", "walletLabel": "Dirección de wallet USDT", "networkLabel": "Red", "comingSoon": " (Próximamente)", "twofaLabel": "Código 2FA", "twofaPlaceholder": "000000", "twofaHelp": "Introduce el código de 6 dígitos de tu app de autenticación." },
+    "errors": { "winningsLocked": "Tus ganancias aún no están desbloqueadas. Aumenta tu volumen operado.", "workingLocked": "No puedes retirar ingresos por trabajo. Opera al menos $2 para desbloquear.", "invalidAmount": "Introduce un importe de retiro válido.", "amountTooHigh": "El importe no puede superar tu saldo disponible.", "invalidAddress": "Introduce una dirección de wallet válida.", "selectNetwork": "Selecciona una red.", "invalid2fa": "Introduce el código de 6 dígitos de tu app de autenticación." },
+    "notice": { "processing": "Los retiros se procesan manualmente. Tu saldo se descontará de inmediato y el estado se actualizará según se procese." },
+    "actions": { "submit": "Enviar retiro", "withdraw": "Retirar" },
+    "rules": { "ariaLabel": "Normas de retiro", "instant": "Retiro instantáneo", "amountRange": "Rango de retiro $1.00-$100,000.00", "amountRangeHighlight": "$1.00-$100,000.00", "confirmBeneficiary": "Confirma la información de tu cuenta beneficiaria antes de retirar. Si los datos son incorrectos, la empresa no se hará responsable de las pérdidas.", "contactService": "Si los datos beneficiarios son incorrectos, contacta con atención al cliente." },
+    "twofaDialog": { "title": "Autenticación en dos pasos", "description": "Introduce el código de 6 dígitos de tu app de autenticación.", "label": "Código de autenticación", "cancel": "Cancelar", "verify": "Verificar" },
+    "overview": { "title": "Resumen de retiros", "withdrawableWinnings": "Ganancias retirables", "winningsStatusUnlocked": "Desbloqueado", "winningsStatusLocked": "Bloqueado hasta volumen ≥ depósitos", "workingIncome": "Ingresos por trabajo", "workingStatusEligible": "Elegible", "workingStatusLocked": "Opera al menos $2 para desbloquear", "hint": "Las ganancias se desbloquean cuando tu volumen operado total es mayor o igual a tus depósitos. Los ingresos por trabajo son elegibles al operar al menos $2." },
+    "history": { "title": "Historial de retiros", "emptyTitle": "Sin historial de retiros", "emptyDescription": "Tus solicitudes aparecerán aquí después de enviarlas.", "amount": "Importe", "type": "Tipo", "status": "Estado", "date": "Fecha", "viewOnExplorer": "Ver en el explorador de la cadena", "walletLabel": "Wallet:", "networkLabel": "Red:", "typeWinnings": "Ganancias", "typeWorking": "Ingresos por trabajo", "statusRequested": "Solicitado", "statusConfirmed": "Confirmado", "statusSent": "Enviado", "statusFailed": "Fallido" },
+    "fetchHistoryFailed": "Error al cargar el historial de retiros",
+    "submitSuccess": "Solicitud de retiro enviada correctamente.",
+    "submitFailed": "No se pudo enviar el retiro. Comprueba los datos e inténtalo de nuevo."
+  },
+  "gameHistory": {
+    "title": "Historial de operaciones",
+    "back": "Atrás",
+    "refresh": "Actualizar",
+    "loadingShort": "Cargando...",
+    "currencyUsdt": "USDT",
+    "summary": {
+      "totalPnl": "PNL total",
+      "today": "Hoy",
+      "yesterday": "Ayer",
+      "monthly": "Mensual",
+      "all": "Todo",
+      "totalProfit": "Beneficio total",
+      "totalLoss": "Pérdida total",
+      "contracts": "Contratos",
+      "profitableContracts": "Contratos rentables",
+      "contractAmount": "Importe del contrato",
+      "closedPositions": "Posiciones cerradas"
+    },
+    "notLoggedIn": {
+      "title": "Conéctate para ver tu historial de operaciones",
+      "subtitle": "Inicia sesión para ver la lista de tus operaciones completadas."
+    },
+    "filters": {
+      "status": "Estado",
+      "statusAll": "Todos",
+      "statusWin": "Ganado",
+      "statusLose": "Perdido",
+      "pairPlaceholder": "Par (ej. BTC-USD)",
+      "apply": "Aplicar"
+    },
+    "loading": "Cargando historial de operaciones...",
+    "empty": {
+      "title": "Aún no hay historial de operaciones",
+      "subtitle": "Cuando completes operaciones, aparecerán aquí."
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "page": "Página {{page}}",
+      "next": "Siguiente"
+    },
+    "table": {
+      "Time": "Hora",
+      "Pair": "Par",
+      "Direction": "Dirección",
+      "Amount": "Cantidad (USDT)",
+      "PnlRate": "Tasa PnL",
+      "EntryPrice": "Precio entrada",
+      "OpenTime": "Hora apertura",
+      "RemainingTime": "Tiempo restante",
+      "CloseTime": "Hora cierre",
+      "Entry": "Precio entrada",
+      "Exit": "Precio cierre",
+      "StatusLabel": "Estado",
+      "StatusOpen": "Abierto",
+      "StatusWin": "Ganado",
+      "StatusLose": "Perdido",
+      "Payout": "Pago"
+    }
+  },
+  "transactionHistory": {
+    "title": "Historial de transacciones",
+    "errors": {
+      "fetchFailed": "No se pudo cargar el historial de transacciones"
+    },
+    "filters": {
+      "pairPlaceholder": "Par (ej. BTC-USD)",
+      "type": "Tipo",
+      "status": "Estado",
+      "chain": "Red",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha de fin",
+      "apply": "Aplicar",
+      "sort": "Ordenar",
+      "sortNewest": "Más reciente",
+      "sortOldest": "Más antiguo",
+      "sortAmountHigh": "Monto de mayor a menor",
+      "sortAmountLow": "Monto de menor a mayor",
+      "selectType": "Seleccionar tipo",
+      "typeOption": {
+        "all": "Todos",
+        "DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE": "Todos",
+        "DEPOSIT": "Depósito",
+        "WITHDRAWAL": "Retiro",
+        "WITHDRAW_WINNINGS": "Retiro de ganancias",
+        "WITHDRAW_WORKING": "Retiro de ingresos de trabajo",
+        "TRADE": "Operación",
+        "REFERRAL_BONUS": "Bono por referido",
+        "LEVEL_INCOME": "Ingresos por nivel",
+        "SALARY_INCOME": "Ingresos por salario"
+      },
+      "statusOption": {
+        "all": "Todos los estados",
+        "REQUESTED": "Solicitado",
+        "SENT": "Enviado",
+        "PENDING": "Pendiente",
+        "CONFIRMED": "Confirmado",
+        "SUCCESS": "Exitoso",
+        "FAILED": "Fallido",
+        "OPEN": "Abierto",
+        "WIN": "Ganado",
+        "LOSS": "Perdido"
+      },
+      "chainOption": {
+        "all": "Todas las redes",
+        "BSC": "BSC",
+        "ETH": "ETH",
+        "POLYGON": "POLYGON"
+      }
+    },
+    "empty": {
+      "title": "Aún no hay transacciones",
+      "subtitle": "Tu historial de transacciones unificado aparecerá aquí."
+    },
+    "refreshAriaLabel": "Actualizar",
+    "pagination": {
+      "previous": "Anterior",
+      "summary": "Página {{page}} de {{totalPages}} ({{total}} en total)",
+      "next": "Siguiente"
+    },
+    "card": {
+      "detail": "Detalle",
+      "time": "Hora",
+      "balance": "Saldo",
+      "salary": "Salario",
+      "remarks": "Observaciones",
+      "noRemark": "Sin observaciones",
+      "entryExit": "Entrada {{entry}} \u2192 Salida {{exit}}",
+      "payout": "Pago",
+      "gross": "Bruto",
+      "fee": "Comisión",
+      "txPrefix": "Tx:",
+      "direction": {
+        "UP": "Al alza",
+        "DOWN": "A la baja",
+        "BUY": "Comprar",
+        "SELL": "Vender"
+      }
+    }
+  },
+  "market": {
+    "topTabs": {
+      "favorites": "Favoritos",
+      "favourites": "Favoritos",
+      "market": "Mercado",
+      "insights": "Insights"
+    },
+    "subTabs": {
+      "futures": "Futuros",
+      "spot": "Spot",
+      "tradfi": "TradFi",
+      "trading pair list": "Lista de pares de trading"
+    },
+    "categories": {
+      "all": "Todos",
+      "top": "Monedas destacadas",
+      "tradable coin": "Monedas operables",
+      "ai": "IA",
+      "defi": "DeFi",
+      "lsd": "LSD",
+      "layer1": "Layer 1 / Layer 2"
+    },
+    "overview": {
+      "title": "Resumen del mercado",
+      "fearGreed": "Índice de miedo y codicia",
+      "fearGreedLabel": "Neutral",
+      "marketCap": "Capitalización de mercado",
+      "volume24h": "Volumen 24 h"
+    },
+    "performance": {
+      "title": "Rendimiento del mercado",
+      "rise": "Suben {{count}}",
+      "fall": "Bajan {{count}}"
+    },
+    "copyTrading": {
+      "title": "Oportunidades de copy trading",
+      "copyButton": "Copiar",
+      "roi30Label": "ROI 30 días",
+      "aumLabel": "AUM",
+      "daysRegisteredLabel": "Días de registro",
+      "winRateLabel": "Tasa de acierto",
+      "profitShareRatioLabel": "Porcentaje de reparto de ganancias",
+      "detail": {
+        "title": "Copy trading de futuros",
+        "infoAriaLabel": "Más información",
+        "profileName": "Los años dorados de la Señora Niu",
+        "followIntro": "Si sigues mis órdenes, ten en cuenta lo siguiente:",
+        "tabs": {
+          "performance": "Rendimiento",
+          "openPosition": "Posiciones abiertas",
+          "positionHistory": "Historial de posiciones",
+          "copiers": "Copiadores"
+        },
+        "point1": "1. Solo opero con Ethereum y Bitcoin.",
+        "point2": "2. Uso el control de posición para la liquidación en lugar de stop loss fijo, y abro posiciones largas y cortas. Si hay órdenes atrapadas las gestionaré; no afecta a abrir nuevas posiciones.",
+        "point3": "3. Puedes tomar ganancias manualmente cuando estés satisfecho con el beneficio de la copia, ya que a veces mantengo posiciones con volatilidad o más tiempo para movimientos de tendencia.",
+        "point4": "4. Generalmente abro muy pocas órdenes los fines de semana.",
+        "loading": "Cargando...",
+        "empty": "Sin datos de operaciones",
+        "loadFailed": "Error al cargar datos de operaciones",
+        "direction": {
+          "buy": "Comprar",
+          "sell": "Vender",
+          "long": "Largo",
+          "short": "Corto",
+          "down": "Corto"
+        },
+        "fields": {
+          "pair": "Par",
+          "direction": "Dirección",
+          "status": "Estado",
+          "amount": "Importe (USDT)",
+          "grossAmount": "Importe bruto (USDT)",
+          "feeAmount": "Comisión (USDT)",
+          "netTradeAmount": "Importe neto de la operación (USDT)",
+          "entryPrice": "Precio de entrada (USDT)",
+          "exitPrice": "Precio de salida (USDT)",
+          "rewardRate": "Tasa de recompensa",
+          "payout": "Pago (USDT)",
+          "startTime": "Hora de inicio",
+          "expiryTime": "Hora de vencimiento",
+          "settlementTime": "Hora de liquidación",
+          "openingPrice": "Precio de apertura",
+          "buyAmount": "Importe de compra",
+          "period": "Período",
+          "closingPrice": "Precio de cierre",
+          "transactionFee": "Comisión de transacción (1%)"
+        }
+      }
+    },
+    "rankings": {
+      "title": "Rankings de mercado"
+    },
+    "search": "Buscar"
+  },
+  "feedback": {
+    "title": "Comentarios",
+    "imageAlt": "Ilustración de comentarios",
+    "errors": {
+      "empty": "Por favor describe tu problema o sugerencia antes de enviar."
+    },
+    "form": {
+      "placeholder": "Bienvenido a comentarios, describe el problema con detalle.\nSi es posible, incluye una captura de pantalla para que podamos procesar tu comentario rápidamente."
+    },
+    "helper": {
+      "title": "Envía comentarios útiles",
+      "subtitle": "Oportunidad de ganar recompensas misteriosas"
+    },
+    "actions": {
+      "submit": "Enviar"
+    }
+  },
+  "tradeTabs": {
+    "tabs": {
+      "liveTrades": "Posiciones abiertas ({{count}})",
+      "tradeHistory": "Posiciones cerradas ({{count}})"
+    },
+    "states": {
+      "liveNotLoggedIn": {
+        "title": "Conéctate para ver tus posiciones abiertas",
+        "subtitle": "Inicia sesión y opera para verlas en tiempo real."
+      },
+      "liveLoading": "Cargando posiciones abiertas...",
+      "liveEmpty": {
+        "title": "Sin posiciones abiertas",
+        "subtitle": "Abre una nueva operación para verla aquí."
+      },
+      "historyNotLoggedIn": {
+        "title": "Conéctate para ver tu historial",
+        "subtitle": "Inicia sesión para ver tus operaciones completadas."
+      },
+      "historyLoading": "Cargando historial...",
+      "historyEmpty": {
+        "title": "Aún no hay historial",
+        "subtitle": "Tras completar operaciones, aparecerán aquí."
+      }
+    }
+  },
+  "tradeTop": {
+    "pageTitle": "Zona de trading",
+    "backAriaLabel": "Atrás",
+    "upLabel": "Subir",
+    "downLabel": "Bajar",
+    "favoriteAriaLabel": "Favorito",
+    "guideAriaLabel": "Guía de trading",
+    "favoriteError": "Error al añadir par favorito",
+    "pairMenu": {
+      "title": "Pares"
+    }
+  },
+  "tradeGuide": {
+    "title": "Guía de la zona de trading",
+    "heroTitle": "Cómo operar",
+    "heroSubtitle": "Sigue estos pasos para realizar una operación de predicción y gestionar tus posiciones.",
+    "tradeNow": "Operar ahora",
+    "items": {
+      "expiry": {
+        "label": "Vencimiento del trade de predicción",
+        "description": "Establece el plazo de vencimiento para tu operación de futuros de predicción."
+      },
+      "investment": {
+        "label": "Monto a invertir",
+        "description": "Introduce el monto que deseas operar para ver el pago estimado y la ganancia."
+      },
+      "direction": {
+        "label": "Elegir una dirección",
+        "description": "Selecciona Subir o Bajar según tu predicción de si el precio subirá o bajará."
+      },
+      "positions": {
+        "label": "Ver posiciones",
+        "description": "Tras colocar una orden con éxito, puedes ver tu posición en Posiciones abiertas. Cuando expire el trade, ve a Posiciones cerradas para ver el resultado."
+      }
+    }
+  },
+  "tradingPane": {
+    "timeUnit": "Unidad de tiempo",
+    "amount": "Cantidad",
+    "avail": "Disp.",
+    "loading": "Cargando...",
+    "upPayout": "Pago subir",
+    "downPayout": "Pago bajar",
+    "up": "Subir",
+    "down": "Bajar",
+    "balance": "Saldo",
+    "quantity": "Cantidad",
+    "agreeRules": "Acepto",
+    "presaleRules": "《Normas de preventa》",
+    "cancel": "Cancelar",
+    "placing": "Colocando orden...",
+    "totalAmount": "Monto total {{value}} {{currency}}",
+    "settlementAmount": "Monto de liquidación:",
+    "pleaseLogin": "Inicia sesión para realizar una operación.",
+    "enterAmountGreaterThanZero": "Introduce una cantidad mayor que cero.",
+    "tradePlaced": "Operación realizada",
+    "failedToPlaceTrade": "Error al realizar la operación",
+    "multiplier": "X{{mult}}"
+  },
+  "announcement": {
+    "title": "Anuncio",
+    "hero": {
+      "title": "Centro BT EXCHANGE",
+      "subtitle": "Mantente al día con los últimos anuncios de la plataforma, consejos de depósito y notificaciones de retiro."
+    },
+    "items": {
+      "welcome": {
+        "title": "Bienvenido a BT EXCHANGE",
+        "subtitle": "",
+        "points": [
+          "Disfruta de operaciones fluidas con un sistema transparente y eficiente.",
+          "Experiencia de interfaz limpia y fácil de usar en todos los dispositivos.",
+          "Mantente atento a las últimas actualizaciones y nuevas funciones.",
+          "Gracias por elegir BT EXCHANGE."
+        ]
+      },
+      "deposit": {
+        "title": "Anuncio de depósito",
+        "subtitle": "Depósitos rápidos y seguros las 24 horas.",
+        "points": [
+          "Los depósitos en BT EXCHANGE se procesan de forma rápida y segura.",
+          "Verifica siempre tu red y dirección antes de depositar.",
+          "Si tu depósito se retrasa, contacta a soporte con los detalles completos de la transacción.",
+          "Tus fondos están protegidos por nuestros sistemas de seguridad y control de riesgos."
+        ]
+      },
+      "withdrawal": {
+        "title": "Anuncio de retiro instantáneo",
+        "subtitle": "Retiros rápidos una vez aprobados.",
+        "points": [
+          "Los retiros se procesan al instante después de la aprobación.",
+          "Asegúrate de que todos los datos del retiro sean correctos para evitar problemas.",
+          "La congestión de la red o retrasos de terceros pueden afectar el tiempo de llegada.",
+          "Disfruta de retiros rápidos y fiables con BT EXCHANGE."
+        ]
+      }
+    },
+    "footer": "Los anuncios anteriores son solo de referencia. Consulta la información más reciente en BT EXCHANGE para los detalles finales."
+  },
+  "about": {
+    "headerTitle": "Sobre nosotros",
+    "hero": {
+      "title": "Centro legal de BT EXCHANGE",
+      "description": "Consulta en un solo lugar nuestras condiciones de privacidad, confidencialidad y riesgo. Mantente informado y opera con confianza."
+    },
+    "options": {
+      "privacy": {
+        "title": "Política de privacidad y acuerdo de confidencialidad"
+      },
+      "risk": {
+        "title": "Divulgación de riesgos y acuerdo de usuario"
+      }
+    },
+    "documents": {
+      "privacy": {
+        "title": "Política de privacidad y acuerdo de confidencialidad",
+        "intro": "Esta Política de Privacidad explica cómo BT EXCHANGE («nosotros», «nos», «nuestro») recopila, utiliza, almacena y protege su información cuando utiliza nuestro sitio web, aplicación o servicios.",
+        "sections": {
+          "0": { "heading": "1. Nuestro compromiso con su privacidad", "body": { "0": "Estamos comprometidos con la protección de su privacidad y la transparencia en el manejo de sus datos." } },
+          "1": { "heading": "2. Interpretación y definiciones", "body": { "0": "Las palabras con letras iniciales mayúsculas tienen significados definidos en las siguientes condiciones. Estas definiciones se aplican tanto en singular como en plural." }, "bullets": { "0": "Usuario / Usted – la persona que accede o utiliza el Servicio.", "1": "Empresa – BT EXCHANGE.", "2": "Cuenta – la cuenta única creada para acceder a nuestro Servicio.", "3": "Sitio web – la plataforma oficial BT EXCHANGE.", "4": "Servicio – operaciones, inversión y servicios relacionados de BT EXCHANGE.", "5": "País – la jurisdicción operativa según las leyes aplicables.", "6": "Proveedor de servicios – cualquier tercero que procese datos en nombre de la Empresa.", "7": "Datos personales – cualquier información que identifique a un individuo.", "8": "Datos de uso – datos recopilados automáticamente al usar el Servicio." } },
+          "2": { "heading": "3. Tipos de datos que recopilamos", "subheading": "3.1 Datos personales", "body": { "0": "Al usar nuestro Servicio, podemos solicitarle cierta información personal, incluyendo pero no limitado a:" }, "bullets": { "0": "Correo electrónico", "1": "Nombre completo", "2": "Número de teléfono", "3": "País o ciudad", "4": "Detalles de inicio de sesión de la cuenta" } },
+          "3": { "subheading": "3.2 Datos de uso", "body": { "0": "Los datos de uso se recopilan automáticamente y pueden incluir:" }, "bullets": { "0": "Dirección IP", "1": "Tipo y ID único del dispositivo", "2": "Tipo y versión del navegador", "3": "Páginas visitadas, tiempo y registros de actividad" }, "extra": { "0": "Al acceder a BT EXCHANGE desde móvil, se pueden recopilar datos adicionales del dispositivo para seguridad y optimización." } },
+          "4": { "heading": "4. Cookies y tecnologías de rastreo", "body": { "0": "BT EXCHANGE utiliza cookies y tecnologías similares para mejorar la experiencia y analizar el rendimiento de la plataforma." }, "bullets": { "0": "Cookies esenciales – necesarias para inicio de sesión, seguridad y funcionalidad básica.", "1": "Cookies de aceptación – almacenan sus preferencias de consentimiento.", "2": "Cookies de funcionalidad – recuerdan preferencias como idioma y configuración." }, "extra": { "0": "Puede desactivar cookies en la configuración del navegador, pero algunas funciones pueden no operar correctamente." } },
+          "5": { "heading": "5. Cómo usamos sus datos personales", "bullets": { "0": "Proporcionar y mantener nuestro Servicio.", "1": "Gestionar y verificar cuentas de usuario.", "2": "Mejorar la seguridad y prevenir fraude.", "3": "Comunicar actualizaciones, notificaciones y mensajes del servicio.", "4": "Analizar tendencias para mejorar el rendimiento y la experiencia de usuario." } },
+          "6": { "heading": "6. Seguridad y confidencialidad de datos", "body": { "0": "Implementamos medidas de seguridad técnicas y organizativas para proteger sus datos contra acceso no autorizado, pérdida o mal uso.", "1": "Sin embargo, ningún sistema es 100% seguro. Se recomienda usar contraseñas seguras y habilitar todas las funciones de seguridad disponibles." } },
+          "7": { "heading": "7. Proveedores de servicios terceros", "body": { "0": "Podemos compartir datos limitados con proveedores de confianza estrictamente para:" }, "bullets": { "0": "Mantenimiento y operación de la plataforma.", "1": "Análisis y monitoreo de rendimiento.", "2": "Verificación de seguridad y control de riesgos." }, "extra": { "0": "No vendemos sus datos personales a terceros." } },
+          "8": { "heading": "8. Sus derechos de privacidad", "body": { "0": "Según su jurisdicción, puede tener derecho a:" }, "bullets": { "0": "Acceder a los datos personales que tenemos sobre usted.", "1": "Solicitar corrección o eliminación de sus datos personales.", "2": "Oponerse o restringir ciertos tipos de procesamiento.", "3": "Retirar el consentimiento en cualquier momento." }, "extra": { "0": "Las solicitudes pueden realizarse a través de los canales de soporte oficiales de BT EXCHANGE." } },
+          "9": { "heading": "9. Cambios en esta política de privacidad", "body": { "0": "BT EXCHANGE se reserva el derecho de actualizar esta política en cualquier momento.", "1": "Los cambios se publicarán en esta página y serán efectivos inmediatamente." } },
+          "10": { "heading": "10. Contáctenos", "body": { "0": "Si tiene preguntas sobre esta Política de Privacidad o el manejo de sus datos, contacte a BT EXCHANGE a través de los canales de soporte oficiales." } }
+        }
+      },
+      "risk": {
+        "title": "Divulgación de riesgos y acuerdo de usuario",
+        "intro": "Lea atentamente esta Divulgación de Riesgos y Acuerdo de Usuario antes de usar BT EXCHANGE. Al acceder o usar nuestra plataforma, reconoce que entiende y acepta los siguientes términos y riesgos.",
+        "sections": {
+          "0": { "heading": "1. Aceptación del acuerdo", "bullets": { "0": "Al registrarse, iniciar sesión o usar BT EXCHANGE, confirma que ha leído, entendido y aceptado este Acuerdo de Usuario y todas las reglas aplicables.", "1": "Su uso continuado constituye la aceptación de futuras actualizaciones." } },
+          "1": { "heading": "2. Responsabilidad de seguridad de la cuenta", "bullets": { "0": "Usted es responsable de mantener la confidencialidad de sus credenciales, incluido ID y contraseña.", "1": "Todas las actividades realizadas con su cuenta se considerarán autorizadas por usted." }, "extra": { "0": "BT EXCHANGE no es responsable de pérdidas por acceso no autorizado o negligencia al asegurar su cuenta.", "1": "Se recomienda actualizar contraseñas regularmente y habilitar todas las funciones de seguridad." } },
+          "2": { "heading": "3. Modificación de términos", "bullets": { "0": "BT EXCHANGE se reserva el derecho de modificar este acuerdo en cualquier momento sin previo aviso.", "1": "Los términos revisados serán efectivos inmediatamente tras su publicación.", "2": "La Empresa se reserva el derecho final de interpretar y decidir sobre disputas." } },
+          "3": { "heading": "4. Requisito de edad legal", "bullets": { "0": "Los usuarios deben tener la edad legal según las leyes de su país o región para usar los servicios de BT EXCHANGE.", "1": "Las transacciones incompletas o no enviadas se considerarán inválidas." } },
+          "4": { "heading": "5. Riesgos técnicos y de red", "body": { "0": "Las plataformas digitales están sujetas a limitaciones técnicas. BT EXCHANGE no es responsable de pérdidas causadas por:" }, "bullets": { "0": "Interrupciones de internet o conectividad.", "1": "Fallo del dispositivo o hardware.", "2": "Cortes de energía o suministro inestable.", "3": "Retrasos, interrupciones o fuerza mayor del sistema." }, "extra": { "0": "Si un usuario se desconecta antes de confirmar una transacción, no afectará los resultados ya registrados." } },
+          "5": { "heading": "6. Divulgación de riesgos de trading y financieros", "body": { "0": "Las actividades de trading y activos digitales implican riesgos significativos. Los precios pueden fluctuar y los usuarios pueden experimentar pérdidas parciales o totales.", "1": "Antes de operar, evalúe cuidadosamente su tolerancia al riesgo y situación financiera." }, "bullets": { "0": "Opere con responsabilidad y evite el apalancamiento excesivo.", "1": "Use solo fondos que pueda permitirse perder.", "2": "El rendimiento pasado no garantiza resultados futuros." }, "extra": { "0": "BT EXCHANGE no garantiza ganancias, retornos fijos ni ausencia de pérdidas." } },
+          "6": { "heading": "7. Responsabilidad del usuario", "bullets": { "0": "Todas las decisiones de trading son tomadas independientemente por los usuarios.", "1": "Usted es responsable de ganancias, pérdidas o consecuencias legales de sus acciones.", "2": "BT EXCHANGE no será responsable de pérdidas por acciones del usuario o decisiones de inversión." } },
+          "7": { "heading": "8. Autoridad de decisión final", "bullets": { "0": "En caso de disputas, errores del sistema o violaciones, la decisión de BT EXCHANGE será final y vinculante." } },
+          "8": { "heading": "9. Descargo de responsabilidad", "body": { "0": "BT EXCHANGE se proporciona «tal cual». No garantizamos que la plataforma esté libre de interrupciones, errores o riesgos.", "1": "Al usar BT EXCHANGE, reconoce que el trading de activos digitales conlleva riesgos inherentes y acepta asumir la responsabilidad de su participación." } }
+        }
+      }
+    }
+  },
+  "copyTradeSetting": {
+    "title": "Configuración de copy trading",
+    "description": "Esta función está en desarrollo. Pronto podrás configurar aquí tus preferencias de copy trading.",
+    "comingSoon": "PRÓXIMAMENTE"
+  },
+  "comingSoonPage": {
+    "title": "Próximamente",
+    "subtitle": "Estamos creando algo que vale la pena esperar.",
+    "backToHome": "Volver al inicio"
+  }
+}
+

@@ -1,0 +1,1298 @@
+{
+  "loaderMessageModal": {
+    "processing": "प्रोसेस हो रहा है...",
+    "success": "सफल",
+    "somethingWentWrong": "कुछ गलत हो गया"
+  },
+  "tabs": {
+    "overview": "ओवरव्यू",
+    "funding": "फंडिंग",
+    "futures": "फ्यूचर्स",
+    "spot": "स्पॉट",
+    "tradfi": "ट्रैडफाई"
+  },
+  "assets": {
+    "totalValue": "कुल मूल्य (अनुमानित)",
+    "currency": "USDT",
+    "approx": "{{value}}",
+    "loading": "लोड हो रहा है...",
+    "hideBalanceAriaLabel": "बैलेंस छुपाएं",
+    "showBalanceAriaLabel": "बैलेंस दिखाएं",
+    "deposit": "जमा",
+    "withdraw": "निकासी",
+    "transfer": "ट्रांसफर",
+    "stats": {
+      "signUpQty": "कुल पंजीकरण",
+      "participateQty": "सक्रिय टीम",
+      "circulation": "कुल आय",
+      "personal": "ट्रेड आय",
+      "personalIncome": "ट्रेड आय",
+      "teamIncome": "टीम आय"
+    },
+    "cards": {
+      "gameHistoryTitle": "गेम इतिहास",
+      "gameHistorySubtitle": "मेरा गेम इतिहास",
+      "transactionTitle": "ट्रांज़ैक्शन",
+      "transactionSubtitle": "मेरा ट्रांज़ैक्शन इतिहास",
+      "depositTitle": "जमा",
+      "depositSubtitle": "मेरी जमा हिस्ट्री",
+      "withdrawTitle": "निकासी",
+      "withdrawSubtitle": "मेरी निकासी हिस्ट्री"
+    },
+    "options": {
+      "notification": "सूचनाएं",
+      "telegramChannel": "टेलीग्राम चैनल",
+      "telegramGroup": "टेलीग्राम समूह",
+      "language": "भाषा",
+      "currentLanguage": "हिंदी"
+    },
+    "serviceCenterTitle": "सेवा केंद्र",
+    "serviceCenter": {
+      "profile": "प्रोफ़ाइल",
+      "feedback": "फीडबैक",
+      "announcement": "घोषणाएँ",
+      "customerService": "कस्टमर सर्विस",
+      "beginnerGuide": "शुरुआती गाइड",
+      "aboutUs": "हमारे बारे में"
+    },
+    "listTabs": {
+      "account": "खाता",
+      "symbol": "सिंबल"
+    }
+  },
+  "common": {
+    "ok": "ठीक",
+    "cancel": "रद्द",
+    "confirm": "पुष्टि",
+    "pleaseWait": "कृपया प्रतीक्षा करें...",
+    "closeAriaLabel": "बंद करें",
+    "decreaseAriaLabel": "घटाएं",
+    "increaseAriaLabel": "बढ़ाएं"
+  },
+  "auth": {
+    "login": {
+      "title": "पासवर्ड से लॉगिन",
+      "emailTab": "ईमेल",
+      "mobileTab": "मोबाइल",
+      "emailPlaceholder": "ईमेल पता दर्ज करें",
+      "mobilePlaceholder": "मोबाइल नंबर दर्ज करें",
+      "passwordPlaceholder": "पासवर्ड दर्ज करें",
+      "signingIn": "लॉग इन हो रहा है...",
+      "confirm": "पुष्टि",
+      "support": "सहायता?",
+      "forgotPassword": "पासवर्ड भूल गए?",
+      "verifyEmailInfo": "जारी रखने के लिए ईमेल सत्यापित करें।",
+      "emailVerifiedSuccess": "ईमेल सत्यापित। लॉग इन करें।",
+      "success": "लॉगिन सफल",
+      "failed": "लॉगिन विफल। पुनः प्रयास करें।",
+      "googleLoginComingSoon": "Google लॉगिन जल्द आ रहा है",
+      "termsPrefix": "साइन अप/लॉग इन करके आप हमारी",
+      "termsOfService": "सेवा की शर्तें",
+      "and": "और",
+      "privacyPolicy": "गोपनीयता नीति",
+      "termsSuffix": "से सहमत हैं।"
+    },
+    "signup": {
+      "fullNamePlaceholder": "पूरा नाम दर्ज करें",
+      "emailPlaceholder": "ईमेल पता दर्ज करें",
+      "mobilePlaceholder": "मोबाइल नंबर दर्ज करें",
+      "passwordPlaceholder": "पासवर्ड दर्ज करें",
+      "referralPlaceholder": "रेफरल कोड भरें",
+      "referralCodeLabel": "रेफरल कोड",
+      "passwordReqLength": "8-30 अक्षर",
+      "passwordReqUpper": "कम से कम एक बड़ा अक्षर",
+      "passwordReqLower": "कम से कम एक छोटा अक्षर",
+      "passwordReqNumber": "कम से कम एक अंक",
+      "creatingAccount": "खाता बन रहा है...",
+      "confirm": "पुष्टि",
+      "googleSignupComingSoon": "Google साइनअप जल्द आ रहा है",
+      "registrationFailed": "रजिस्ट्रेशन विफल। पुनः प्रयास करें।",
+      "registrationSuccess": "रजिस्ट्रेशन सफल। सत्यापन के लिए ईमेल देखें।"
+    },
+    "forgotPassword": {
+      "emailPlaceholder": "ईमेल पता",
+      "mobilePlaceholder": "मोबाइल नंबर",
+      "verificationCodePlaceholder": "सत्यापन कोड",
+      "newPasswordPlaceholder": "नया पासवर्ड दर्ज करें",
+      "emailVerificationLabel": "ईमेल सत्यापन",
+      "newPasswordLabel": "नया पासवर्ड",
+      "sending": "भेज रहा है...",
+      "sendCode": "कोड भेजें",
+      "otpVerified": "सत्यापित। नया पासवर्ड सेट करें।",
+      "resetSuccess": "पासवर्ड रीसेट। लॉग इन करें।",
+      "codeSent": "कोड भेज दिया गया।"
+    },
+    "changePassword": {
+      "currentPasswordLabel": "वर्तमान पासवर्ड",
+      "newPasswordLabel": "नया पासवर्ड",
+      "confirmPasswordLabel": "नया पासवर्ड पुष्टि करें",
+      "updating": "अपडेट हो रहा है...",
+      "submitButton": "पासवर्ड बदलें",
+      "failed": "पासवर्ड बदलने में विफल"
+    },
+    "validation": {
+      "emailRequired": "ईमेल आवश्यक है",
+      "passwordRequired": "पासवर्ड आवश्यक है",
+      "mobileRequired": "मोबाइल नंबर आवश्यक है",
+      "emailInvalid": "वैध ईमेल पता दर्ज करें",
+      "mobileInvalid": "वैध मोबाइल नंबर दर्ज करें",
+      "passwordMinLength": "पासवर्ड कम से कम 6 अक्षर",
+      "emailMaxLength": "ईमेल 100 अक्षर से कम",
+      "fullNameRequired": "पूरा नाम आवश्यक है",
+      "referralCodeRequired": "रेफरल कोड आवश्यक है",
+      "fullNameLettersOnly": "नाम में केवल अक्षर और रिक्ति",
+      "passwordStrength": "पासवर्ड में बड़ा अक्षर, छोटा अक्षर और अंक होना चाहिए",
+      "verificationCodeRequired": "सत्यापन कोड आवश्यक है",
+      "newPasswordRequired": "नया पासवर्ड आवश्यक है",
+      "currentPasswordRequired": "वर्तमान पासवर्ड आवश्यक है",
+      "confirmPasswordRequired": "नया पासवर्ड पुष्टि करें",
+      "passwordsMustMatch": "पासवर्ड मेल खाने चाहिए"
+    }
+  },
+  "trade": {
+    "amountLabel": "राशि",
+    "durationLabel": "अवधि",
+    "confirmTradeTitle": "ट्रेड पुष्टि",
+    "confirmTradeDescription": "{{pair}} पर {{amount}} USDT से {{duration}} के लिए {{direction}}?",
+    "directionUp": "ऊपर",
+    "directionDown": "नीचे",
+    "placing": "भेज रहा है...",
+    "loading": "लोड हो रहा है...",
+    "indicatorsTooltip": "संकेतक",
+    "screenshotTooltip": "स्क्रीनशॉट"
+  },
+  "rewardHubDeposit": {
+    "networkBsc": "BSC (Binance Smart Chain)",
+    "networkEth": "ETH (Ethereum)",
+    "networkPolygon": "POLYGON"
+  },
+  "menu": {
+    "switchAccount": "खाता बदलें",
+    "recommendedFeaturesTitle": "अनुशंसित सुविधाएँ",
+    "commonFunctionsTitle": "सामान्य फ़ंक्शंस",
+    "recommended": {
+      "deposit": "जमा",
+      "trade": "ट्रेड",
+      "language": "भाषा",
+      "copy": "कॉपी",
+      "market": "मार्केट",
+      "twoFA": "2FA",
+      "couponCenter": "कूपन केंद्र",
+      "more": "और"
+    },
+    "common": {
+      "rewardsHub": "रिवॉर्ड्स हब",
+      "accountSecurity": "खाता और सुरक्षा",
+      "settings": "सेटिंग्स",
+      "network": "नेटवर्क"
+    },
+    "footerVersion": "BLOCK APP v1.0.0"
+  },
+  "bottomNav": {
+    "home": "होम",
+    "market": "मार्केट",
+    "trade": "ट्रेड",
+    "promotion": "प्रमोशन",
+    "asset": "एसेट",
+    "signupBannerText": "साइन अप करें और अभी अपने नए उपयोगकर्ता रिवॉर्ड्स प्राप्त करें!",
+    "signupCta": "साइन अप करें"
+  },
+  "bottomNavMlm": {
+    "home": "होम",
+    "team": "टीम",
+    "reporting": "रिपोर्टिंग",
+    "wallet": "वॉलेट"
+  },
+  "landing": {
+    "depositBanner": {
+      "title": "100 USDT जमा करें",
+      "subtitlePrefix": "पाएं अधिकतम ",
+      "subtitleHighlight": "50 USDT बोनस",
+      "cta": "अभी जमा करें"
+    },
+    "registerTitle": "रजिस्टर करें और पाएं",
+    "registerSubtitle": "नए उपयोगकर्ता इनाम!",
+    "auth": {
+      "login": "लॉग इन",
+      "signUp": "साइन अप"
+    },
+    "badgeNew": "नया",
+    "featureShortcuts": {
+      "rewards": "ईअर्न हब",
+      "copy": "कॉपी",
+      "referral": "रेफरल",
+      "2fa": "2FA",
+      "more": "अधिक"
+    },
+    "tabs": {
+      "favorites": "पसंदीदा",
+      "coin": "कॉइन",
+      "hot": "हॉट",
+      "gainers": "गैनर्स",
+      "losers": "लूज़र्स",
+      "volume": "वॉल्यूम"
+    },
+    "viewAll": "सभी देखें",
+    "marketTable": {
+      "tradingPairs": "ट्रेडिंग पेयर",
+      "lastPrice": "अंतिम कीमत",
+      "change24h": "24 घंटे का बदलाव",
+      "noResults": "कोई परिणाम नहीं मिला"
+    },
+    "hero": {
+      "cards": {
+        "1": {
+          "title": "वैश्विक रेफरल रिवॉर्ड इवेंट",
+          "description": "दोस्तों को आमंत्रित करें और 10% ट्रेडिंग बोनस पाएं",
+          "label": "नया"
+        },
+        "2": {
+          "title": "मिस्ट्री रिवॉर्ड्स बॉक्स",
+          "description": "स्मार्ट ट्रेड करें • बड़ा जीतें — 1,000,000 USDT",
+          "label": "नया"
+        },
+        "3": {
+          "title": "USDT डिपॉज़िट बोनस इवेंट",
+          "description": "🎁 अपने डिपॉज़िट पर 5% बोनस पाएं",
+          "label": "नया"
+        },
+        "4": {
+          "title": "Earn Hub – 1–3% दैनिक कमाई",
+          "description": "सरल सिस्टम + बोनस रिवॉर्ड्स",
+          "label": "नया"
+        }
+      }
+    },
+    "features": {
+      "1": {
+        "title": "सुरक्षा पहले",
+        "description": "ईमेल और फोन से सुरक्षित रजिस्ट्रेशन, उन्नत वेरिफिकेशन और स्मार्ट कॉन्ट्रैक्ट्स के साथ।"
+      },
+      "2": {
+        "title": "वैश्विक पहुंच",
+        "description": "बॉर्डरलेस ट्रेडिंग, दुनिया भर में सुलभ।"
+      },
+      "3": {
+        "title": "सुविधाजनक ट्रेडिंग",
+        "description": "सरल, तेज और शुरुआती के लिए अनुकूल ट्रेडिंग अनुभव।"
+      },
+      "4": {
+        "title": "फेयर और पारदर्शी",
+        "description": "बिना किसी छिपी फीस के पारदर्शी और निष्पक्ष ट्रेडिंग।"
+      },
+      "5": {
+        "title": "मानवीय सेवा",
+        "description": "हर ट्रांज़ैक्शन के लिए पर्सनलाइज़्ड सपोर्ट, हमेशा उपलब्ध।"
+      }
+    },
+    "community": {
+      "title": "वैश्विक उपयोगकर्ता समुदाय",
+      "desc1": "बढ़ते हुए स्मार्ट ट्रेडर्स के वैश्विक समुदाय से जुड़ें",
+      "desc2": "शक्तिशाली और आधुनिक ट्रेडिंग का अनुभव करें",
+      "stats": {
+        "totalUsers": "कुल उपयोगकर्ता",
+        "newUsers": "नए उपयोगकर्ता"
+      }
+    }
+  },
+  "profile": {
+    "title": "यूज़र सेंटर",
+    "loggedOut": "लॉग आउट हो गए",
+    "uid": "यूआईडी",
+    "fullName": "पूरा नाम",
+    "identityVerification": "पहचान सत्यापन",
+    "verified": "सत्यापित",
+    "unverified": "असत्यापित",
+    "twoFactorAuth": "टू‑फैक्टर ऑथेंटिकेशन",
+    "twoFactor": {
+      "enabled": "सक्रिय",
+      "disabled": "निष्क्रिय"
+    },
+    "changePassword": "पासवर्ड बदलें",
+    "switchAccount": "खाता बदलें",
+    "logoutCurrent": "वर्तमान खाते से लॉग आउट करें"
+  },
+  "twoFactor": {
+    "title": "दो-चरण प्रमाणीकरण",
+    "intro": "अपने खाते में अतिरिक्त सुरक्षा जोड़ें। सक्षम होने पर साइन इन करने या संवेदनशील कार्रवाई करने के लिए आपको अपना पासवर्ड और ऑथेंटिकेटर ऐप का कोड चाहिए होगा।",
+    "errors": {
+      "loadProfile": "प्रोफ़ाइल लोड करने में विफल",
+      "startSetupFailed": "2FA सेटअप शुरू करने में विफल",
+      "invalidCodeShort": "कृपया अपने ऑथेंटिकेटर ऐप से 6-अंकीय कोड दर्ज करें।",
+      "missingSetupData": "सेटअप डेटा गायब। कृपया सेटअप फिर से शुरू करें।",
+      "invalidCode": "अमान्य कोड। कृपया पुनः प्रयास करें।",
+      "disableCodeRequired": "अक्षम करने के लिए कृपया अपना वर्तमान 6-अंकीय 2FA कोड दर्ज करें।",
+      "disableFailed": "2FA अक्षम करने में विफल।"
+    },
+    "success": {
+      "enabled": "दो-चरण प्रमाणीकरण सफलतापूर्वक सक्षम।",
+      "disabled": "दो-चरण प्रमाणीकरण अक्षम।"
+    },
+    "status": {
+      "disabled": "स्थिति: अक्षम",
+      "enabled": "स्थिति: सक्षम"
+    },
+    "disabled": {
+      "description": "अपने खाते की सुरक्षा के लिए 2FA सक्षम करें।"
+    },
+    "enabled": {
+      "description": "दो-चरण प्रमाणीकरण आपके खाते की रक्षा कर रहा है। इसे अक्षम करने के लिए नीचे अपना वर्तमान 2FA कोड दर्ज करें।",
+      "codeLabel": "वर्तमान 6-अंकीय कोड दर्ज करें",
+      "codePlaceholder": "000000"
+    },
+    "actions": {
+      "loading": "लोड हो रहा है...",
+      "enable": "दो-चरण प्रमाणीकरण सक्षम करें",
+      "cancel": "रद्द करें",
+      "verifyEnable": "सत्यापित करें और सक्षम करें",
+      "disable": "दो-चरण प्रमाणीकरण अक्षम करें"
+    },
+    "setup": {
+      "scanTitle": "QR कोड स्कैन करें",
+      "scanDescription": "इस QR कोड को स्कैन करने के लिए ऑथेंटिकेटर ऐप (Google Authenticator, Authy, आदि) का उपयोग करें।",
+      "manualLabel": "या यह कुंजी मैन्युअल रूप से दर्ज करें:",
+      "codeLabel": "6-अंकीय कोड दर्ज करें",
+      "codePlaceholder": "000000",
+      "qrCodeAlt": "2FA QR कोड"
+    }
+  },
+  "promotion": {
+    "header": {
+      "title": "प्रमोशन"
+    },
+    "errors": {
+      "loadFailed": "प्रमोशन डेटा लोड करने में विफल"
+    },
+    "loading": "लोड हो रहा है...",
+    "totalCommission": "कुल कमीशन",
+    "yesterdayCommissionLabel": "कल का कुल कमीशन",
+    "upgradeHint": "कमीशन आय बढ़ाने के लिए अपना स्तर अपग्रेड करें",
+    "subordinateTabs": {
+      "direct": "प्रत्यक्ष अधीनस्थ",
+      "team": "टीम अधीनस्थ"
+    },
+    "subordinateStats": {
+      "registerCount": "रजिस्टर की संख्या",
+      "depositCount": "डिपॉज़िट की संख्या",
+      "depositAmount": "डिपॉज़िट राशि",
+      "firstDepositCount": "पहली डिपॉज़िट करने वालों की संख्या"
+    },
+    "downloadQrCta": "क्यूआर कोड डाउनलोड करें",
+    "menu": {
+      "Partner rewards": "पार्टनर रिवॉर्ड्स",
+      "Copy invitation code": "इनविटेशन कोड कॉपी करें",
+      "Subordinate data": "अधीनस्थ डेटा",
+      "Commission detail": "कमीशन विवरण",
+      "Invitation rules": "आमंत्रण नियम",
+      "Agent line customer service": "एजेंट लाइन कस्टमर सर्विस",
+      "Rebate ratio": "रीबेट रेशियो"
+    },
+    "data": {
+      "title": "प्रमोशन डेटा",
+      "thisWeek": "इस सप्ताह",
+      "total": "कुल कमीशन",
+      "directSubordinate": "प्रत्यक्ष अधीनस्थ",
+      "totalTeamSubordinates": "टीम में कुल अधीनस्थों की संख्या"
+    },
+    "partnerRewards": {
+      "title": "पार्टनर रिवॉर्ड्स",
+      "copySuccess": "इनविटेशन लिंक कॉपी हो गया",
+      "loadFailed": "पार्टनर रिवॉर्ड्स लोड करने में विफल",
+      "inviteFriends": "अधिकतम रिवॉर्ड्स पाने के लिए दोस्तों को आमंत्रित करें",
+      "invitationCount": "आमंत्रण संख्या",
+      "effectiveInvitationCount": "प्रभावी आमंत्रण संख्या",
+      "invitationTotalBonus": "आमंत्रण कुल बोनस",
+      "invitationRecord": "आमंत्रण रिकॉर्ड",
+      "invitationLink": "आमंत्रण लिंक",
+      "invitationRules": "आमंत्रण नियम",
+      "ruleTitle": "🎉 जमा पर 10% रेफरल बोनस पाएं",
+      "ruleInvite": "🔗 अपने दोस्तों को BT EXCHANGE पर आमंत्रित करें",
+      "ruleMinDeposit": "💵 न्यूनतम 10 USDT जमा से बोनस शुरू",
+      "ruleNoTurnover": "🎁 कोई टर्नओवर शर्त नहीं",
+      "ruleAutoCredit": "⚡ बोनस स्वचालित रूप से जमा",
+      "bonusExample": "बोनस उदाहरण:",
+      "friendDeposits": "दोस्त जमा करता है {{amount}} USDT",
+      "youGetBonus": "आपको {{bonus}} USDT बोनस मिलता है (10%)",
+      "oneDepositOneBonus": "✅ एक जमा = एक बोनस",
+      "unlimitedReferrals": "♾ असीमित रेफरल — अधिक आमंत्रित करें, अधिक कमाएं",
+      "cta": "BT EXCHANGE — 10 USDT जमा करें और 10% रेफरल बोनस पाएं।"
+    },
+    "commissionDetail": {
+      "title": "कमीशन विवरण",
+      "loadFailed": "कमीशन विवरण लोड करने में विफल",
+      "types": {
+        "all": "सभी",
+        "referral": "रेफरल",
+        "level": "स्तर",
+        "salary": "वेतन"
+      },
+      "dateFrom": "से",
+      "dateTo": "तक",
+      "settlementTitle": "सेटलमेंट सफल",
+      "settlementSubtitle": "कमीशन स्वचालित रूप से आपके बैलेंस में जमा कर दिया गया है",
+      "referralIncome": "रेफरल आय",
+      "levelIncome": "स्तर आय",
+      "salaryIncome": "वेतन आय",
+      "commissionPayout": "कमीशन भुगतान",
+      "empty": "कोई कमीशन रिकॉर्ड नहीं",
+      "rowType": "प्रकार",
+      "rowTime": "समय",
+      "rowBalance": "बैलेंस",
+      "levelLabel": "स्तर {{level}}",
+      "viewMore": "और देखें"
+    },
+    "subordinateData": {
+      "title": "अधीनस्थ डेटा",
+      "uidLabel": "UID",
+      "searchPlaceholder": "अधीनस्थ UID खोजें",
+      "loadFailed": "अधीनस्थ लोड करने में विफल",
+      "empty": "कोई अधीनस्थ नहीं मिला",
+      "copyUidSuccess": "UID कॉपी हो गया",
+      "loadMore": "और लोड करें",
+      "types": {
+        "all": "सभी",
+        "direct": "प्रत्यक्ष",
+        "team": "टीम"
+      },
+      "yes": "हाँ",
+      "no": "नहीं",
+      "summaryFields": {
+        "depositNumber": "जमा संख्या",
+        "depositAmount": "जमा राशि",
+        "numberOfBettors": "ट्रेडर्स की संख्या",
+        "totalBet": "कुल ट्रेड",
+        "firstDepositCount": "पहली बार जमा करने वालों की संख्या",
+        "firstDepositAmount": "पहली जमा राशि"
+      },
+      "subordinateFields": {
+        "level": "स्तर",
+        "depositAmount": "जमा राशि",
+        "betAmount": "दांव राशि",
+        "commission": "कमीशन",
+        "time": "समय",
+        "totalDeposited": "जमा राशि",
+        "fullName": "नाम",
+        "hasDeposited": "जमा किया है"
+      }
+    },
+    "agentService": {
+      "title": "एजेंट लाइन कस्टमर सर्विस",
+      "subtitle": "1:1 सपोर्ट के लिए हमारे ऑफिशियल टेलीग्राम अकाउंट से संपर्क करें।",
+      "description": "ऑनबोर्डिंग, प्रमोशन और अकाउंट सवालों में मदद के लिए उपलब्ध।",
+      "telegram": "Telegram",
+      "imageAlt": "एजेंट लाइन कस्टमर सर्विस",
+      "accounts": {
+        "agent": "BT GLOBAL AGENT",
+        "agency": "BT GLOBAL AGENCY"
+      }
+    },
+    "rebateRatio": {
+      "title": "रीबेट रेशियो",
+      "loadFailed": "रीबेट रेशियो लोड करने में विफल",
+      "bannerTitle": "BT EXCHANGE – कमीशन और रीबेट सिस्टम",
+      "bannerIntro": "BT Exchange पर आप सिर्फ ट्रेड नहीं करते — आप अपने नेटवर्क की ट्रेडिंग एक्टिविटी से कमीशन भी कमाते हैं।",
+      "bannerRefer": "जब आप यूजर्स को BT Exchange पर रेफर करते हैं और वे ट्रेड लगाते हैं, तो आपको उनके ट्रेडिंग फीस का एक प्रतिशत कमीशन के रूप में मिलता है।",
+      "structureTitle": "मल्टी-लेवल कमीशन स्ट्रक्चर:",
+      "empty": "कोई रीबेट रेशियो डेटा उपलब्ध नहीं",
+      "tableLevel": "स्तर",
+      "tableCommission": "कमीशन %",
+      "levelRow": "स्तर {{level}}",
+      "ctaTitle": "आपकी टीम जितनी बड़ी, पैसिव इनकम की संभावना उतनी अधिक।",
+      "bullet1": "कोई अतिरिक्त निवेश की जरूरत नहीं",
+      "bullet2": "कमीशन स्वचालित रूप से जमा",
+      "bullet3": "पूरी तरह पारदर्शी सिस्टम",
+      "bullet4": "रीयल-टाइम अर्निंग्स ट्रैकिंग",
+      "ctaTagline": "स्मार्ट ट्रेड करें। अपना नेटवर्क बनाएं। अधिक कमाएं — BT EXCHANGE के साथ।"
+    },
+    "rulesPage": {
+      "title": "आमंत्रण नियम",
+      "sectionTitle": "आमंत्रण नियम",
+      "point1": "अपना इनविटेशन कोड या रेफरल लिंक दोस्तों और परिवार के साथ साझा करें।",
+      "point2": "जब वे आपके कोड से रजिस्टर करते हैं, तो वे आपके प्रत्यक्ष अधीनस्थ बन जाते हैं।",
+      "point3": "जब आपके प्रत्यक्ष अधीनस्थ जमा करते हैं तो रेफरल बोनस कमाएं।",
+      "point4": "जब आपकी टीम (6 स्तर तक) ट्रेड लगाती है तो लेवल इनकम कमाएं।",
+      "point5": "कमीशन आय बढ़ाने के लिए अपना स्तर अपग्रेड करें।",
+      "point6": "इनविटेशन कोड प्रमोशन पेज से कॉपी किया जा सकता है।",
+      "note": "विस्तृत नियम और शर्तों के लिए सपोर्ट से संपर्क करें।"
+    }
+  },
+  "rewardHub": {
+    "home": {
+      "searchPlaceholder": "खोजें",
+      "totalAssetsLabel": "कुल एसेट (USDT)",
+      "loading": "लोड हो रहा है...",
+      "totalIncomeLabel": "कुल आय: ${{value}}",
+      "depositCta": "डिपॉज़िट",
+      "quickActions": {
+        "hot": "HOT",
+        "main": "मुख्य",
+        "deposit": "डिपॉज़िट",
+        "withdraw": "विदड्रॉ",
+        "trade": "ट्रेड",
+        "referral": "रेफरल"
+      },
+      "referralCard": {
+        "alt": "रेफरल",
+        "title": "रेफरल प्रोग्राम",
+        "subtitle": "FUNN कमाएँ"
+      },
+      "marketsTitle": "मार्केट",
+      "marketError": "मार्केट डेटा लोड करने में विफल",
+      "volume24h": "24h वॉल्यूम",
+      "marketCap": "मार्केट कैप",
+      "high24h": "24h हाई",
+      "low24h": "24h लो"
+    },
+    "invitePoster": {
+      "title": "आमंत्रित करें",
+      "backAriaLabel": "वापस",
+      "swipeHint": "अपनी पसंदीदा पोस्टर चुनने के लिए बाएं - दाएं स्वाइप करें",
+      "posterBrandExchange": "एक्सचेंज",
+      "posterReferral": "रेफरल",
+      "scanToRegister": "रजिस्टर करने के लिए स्कैन करें",
+      "loadingLink": "लोड हो रहा है...",
+      "downloadFilename": "invite-poster.png",
+      "fairJustice": "निष्पक्ष और न्यायसंगत",
+      "openTransparent": "खुला और पारदर्शी",
+      "fullOddsBonusRate": "पूर्ण ऑड्स बोनस दर",
+      "financialSecurity": "वित्तीय सुरक्षा",
+      "quickWithdrawal": "त्वरित निकासी",
+      "permanentCommission": "स्थायी कमीशन {{percent}}% तक",
+      "qrAlt": "रेफरल QR",
+      "inviteIncomeLineBefore": "दोस्तों को आमंत्रित करें आय ",
+      "inviteIncomeLineAfter": " कमीशन",
+      "downloadPoster": "QR कोड डाउनलोड करें",
+      "preparing": "तैयार हो रहा है…",
+      "copyLink": "आमंत्रण लिंक कॉपी करें",
+      "copied": "कॉपी हो गया!",
+      "snackbar": {
+        "linkCopied": "आमंत्रण लिंक कॉपी हो गया",
+        "copyFailed": "कॉपी नहीं हो सका; लिंक अलर्ट में दिखाया गया",
+        "posterNotReady": "पोस्टर तैयार नहीं",
+        "qrNotReady": "QR कोड अभी तैयार नहीं",
+        "posterDownloaded": "पोस्टर डाउनलोड हो गया",
+        "downloadFailed": "डाउनलोड विफल"
+      }
+    },
+    "team": {
+      "teamStatsTitle": "टीम स्टैट्स",
+      "referral": "रेफरल",
+      "group": "ग्रुप",
+      "rankStatus": "रैंक स्टेटस",
+      "directReferrals": "डायरेक्ट रेफरल",
+      "noDirectReferralsYet": "अभी तक कोई डायरेक्ट रेफरल नहीं",
+      "uidLabel": "UID:",
+      "avatarAlt": "अवतार",
+      "level": "स्तर:",
+      "depositAmount": "जमा राशि:",
+      "tradeAmount": "ट्रेड राशि:",
+      "commission": "कमीशन:",
+      "time": "समय:"
+    },
+    "reporting": {
+      "title": "रिपोर्टिंग",
+      "subtitle": "अपनी आय रिपोर्ट देखें",
+      "reportTypeLabel": "रिपोर्ट प्रकार",
+      "startDate": "शुरुआत की तारीख",
+      "endDate": "अंतिम तारीख",
+      "loading": "रिपोर्ट लोड हो रही हैं...",
+      "noData": "कोई डेटा नहीं",
+      "type": {
+        "all": "सभी",
+        "LEVEL": "लेवल आय",
+        "RANK": "रैंक आय",
+        "ROI": "ROI",
+        "other": "आय"
+      },
+      "pagination": {
+        "previous": "पिछला",
+        "next": "अगला",
+        "pageOf": "पृष्ठ {{current}} / {{total}}"
+      }
+    },
+    "deposit": {
+      "title": "डिपॉज़िट",
+      "selectNetwork": "नेटवर्क चुनें",
+      "depositAddressLabel": "डिपॉज़िट एड्रेस",
+      "qrAlt": "डिपॉज़िट एड्रेस QR कोड",
+      "networkNote": "यह एड्रेस केवल {{chain}} नेटवर्क को सपोर्ट करता है",
+      "addressLoading": "लोड हो रहा है...",
+      "tipsTitle": "महत्वपूर्ण",
+      "tips": {
+        "min": "न्यूनतम डिपॉज़िट: {{amount}} {{currency}}",
+        "confirmations": "डिपॉज़िट कन्फर्मेशन: 2 नेटवर्क कन्फर्मेशन",
+        "assetWarning": "इस एड्रेस पर {{chain}} पर {{currency}} के अलावा अन्य एसेट न भेजें, वरना वे खो सकते हैं।",
+        "security": "अपने डिवाइस को सुरक्षित रखें ताकि किसी भी तरह की छेड़छाड़ या लीक से बचा जा सके।"
+      },
+      "shareButton": "एड्रेस शेयर करें",
+      "verifyCta": "ट्रांज़ैक्शन सत्यापित करें",
+      "shareTitle": "{{chain}} डिपॉज़िट एड्रेस",
+      "shareText": "इस एड्रेस पर {{chain}} डिपॉज़िट करें:\n{{address}}",
+      "errors": {
+        "fetchFailed": "डिपॉज़िट एड्रेस प्राप्त करने में विफल"
+      }
+    },
+    "verifyDeposit": {
+      "title": "डिपॉज़िट सत्यापन",
+      "backAriaLabel": "वापस",
+      "networkLabel": "नेटवर्क",
+      "txHashLabel": "ट्रांज़ैक्शन हैश",
+      "txHashPlaceholder": "0x...",
+      "help": "अपना डिपॉज़िट सत्यापित करने के लिए ट्रांज़ैक्शन हैश पेस्ट करें।",
+      "verifyButton": "ट्रांज़ैक्शन सत्यापित करें",
+      "verifiedTitle": "सत्यापन अनुरोध किया गया",
+      "viewExplorer": "एक्सप्लोरर पर देखें",
+      "goToHistory": "डिपॉज़िट इतिहास",
+      "success": "ट्रांज़ैक्शन सत्यापन के लिए सबमिट किया गया।",
+      "errors": {
+        "invalidInput": "कृपया वैध हैश दर्ज करें और नेटवर्क चुनें।",
+        "failed": "सत्यापन विफल। कृपया हैश जाँचकर पुनः प्रयास करें।"
+      }
+    },
+    "withdraw": {
+      "title": "निकासी",
+      "backAriaLabel": "वापस",
+      "historyAriaLabel": "निकासी इतिहास",
+      "withdrawableBalance": "निकासी योग्य बैलेंस",
+      "amountLabel": "राशि (USDT)",
+      "max": "अधिकतम",
+      "addressLabel": "निकासी पता (USDT वॉलेट)",
+      "addressPlaceholder": "0x...",
+      "networkLabel": "नेटवर्क",
+      "chains": {
+        "BSC": "BSC (Binance Smart Chain)",
+        "ETH": "ETH (Ethereum)",
+        "POLYGON": "POLYGON"
+      },
+      "twoFactorLabel": "2FA कोड",
+      "twoFactorPlaceholder": "000000",
+      "notice": "निकासी ब्लॉकचेन पर भेजी जाती है। सुनिश्चित करें कि पता और नेटवर्क आपके USDT वॉलेट से मेल खाते हों। जमा करने से पहले दोबारा जाँच करें।",
+      "submitButton": "निकासी जमा करें",
+      "errors": {
+        "loadFailed": "बैलेंस लोड करने में विफल",
+        "invalidAmount": "कृपया वैध राशि दर्ज करें।",
+        "amountExceeded": "राशि आपके निकासी योग्य बैलेंस से अधिक नहीं हो सकती।",
+        "invalidAddress": "कृपया वैध वॉलेट पता दर्ज करें।",
+        "twoFactorRequired": "कृपया अपना 2FA कोड दर्ज करें।",
+        "failed": "निकासी विफल। कृपया पुनः प्रयास करें।"
+      },
+      "success": {
+        "default": "निकासी सफलतापूर्वक संसाधित।"
+      }
+    },
+    "profile": {
+      "title": "यूज़र सेंटर",
+      "loggedOut": "लॉग आउट हो गया",
+      "rows": {
+        "uid": "UID",
+        "fullName": "पूरा नाम",
+        "identityVerification": "पहचान सत्यापन",
+        "identityVerified": "सत्यापित",
+        "identityUnverified": "असत्यापित",
+        "twoFactor": "टू‑फैक्टर ऑथेंटिकेशन",
+        "twoFactorEnabled": "सक्रिय",
+        "twoFactorDisabled": "निष्क्रिय",
+        "changePassword": "पासवर्ड बदलें",
+        "switchAccount": "अकाउंट बदलें",
+        "logout": "वर्तमान अकाउंट से लॉग आउट करें"
+      }
+    }
+  },
+  "notificationsPage": {
+    "title": "नोटिफिकेशन",
+    "hero": {
+      "title": "अपडेट्स और घोषणाएँ",
+      "subtitle": "प्लेटफ़ॉर्म की महत्वपूर्ण खबरें, मेंटेनेंस विंडो, और सर्विस संदेश।"
+    },
+    "errors": {
+      "loadFailed": "नोटिफिकेशन लोड करने में विफल"
+    },
+    "actions": {
+      "retry": "फिर से कोशिश करें",
+      "viewDetails": "विवरण देखें",
+      "openLinkAria": "लिंक खोलें"
+    },
+    "empty": {
+      "title": "अभी कोई नोटिफिकेशन नहीं",
+      "subtitle": "महत्वपूर्ण अपडेट्स और घोषणाएँ यहाँ दिखेंगी।"
+    },
+    "pastTitle": "पिछले नोटिफिकेशन",
+    "fallbackTitle": "नोटिफिकेशन",
+    "date": {
+      "today": "आज",
+      "yesterday": "कल"
+    }
+  },
+  "deposit": {
+    "header": {
+      "title": "जमा"
+    },
+    "selectCoinLabel": "सिक्का चुनें",
+    "addressLabel": "जमा पता",
+    "onlySupport": "केवल {{chain}} समर्थन करता है",
+    "loading": "लोड हो रहा है...",
+    "tipsTitle": "सुझाव",
+    "tips": {
+      "minimum": "न्यूनतम जमा: 1 USDT",
+      "confirmations": "जमा पुष्टि: 2 नेटवर्क पुष्टि",
+      "onlyThisAsset": "कृपया उपरोक्त पते पर {{chain}} के अलावा अन्य एसेट जमा न करें, अन्यथा इससे एसेट हानि हो सकती है।",
+      "security": "कृपया अपने मोबाइल उपकरणों की सुरक्षा सुनिश्चित करें ताकि जानकारी को छेड़छाड़ या लीक होने से रोका जा सके"
+    },
+    "shareCta": "पता साझा करें",
+    "share": {
+      "title": "{{chain}} जमा पता",
+      "text": "इस पते पर {{chain}} जमा करें:\n{{address}}"
+    },
+    "errors": {
+      "fetchFailed": "जमा पता प्राप्त करने में विफल"
+    },
+    "backAriaLabel": "वापस",
+    "qrCodeAlt": "QR कोड",
+    "chains": {
+      "BSC": {
+        "label": "BSC (Binance Smart Chain)"
+      },
+      "ETH": {
+        "label": "ETH (Ethereum)"
+      },
+      "POLYGON": {
+        "label": "POLYGON"
+      }
+    }
+  },
+  "depositHistory": {
+    "title": "जमा इतिहास",
+    "errors": {
+      "fetchFailed": "जमा इतिहास प्राप्त करने में विफल"
+    },
+    "actions": {
+      "retry": "फिर से कोशिश करें"
+    },
+    "empty": {
+      "title": "कोई जमा इतिहास नहीं",
+      "description": "आपकी जमा राशियाँ पुष्टि होने के बाद यहाँ दिखाई देंगी"
+    },
+    "card": {
+      "amount": "राशि",
+      "network": "नेटवर्क",
+      "date": "तारीख",
+      "txHash": "ट्रांज़ैक्शन हैश",
+      "viewOnExplorer": "एक्सप्लोरर पर देखें"
+    }
+  },
+  "gameHistory": {
+    "title": "ट्रेड इतिहास",
+    "back": "वापस",
+    "refresh": "रीफ्रेश करें",
+    "loadingShort": "लोड हो रहा है...",
+    "currencyUsdt": "USDT",
+    "summary": {
+      "totalPnl": "कुल PnL",
+      "today": "आज",
+      "yesterday": "कल",
+      "monthly": "मासिक",
+      "all": "सभी",
+      "totalProfit": "कुल लाभ",
+      "totalLoss": "कुल नुकसान",
+      "contracts": "कॉन्ट्रैक्ट",
+      "profitableContracts": "लाभदायक कॉन्ट्रैक्ट",
+      "contractAmount": "कॉन्ट्रैक्ट राशि",
+      "closedPositions": "बंद पोजीशन"
+    },
+    "notLoggedIn": {
+      "title": "अपना ट्रेड इतिहास देखने के लिए कनेक्ट करें",
+      "subtitle": "अपनी पूरी हुई ट्रेड्स की सूची देखने के लिए लॉग इन करें।"
+    },
+    "filters": {
+      "status": "स्थिति",
+      "statusAll": "सभी",
+      "statusWin": "जीत",
+      "statusLose": "हार",
+      "pairPlaceholder": "पेयर (जैसे BTC-USD)",
+      "apply": "लागू करें"
+    },
+    "loading": "ट्रेड इतिहास लोड हो रहा है...",
+    "empty": {
+      "title": "अभी तक कोई ट्रेड इतिहास नहीं",
+      "subtitle": "आपके ट्रेड पूरे होने के बाद यहाँ दिखाई देंगे।"
+    },
+    "pagination": {
+      "previous": "पिछला",
+      "page": "पृष्ठ {{page}}",
+      "next": "अगला"
+    },
+    "table": {
+      "Time": "समय",
+      "Pair": "पेयर",
+      "Direction": "दिशा",
+      "Amount": "राशि (USDT)",
+      "PnlRate": "PnL दर",
+      "EntryPrice": "एंट्री कीमत",
+      "OpenTime": "खुलने का समय",
+      "RemainingTime": "शेष समय",
+      "CloseTime": "बंद होने का समय",
+      "Entry": "एंट्री कीमत",
+      "Exit": "बंद कीमत",
+      "StatusLabel": "स्थिति",
+      "StatusOpen": "खुला",
+      "StatusWin": "जीत",
+      "StatusLose": "हार",
+      "Payout": "पेआउट"
+    }
+  },
+  "transactionHistory": {
+    "title": "ट्रांज़ैक्शन इतिहास",
+    "errors": {
+      "fetchFailed": "ट्रांज़ैक्शन इतिहास लोड करने में विफल"
+    },
+    "filters": {
+      "pairPlaceholder": "पेयर (जैसे BTC-USD)",
+      "type": "प्रकार",
+      "status": "स्थिति",
+      "chain": "चेन",
+      "startDate": "शुरुआत की तारीख",
+      "endDate": "अंतिम तारीख",
+      "apply": "लागू करें",
+      "sort": "सॉर्ट",
+      "sortNewest": "नवीनतम",
+      "sortOldest": "सबसे पुराना",
+      "sortAmountHigh": "राशि अधिक से कम",
+      "sortAmountLow": "राशि कम से अधिक",
+      "selectType": "प्रकार चुनें",
+      "typeOption": {
+        "all": "सभी",
+        "DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE": "सभी",
+        "DEPOSIT": "जमा",
+        "WITHDRAWAL": "निकासी",
+        "WITHDRAW_WINNINGS": "विनिंग्स निकासी",
+        "WITHDRAW_WORKING": "वर्किंग निकासी",
+        "TRADE": "ट्रेड",
+        "REFERRAL_BONUS": "रेफरल बोनस",
+        "LEVEL_INCOME": "लेवल आय",
+        "SALARY_INCOME": "सैलरी आय"
+      },
+      "statusOption": {
+        "all": "सभी स्थिति",
+        "REQUESTED": "अनुरोधित",
+        "SENT": "भेजा गया",
+        "PENDING": "लंबित",
+        "CONFIRMED": "पुष्टि की गई",
+        "SUCCESS": "सफल",
+        "FAILED": "असफल",
+        "OPEN": "खुला",
+        "WIN": "जीत",
+        "LOSS": "हार"
+      },
+      "chainOption": {
+        "all": "सभी चेन",
+        "BSC": "BSC",
+        "ETH": "ETH",
+        "POLYGON": "POLYGON"
+      }
+    },
+    "empty": {
+      "title": "अभी तक कोई ट्रांज़ैक्शन नहीं",
+      "subtitle": "आपका संयुक्त ट्रांज़ैक्शन इतिहास यहाँ दिखाई देगा।"
+    },
+    "refreshAriaLabel": "रीफ्रेश करें",
+    "pagination": {
+      "previous": "पिछला",
+      "summary": "पृष्ठ {{page}} / {{totalPages}} (कुल {{total}})",
+      "next": "अगला"
+    },
+    "card": {
+      "detail": "विवरण",
+      "time": "समय",
+      "balance": "बैलेंस",
+      "salary": "वेतन",
+      "remarks": "टिप्पणियाँ",
+      "noRemark": "कोई टिप्पणी नहीं",
+      "entryExit": "एंट्री {{entry}} \u2192 एग्ज़िट {{exit}}",
+      "payout": "पेआउट",
+      "gross": "कुल (ग्रॉस)",
+      "fee": "शुल्क",
+      "txPrefix": "Tx:",
+      "direction": {
+        "UP": "बढ़त",
+        "DOWN": "गिरावट",
+        "BUY": "खरीद",
+        "SELL": "बिक्री"
+      }
+    }
+  },
+  "withdraw": {
+    "tabs": {
+      "withdraw": "निकासी",
+      "history": "इतिहास"
+    },
+    "errors": {
+      "winningsLocked": "आपकी विनिंग्स अभी अनलॉक नहीं हुई हैं। कृपया अपना ट्रेड वॉल्यूम बढ़ाएं।",
+      "workingLocked": "आप कार्य आय निकालने के लिए पात्र नहीं हैं। अनलॉक करने के लिए कम से कम $2 का ट्रेड करें।",
+      "invalidAmount": "कृपया एक मान्य निकासी राशि दर्ज करें।",
+      "amountTooHigh": "राशि आपके उपलब्ध बैलेंस से अधिक नहीं हो सकती।",
+      "invalidAddress": "कृपया एक मान्य वॉलेट पता दर्ज करें।",
+      "selectNetwork": "कृपया नेटवर्क चुनें।",
+      "invalid2fa": "कृपया अपने ऑथेंटिकेटर ऐप से 6-अंकों का कोड दर्ज करें।"
+    },
+    "types": {
+      "winnings": {
+        "title": "विनिंग्स निकालें",
+        "menuLabel": "विनिंग्स निकालें",
+        "description": "ट्रेडिंग से हुई वे कमाई जो निकासी के लिए अनलॉक हो चुकी हैं।"
+      },
+      "working": {
+        "title": "वर्किंग आय निकालें",
+        "menuLabel": "वर्किंग आय निकालें",
+        "description": "रेफरल, लेवल और सैलरी आय जो निकासी के लिए उपलब्ध है।"
+      }
+    },
+    "status": {
+      "winningsUnlocked": "विनिंग्स अनलॉक",
+      "winningsLocked": "विनिंग्स लॉक",
+      "workingUnlocked": "वर्किंग आय अनलॉक",
+      "workingLocked": "वर्किंग आय लॉक"
+    },
+    "available": "उपलब्ध: {{amount}} USDT",
+    "form": {
+      "amountLabel": "राशि (USDT)",
+      "max": "अधिकतम",
+      "walletLabel": "USDT वॉलेट पता",
+      "networkLabel": "नेटवर्क",
+      "comingSoon": " (जल्द आ रहा है)",
+      "twofaLabel": "2FA कोड",
+      "twofaPlaceholder": "000000",
+      "twofaHelp": "अपने ऑथेंटिकेटर ऐप से 6-अंकों का कोड दर्ज करें।"
+    },
+    "notice": {
+      "processing": "निकासी रिक्वेस्ट एडमिन द्वारा मैन्युअल रूप से प्रोसेस की जाती हैं। आपकी बैलेंस तुरंत डेबिट हो जाएगी और स्टेटस प्रोसेस के साथ अपडेट होगा।"
+    },
+    "actions": {
+      "submit": "निकासी सबमिट करें"
+    },
+    "overview": {
+      "title": "निकासी ओवरव्यू",
+      "withdrawableWinnings": "निकासी योग्य विनिंग्स",
+      "winningsStatusUnlocked": "अनलॉक",
+      "winningsStatusLocked": "डिपॉज़िट वॉल्यूम तक लॉक",
+      "workingIncome": "वर्किंग आय",
+      "workingStatusEligible": "पात्र",
+      "workingStatusLocked": "अनलॉक करने के लिए कम से कम $2 का ट्रेड करें",
+      "hint": "जब आपकी कुल ट्रेड वॉल्यूम आपके कुल डिपॉज़िट के बराबर या उससे अधिक हो जाती है, तो विनिंग्स स्वतः अनलॉक हो जाती हैं। वर्किंग आय तब पात्र होती है जब आपने कम से कम $2 का ट्रेड किया हो।"
+    },
+    "history": {
+      "title": "निकासी इतिहास",
+      "emptyTitle": "कोई निकासी इतिहास नहीं मिला",
+      "emptyDescription": "आपकी निकासी रिक्वेस्ट यहाँ सबमिट करने के बाद दिखाई देंगी।",
+      "amount": "राशि",
+      "type": "प्रकार",
+      "status": "स्टेटस",
+      "date": "तारीख",
+      "viewOnExplorer": "ब्लॉकचेन एक्सप्लोरर पर देखें",
+      "walletLabel": "वॉलेट:",
+      "networkLabel": "नेटवर्क:",
+      "typeWinnings": "विनिंग्स",
+      "typeWorking": "वर्किंग आय"
+    },
+    "fetchHistoryFailed": "निकासी इतिहास लोड करने में विफल",
+    "submitSuccess": "निकासी अनुरोध सफलतापूर्वक सबमिट हो गया।",
+    "submitFailed": "निकासी सबमिट करने में असमर्थ। विवरण जांचें और पुनः प्रयास करें।"
+  },
+  "feedback": {
+    "title": "फीडबैक",
+    "imageAlt": "फीडबैक चित्रण",
+    "errors": {
+      "empty": "कृपया सबमिट करने से पहले अपनी समस्या या सुझाव का विवरण लिखें।"
+    },
+    "form": {
+      "placeholder": "फीडबैक में आपका स्वागत है, कृपया समस्या का विस्तार से वर्णन करें।\nयदि संभव हो तो स्क्रीनशॉट भी जोड़ें ताकि हम आपका फीडबैक जल्दी प्रोसेस कर सकें।"
+    },
+    "helper": {
+      "title": "उपयोगी फीडबैक भेजें",
+      "subtitle": "मिस्ट्री रिवॉर्ड्स जीतने का मौका"
+    },
+    "actions": {
+      "submit": "सबमिट करें"
+    }
+  },
+  "tradeTabs": {
+    "tabs": {
+      "liveTrades": "ओपन पोज़िशन ({{count}})",
+      "tradeHistory": "क्लोज़्ड पोज़िशन ({{count}})"
+    },
+    "states": {
+      "liveNotLoggedIn": {
+        "title": "अपने लाइव ट्रेड देखने के लिए कनेक्ट करें",
+        "subtitle": "रियल‑टाइम अपडेट देखने के लिए लॉग इन करें और ट्रेड करें।"
+      },
+      "liveLoading": "लाइव ट्रेड लोड हो रहे हैं...",
+      "liveEmpty": {
+        "title": "कोई लाइव ट्रेड नहीं",
+        "subtitle": "जब आप नया ट्रेड शुरू करेंगे तो वह यहाँ दिखाई देगा।"
+      },
+      "historyNotLoggedIn": {
+        "title": "अपना ट्रेड इतिहास देखने के लिए कनेक्ट करें",
+        "subtitle": "अपनी पूरी हुई ट्रेड्स की सूची देखने के लिए लॉग इन करें।"
+      },
+      "historyLoading": "ट्रेड इतिहास लोड हो रहा है...",
+      "historyEmpty": {
+        "title": "अभी तक कोई ट्रेड इतिहास नहीं",
+        "subtitle": "आपके ट्रेड पूरे होने के बाद यहाँ दिखाई देंगे।"
+      }
+    }
+  },
+  "tradeTop": {
+    "pageTitle": "ट्रेड ज़ोन",
+    "backAriaLabel": "वापस",
+    "upLabel": "ऊपर",
+    "downLabel": "नीचे",
+    "favoriteAriaLabel": "पसंदीदा",
+    "guideAriaLabel": "ट्रेड गाइड",
+    "favoriteError": "पसंदीदा पेयर जोड़ने में विफल",
+    "pairMenu": {
+      "title": "पेयर"
+    }
+  },
+  "tradeGuide": {
+    "title": "ट्रेड ज़ोन गाइड",
+    "heroTitle": "कैसे ट्रेड करें",
+    "heroSubtitle": "प्रिडिक्शन ट्रेड लगाने और अपनी पोजीशन प्रबंधित करने के लिए इन चरणों का पालन करें।",
+    "tradeNow": "अभी ट्रेड करें",
+    "items": {
+      "expiry": {
+        "label": "प्रिडिक्शन ट्रेड एक्सपायरी",
+        "description": "अपने प्रिडिक्शन फ्यूचर्स ट्रेड के लिए एक्सपायरी समय अवधि सेट करें।"
+      },
+      "investment": {
+        "label": "निवेश राशि",
+        "description": "अनुमानित भुगतान और लाभ देखने के लिए जितनी राशि ट्रेड करना चाहते हैं वह दर्ज करें।"
+      },
+      "direction": {
+        "label": "दिशा चुनें",
+        "description": "कीमत बढ़ेगी या गिरेगी की अपनी भविष्यवाणी के आधार पर अप या डाउन चुनें।"
+      },
+      "positions": {
+        "label": "पोजीशन देखें",
+        "description": "ऑर्डर सफलतापूर्वक लगाने के बाद, आप ओपन पोजीशन में अपनी पोजीशन देख सकते हैं। ट्रेड एक्सपायर होने के बाद, परिणाम देखने के लिए क्लोज्ड पोजीशन पर जाएं।"
+      }
+    }
+  },
+  "tradingPane": {
+    "timeUnit": "समय इकाई",
+    "amount": "राशि",
+    "avail": "उपलब्ध",
+    "loading": "लोड हो रहा है...",
+    "upPayout": "ऊपर भुगतान",
+    "downPayout": "नीचे भुगतान",
+    "up": "ऊपर",
+    "down": "नीचे",
+    "balance": "बैलेंस",
+    "quantity": "मात्रा",
+    "agreeRules": "मैं सहमत हूं",
+    "presaleRules": "《प्री-सेल नियम》",
+    "cancel": "रद्द करें",
+    "placing": "ऑर्डर लगा रहा है...",
+    "totalAmount": "कुल राशि {{value}} {{currency}}",
+    "settlementAmount": "निपटान राशि:",
+    "pleaseLogin": "ट्रेड लगाने के लिए लॉग इन करें।",
+    "enterAmountGreaterThanZero": "शून्य से अधिक राशि दर्ज करें।",
+    "tradePlaced": "ट्रेड लगाया गया",
+    "failedToPlaceTrade": "ट्रेड लगाने में विफल",
+    "multiplier": "X{{mult}}"
+  },
+  "announcement": {
+    "title": "घोषणा",
+    "hero": {
+      "title": "BT EXCHANGE सेंटर",
+      "subtitle": "नवीनतम प्लेटफॉर्म घोषणाओं, जमा टिप्स और निकासी सूचनाओं के साथ अपडेट रहें।"
+    },
+    "items": {
+      "welcome": {
+        "title": "BT EXCHANGE में आपका स्वागत है",
+        "subtitle": "",
+        "points": [
+          "पारदर्शी और कुशल सिस्टम के साथ सुगम ट्रेडिंग का आनंद लें।",
+          "सभी उपकरणों पर स्वच्छ, उपयोगकर्ता-अनुकूल इंटरफ़ेस का अनुभव करें।",
+          "नवीनतम अपडेट और नई सुविधाओं के लिए बने रहें।",
+          "BT EXCHANGE चुनने के लिए धन्यवाद।"
+        ]
+      },
+      "deposit": {
+        "title": "जमा घोषणा",
+        "subtitle": "24/7 तेज़, सुरक्षित जमा।",
+        "points": [
+          "BT EXCHANGE पर जमा जल्दी और सुरक्षित रूप से प्रोसेस की जाती हैं।",
+          "जमा करने से पहले हमेशा अपना नेटवर्क और पता दोबारा जांचें।",
+          "यदि आपकी जमा में देरी होती है, तो पूर्ण ट्रांज़ैक्शन विवरण के साथ सपोर्ट से संपर्क करें।",
+          "आपके फंड हमारी सुरक्षा और रिस्क-कंट्रोल सिस्टम द्वारा सुरक्षित हैं।"
+        ]
+      },
+      "withdrawal": {
+        "title": "इंस्टैंट निकासी घोषणा",
+        "subtitle": "अनुमोदन के बाद तेज़ निकासी।",
+        "points": [
+          "अनुमोदन के बाद निकासी तुरंत प्रोसेस की जाती है।",
+          "समस्याओं से बचने के लिए कृपया सभी निकासी विवरण सही सुनिश्चित करें।",
+          "नेटवर्क कंजेशन या तीसरे पक्ष की देरी आगमन समय को प्रभावित कर सकती है।",
+          "BT EXCHANGE के साथ तेज़ और विश्वसनीय निकासी का आनंद लें।"
+        ]
+      }
+    },
+    "footer": "उपरोक्त घोषणाएँ केवल संदर्भ के लिए हैं। अंतिम विवरण के लिए BT EXCHANGE पर नवीनतम जानकारी देखें।"
+  },
+  "about": {
+    "headerTitle": "हमारे बारे में",
+    "hero": {
+      "title": "BT EXCHANGE लीगल सेंटर",
+      "description": "हमारी प्राइवेसी, गोपनीयता और रिस्क से जुड़ी शर्तों को एक ही जगह देखें। जानकारी में रहें और भरोसे के साथ ट्रेड करें।"
+    },
+    "options": {
+      "privacy": {
+        "title": "प्राइवेसी पॉलिसी और गोपनीयता समझौता"
+      },
+      "risk": {
+        "title": "रिस्क डिस्क्लोज़र और यूज़र एग्रीमेंट"
+      }
+    },
+    "documents": {
+      "privacy": {
+        "title": "प्राइवेसी पॉलिसी और गोपनीयता समझौता",
+        "intro": "यह प्राइवेसी पॉलिसी बताती है कि BT EXCHANGE (\"हम\", \"हमारा\") हमारी वेबसाइट, ऐप या सेवाओं का उपयोग करते समय आपकी जानकारी कैसे एकत्र, उपयोग, संग्रह और सुरक्षित करता है।",
+        "sections": {
+          "0": { "heading": "1. आपकी प्राइवेसी के प्रति हमारी प्रतिबद्धता", "body": { "0": "हम आपकी प्राइवेसी की रक्षा और आपके डेटा के प्रबंधन में पारदर्शिता सुनिश्चित करने के लिए प्रतिबद्ध हैं।" } },
+          "1": { "heading": "2. व्याख्या और परिभाषाएं", "body": { "0": "बड़े अक्षरों वाले शब्दों के निम्नलिखित शर्तों के तहत परिभाषित अर्थ हैं। ये परिभाषाएं एकवचन या बहुवचन दोनों पर लागू होती हैं।" }, "bullets": { "0": "यूज़र/आप – सेवा का उपयोग करने वाला व्यक्ति।", "1": "कंपनी – BT EXCHANGE।", "2": "खाता – हमारी सेवा तक पहुंचने के लिए बनाया गया अनोखा खाता।", "3": "वेबसाइट – आधिकारिक BT EXCHANGE प्लेटफॉर्म।", "4": "सेवा – BT EXCHANGE द्वारा ट्रेडिंग, निवेश और संबंधित सेवाएं।", "5": "देश – लागू कानूनों के अनुसार परिचालन क्षेत्राधिकार।", "6": "सेवा प्रदाता – कंपनी की ओर से डेटा प्रोसेस करने वाला कोई तीसरा पक्ष।", "7": "व्यक्तिगत डेटा – व्यक्ति की पहचान करने वाली कोई भी जानकारी।", "8": "उपयोग डेटा – सेवा उपयोग के दौरान स्वचालित रूप से एकत्र डेटा।" } },
+          "2": { "heading": "3. हम जो डेटा एकत्र करते हैं", "subheading": "3.1 व्यक्तिगत डेटा", "body": { "0": "हमारी सेवा उपयोग करते समय हम आपसे कुछ व्यक्तिगत जानकारी मांग सकते हैं, जिसमें शामिल है:" }, "bullets": { "0": "ईमेल पता", "1": "पूरा नाम", "2": "फोन नंबर", "3": "देश या शहर", "4": "खाता लॉगिन विवरण" } },
+          "3": { "subheading": "3.2 उपयोग डेटा", "body": { "0": "उपयोग डेटा स्वचालित रूप से एकत्र किया जाता है और शामिल हो सकता है:" }, "bullets": { "0": "IP पता", "1": "डिवाइस प्रकार और अद्वितीय ID", "2": "ब्राउज़र प्रकार और संस्करण", "3": "देखे गए पेज, समय और एक्टिविटी लॉग" }, "extra": { "0": "मोबाइल से BT EXCHANGE एक्सेस करते समय, सुरक्षा और प्रदर्शन के लिए अतिरिक्त डेटा एकत्र किया जा सकता है।" } },
+          "4": { "heading": "4. कुकीज़ और ट्रैकिंग तकनीकें", "body": { "0": "BT EXCHANGE उपयोगकर्ता अनुभव में सुधार और प्लेटफॉर्म प्रदर्शन विश्लेषण के लिए कुकीज़ और समान तकनीकों का उपयोग करता है।" }, "bullets": { "0": "आवश्यक कुकीज़ – खाता लॉगिन, सुरक्षा और बुनियादी कार्यक्षमता के लिए आवश्यक।", "1": "स्वीकृति कुकीज़ – आपकी कुकी सहमति प्राथमिकताएं संग्रहीत करती हैं।", "2": "कार्यक्षमता कुकीज़ – भाषा, लॉगिन और सेटिंग्स जैसी प्राथमिकताएं याद रखती हैं।" }, "extra": { "0": "आप ब्राउज़र सेटिंग्स में कुकीज़ अक्षम कर सकते हैं, लेकिन कुछ सुविधाएं ठीक से काम नहीं कर सकतीं।" } },
+          "5": { "heading": "5. हम आपके व्यक्तिगत डेटा का उपयोग कैसे करते हैं", "bullets": { "0": "हमारी सेवा प्रदान और बनाए रखना।", "1": "यूज़र खातों को प्रबंधित और सत्यापित करना।", "2": "सुरक्षा में सुधार और धोखाधड़ी रोकना।", "3": "महत्वपूर्ण अपडेट और सूचनाएं संप्रेषित करना।", "4": "प्लेटफॉर्म प्रदर्शन बेहतर बनाने के लिए उपयोग रुझानों का विश्लेषण करना।" } },
+          "6": { "heading": "6. डेटा सुरक्षा और गोपनीयता", "body": { "0": "हम आपके डेटा की अनधिकृत पहुंच, हानि या दुरुपयोग से रक्षा के लिए उचित तकनीकी और संगठनात्मक उपाय लागू करते हैं।", "1": "हालांकि कोई भी सिस्टम 100% सुरक्षित नहीं है। मजबूत पासवर्ड और सभी सुरक्षा सुविधाएं सक्षम करने की सलाह दी जाती है।" } },
+          "7": { "heading": "7. तीसरे पक्ष के सेवा प्रदाता", "body": { "0": "हम विश्वसनीय तीसरे पक्ष के साथ सीमित डेटा साझा कर सकते हैं केवल इन उद्देश्यों के लिए:" }, "bullets": { "0": "सेवा रखरखाव और प्लेटफॉर्म संचालन।", "1": "विश्लेषण और प्रदर्शन निगरानी।", "2": "सुरक्षा सत्यापन और जोखिम नियंत्रण।" }, "extra": { "0": "हम आपका व्यक्तिगत डेटा तीसरे पक्ष को नहीं बेचते।" } },
+          "8": { "heading": "8. आपके प्राइवेसी अधिकार", "body": { "0": "आपके क्षेत्राधिकार के आधार पर, आपके पास अधिकार हो सकता है:" }, "bullets": { "0": "हमारे पास मौजूद आपके व्यक्तिगत डेटा तक पहुंच।", "1": "आपके डेटा के सुधार या विलोपन का अनुरोध।", "2": "कुछ प्रकार के प्रोसेसिंग पर आपत्ति या प्रतिबंध।", "3": "सहमति आधारित प्रोसेसिंग में किसी भी समय सहमति वापस लेना।" }, "extra": { "0": "अनुरोध BT EXCHANGE आधिकारिक सपोर्ट चैनलों के माध्यम से किए जा सकते हैं।" } },
+          "9": { "heading": "9. इस प्राइवेसी पॉलिसी में परिवर्तन", "body": { "0": "BT EXCHANGE कानूनी, नियामक या परिचालन आवश्यकताओं में परिवर्तन को दर्शाने के लिए इस नीति को किसी भी समय अपडेट करने का अधिकार सुरक्षित रखता है।", "1": "कोई भी परिवर्तन इस पेज पर पोस्ट किया जाएगा और प्रकाशन पर तुरंत प्रभावी होगा।" } },
+          "10": { "heading": "10. हमसे संपर्क करें", "body": { "0": "इस प्राइवेसी पॉलिसी, गोपनीयता या आपके डेटा के प्रबंधन के बारे में कोई प्रश्न हो तो आधिकारिक सपोर्ट चैनलों के माध्यम से BT EXCHANGE से संपर्क करें।" } }
+        }
+      },
+      "risk": {
+        "title": "रिस्क डिस्क्लोज़र और यूज़र एग्रीमेंट",
+        "intro": "BT EXCHANGE उपयोग करने से पहले इस रिस्क डिस्क्लोज़र और यूज़र एग्रीमेंट को ध्यान से पढ़ें। हमारे प्लेटफॉर्म तक पहुंचकर आप स्वीकार करते हैं कि निम्नलिखित शर्तों और जोखिमों को समझते और स्वीकार करते हैं।",
+        "sections": {
+          "0": { "heading": "1. समझौते की स्वीकृति", "bullets": { "0": "पंजीकरण, लॉगिन या BT EXCHANGE उपयोग करके आप पुष्टि करते हैं कि इस यूज़र एग्रीमेंट और सभी लागू नियमों को पढ़ा, समझा और स्वीकार किया है।", "1": "प्लेटफॉर्म का निरंतर उपयोग भविष्य के अपडेट की स्वीकृति बनता है।" } },
+          "1": { "heading": "2. खाता सुरक्षा जिम्मेदारी", "bullets": { "0": "आप अपने खाता क्रेडेंशियल्स की गोपनीयता बनाए रखने के लिए पूरी तरह जिम्मेदार हैं।", "1": "आपके खाते से की गई सभी गतिविधियां आपके द्वारा अधिकृत मानी जाएंगी।" }, "extra": { "0": "BT EXCHANGE अनधिकृत पहुंच, चोरी क्रेडेंशियल्स या खाता सुरक्षित करने में लापरवाही से होने वाले नुकसान के लिए जिम्मेदार नहीं है।", "1": "नियमित रूप से पासवर्ड अपडेट और सभी सुरक्षा सुविधाएं सक्षम करने की सलाह दी जाती है।" } },
+          "2": { "heading": "3. शर्तों में संशोधन", "bullets": { "0": "BT EXCHANGE बिना पूर्व सूचना के किसी भी समय इस समझौते, प्लेटफॉर्म नियमों या संबंधित नीतियों को संशोधित करने का अधिकार सुरक्षित रखता है।", "1": "संशोधित शर्तें प्लेटफॉर्म पर प्रकाशन पर तुरंत प्रभावी होती हैं।", "2": "कंपनी सभी विवादों की व्याख्या और निर्णय का अंतिम अधिकार सुरक्षित रखती है।" } },
+          "3": { "heading": "4. कानूनी उम्र आवश्यकता", "bullets": { "0": "BT EXCHANGE सेवाओं तक पहुंचने के लिए यूज़र्स को अपने देश या क्षेत्र के कानूनों के तहत कानूनी उम्र का होना चाहिए।", "1": "अधूरे या सफलतापूर्वक सबमिट नहीं किए गए लेनदेन अमान्य माने जाएंगे।" } },
+          "4": { "heading": "5. तकनीकी और नेटवर्क जोखिम", "body": { "0": "डिजिटल प्लेटफॉर्म तकनीकी सीमाओं के अधीन हैं। BT EXCHANGE निम्न के कारण हानियों के लिए जिम्मेदार नहीं है:" }, "bullets": { "0": "इंटरनेट व्यवधान या कनेक्टिविटी समस्याएं।", "1": "डिवाइस या हार्डवेयर विफलता।", "2": "बिजली आउटेज या अस्थिर बिजली आपूर्ति।", "3": "सिस्टम देरी, रुकावट या अन्य फोर्स मेजर।" }, "extra": { "0": "लेनदेन पुष्टि से पहले यूज़र डिस्कनेक्ट होने पर सिस्टम द्वारा रिकॉर्ड किए गए पूर्ण परिणाम प्रभावित नहीं होंगे।" } },
+          "5": { "heading": "6. ट्रेडिंग और वित्तीय जोखिम प्रकटीकरण", "body": { "0": "ट्रेडिंग और डिजिटल संपत्ति गतिविधियों में महत्वपूर्ण जोखिम शामिल है। बाजार की कीमतें उतार-चढ़ाव कर सकती हैं और यूज़र्स को आंशिक या कुल फंड हानि हो सकती है।", "1": "ट्रेडिंग से पहले अपनी जोखिम सहनशीलता और वित्तीय स्थिति का सावधानीपूर्वक मूल्यांकन करें।" }, "bullets": { "0": "जिम्मेदारी से ट्रेड करें और अत्यधिक लीवरेज या सट्टेबाजी से बचें।", "1": "केवल उन फंड्स का उपयोग करें जिन्हें आप खो सकते हैं।", "2": "अतीत का प्रदर्शन भविष्य के परिणामों की गारंटी नहीं देता।" }, "extra": { "0": "BT EXCHANGE लाभ, निश्चित रिटर्न या हानि की अनुपस्थिति की गारंटी नहीं देता।" } },
+          "6": { "heading": "7. यूज़र जिम्मेदारी", "bullets": { "0": "सभी ट्रेडिंग निर्णय यूज़र्स द्वारा स्वतंत्र रूप से किए जाते हैं।", "1": "प्लेटफॉर्म पर आपके कार्यों से उत्पन्न लाभ, हानि या कानूनी परिणामों के लिए आप पूरी तरह जिम्मेदार हैं।", "2": "यूज़र कार्यों, निवेश निर्णयों या बाजार स्थितियों की गलतफहमी से होने वाली प्रत्यक्ष या अप्रत्यक्ष हानियों के लिए BT EXCHANGE उत्तरदायी नहीं होगा।" } },
+          "7": { "heading": "8. अंतिम निर्णय अधिकार", "bullets": { "0": "विवादों, सिस्टम त्रुटियों, असामान्य गतिविधि या संदिग्ध उल्लंघन की स्थिति में, BT EXCHANGE का निर्णय लागू कानून की पूर्ण सीमा तक अंतिम और बाध्यकारी होगा।" } },
+          "8": { "heading": "9. अस्वीकरण", "body": { "0": "BT EXCHANGE \"जैसा है\" और \"जैसा उपलब्ध है\" आधार पर प्रदान किया जाता है। हम सुरक्षित और स्थिर ट्रेडिंग वातावरण बनाए रखने का प्रयास करते हैं, लेकिन यह गारंटी नहीं देते कि प्लेटफॉर्म बिना रुकावट, त्रुटि-मुक्त या जोखिम-मुक्त होगा।", "1": "BT EXCHANGE उपयोग करके आप स्वीकार करते हैं कि डिजिटल संपत्ति ट्रेडिंग में निहित जोखिम होते हैं और अपनी भागीदारी की पूर्ण जिम्मेदारी लेने के लिए सहमत हैं।" } }
+        }
+      }
+    }
+  },
+  "market": {
+    "topTabs": {
+      "favorites": "पसंदीदा",
+      "favourites": "पसंदीदा",
+      "market": "मार्केट",
+      "insights": "इनसाइट्स"
+    },
+    "subTabs": {
+      "futures": "फ्यूचर्स",
+      "spot": "स्पॉट",
+      "tradfi": "ट्रैडफाई",
+      "trading pair list": "ट्रेडिंग पेयर सूची"
+    },
+    "categories": {
+      "all": "सभी",
+      "top": "शीर्ष कॉइन",
+      "tradable coin": "ट्रेड करने योग्य कॉइन",
+      "ai": "एआई",
+      "defi": "डीफाई",
+      "lsd": "LSD",
+      "layer1": "लेयर 1 / लेयर 2"
+    },
+    "overview": {
+      "title": "मार्केट ओवरव्यू",
+      "fearGreed": "डर और लालच सूचकांक",
+      "fearGreedLabel": "तटस्थ",
+      "marketCap": "मार्केट कैप",
+      "volume24h": "24 घंटे वॉल्यूम"
+    },
+    "performance": {
+      "title": "मार्केट परफ़ॉर्मेंस",
+      "rise": "उत्थान {{count}}",
+      "fall": "गिरावट {{count}}"
+    },
+    "copyTrading": {
+      "title": "कॉपी ट्रेडिंग अवसर",
+      "copyButton": "कॉपी",
+      "roi30Label": "30‑दिन ROI",
+      "aumLabel": "AUM",
+      "daysRegisteredLabel": "पंजीकरण के दिन",
+      "winRateLabel": "विन रेट",
+      "profitShareRatioLabel": "प्रॉफिट शेयर अनुपात",
+      "detail": {
+        "title": "फ्यूचर्स कॉपी ट्रेडिंग",
+        "infoAriaLabel": "अधिक जानकारी",
+        "profileName": "मैडम नियू के स्वर्णिम वर्ष",
+        "followIntro": "मेरे ऑर्डर फॉलो करते समय कृपया निम्न बातों का ध्यान रखें:",
+        "tabs": {
+          "performance": "प्रदर्शन",
+          "openPosition": "खुली पोज़िशन",
+          "positionHistory": "पोज़िशन इतिहास",
+          "copiers": "कॉपी करने वाले"
+        },
+        "point1": "1. केवल इथीरियम और बिटकॉइन पर ट्रेड करता/करती हूँ।",
+        "point2": "2. मैं लिक्विडेशन के लिए पोजिशन कंट्रोल इस्तेमाल करता/करती हूँ, फिक्स्ड स्टॉप लॉस नहीं; लॉन्ग और शॉर्ट दोनों पोजिशन खुले रहते हैं। अगर ट्रैप्ड ऑर्डर होंगे तो मैं उन्हें संभालूंगा/संभालूंगी; इससे नए पोजिशन खोलने पर असर नहीं पड़ता।",
+        "point3": "3. कॉपी ट्रेड प्रॉफिट से संतुष्ट होने पर आप मैन्युअल टेक प्रॉफिट भी कर सकते हैं, क्योंकि कभी-कभी मैं पोजिशन वोलैटिलिटी के दौरान या ट्रेंड स्विंग के लिए लंबे समय तक रखता/रखती हूँ।",
+        "point4": "4. मैं आम तौर पर वीकेंड पर बहुत कम ऑर्डर खोलता/खोलती हूँ।",
+        "loading": "लोड हो रहा है...",
+        "empty": "कोई ट्रेड डेटा नहीं",
+        "loadFailed": "ट्रेड डेटा लोड करने में विफल",
+        "direction": {
+          "buy": "खरीद",
+          "sell": "बेच",
+          "long": "लॉन्ग",
+          "short": "शॉर्ट",
+          "down": "शॉर्ट"
+        },
+        "fields": {
+          "pair": "पेयर",
+          "direction": "दिशा",
+          "status": "स्टेटस",
+          "amount": "राशि (USDT)",
+          "grossAmount": "सकल राशि (USDT)",
+          "feeAmount": "फीस राशि (USDT)",
+          "netTradeAmount": "शुद्ध ट्रेड राशि (USDT)",
+          "entryPrice": "एंट्री प्राइस (USDT)",
+          "exitPrice": "एग्ज़िट प्राइस (USDT)",
+          "rewardRate": "इनाम दर",
+          "payout": "पेआउट (USDT)",
+          "startTime": "शुरू होने का समय",
+          "expiryTime": "समाप्ति समय",
+          "settlementTime": "सेटलमेंट समय",
+          "openingPrice": "ओपनिंग प्राइस",
+          "buyAmount": "खरीद राशि",
+          "period": "अवधि",
+          "closingPrice": "क्लोजिंग प्राइस",
+          "transactionFee": "लेनदेन शुल्क (1%)"
+        }
+      }
+    },
+    "rankings": {
+      "title": "मार्केट रैंकिंग्स"
+    },
+    "search": "खोजें"
+  }
+  ,
+  "copyTradeSetting": {
+    "title": "कॉपी ट्रेडिंग सेटिंग",
+    "description": "यह फीचर डेवलपमेंट में है। जल्द ही आप यहाँ अपनी कॉपी ट्रेडिंग प्राथमिकताएँ सेट कर पाएँगे।",
+    "comingSoon": "जल्द आ रहा है"
+  },
+  "comingSoonPage": {
+    "title": "जल्द आ रहा है",
+    "subtitle": "हम आपके लिए कुछ खास तैयार कर रहे हैं।",
+    "backToHome": "होम पर वापस"
+  }
+}
+
