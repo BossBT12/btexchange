@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate, Link, useLocation, useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -26,6 +26,7 @@ import OtpVerification from "../../components/otpVerification";
 import useSnackbar from "../../hooks/useSnackbar";
 import { decryptData } from "../../utils/encryption";
 import { FONT_SIZE } from "../../constant/lookUpConstant";
+import CountryCodePicker from "../../components/CountryCodePicker";
 
 const validationSchema = Yup.object({
   fullName: Yup.string()
@@ -39,7 +40,7 @@ const validationSchema = Yup.object({
     .max(100, "Email must be less than 100 characters"),
   mobile: Yup.string()
     .required("Mobile number is required")
-    .matches(/^[0-9+\-\s()]{10,20}$/, "Please enter a valid mobile number"),
+    .matches(/^\d{6,14}$/, "Please enter a valid mobile number"),
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters")
@@ -70,10 +71,16 @@ export default function Signup() {
 
   const [searchParams] = useSearchParams();
   const referralId = searchParams.get("ref") || "";
-  const decryptedReferralId = decryptData(referralId);
+  const decryptedReferralId = decryptData(referralId) ?? referralId;
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState({
+    iso2: "IN",
+    dialCode: "+91",
+    name: "India",
+    flag: "🇮🇳",
+  });
   const [otpFormData, setOtpFormData] = useState({
     showOtpForm: false,
     userData: {
@@ -99,14 +106,15 @@ export default function Signup() {
     onSubmit: async (values) => {
       setLoading(true);
       try {
+        const nationalNumber = String(values.mobile || "").replace(/\D/g, "").slice(0, 14);
         const body = {
           fullName: values.fullName.trim(),
           email: values.email.trim(),
-          // mobile: values.mobile.trim(),
+          countryCode: selectedCountry?.dialCode || "+91",
+          mobile: nationalNumber,
           password: values.password,
           referrerId: values.referrerId.trim(),
         };
-
         const signup1Res = await authService.register(body);
         if (!signup1Res?.success) {
           showSnackbar(signup1Res?.message || "Registration failed. Please try again.", "error");
@@ -309,12 +317,28 @@ export default function Signup() {
               name="mobile"
               placeholder="Enter mobile number"
               value={formik.values.mobile}
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                const digitsOnly = String(e.target.value || "").replace(/\D/g, "").slice(0, 14);
+                formik.setFieldValue("mobile", digitsOnly, true);
+              }}
               onBlur={formik.handleBlur}
               error={formik.touched.mobile && Boolean(formik.errors.mobile)}
               helperText={formik.touched.mobile && formik.errors.mobile}
               variant="outlined"
               autoComplete="mobile"
+              inputMode="numeric"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start" sx={{ mr: 0.5 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", mr: 0.5 }}>
+                      <CountryCodePicker
+                        valueIso2={selectedCountry?.iso2}
+                        onChange={(c) => setSelectedCountry(c)}
+                      />
+                    </Box>
+                  </InputAdornment>
+                ),
+              }}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   bgcolor: AppColors.BG_SECONDARY,
@@ -325,7 +349,7 @@ export default function Signup() {
                   "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
-                "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2 },
+                "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2, pl: 1, ml: 1, borderLeft: "1px solid rgba(255,255,255,0.12)" },
                 "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
                 "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
               }}

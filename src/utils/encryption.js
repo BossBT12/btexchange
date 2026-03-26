@@ -12,12 +12,20 @@ export const encryptData = (data) => {
 };
 
 export const decryptData = (cipherText) => {
+  if (!cipherText || typeof cipherText !== "string") {
+    return null;
+  }
+
   try {
     const bytes = CryptoJS.AES.decrypt(cipherText, SECRET_KEY);
-    const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    const plainText = bytes.toString(CryptoJS.enc.Utf8);
+    if (!plainText) {
+      return null;
+    }
+
+    const decryptedData = JSON.parse(plainText);
     return decryptedData;
-  } catch (error) {
-    console.error("Decryption error:", error);
+  } catch {
     return null;
   }
 };
