@@ -8,10 +8,10 @@ import {
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { AppColors } from "../../../constant/appColors";
-import { FONT_SIZE } from "../../../constant/lookUpConstant";
 import agentLineCustomerService from "../../../assets/images/ccw.webp";
 import dashboardServices from "../../../services/dashboardServices";
 import { TRADE_NAMESPACE } from "../../../i18n";
+import useSnackbar from "../../../hooks/useSnackbar";
 
 /**
  * Agent line customer service – static/placeholder page.
@@ -24,6 +24,7 @@ const TELEGRAM_ACCOUNTS = [
 
 const AgentServicePage = () => {
   const navigate = useNavigate();
+  const { showSnackbar } = useSnackbar();
   const { t } = useTranslation(TRADE_NAMESPACE);
   const [showTelegramAccounts, setShowTelegramAccounts] = useState(false);
   const [telegramAccounts, setTelegramAccounts] = useState({
@@ -35,6 +36,7 @@ const AgentServicePage = () => {
     const fetchTelegramAccounts = async () => {
       try {
         const response = await dashboardServices.getSocialMediaLinks();
+        console.log('response: ', response);
         setTelegramAccounts({
           channel: response?.data?.facebookUrl ?? "",
           channel2: response?.data?.instagramUrl ?? "",
@@ -47,7 +49,7 @@ const AgentServicePage = () => {
   }, []);
 
   const handleOpenAccount = (type, url) => {
-    if (!url) return;
+    if (!url) return showSnackbar(t("promotion.agentService.noUrl", "No URL found"), "error");
     if (type === "channel" || type === "channel2") {
       window.open(url, "_blank", "noopener,noreferrer");
     } else {
@@ -237,10 +239,10 @@ const AgentServicePage = () => {
           )}
 
           {showTelegramAccounts &&
-            TELEGRAM_ACCOUNTS.map((item, index) => (
+            TELEGRAM_ACCOUNTS?.filter(item => Boolean(telegramAccounts?.[item?.type])).map((item, index) => (
               <Box
                 key={item.id || index}
-                onClick={() => handleOpenAccount(item.type, telegramAccounts[item.type] ?? item.url)}
+                onClick={() => handleOpenAccount(item.type, telegramAccounts[item.type])}
                 sx={{
                   display: "flex",
                   alignItems: "center",

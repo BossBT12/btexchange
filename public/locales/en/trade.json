@@ -493,6 +493,7 @@
       "title": "Agent line customer service",
       "subtitle": "Contact our official Telegram accounts for 1:1 support.",
       "description": "Available to help with onboarding, promotions, and account questions.",
+      "noUrl": "No URL found",
       "telegram": "Telegram",
       "imageAlt": "Agent line customer service",
       "accounts": {

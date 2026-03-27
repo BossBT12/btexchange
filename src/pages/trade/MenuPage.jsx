@@ -12,13 +12,10 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
-import DonutSmallOutlinedIcon from "@mui/icons-material/DonutSmallOutlined";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import CandlestickChartOutlinedIcon from "@mui/icons-material/CandlestickChartOutlined";
 import GpsFixedOutlinedIcon from "@mui/icons-material/GpsFixedOutlined";
 import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -53,7 +50,7 @@ const recommendedFeatures = [
     key: "copy",
     labelKey: "menu.recommended.copy",
     icon: <FileCopyOutlinedIcon fontSize="medium" />,
-    path: "/copy-trading",
+    path: "/coming-soon",
   },
   {
     key: "market",
@@ -320,33 +317,6 @@ const MenuPage = () => {
             </Grid>
           ))}
         </Grid>
-      </Box>
-
-      {/* Fo o ter */}
-
-      <Box
-        sx={{
-          mt: "auto",
-          pt: 2,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 0.5,
-        }}
-      >
-        <Typography
-          variant="caption"
-          sx={{ color: AppColors.TXT_SUB }}
-        >
-          {t("menu.footerVersion")}
-        </Typography>
-        <Typography
-          variant="caption"
-          sx={{ color: AppColors.TXT_SUB }}
-        >
-          2026000017
-        </Typography>
       </Box>
 
       {/* Language selection menu for MenuPage */}

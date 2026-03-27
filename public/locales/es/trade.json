@@ -479,6 +479,7 @@
       "title": "Atención al cliente para agentes",
       "subtitle": "Contacta nuestras cuentas oficiales de Telegram para soporte 1:1.",
       "description": "Disponibles para ayuda con incorporación, promociones y consultas de cuenta.",
+      "noUrl": "No se encontró la URL",
       "telegram": "Telegram",
       "imageAlt": "Atención al cliente para agentes",
       "accounts": {

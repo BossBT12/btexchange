@@ -18,6 +18,7 @@ import { copyToClipboard } from "../utils/utils";
 import html2canvas from "html2canvas";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../i18n";
+import btLogo from "../assets/images/btLogo.webp";
 
 const InvitePosterModal = ({
   open,
@@ -48,7 +49,7 @@ const InvitePosterModal = ({
     return () => {
       cancelled = true;
     };
-  }, [ open, userData?.UID ]);
+  }, [open, userData?.UID]);
 
   const handleCopyLink = useCallback(async () => {
     const ok = await copyToClipboard(referralLink, setCopied);
@@ -81,7 +82,10 @@ const InvitePosterModal = ({
 
     const link = document.createElement("a");
     link.href = image;
-    link.download = t("rewardHub.invitePoster.downloadFilename", "invite-poster.png");
+    link.download = t(
+      "rewardHub.invitePoster.downloadFilename",
+      "invite-poster.png",
+    );
     link.click();
   };
 
@@ -92,6 +96,7 @@ const InvitePosterModal = ({
       fullScreen
       PaperProps={{
         sx: {
+          fontFamily: "Open Sans, sans-serif",
           bgcolor: AppColors.BG_MAIN,
           color: AppColors.TXT_MAIN,
         },
@@ -308,16 +313,20 @@ const InvitePosterModal = ({
               textAlign: "center",
             }}
           >
-            <div
+            <figure
               style={{
-                fontSize: "30px",
-                fontWeight: 600,
-                letterSpacing: "2px",
+                width: "50px",
+                height: "50px",
+                boxShadow: "0 0 40px rgba(0, 0, 0, 0.64)",
+                borderRadius: "50%",
               }}
             >
-              BT
-            </div>
-            <div style={{ fontSize: "8px" }}>{t("rewardHub.invitePoster.posterBrandExchange", "Exchange")}</div>
+              <img
+                src={btLogo}
+                alt="BT Logo"
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              />
+            </figure>
           </div>
 
           {/* PRESENT */}
@@ -404,7 +413,8 @@ const InvitePosterModal = ({
               maxWidth: "100%",
             }}
           >
-            {referralLink || t("rewardHub.invitePoster.loadingLink", "Loading...")}
+            {referralLink ||
+              t("rewardHub.invitePoster.loadingLink", "Loading...")}
           </div>
         </div>
 
