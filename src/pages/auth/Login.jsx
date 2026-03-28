@@ -9,7 +9,6 @@ import {
   IconButton,
   TextField,
   InputAdornment,
-  Divider,
   Container,
 } from "@mui/material";
 import {
@@ -17,7 +16,6 @@ import {
   VisibilityOff,
   Close as CloseIcon,
   SwapHoriz as SwapHorizIcon,
-  Google,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
@@ -73,22 +71,24 @@ export default function Login() {
     onSubmit: async (values) => {
       setLoading(true);
       try {
-        const [tradeUser, networkUser] = await Promise.all([authService.login({
+        const tradeUser = await authService.login({
           email: values.email.trim(),
           password: values.password,
           deviceType: "web",
           deviceToken: "",
-        }),
-        userService.login({
+        });
+        const networkUser = await userService.login({
           email: values.email.trim(),
           password: values.password,
-        }),
-        ]);
+        });
 
         const { data: loginData, message } = tradeUser || {};
         const { data: networkLoginData } = networkUser || {};
 
-        if (loginData?.isEmailVerified === false || networkLoginData?.isEmailVerified === false) {
+        if (
+          loginData?.isEmailVerified === false ||
+          networkLoginData?.isEmailVerified === false
+        ) {
           setPendingEmail(values.email.trim());
           showSnackbar(t("auth.login.verifyEmailInfo"), "info");
           return;
@@ -105,8 +105,8 @@ export default function Login() {
               user: networkLoginData,
               token: networkUser.token,
               refreshToken: networkUser.refreshToken,
-            }
-          }
+            },
+          };
           setUser(userData);
           showSnackbar(message || t("auth.login.success"), "success");
           tradeSocket.joinUser(values.email.trim());
@@ -114,11 +114,34 @@ export default function Login() {
         }
       } catch (err) {
         console.error("❌ Login failed:", err);
+        const api = err?.response?.data ?? err;
+        const profile = api?.data;
+        if (
+          api?.success === false &&
+          profile &&
+          profile.isEmailVerified === false
+        ) {
+          showSnackbar(
+            api.message || t("auth.login.verifyEmailInfo"),
+            "info",
+          );
+          navigate("/signup", {
+            replace: true,
+            state: {
+              verifyEmailResume: {
+                fullName: profile.fullName || "",
+                email: profile.email || "",
+                countryCode: profile.countryCode || "+91",
+                mobile: String(profile.mobile || "").replace(/\D/g, "").slice(0, 14),
+                referrerId: profile.referrer?.UID || "",
+              },
+            },
+          });
+          return;
+        }
         showSnackbar(
-          err.response?.data?.message ||
-          err.message ||
-          t("auth.login.failed"),
-          "error"
+          api?.message || err?.message || t("auth.login.failed"),
+          "error",
         );
       } finally {
         setLoading(false);
@@ -194,12 +217,14 @@ export default function Login() {
         </Link>
       </Box>
 
-      <Box sx={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        pb: 1,
-      }}>
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          pb: 1,
+        }}
+      >
         <Container maxWidth="md">
           <Typography
             variant="h6"
@@ -218,7 +243,9 @@ export default function Login() {
               onClick={() => setLoginMethod("email")}
               sx={{
                 color:
-                  loginMethod === "email" ? AppColors.TXT_MAIN : AppColors.TXT_SUB,
+                  loginMethod === "email"
+                    ? AppColors.TXT_MAIN
+                    : AppColors.TXT_SUB,
                 fontWeight: loginMethod === "email" ? 600 : 400,
                 cursor: "pointer",
                 pb: 0.5,
@@ -235,7 +262,13 @@ export default function Login() {
           <Box
             component="form"
             onSubmit={formik.handleSubmit}
-            sx={{ display: "flex", flexDirection: "column", gap: 2, justifyContent: "center", alignItems: "center" }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             <TextField
               fullWidth
@@ -259,12 +292,21 @@ export default function Login() {
                   borderRadius: 2,
                   "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
                   "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                  "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+                  "&.Mui-focused fieldset": {
+                    borderColor: AppColors.TXT_SUB,
+                    borderWidth: 1,
+                  },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
                 "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2 },
-                "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-                "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+                "& .MuiInputBase-input::placeholder": {
+                  color: AppColors.TXT_SUB,
+                  opacity: 1,
+                },
+                "& .MuiFormHelperText-root": {
+                  color: AppColors.ERROR,
+                  fontSize: FONT_SIZE.CAPTION,
+                },
               }}
             />
 
@@ -309,12 +351,21 @@ export default function Login() {
                   borderRadius: 2,
                   "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
                   "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                  "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+                  "&.Mui-focused fieldset": {
+                    borderColor: AppColors.TXT_SUB,
+                    borderWidth: 1,
+                  },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
                 "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2 },
-                "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-                "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+                "& .MuiInputBase-input::placeholder": {
+                  color: AppColors.TXT_SUB,
+                  opacity: 1,
+                },
+                "& .MuiFormHelperText-root": {
+                  color: AppColors.ERROR,
+                  fontSize: FONT_SIZE.CAPTION,
+                },
               }}
             />
 
@@ -374,7 +425,9 @@ export default function Login() {
               <Button
                 variant="text"
                 onClick={() =>
-                  navigate("/forgot-password", { state: { email: formik.values.email } })
+                  navigate("/forgot-password", {
+                    state: { email: formik.values.email },
+                  })
                 }
                 sx={{
                   color: AppColors.TXT_MAIN,
@@ -400,7 +453,14 @@ export default function Login() {
         {/* <Divider sx={{ my: 2 }}>or</Divider> */}
 
         {/* Google login */}
-        <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           {/* <IconButton
             onClick={() => showSnackbar(t("auth.login.googleLoginComingSoon"), "info")}
             sx={{

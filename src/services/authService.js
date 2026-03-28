@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import api from "../utils/axios";
 
 const authService = {

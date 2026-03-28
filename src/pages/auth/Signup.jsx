@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { useNavigate, Link, useLocation, useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -27,6 +27,38 @@ import useSnackbar from "../../hooks/useSnackbar";
 import { decryptData } from "../../utils/encryption";
 import { FONT_SIZE } from "../../constant/lookUpConstant";
 import CountryCodePicker from "../../components/CountryCodePicker";
+import { getCountries, getCountryCallingCode } from "libphonenumber-js";
+
+const RESUME_OTP_MESSAGE_PATTERN =
+  /already exists|already registered|duplicate|email.*(in use|taken|exists)|user exists|verify your email|check your inbox/i;
+
+function countryFromDialCode(dialCode) {
+  if (!dialCode) return null;
+  const raw = String(dialCode).trim().replace(/\s/g, "");
+  const withPlus = raw.startsWith("+") ? raw : `+${raw}`;
+  let displayNames;
+  try {
+    displayNames = new Intl.DisplayNames(["en"], { type: "region" });
+  } catch {
+    displayNames = null;
+  }
+  for (const iso2 of getCountries()) {
+    try {
+      const dc = `+${getCountryCallingCode(iso2)}`;
+      if (dc === withPlus) {
+        return {
+          iso2,
+          dialCode: dc,
+          name: displayNames?.of(iso2) || iso2,
+          flag: "",
+        };
+      }
+    } catch {
+      continue;
+    }
+  }
+  return null;
+}
 
 const validationSchema = Yup.object({
   fullName: Yup.string()
@@ -68,6 +100,8 @@ export default function Signup() {
   const navigate = useNavigate();
   const location = useLocation();
   const initialEmail = location.state?.inputValue || "";
+  const verifyEmailResume = location.state?.verifyEmailResume;
+  const isLockedProfile = Boolean(verifyEmailResume?.email);
 
   const [searchParams] = useSearchParams();
   const referralId = searchParams.get("ref") || "";
@@ -94,48 +128,97 @@ export default function Signup() {
   const [signupMethod, setSignupMethod] = useState("email"); // "email" | "mobile"
   const { showSnackbar } = useSnackbar();
 
-  const formik = useFormik({
-    initialValues: {
-      fullName: "",
-      email: initialEmail,
-      mobile: "",
+  const initialFormValues = useMemo(
+    () => ({
+      fullName: verifyEmailResume?.fullName ?? "",
+      email: verifyEmailResume?.email ?? initialEmail,
+      mobile: verifyEmailResume?.mobile
+        ? String(verifyEmailResume.mobile).replace(/\D/g, "").slice(0, 14)
+        : "",
       password: "",
-      referrerId: decryptedReferralId,
+      referrerId: verifyEmailResume?.referrerId ?? decryptedReferralId,
+    }),
+    [verifyEmailResume, initialEmail, decryptedReferralId],
+  );
+
+  useEffect(() => {
+    if (!verifyEmailResume?.countryCode) return;
+    const resolved = countryFromDialCode(verifyEmailResume.countryCode);
+    if (resolved) setSelectedCountry(resolved);
+  }, [verifyEmailResume?.countryCode]);
+
+  const resumeOtpFlow = useCallback(
+    async (body) => {
+      try {
+        const resend = await authService.resendOtp({ email: body.email });
+        if (resend?.success) {
+          setOtpFormData({ showOtpForm: true, userData: body });
+          showSnackbar(
+            resend?.message || "Verification code sent. Check your inbox.",
+            "success",
+          );
+          return true;
+        }
+        showSnackbar(
+          resend?.message || "Could not send verification code.",
+          "error",
+        );
+      } catch (e) {
+        const api = e?.response?.data ?? e;
+        showSnackbar(
+          api?.message || e?.message || "Could not send verification code.",
+          "error",
+        );
+      }
+      return false;
     },
+    [showSnackbar],
+  );
+
+  const formik = useFormik({
+    initialValues: initialFormValues,
+    enableReinitialize: true,
     validationSchema,
     onSubmit: async (values) => {
       setLoading(true);
+      const nationalNumber = String(values.mobile || "").replace(/\D/g, "").slice(0, 14);
+      const body = {
+        fullName: values.fullName.trim(),
+        email: values.email.trim(),
+        countryCode: selectedCountry?.dialCode || "+91",
+        mobile: nationalNumber,
+        password: values.password,
+        referrerId: values.referrerId.trim(),
+      };
       try {
-        const nationalNumber = String(values.mobile || "").replace(/\D/g, "").slice(0, 14);
-        const body = {
-          fullName: values.fullName.trim(),
-          email: values.email.trim(),
-          countryCode: selectedCountry?.dialCode || "+91",
-          mobile: nationalNumber,
-          password: values.password,
-          referrerId: values.referrerId.trim(),
-        };
         const signup1Res = await authService.register(body);
         if (!signup1Res?.success) {
-          showSnackbar(signup1Res?.message || "Registration failed. Please try again.", "error");
+          if (RESUME_OTP_MESSAGE_PATTERN.test(signup1Res?.message || "")) {
+            if (await resumeOtpFlow(body)) return;
+          }
+          showSnackbar(
+            signup1Res?.message || "Registration failed. Please try again.",
+            "error",
+          );
           return;
         }
         setOtpFormData({
           showOtpForm: true,
           userData: body,
         });
-        showSnackbar(signup1Res?.message || "Registration successful. Please check your email for verification.", "success");
+        showSnackbar(
+          signup1Res?.message ||
+            "Registration successful. Please check your email for verification.",
+          "success",
+        );
       } catch (err) {
         console.error("Registration error:", err);
-        if (err.success === false && err.message === "User with this email already exists") {
-          setOtpFormData({
-            showOtpForm: true,
-            userData: body,
-          });
-          showSnackbar(err.response?.data?.message || err.message || "Registration failed. Please try again.", "success");
-        } else {
-          showSnackbar(err.response?.data?.message || err.message || "Registration failed. Please try again.", "error");
+        const api = err?.response?.data ?? err;
+        const msg = api?.message || err?.message || "";
+        if (api?.success === false && RESUME_OTP_MESSAGE_PATTERN.test(msg)) {
+          if (await resumeOtpFlow(body)) return;
         }
+        showSnackbar(msg || "Registration failed. Please try again.", "error");
       } finally {
         setLoading(false);
       }
@@ -232,15 +315,32 @@ export default function Signup() {
             Sign Up
           </Typography>
 
+          {isLockedProfile ? (
+            <Typography
+              variant="body2"
+              sx={{
+                color: AppColors.TXT_SUB,
+                mb: 2,
+                lineHeight: 1.5,
+                maxWidth: "28rem",
+                mx: "auto",
+              }}
+            >
+              Your account is not verified yet. Your details are shown below — enter the same password you use to log in, then continue to verify your email with the code we send you.
+            </Typography>
+          ) : null}
+
           {/* Email / Mobile tabs */}
           <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
             <Typography
               variant="body1"
-              onClick={() => setSignupMethod("email")}
+              onClick={() => {
+                if (!isLockedProfile) setSignupMethod("email");
+              }}
               sx={{
                 color: signupMethod === "email" ? AppColors.TXT_MAIN : AppColors.TXT_SUB,
                 fontWeight: signupMethod === "email" ? 600 : 400,
-                cursor: "pointer",
+                cursor: isLockedProfile ? "default" : "pointer",
                 pb: 0.5,
                 borderBottom:
                   signupMethod === "email"
@@ -269,6 +369,7 @@ export default function Signup() {
               helperText={formik.touched.fullName && formik.errors.fullName}
               variant="outlined"
               autoComplete="name"
+              disabled={isLockedProfile}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   bgcolor: AppColors.BG_SECONDARY,
@@ -296,6 +397,7 @@ export default function Signup() {
               helperText={formik.touched.email && formik.errors.email}
               variant="outlined"
               autoComplete="email"
+              disabled={isLockedProfile}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   bgcolor: AppColors.BG_SECONDARY,
@@ -327,6 +429,7 @@ export default function Signup() {
               variant="outlined"
               autoComplete="mobile"
               inputMode="numeric"
+              disabled={isLockedProfile}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start" sx={{ mr: 0.5 }}>
@@ -334,6 +437,7 @@ export default function Signup() {
                       <CountryCodePicker
                         valueIso2={selectedCountry?.iso2}
                         onChange={(c) => setSelectedCountry(c)}
+                        disabled={isLockedProfile}
                       />
                     </Box>
                   </InputAdornment>
@@ -421,6 +525,7 @@ export default function Signup() {
               error={formik.touched.referrerId && Boolean(formik.errors.referrerId)}
               helperText={formik.touched.referrerId && formik.errors.referrerId}
               variant="outlined"
+              disabled={isLockedProfile}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   bgcolor: AppColors.BG_SECONDARY,
