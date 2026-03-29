@@ -83,10 +83,8 @@ export default function Login() {
             password: values.password,
           }),
         ]);
-        console.log('tradeUser: ', tradeUser);
-        console.log('networkUser: ', networkUser);
 
-        const { data: loginData, message } = tradeUser[0] || {};
+        const { data: loginData, message } = tradeUser || {};
         const { data: networkLoginData } = networkUser || {};
 
         if (

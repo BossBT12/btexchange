@@ -11,12 +11,18 @@ import {
   InputAdornment,
   Container,
 } from "@mui/material";
-import { ChevronLeft, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+  ChevronLeft,
+  Lock,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import { WarningAmberRounded } from "@mui/icons-material";
 import { AppColors } from "../../constant/appColors";
 import authService from "../../services/authService";
 import useSnackbar from "../../hooks/useSnackbar";
 import { FONT_SIZE } from "../../constant/lookUpConstant";
+import userService from "../../services/secondGameServices/userService";
 
 const steps = {
   request: "request",
@@ -48,9 +54,14 @@ export default function ForgotPassword() {
       .when([], {
         is: () => isEmail,
         then: (schema) =>
-          schema.email("Please enter a valid email").max(100, "Email must be less than 100 characters"),
+          schema
+            .email("Please enter a valid email")
+            .max(100, "Email must be less than 100 characters"),
         otherwise: (schema) =>
-          schema.matches(/^[0-9+\-\s()]{10,20}$/, "Please enter a valid mobile number"),
+          schema.matches(
+            /^[0-9+\-\s()]{10,20}$/,
+            "Please enter a valid mobile number",
+          ),
       }),
     verificationCode: Yup.string()
       .required("Verification code is required")
@@ -58,8 +69,8 @@ export default function ForgotPassword() {
     newPassword:
       step === steps.reset
         ? Yup.string()
-          .required("New password is required")
-          .min(6, "Password must be at least 6 characters")
+            .required("New password is required")
+            .min(6, "Password must be at least 6 characters")
         : Yup.string(),
   });
 
@@ -83,18 +94,29 @@ export default function ForgotPassword() {
           setStep(steps.reset);
           showSnackbar("OTP verified. Please set a new password.", "success");
         } else if (step === steps.reset) {
-          await authService.resetPassword({
-            email,
-            newPassword: values.newPassword,
-          });
-          showSnackbar("Password reset successfully. Please log in.", "success");
+          await Promise.all([
+            authService.resetPassword({
+              email,
+              newPassword: values.newPassword,
+            }),
+            userService.resetPassword({
+              email,
+              newPassword: values.newPassword,
+            }),
+          ]);
+          showSnackbar(
+            "Password reset successfully. Please log in.",
+            "success",
+          );
           navigate("/login", { state: { email } });
         }
       } catch (err) {
         console.error("Forgot password flow failed:", err);
         showSnackbar(
-          err.response?.data?.message || err.message || "Something went wrong. Please try again.",
-          "error"
+          err.response?.data?.message ||
+            err.message ||
+            "Something went wrong. Please try again.",
+          "error",
         );
       } finally {
         setLoading(false);
@@ -119,8 +141,10 @@ export default function ForgotPassword() {
       showSnackbar("Verification code sent.", "success");
     } catch (err) {
       showSnackbar(
-        err.response?.data?.message || err.message || "Failed to send code. Please try again.",
-        "error"
+        err.response?.data?.message ||
+          err.message ||
+          "Failed to send code. Please try again.",
+        "error",
       );
     } finally {
       setSendCodeLoading(false);
@@ -129,7 +153,10 @@ export default function ForgotPassword() {
 
   useEffect(() => {
     if (resendCooldown <= 0) return;
-    const t = setInterval(() => setResendCooldown((c) => Math.max(0, c - 1)), 1000);
+    const t = setInterval(
+      () => setResendCooldown((c) => Math.max(0, c - 1)),
+      1000,
+    );
     return () => clearInterval(t);
   }, [resendCooldown]);
 
@@ -159,7 +186,9 @@ export default function ForgotPassword() {
         }}
       >
         <IconButton
-          onClick={() => (showNewPasswordStep ? setStep(steps.verify) : navigate(-1))}
+          onClick={() =>
+            showNewPasswordStep ? setStep(steps.verify) : navigate(-1)
+          }
           sx={{
             color: AppColors.TXT_MAIN,
             p: 0.5,
@@ -207,10 +236,20 @@ export default function ForgotPassword() {
             color: "rgba(255, 255, 255, 0.9)",
           }}
         >
-          You won&apos;t be able to withdraw assets within 24 hours after reset password
+          You won&apos;t be able to withdraw assets within 24 hours after reset
+          password
         </Typography>
       </Box>
-      <Container maxWidth="md" sx={{ display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center" }}>
+      <Container
+        maxWidth="md"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         {!showNewPasswordStep && (
           <>
             <Box sx={{ display: "flex", gap: 2, mb: 2, width: "100%" }}>
@@ -237,7 +276,9 @@ export default function ForgotPassword() {
             <TextField
               name="email"
               fullWidth
-              placeholder={isEmail ? "Enter email address" : "Enter mobile number"}
+              placeholder={
+                isEmail ? "Enter email address" : "Enter mobile number"
+              }
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -251,12 +292,21 @@ export default function ForgotPassword() {
                   borderRadius: 2,
                   "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
                   "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                  "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+                  "&.Mui-focused fieldset": {
+                    borderColor: AppColors.TXT_SUB,
+                    borderWidth: 1,
+                  },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
                 "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2 },
-                "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-                "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+                "& .MuiInputBase-input::placeholder": {
+                  color: AppColors.TXT_SUB,
+                  opacity: 1,
+                },
+                "& .MuiFormHelperText-root": {
+                  color: AppColors.ERROR,
+                  fontSize: FONT_SIZE.CAPTION,
+                },
               }}
             />
             <Typography
@@ -277,8 +327,14 @@ export default function ForgotPassword() {
               value={formik.values.verificationCode}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.verificationCode && Boolean(formik.errors.verificationCode)}
-              helperText={formik.touched.verificationCode && formik.errors.verificationCode}
+              error={
+                formik.touched.verificationCode &&
+                Boolean(formik.errors.verificationCode)
+              }
+              helperText={
+                formik.touched.verificationCode &&
+                formik.errors.verificationCode
+              }
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -293,11 +349,18 @@ export default function ForgotPassword() {
                         fontWeight: 600,
                         minWidth: "auto",
                         p: 0.5,
-                        "&:hover": { backgroundColor: "transparent", textDecoration: "underline" },
+                        "&:hover": {
+                          backgroundColor: "transparent",
+                          textDecoration: "underline",
+                        },
                         "&.Mui-disabled": { color: AppColors.TXT_SUB },
                       }}
                     >
-                      {resendCooldown > 0 ? `${resendCooldown}s` : sendCodeLoading ? "Sending..." : "Send code"}
+                      {resendCooldown > 0
+                        ? `${resendCooldown}s`
+                        : sendCodeLoading
+                          ? "Sending..."
+                          : "Send code"}
                     </Button>
                   </InputAdornment>
                 ),
@@ -309,12 +372,21 @@ export default function ForgotPassword() {
                   borderRadius: 2,
                   "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
                   "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                  "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+                  "&.Mui-focused fieldset": {
+                    borderColor: AppColors.TXT_SUB,
+                    borderWidth: 1,
+                  },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
                 "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2 },
-                "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-                "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+                "& .MuiInputBase-input::placeholder": {
+                  color: AppColors.TXT_SUB,
+                  opacity: 1,
+                },
+                "& .MuiFormHelperText-root": {
+                  color: AppColors.ERROR,
+                  fontSize: FONT_SIZE.CAPTION,
+                },
               }}
             />
           </>
@@ -340,8 +412,12 @@ export default function ForgotPassword() {
               value={formik.values.newPassword}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.newPassword && Boolean(formik.errors.newPassword)}
-              helperText={formik.touched.newPassword && formik.errors.newPassword}
+              error={
+                formik.touched.newPassword && Boolean(formik.errors.newPassword)
+              }
+              helperText={
+                formik.touched.newPassword && formik.errors.newPassword
+              }
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -351,7 +427,11 @@ export default function ForgotPassword() {
                       edge="end"
                       sx={{ color: AppColors.TXT_SUB, p: 0.5 }}
                     >
-                      {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+                      {showPassword ? (
+                        <VisibilityOff fontSize="small" />
+                      ) : (
+                        <Visibility fontSize="small" />
+                      )}
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -363,12 +443,21 @@ export default function ForgotPassword() {
                   borderRadius: 2,
                   "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
                   "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                  "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+                  "&.Mui-focused fieldset": {
+                    borderColor: AppColors.TXT_SUB,
+                    borderWidth: 1,
+                  },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
                 "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2 },
-                "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-                "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+                "& .MuiInputBase-input::placeholder": {
+                  color: AppColors.TXT_SUB,
+                  opacity: 1,
+                },
+                "& .MuiFormHelperText-root": {
+                  color: AppColors.ERROR,
+                  fontSize: FONT_SIZE.CAPTION,
+                },
               }}
             />
           </>
@@ -395,7 +484,6 @@ export default function ForgotPassword() {
         >
           {loading ? "Please wait..." : "Confirm"}
         </Button>
-
       </Container>
     </Box>
   );
