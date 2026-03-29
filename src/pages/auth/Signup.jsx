@@ -1,5 +1,10 @@
-import { useEffect, useMemo, useState, useCallback } from "react";
-import { useNavigate, Link, useLocation, useSearchParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import {
+  useNavigate,
+  Link,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -9,28 +14,23 @@ import {
   IconButton,
   TextField,
   InputAdornment,
-  Divider,
   Container,
 } from "@mui/material";
 import {
   Visibility,
   VisibilityOff,
   Close as CloseIcon,
-  Google,
   CheckCircle as CheckCircleIcon,
   SwapHoriz as SwapHorizIcon,
 } from "@mui/icons-material";
 import { AppColors } from "../../constant/appColors";
 import authService from "../../services/authService";
-import OtpVerification from "../../components/otpVerification";
 import useSnackbar from "../../hooks/useSnackbar";
 import { decryptData } from "../../utils/encryption";
 import { FONT_SIZE } from "../../constant/lookUpConstant";
 import CountryCodePicker from "../../components/CountryCodePicker";
 import { getCountries, getCountryCallingCode } from "libphonenumber-js";
-
-const RESUME_OTP_MESSAGE_PATTERN =
-  /already exists|already registered|duplicate|email.*(in use|taken|exists)|user exists|verify your email|check your inbox/i;
+import userService from "../../services/secondGameServices/userService";
 
 function countryFromDialCode(dialCode) {
   if (!dialCode) return null;
@@ -87,9 +87,25 @@ const validationSchema = Yup.object({
 
 function PasswordRequirement({ met, label }) {
   return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 1, color: AppColors.TXT_SUB, fontSize: FONT_SIZE.CAPTION }}>
-      <CheckCircleIcon sx={{ fontSize: 18, color: met ? AppColors.SUCCESS : AppColors.TXT_SUB }} />
-      <Typography component="span" sx={{ fontSize: FONT_SIZE.CAPTION, color: AppColors.TXT_SUB }}>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+        color: AppColors.TXT_SUB,
+        fontSize: FONT_SIZE.CAPTION,
+      }}
+    >
+      <CheckCircleIcon
+        sx={{
+          fontSize: 18,
+          color: met ? AppColors.SUCCESS : AppColors.TXT_SUB,
+        }}
+      />
+      <Typography
+        component="span"
+        sx={{ fontSize: FONT_SIZE.CAPTION, color: AppColors.TXT_SUB }}
+      >
         {label}
       </Typography>
     </Box>
@@ -115,16 +131,6 @@ export default function Signup() {
     name: "India",
     flag: "🇮🇳",
   });
-  const [otpFormData, setOtpFormData] = useState({
-    showOtpForm: false,
-    userData: {
-      email: "",
-      fullName: "",
-      mobile: "",
-      password: "",
-      referrerId: "",
-    },
-  });
   const [signupMethod, setSignupMethod] = useState("email"); // "email" | "mobile"
   const { showSnackbar } = useSnackbar();
 
@@ -147,41 +153,15 @@ export default function Signup() {
     if (resolved) setSelectedCountry(resolved);
   }, [verifyEmailResume?.countryCode]);
 
-  const resumeOtpFlow = useCallback(
-    async (body) => {
-      try {
-        const resend = await authService.resendOtp({ email: body.email });
-        if (resend?.success) {
-          setOtpFormData({ showOtpForm: true, userData: body });
-          showSnackbar(
-            resend?.message || "Verification code sent. Check your inbox.",
-            "success",
-          );
-          return true;
-        }
-        showSnackbar(
-          resend?.message || "Could not send verification code.",
-          "error",
-        );
-      } catch (e) {
-        const api = e?.response?.data ?? e;
-        showSnackbar(
-          api?.message || e?.message || "Could not send verification code.",
-          "error",
-        );
-      }
-      return false;
-    },
-    [showSnackbar],
-  );
-
   const formik = useFormik({
     initialValues: initialFormValues,
     enableReinitialize: true,
     validationSchema,
     onSubmit: async (values) => {
       setLoading(true);
-      const nationalNumber = String(values.mobile || "").replace(/\D/g, "").slice(0, 14);
+      const nationalNumber = String(values.mobile || "")
+        .replace(/\D/g, "")
+        .slice(0, 14);
       const body = {
         fullName: values.fullName.trim(),
         email: values.email.trim(),
@@ -191,33 +171,23 @@ export default function Signup() {
         referrerId: values.referrerId.trim(),
       };
       try {
-        const signup1Res = await authService.register(body);
-        if (!signup1Res?.success) {
-          if (RESUME_OTP_MESSAGE_PATTERN.test(signup1Res?.message || "")) {
-            if (await resumeOtpFlow(body)) return;
-          }
+        const [signup1Res, signup2Res] = await Promise.all([
+          authService.register(body),
+          userService.register(body),
+        ]);
+        if (signup1Res?.success || signup2Res?.success) {
+          handleVerificationSuccess();
           showSnackbar(
-            signup1Res?.message || "Registration failed. Please try again.",
-            "error",
+            signup1Res?.message ||
+              "Registration successful. Please check your email for verification.",
+            "success",
           );
           return;
         }
-        setOtpFormData({
-          showOtpForm: true,
-          userData: body,
-        });
-        showSnackbar(
-          signup1Res?.message ||
-            "Registration successful. Please check your email for verification.",
-          "success",
-        );
       } catch (err) {
         console.error("Registration error:", err);
         const api = err?.response?.data ?? err;
         const msg = api?.message || err?.message || "";
-        if (api?.success === false && RESUME_OTP_MESSAGE_PATTERN.test(msg)) {
-          if (await resumeOtpFlow(body)) return;
-        }
         showSnackbar(msg || "Registration failed. Please try again.", "error");
       } finally {
         setLoading(false);
@@ -234,18 +204,8 @@ export default function Signup() {
   };
 
   const handleVerificationSuccess = () => {
-    navigate("/login", { state: { email: otpFormData?.userData?.email } });
+    navigate("/login", { state: { email: formik.values.email } });
   };
-
-  if (otpFormData.showOtpForm) {
-    return (
-      <OtpVerification
-        otpFormData={otpFormData}
-        onVerificationSuccess={handleVerificationSuccess}
-        onBack={() => setOtpFormData({ showOtpForm: false, userData: { email: "", fullName: "", password: "", referrerId: "" } })}
-      />
-    );
-  }
 
   return (
     <Box
@@ -297,12 +257,14 @@ export default function Signup() {
         </Link>
       </Box>
 
-      <Box sx={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        pb: 1,
-      }}>
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          pb: 1,
+        }}
+      >
         <Container maxWidth="md">
           <Typography
             variant="h6"
@@ -326,7 +288,9 @@ export default function Signup() {
                 mx: "auto",
               }}
             >
-              Your account is not verified yet. Your details are shown below — enter the same password you use to log in, then continue to verify your email with the code we send you.
+              Your account is not verified yet. Your details are shown below —
+              enter the same password you use to log in, then continue to verify
+              your email with the code we send you.
             </Typography>
           ) : null}
 
@@ -338,7 +302,10 @@ export default function Signup() {
                 if (!isLockedProfile) setSignupMethod("email");
               }}
               sx={{
-                color: signupMethod === "email" ? AppColors.TXT_MAIN : AppColors.TXT_SUB,
+                color:
+                  signupMethod === "email"
+                    ? AppColors.TXT_MAIN
+                    : AppColors.TXT_SUB,
                 fontWeight: signupMethod === "email" ? 600 : 400,
                 cursor: isLockedProfile ? "default" : "pointer",
                 pb: 0.5,
@@ -356,7 +323,13 @@ export default function Signup() {
           <Box
             component="form"
             onSubmit={formik.handleSubmit}
-            sx={{ display: "flex", flexDirection: "column", gap: 2, maxWidth: "28rem", mx: "auto" }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              maxWidth: "28rem",
+              mx: "auto",
+            }}
           >
             <TextField
               fullWidth
@@ -377,12 +350,21 @@ export default function Signup() {
                   borderRadius: 2,
                   "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
                   "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                  "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+                  "&.Mui-focused fieldset": {
+                    borderColor: AppColors.TXT_SUB,
+                    borderWidth: 1,
+                  },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
                 "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2 },
-                "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-                "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+                "& .MuiInputBase-input::placeholder": {
+                  color: AppColors.TXT_SUB,
+                  opacity: 1,
+                },
+                "& .MuiFormHelperText-root": {
+                  color: AppColors.ERROR,
+                  fontSize: FONT_SIZE.CAPTION,
+                },
               }}
             />
 
@@ -405,12 +387,21 @@ export default function Signup() {
                   borderRadius: 2,
                   "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
                   "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                  "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+                  "&.Mui-focused fieldset": {
+                    borderColor: AppColors.TXT_SUB,
+                    borderWidth: 1,
+                  },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
                 "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2 },
-                "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-                "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+                "& .MuiInputBase-input::placeholder": {
+                  color: AppColors.TXT_SUB,
+                  opacity: 1,
+                },
+                "& .MuiFormHelperText-root": {
+                  color: AppColors.ERROR,
+                  fontSize: FONT_SIZE.CAPTION,
+                },
               }}
             />
             {/* Mobile number */}
@@ -420,7 +411,9 @@ export default function Signup() {
               placeholder="Enter mobile number"
               value={formik.values.mobile}
               onChange={(e) => {
-                const digitsOnly = String(e.target.value || "").replace(/\D/g, "").slice(0, 14);
+                const digitsOnly = String(e.target.value || "")
+                  .replace(/\D/g, "")
+                  .slice(0, 14);
                 formik.setFieldValue("mobile", digitsOnly, true);
               }}
               onBlur={formik.handleBlur}
@@ -433,7 +426,9 @@ export default function Signup() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start" sx={{ mr: 0.5 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", mr: 0.5 }}>
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", mr: 0.5 }}
+                    >
                       <CountryCodePicker
                         valueIso2={selectedCountry?.iso2}
                         onChange={(c) => setSelectedCountry(c)}
@@ -450,12 +445,27 @@ export default function Signup() {
                   borderRadius: 2,
                   "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
                   "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                  "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+                  "&.Mui-focused fieldset": {
+                    borderColor: AppColors.TXT_SUB,
+                    borderWidth: 1,
+                  },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
-                "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2, pl: 1, ml: 1, borderLeft: "1px solid rgba(255,255,255,0.12)" },
-                "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-                "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+                "& .MuiInputBase-input": {
+                  py: 1.5,
+                  fontSize: FONT_SIZE.BODY2,
+                  pl: 1,
+                  ml: 1,
+                  borderLeft: "1px solid rgba(255,255,255,0.12)",
+                },
+                "& .MuiInputBase-input::placeholder": {
+                  color: AppColors.TXT_SUB,
+                  opacity: 1,
+                },
+                "& .MuiFormHelperText-root": {
+                  color: AppColors.ERROR,
+                  fontSize: FONT_SIZE.CAPTION,
+                },
               }}
             />
             <TextField
@@ -476,7 +486,10 @@ export default function Signup() {
                     <IconButton
                       onClick={() => setShowPassword(!showPassword)}
                       edge="end"
-                      sx={{ color: AppColors.TXT_SUB, "&:hover": { color: AppColors.TXT_MAIN } }}
+                      sx={{
+                        color: AppColors.TXT_SUB,
+                        "&:hover": { color: AppColors.TXT_MAIN },
+                      }}
                     >
                       {showPassword ? (
                         <VisibilityOff sx={{ fontSize: 20 }} />
@@ -494,25 +507,57 @@ export default function Signup() {
                   borderRadius: 2,
                   "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
                   "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                  "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+                  "&.Mui-focused fieldset": {
+                    borderColor: AppColors.TXT_SUB,
+                    borderWidth: 1,
+                  },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
                 "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2 },
-                "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-                "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+                "& .MuiInputBase-input::placeholder": {
+                  color: AppColors.TXT_SUB,
+                  opacity: 1,
+                },
+                "& .MuiFormHelperText-root": {
+                  color: AppColors.ERROR,
+                  fontSize: FONT_SIZE.CAPTION,
+                },
               }}
             />
 
             {/* Password requirements */}
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, mb: 0.5, alignItems: "flex-start" }}>
-              <PasswordRequirement met={requirements.length} label="8-30 Characters" />
-              <PasswordRequirement met={requirements.upper} label="At least one uppercase letter" />
-              <PasswordRequirement met={requirements.lower} label="At least one lowercase letter" />
-              <PasswordRequirement met={requirements.number} label="At least one number" />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 0.5,
+                mb: 0.5,
+                alignItems: "flex-start",
+              }}
+            >
+              <PasswordRequirement
+                met={requirements.length}
+                label="8-30 Characters"
+              />
+              <PasswordRequirement
+                met={requirements.upper}
+                label="At least one uppercase letter"
+              />
+              <PasswordRequirement
+                met={requirements.lower}
+                label="At least one lowercase letter"
+              />
+              <PasswordRequirement
+                met={requirements.number}
+                label="At least one number"
+              />
             </Box>
 
             {/* Referral Code */}
-            <Typography variant="body1" sx={{ fontWeight: 500, color: AppColors.TXT_MAIN }}>
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: 500, color: AppColors.TXT_MAIN }}
+            >
               Referral Code
             </Typography>
             <TextField
@@ -522,7 +567,9 @@ export default function Signup() {
               value={formik.values.referrerId}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.referrerId && Boolean(formik.errors.referrerId)}
+              error={
+                formik.touched.referrerId && Boolean(formik.errors.referrerId)
+              }
               helperText={formik.touched.referrerId && formik.errors.referrerId}
               variant="outlined"
               disabled={isLockedProfile}
@@ -533,12 +580,21 @@ export default function Signup() {
                   borderRadius: 2,
                   "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
                   "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                  "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+                  "&.Mui-focused fieldset": {
+                    borderColor: AppColors.TXT_SUB,
+                    borderWidth: 1,
+                  },
                   "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
                 },
                 "& .MuiInputBase-input": { py: 1.5, fontSize: FONT_SIZE.BODY2 },
-                "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-                "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+                "& .MuiInputBase-input::placeholder": {
+                  color: AppColors.TXT_SUB,
+                  opacity: 1,
+                },
+                "& .MuiFormHelperText-root": {
+                  color: AppColors.ERROR,
+                  fontSize: FONT_SIZE.CAPTION,
+                },
               }}
             />
 
@@ -575,7 +631,14 @@ export default function Signup() {
         </Divider> */}
 
         {/* Google sign-up */}
-        <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           {/* <IconButton
             onClick={() => showSnackbar("Google sign-up coming soon", "info")}
             sx={{
@@ -621,7 +684,6 @@ export default function Signup() {
             .
           </Typography>
         </Box>
-
       </Box>
     </Box>
   );

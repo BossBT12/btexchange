@@ -71,18 +71,22 @@ export default function Login() {
     onSubmit: async (values) => {
       setLoading(true);
       try {
-        const tradeUser = await authService.login({
-          email: values.email.trim(),
-          password: values.password,
-          deviceType: "web",
-          deviceToken: "",
-        });
-        const networkUser = await userService.login({
-          email: values.email.trim(),
-          password: values.password,
-        });
+        const [tradeUser, networkUser] = await Promise.all([
+          authService.login({
+            email: values.email.trim(),
+            password: values.password,
+            deviceType: "web",
+            deviceToken: "",
+          }),
+          userService.login({
+            email: values.email.trim(),
+            password: values.password,
+          }),
+        ]);
+        console.log('tradeUser: ', tradeUser);
+        console.log('networkUser: ', networkUser);
 
-        const { data: loginData, message } = tradeUser || {};
+        const { data: loginData, message } = tradeUser[0] || {};
         const { data: networkLoginData } = networkUser || {};
 
         if (
@@ -121,10 +125,7 @@ export default function Login() {
           profile &&
           profile.isEmailVerified === false
         ) {
-          showSnackbar(
-            api.message || t("auth.login.verifyEmailInfo"),
-            "info",
-          );
+          showSnackbar(api.message || t("auth.login.verifyEmailInfo"), "info");
           navigate("/signup", {
             replace: true,
             state: {
@@ -132,7 +133,9 @@ export default function Login() {
                 fullName: profile.fullName || "",
                 email: profile.email || "",
                 countryCode: profile.countryCode || "+91",
-                mobile: String(profile.mobile || "").replace(/\D/g, "").slice(0, 14),
+                mobile: String(profile.mobile || "")
+                  .replace(/\D/g, "")
+                  .slice(0, 14),
                 referrerId: profile.referrer?.UID || "",
               },
             },
