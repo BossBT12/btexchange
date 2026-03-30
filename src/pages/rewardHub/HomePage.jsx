@@ -48,7 +48,7 @@ const QUICK_ACTIONS = [
   { id: "main", label: "Main", icon: HomeOutlined, path: "/" },
   { id: "deposit", label: "Deposit", icon: AddIcon, path: "/reward-hub/deposit" },
   { id: "withdraw", label: "Withdraw", icon: RemoveIcon, path: "/reward-hub/withdraw" },
-  { id: "trade", label: "Trade", icon: BoltOutlined, path: "/reward-hub/future-copy" },
+  { id: "trade", label: "Capt WD", icon: BoltOutlined, path: "/reward-hub/capital-withdraw" },
   { id: "referral", label: "Referral", icon: GroupOutlined },
 ];
 

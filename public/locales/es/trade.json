@@ -183,7 +183,7 @@
     "common": {
       "rewardsHub": "Centro de recompensas",
       "accountSecurity": "Cuenta y seguridad",
-      "settings": "Configuración",
+      "settings": "Kundendienst",
       "network": "Red"
     },
     "footerVersion": "BLOCK APP v1.0.0"
@@ -308,9 +308,13 @@
       "enabled": "Activada",
       "disabled": "Desactivada"
     },
+    "updateEmail": "Actualizar correo",
     "changePassword": "Cambiar contraseña",
     "switchAccount": "Cambiar cuenta",
-    "logoutCurrent": "Cerrar sesión en esta cuenta"
+    "logoutCurrent": "Cerrar sesión en esta cuenta",
+    "logoutConfirmTitle": "¿Cerrar sesión?",
+    "logoutConfirmDescription": "Se cerrará la sesión de esta cuenta. Podrás iniciar sesión de nuevo cuando quieras.",
+    "logoutConfirmOk": "Cerrar sesión"
   },
   "twoFactor": {
     "title": "Autenticación de dos factores",
@@ -529,7 +533,7 @@
         "main": "Principal",
         "deposit": "Depositar",
         "withdraw": "Retirar",
-        "trade": "Operar",
+        "trade": "Capt WD",
         "referral": "Referidos"
       },
       "referralCard": {
@@ -759,6 +763,9 @@
     "profile": {
       "title": "Centro de usuario",
       "loggedOut": "Sesión cerrada",
+      "logoutConfirmTitle": "¿Cerrar sesión?",
+      "logoutConfirmDescription": "Se cerrará la sesión de esta cuenta. Podrás iniciar sesión de nuevo cuando quieras.",
+      "logoutConfirmOk": "Cerrar sesión",
       "rows": {
         "uid": "UID",
         "fullName": "Nombre completo",
@@ -768,6 +775,7 @@
         "twoFactor": "Autenticación de dos factores",
         "twoFactorEnabled": "Activada",
         "twoFactorDisabled": "Desactivada",
+        "updateEmail": "Actualizar correo",
         "changePassword": "Cambiar contraseña",
         "switchAccount": "Cambiar cuenta",
         "logout": "Cerrar sesión de la cuenta actual"

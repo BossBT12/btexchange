@@ -38,8 +38,7 @@ import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
 import dashboardServices from "../../services/dashboardServices";
 import BTLoader from "../../components/Loader";
-import { FaUserTie } from "react-icons/fa";
-import userStatsImg from '../../assets/images/userStats.png';
+import { IoIosPeople } from "react-icons/io";
 
 const TraderChart = memo(({ tradeValue, idx }) => {
   const chartData = useMemo(() => {
@@ -585,8 +584,8 @@ const LandingPage = () => {
                 </linearGradient>
               </defs>
             </svg>
-            <FaUserTie
-              style={{ fill: "url(#landingIconGoldGrad)", width: 50, height: 50 }}
+            <IoIosPeople 
+              style={{ fill: "url(#landingIconGoldGrad)", width: 75, height: 75 }}
               aria-hidden
             />
           </Box>

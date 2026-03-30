@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   useNavigate,
   Link,
@@ -31,6 +31,14 @@ import { FONT_SIZE } from "../../constant/lookUpConstant";
 import CountryCodePicker from "../../components/CountryCodePicker";
 import { getCountries, getCountryCallingCode } from "libphonenumber-js";
 import userService from "../../services/secondGameServices/userService";
+import {
+  SignupCaptcha,
+  validateSignupCaptcha,
+  getSignupCaptchaAttemptState,
+  recordSignupCaptchaFailure,
+  formatCaptchaLockoutCountdown,
+  SIGNUP_CAPTCHA_MAX_ATTEMPTS,
+} from "../../features/signupCaptcha";
 
 function countryFromDialCode(dialCode) {
   if (!dialCode) return null;
@@ -125,6 +133,14 @@ export default function Signup() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [captchaBlocked, setCaptchaBlocked] = useState(false);
+  const [captchaRemaining, setCaptchaRemaining] = useState(
+    SIGNUP_CAPTCHA_MAX_ATTEMPTS,
+  );
+  const [captchaUnlockAtMs, setCaptchaUnlockAtMs] = useState(null);
+  const [captchaLockoutTick, setCaptchaLockoutTick] = useState(0);
+  const captchaRef = useRef(null);
+  const captchaBlockedRef = useRef(false);
   const [selectedCountry, setSelectedCountry] = useState({
     iso2: "IN",
     dialCode: "+91",
@@ -153,11 +169,74 @@ export default function Signup() {
     if (resolved) setSelectedCountry(resolved);
   }, [verifyEmailResume?.countryCode]);
 
+  useEffect(() => {
+    captchaBlockedRef.current = captchaBlocked;
+  }, [captchaBlocked]);
+
+  useEffect(() => {
+    let cancelled = false;
+    getSignupCaptchaAttemptState().then((state) => {
+      if (cancelled) return;
+      setCaptchaBlocked(state.blocked);
+      captchaBlockedRef.current = state.blocked;
+      setCaptchaRemaining(state.remaining);
+      setCaptchaUnlockAtMs(state.unlockAtMs ?? null);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!captchaBlocked || captchaUnlockAtMs == null) return;
+    const id = window.setInterval(() => {
+      setCaptchaLockoutTick((t) => t + 1);
+      if (Date.now() >= captchaUnlockAtMs) {
+        getSignupCaptchaAttemptState().then((state) => {
+          setCaptchaBlocked(state.blocked);
+          captchaBlockedRef.current = state.blocked;
+          setCaptchaRemaining(state.remaining);
+          setCaptchaUnlockAtMs(state.unlockAtMs ?? null);
+        });
+      }
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, [captchaBlocked, captchaUnlockAtMs]);
+
   const formik = useFormik({
     initialValues: initialFormValues,
     enableReinitialize: true,
     validationSchema,
     onSubmit: async (values) => {
+      if (captchaBlockedRef.current) {
+        showSnackbar(
+          "Sign up is disabled after too many failed captcha attempts.",
+          "error",
+        );
+        return;
+      }
+      const captchaValue = captchaRef.current?.getValue?.() ?? "";
+      if (!validateSignupCaptcha(captchaValue)) {
+        const next = await recordSignupCaptchaFailure();
+        setCaptchaBlocked(next.blocked);
+        captchaBlockedRef.current = next.blocked;
+        setCaptchaRemaining(next.remaining);
+        setCaptchaUnlockAtMs(next.unlockAtMs ?? null);
+        if (next.blocked) {
+          showSnackbar(
+            "Too many incorrect captcha attempts. Sign up is disabled for this network.",
+            "error",
+          );
+        } else {
+          showSnackbar(
+            `Invalid captcha. ${next.remaining} attempt${next.remaining === 1 ? "" : "s"} remaining.`,
+            "error",
+          );
+        }
+        captchaRef.current?.reload?.();
+        return;
+      }
+
       setLoading(true);
       const nationalNumber = String(values.mobile || "")
         .replace(/\D/g, "")
@@ -206,6 +285,12 @@ export default function Signup() {
   const handleVerificationSuccess = () => {
     navigate("/login", { state: { email: formik.values.email } });
   };
+
+  const signupDisabledByCaptcha = captchaBlocked;
+  const captchaLockoutRemainingMs =
+    signupDisabledByCaptcha && captchaUnlockAtMs != null
+      ? Math.max(0, captchaUnlockAtMs - Date.now())
+      : 0;
 
   return (
     <Box
@@ -276,7 +361,6 @@ export default function Signup() {
           >
             Sign Up
           </Typography>
-
           {isLockedProfile ? (
             <Typography
               variant="body2"
@@ -342,7 +426,7 @@ export default function Signup() {
               helperText={formik.touched.fullName && formik.errors.fullName}
               variant="outlined"
               autoComplete="name"
-              disabled={isLockedProfile}
+              disabled={isLockedProfile || signupDisabledByCaptcha}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   bgcolor: AppColors.BG_SECONDARY,
@@ -379,7 +463,7 @@ export default function Signup() {
               helperText={formik.touched.email && formik.errors.email}
               variant="outlined"
               autoComplete="email"
-              disabled={isLockedProfile}
+              disabled={isLockedProfile || signupDisabledByCaptcha}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   bgcolor: AppColors.BG_SECONDARY,
@@ -422,7 +506,7 @@ export default function Signup() {
               variant="outlined"
               autoComplete="mobile"
               inputMode="numeric"
-              disabled={isLockedProfile}
+              disabled={isLockedProfile || signupDisabledByCaptcha}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start" sx={{ mr: 0.5 }}>
@@ -432,7 +516,7 @@ export default function Signup() {
                       <CountryCodePicker
                         valueIso2={selectedCountry?.iso2}
                         onChange={(c) => setSelectedCountry(c)}
-                        disabled={isLockedProfile}
+                        disabled={isLockedProfile || signupDisabledByCaptcha}
                       />
                     </Box>
                   </InputAdornment>
@@ -480,12 +564,14 @@ export default function Signup() {
               helperText={formik.touched.password && formik.errors.password}
               variant="outlined"
               autoComplete="new-password"
+              disabled={signupDisabledByCaptcha}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
                       onClick={() => setShowPassword(!showPassword)}
                       edge="end"
+                      disabled={signupDisabledByCaptcha}
                       sx={{
                         color: AppColors.TXT_SUB,
                         "&:hover": { color: AppColors.TXT_MAIN },
@@ -572,7 +658,7 @@ export default function Signup() {
               }
               helperText={formik.touched.referrerId && formik.errors.referrerId}
               variant="outlined"
-              disabled={isLockedProfile}
+              disabled={isLockedProfile || signupDisabledByCaptcha}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   bgcolor: AppColors.BG_SECONDARY,
@@ -598,11 +684,60 @@ export default function Signup() {
               }}
             />
 
+            {!signupDisabledByCaptcha &&
+            captchaRemaining < SIGNUP_CAPTCHA_MAX_ATTEMPTS ? (
+              <Typography
+                variant="caption"
+                sx={{ color: AppColors.TXT_SUB, alignSelf: "flex-start" }}
+              >
+                Captcha attempts remaining: {captchaRemaining}
+              </Typography>
+            ) : null}
+
+            <SignupCaptcha
+              ref={captchaRef}
+              disabled={loading || signupDisabledByCaptcha}
+            />
+
+            {signupDisabledByCaptcha ? (
+              <Box
+                data-lockout-tick={captchaLockoutTick}
+                sx={{
+                  maxWidth: "28rem",
+                  mx: "auto",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 0.75,
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: AppColors.ERROR,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  Too many incorrect captcha attempts. Sign up is disabled for
+                  this network. Try again in{" "}
+                  <Box
+                    component="span"
+                    sx={{
+                      fontVariantNumeric: "tabular-nums",
+                      fontWeight: 600,
+                      color: AppColors.TXT_MAIN,
+                    }}
+                  >
+                    {formatCaptchaLockoutCountdown(captchaLockoutRemainingMs)}
+                  </Box>
+                  .
+                </Typography>
+              </Box>
+            ) : null}
             {/* Confirm button */}
             <Button
               type="submit"
               fullWidth
-              disabled={loading}
+              disabled={loading || signupDisabledByCaptcha}
               sx={{
                 mt: 1,
                 py: 1,

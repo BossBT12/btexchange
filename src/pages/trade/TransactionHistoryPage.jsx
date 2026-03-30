@@ -60,16 +60,6 @@ const CHAIN_OPTIONS = [
 
 const PAGE_SIZE = 10;
 
-const getExplorerUrl = (chain, txHash) => {
-  if (!chain || !txHash) return null;
-  const explorers = {
-    BSC: `https://bscscan.com/tx/${txHash}`,
-    ETH: `https://etherscan.io/tx/${txHash}`,
-    POLYGON: `https://polygonscan.com/tx/${txHash}`,
-  };
-  return explorers[chain] || null;
-};
-
 const formatDate = (dateString) => {
   if (!dateString) return "—";
   const date = new Date(dateString);
@@ -132,7 +122,6 @@ export default function TransactionHistoryPage() {
   );
   const [statusFilter, setStatusFilter] = useState("");
   const [chainFilter, setChainFilter] = useState("");
-  const [pairFilter, setPairFilter] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [sortBy, setSortBy] = useState("createdAt");
@@ -149,7 +138,6 @@ export default function TransactionHistoryPage() {
         sortOrder,
         ...(statusFilter && { status: statusFilter }),
         ...(chainFilter && { chain: chainFilter }),
-        ...(pairFilter?.trim() && { pair: pairFilter.trim() }),
         ...(startDate && { startDate: new Date(startDate).toISOString() }),
         ...(endDate && { endDate: new Date(endDate).toISOString() }),
       };
@@ -181,7 +169,7 @@ export default function TransactionHistoryPage() {
     } finally {
       setLoading(false);
     }
-  }, [typeFilter, statusFilter, chainFilter, pairFilter, startDate, endDate, sortBy, sortOrder, page, t]);
+  }, [typeFilter, statusFilter, chainFilter, startDate, endDate, sortBy, sortOrder, page, t]);
 
   useEffect(() => {
     fetchHistory();
@@ -197,11 +185,6 @@ export default function TransactionHistoryPage() {
         "transactionHistory.filters.typeOption.DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE",
         "All"
       );
-
-  const getStatusLabel = (status) =>
-    status
-      ? t(`transactionHistory.filters.statusOption.${status}`, status)
-      : t("transactionHistory.filters.statusOption.all", "All status");
 
   const getChainLabel = (chain) =>
     chain
@@ -295,10 +278,10 @@ export default function TransactionHistoryPage() {
           }}
         >
           <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
-            {t("transactionHistory.card.noRemark", "No remark")}
+            {item?.note || t("transactionHistory.card.noRemark", "No remark")} 
           </Typography>
-          <Box sx={{ minHeight: 40 }}>
-            {/* {item.txHash ? (
+          {/* <Box sx={{ minHeight: 40 }}>
+            {item.txHash ? (
               <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, flexWrap: "wrap" }}>
                 <Typography sx={{ fontSize: FONT_SIZE.CAPTION, color: AppColors.TXT_SUB, wordBreak: "break-all" }}>
                   {t("transactionHistory.card.txPrefix", "Tx:")} {item.txHash}
@@ -317,8 +300,8 @@ export default function TransactionHistoryPage() {
               </Box>
             ) : (
               <Typography sx={{ fontSize: FONT_SIZE.CAPTION, color: AppColors.TXT_SUB }}>—</Typography>
-            )} */}
-          </Box>
+            )}
+          </Box> */}
         </Box>
       </Box>
     );

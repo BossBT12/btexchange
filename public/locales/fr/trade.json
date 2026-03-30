@@ -183,7 +183,7 @@
     "common": {
       "rewardsHub": "Centre de récompenses",
       "accountSecurity": "Compte et sécurité",
-      "settings": "Paramètres",
+      "settings": "Service client",
       "network": "Réseau"
     },
     "footerVersion": "BLOCK APP v1.0.0"
@@ -308,9 +308,13 @@
       "enabled": "Activée",
       "disabled": "Désactivée"
     },
+    "updateEmail": "Modifier l’e-mail",
     "changePassword": "Modifier le mot de passe",
     "switchAccount": "Changer de compte",
-    "logoutCurrent": "Se déconnecter de ce compte"
+    "logoutCurrent": "Se déconnecter de ce compte",
+    "logoutConfirmTitle": "Se déconnecter ?",
+    "logoutConfirmDescription": "Vous serez déconnecté de ce compte. Vous pourrez vous reconnecter à tout moment.",
+    "logoutConfirmOk": "Se déconnecter"
   },
   "twoFactor": {
     "title": "Authentification à deux facteurs",
@@ -529,7 +533,7 @@
         "main": "Accueil",
         "deposit": "Dépôt",
         "withdraw": "Retrait",
-        "trade": "Trader",
+        "trade": "Capt WD",
         "referral": "Parrainage"
       },
       "referralCard": {
@@ -759,6 +763,9 @@
     "profile": {
       "title": "Centre utilisateur",
       "loggedOut": "Déconnecté",
+      "logoutConfirmTitle": "Se déconnecter ?",
+      "logoutConfirmDescription": "Vous serez déconnecté de ce compte. Vous pourrez vous reconnecter à tout moment.",
+      "logoutConfirmOk": "Se déconnecter",
       "rows": {
         "uid": "UID",
         "fullName": "Nom complet",
@@ -768,6 +775,7 @@
         "twoFactor": "Authentification à deux facteurs",
         "twoFactorEnabled": "Activée",
         "twoFactorDisabled": "Désactivée",
+        "updateEmail": "Modifier l’e-mail",
         "changePassword": "Changer le mot de passe",
         "switchAccount": "Changer de compte",
         "logout": "Se déconnecter du compte actuel"

@@ -358,7 +358,7 @@ const ReportingPage = () => {
                     + ${String(report.amount ?? report.amountUsd ?? 0).replace(/(\.\d*?)0+$/, "$1")}
                   </Typography>
                 </Box>
-                {report.description && (
+                {/* {report.description && (
                   <Typography
                     variant="body2"
                     sx={{
@@ -369,7 +369,7 @@ const ReportingPage = () => {
                   >
                     {report.description}
                   </Typography>
-                )}
+                )} */}
               </Box>
             ))
           )}

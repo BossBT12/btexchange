@@ -183,7 +183,7 @@
     "common": {
       "rewardsHub": "奖励中心",
       "accountSecurity": "账户与安全",
-      "settings": "设置",
+      "settings": "客户服务",
       "network": "网络"
     },
     "footerVersion": "BLOCK APP v1.0.0"
@@ -308,9 +308,13 @@
       "enabled": "已启用",
       "disabled": "未启用"
     },
+    "updateEmail": "更新邮箱",
     "changePassword": "修改密码",
     "switchAccount": "切换账户",
-    "logoutCurrent": "退出当前账户"
+    "logoutCurrent": "退出当前账户",
+    "logoutConfirmTitle": "退出登录？",
+    "logoutConfirmDescription": "您将退出当前账号。可随时重新登录。",
+    "logoutConfirmOk": "退出登录"
   },
   "twoFactor": {
     "title": "双因素认证",
@@ -529,7 +533,7 @@
         "main": "主页",
         "deposit": "充值",
         "withdraw": "提现",
-        "trade": "交易",
+        "trade": "上尉病房",
         "referral": "邀请"
       },
       "referralCard": {
@@ -759,6 +763,9 @@
     "profile": {
       "title": "用户中心",
       "loggedOut": "已退出登录",
+      "logoutConfirmTitle": "退出登录？",
+      "logoutConfirmDescription": "您将退出当前账号。可随时重新登录。",
+      "logoutConfirmOk": "退出登录",
       "rows": {
         "uid": "UID",
         "fullName": "姓名",
@@ -768,6 +775,7 @@
         "twoFactor": "两步验证",
         "twoFactorEnabled": "已开启",
         "twoFactorDisabled": "未开启",
+        "updateEmail": "更新邮箱",
         "changePassword": "修改密码",
         "switchAccount": "切换账号",
         "logout": "退出当前账号"

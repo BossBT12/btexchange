@@ -18,11 +18,10 @@ import GpsFixedOutlinedIcon from "@mui/icons-material/GpsFixedOutlined";
 import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import AccountTreeOutlinedIcon from "@mui/icons-material/AccountTreeOutlined";
 import { useNavigate } from "react-router-dom";
 import { AppColors } from "../../constant/appColors";
-import { ArrowForwardIos, CheckCircle, InsightsOutlined, Language } from "@mui/icons-material";
+import { ArrowForwardIos, CheckCircle, InsightsOutlined, Language, SupportAgent } from "@mui/icons-material";
 import { copyToClipboard } from "../../utils/utils";
 import useAuth from "../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
@@ -96,7 +95,7 @@ const commonFunctions = [
   {
     key: "settings",
     labelKey: "menu.common.settings",
-    icon: <SettingsOutlinedIcon fontSize="medium" />,
+    icon: <SupportAgent fontSize="medium" />,
     path: "/agent-service",
   },
   {

@@ -2,16 +2,19 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import cryptoMarketService from "../services/cryptoMarketService";
 import { createMarketInsightsSocket } from "../services/cryptoMarketWebSocket";
 
-const POLL_MARKET_CAP_MS = 2 * 60 * 1000;  // 2 min - CoinGecko caches 10 min
+const POLL_MARKET_CAP_MS = 2 * 60 * 1000; // 2 min - CoinGecko caches 10 min
 const POLL_FEAR_GREED_MS = 60 * 60 * 1000; // 1 hour - updates daily
 
 /**
  * Hook for live market insights data.
- * Uses Binance WebSocket for real-time volume + performance,
- * and REST polling for market cap + Fear & Greed (no WS available).
- * @param {boolean} active - Only connect when true (e.g. Insights tab visible)
+ * Binance WebSocket streams live volume + performance whenever `streamLive` is true.
+ * CoinGecko REST (market cap, Fear & Greed) runs only when `loadRestInsights` is true.
+ * @param {{ streamLive?: boolean, loadRestInsights?: boolean }} options
  */
-export function useMarketInsightsLive(active) {
+export function useMarketInsightsLive(options = {}) {
+  const streamLive = options.streamLive !== false;
+  const loadRestInsights = options.loadRestInsights === true;
+
   const [overview, setOverview] = useState({
     fearGreed: null,
     marketCap: null,
@@ -27,6 +30,7 @@ export function useMarketInsightsLive(active) {
   const [error, setError] = useState(null);
 
   const wsRef = useRef(null);
+  const wsGenerationRef = useRef(0);
   const pollMarketCapRef = useRef(null);
   const pollFearGreedRef = useRef(null);
 
@@ -63,11 +67,11 @@ export function useMarketInsightsLive(active) {
         cryptoMarketService.getGlobalMarketData(),
         cryptoMarketService.getFearGreedIndex(),
       ]);
-      setOverview({
+      setOverview((prev) => ({
         fearGreed: { value: fearGreed.value, label: fearGreed.label },
         marketCap: globalData.marketCap,
-        volume24h: globalData.volume24h,
-      });
+        volume24h: prev.volume24h ?? globalData.volume24h,
+      }));
     } catch (err) {
       setError(err?.message || "Failed to load market data");
     } finally {
@@ -75,20 +79,21 @@ export function useMarketInsightsLive(active) {
     }
   }, []);
 
+  // Binance WebSocket: live 24h volume + performance distribution (always while Market page is open)
   useEffect(() => {
-    if (!active) return;
+    if (!streamLive) return;
 
+    const gen = ++wsGenerationRef.current;
     let cancelled = false;
 
-    // Initial REST fetch for market cap + fear & greed
-    initialFetch();
-
-    // WebSocket for live volume + performance
     wsRef.current = createMarketInsightsSocket((data) => {
-      if (cancelled) return;
+      if (cancelled || gen !== wsGenerationRef.current) return;
       setOverview((prev) => ({
         ...prev,
-        volume24h: { ...data.volume24h, change: prev.volume24h?.change ?? data.volume24h.change },
+        volume24h: {
+          ...data.volume24h,
+          change: prev.volume24h?.change ?? data.volume24h.change,
+        },
       }));
       setPerformance({
         values: data.performance.values,
@@ -98,24 +103,35 @@ export function useMarketInsightsLive(active) {
       });
     });
 
-    // Poll market cap periodically (CoinGecko has no WebSocket)
-    const pollMarketCap = () => {
-      if (!cancelled) fetchMarketCap();
-    };
-    pollMarketCap(); // Immediate fetch
-    pollMarketCapRef.current = setInterval(pollMarketCap, POLL_MARKET_CAP_MS);
-
-    // Poll Fear & Greed (updates ~daily)
-    const pollFearGreed = () => {
-      if (!cancelled) fetchFearGreed();
-    };
-    pollFearGreed(); // Immediate fetch
-    pollFearGreedRef.current = setInterval(pollFearGreed, POLL_FEAR_GREED_MS);
-
     return () => {
       cancelled = true;
       wsRef.current?.close();
       wsRef.current = null;
+    };
+  }, [streamLive]);
+
+  // CoinGecko + polling: only when Insights tab is visible (rate limits)
+  useEffect(() => {
+    if (!loadRestInsights) return;
+
+    let cancelled = false;
+
+    initialFetch();
+    // Do not call fetchMarketCap / fetchFearGreed here — initialFetch already loads both.
+    // Immediate extra polls were doubling CoinGecko traffic and triggering 429 on refresh.
+
+    const pollMarketCap = () => {
+      if (!cancelled) fetchMarketCap();
+    };
+    pollMarketCapRef.current = setInterval(pollMarketCap, POLL_MARKET_CAP_MS);
+
+    const pollFearGreed = () => {
+      if (!cancelled) fetchFearGreed();
+    };
+    pollFearGreedRef.current = setInterval(pollFearGreed, POLL_FEAR_GREED_MS);
+
+    return () => {
+      cancelled = true;
       if (pollMarketCapRef.current) {
         clearInterval(pollMarketCapRef.current);
         pollMarketCapRef.current = null;
@@ -125,7 +141,7 @@ export function useMarketInsightsLive(active) {
         pollFearGreedRef.current = null;
       }
     };
-  }, [active, initialFetch, fetchMarketCap, fetchFearGreed]);
+  }, [loadRestInsights, initialFetch, fetchMarketCap, fetchFearGreed]);
 
   return { overview, performance, loading, error };
 }

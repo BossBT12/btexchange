@@ -76,6 +76,11 @@ const userService = {
     const response = await api2.get("/user/stats-summary");
     return response.data;
   },
+  //user/update-emai
+  updateEmail: async (newEmail) => {
+    const response = await api2.post("/user/update-email", { newEmail });
+    return response.data;
+  },
 };
 
 export default userService;

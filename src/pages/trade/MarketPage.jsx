@@ -31,6 +31,20 @@ const CATEGORY_FILTERS = [
   { id: "tradable coin", label: "Tradable Coins", icon: TrendingUpIcon },
 ];
 
+/** Fallback when WS has not yet sent performance (must match PERF_BUCKETS length in crypto services). */
+const DEFAULT_MARKET_PERF_LABELS = [
+  ">8%",
+  "6-8%",
+  "4-6%",
+  "2-4%",
+  "0-2%",
+  "0-2%",
+  "2-4%",
+  "4-6%",
+  "6-8%",
+  ">8%",
+];
+
 const FearGreedMeter = memo(({ value = 38, label = "Neutral" }) => {
   const cx = 60;
   const cy = 60; // center slightly lower for proper semicircle
@@ -169,7 +183,10 @@ export default function MarketPage() {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [showSearch, setShowSearch] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const { overview, performance, loading: insightsLoading, error: insightsError } = useMarketInsightsLive(activeTab === "Insights");
+  const { overview, performance, loading: insightsLoading, error: insightsError } = useMarketInsightsLive({
+    streamLive: true,
+    loadRestInsights: activeTab === "Insights",
+  });
 
   useEffect(() => {
     return () => {
@@ -189,15 +206,20 @@ export default function MarketPage() {
     []
   );
 
-  const maxBarValue = performance?.values?.length
-    ? Math.max(...performance?.values, 1)
-    : 1;
-  const percent =
-    performance?.riseCount + performance?.fallCount > 0
-      ? (performance.riseCount /
-        (performance.riseCount + performance.fallCount)) *
-      100
-      : 50;
+  const riseCount = performance?.riseCount ?? 0;
+  const fallCount = performance?.fallCount ?? 0;
+  const totalRiseFall = riseCount + fallCount;
+
+  const perfValues = performance?.values?.length
+    ? performance.values
+    : Array(DEFAULT_MARKET_PERF_LABELS.length).fill(0);
+  const perfLabels = performance?.labels?.length
+    ? performance.labels
+    : DEFAULT_MARKET_PERF_LABELS;
+
+  const maxBarValue = perfValues.length ? Math.max(...perfValues, 1) : 1;
+  const riseFallPercent =
+    totalRiseFall > 0 ? (riseCount / totalRiseFall) * 100 : 50;
 
   const tilt = 8;
 
@@ -455,7 +477,7 @@ export default function MarketPage() {
               </Typography>
               <Box>
                 <Box sx={{ display: "flex", alignItems: "flex-end", gap: 0.5, mb: 0.5 }}>
-                  {(performance?.values?.length ? performance?.values : [0]).map((val, i) => (
+                  {perfValues.map((val, i) => (
                     <Box
                       key={i}
                       sx={{
@@ -463,6 +485,7 @@ export default function MarketPage() {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
+                        minWidth: 0,
                       }}
                     >
                       <Typography
@@ -480,14 +503,14 @@ export default function MarketPage() {
                           height: Math.max(8, (val / maxBarValue) * 48),
                           borderRadius: 1,
                           bgcolor: i < 5 ? AppColors.SUCCESS : AppColors.ERROR,
-                          opacity: i < 5 ? 0.9 : 0.9,
+                          opacity: 0.9,
                         }}
                       />
                     </Box>
                   ))}
                 </Box>
                 <Box sx={{ display: "flex", justifyContent: "space-between", px: 0.25 }}>
-                  {(performance?.labels?.length ? performance?.labels : [">8%", "6-8%", "4-6%", "2-4%", "0-2%", "0-2%", "2-4%", "4-6%", "6-8%", ">8%"]).map((label, i) => (
+                  {perfLabels.map((label, i) => (
                     <Typography
                       key={i}
                       variant="body2"
@@ -495,6 +518,7 @@ export default function MarketPage() {
                         flex: 1,
                         color: AppColors.TXT_SUB,
                         textAlign: "center",
+                        minWidth: 0,
                       }}
                     >
                       {label}
@@ -511,10 +535,10 @@ export default function MarketPage() {
                     }}
                   >
                     <Typography variant="body1" sx={{ color: AppColors.TXT_MAIN }}>
-                      {t("market.performance.rise", "Rise {{count}}", { count: performance?.riseCount })}
+                      {t("market.performance.rise", "Rise {{count}}", { count: riseCount })}
                     </Typography>
                     <Typography variant="body1" sx={{ color: AppColors.ERROR }}>
-                      {t("market.performance.fall", "Fall {{count}}", { count: performance?.fallCount })}
+                      {t("market.performance.fall", "Fall {{count}}", { count: fallCount })}
                     </Typography>
                   </Box>
                   <Box
@@ -529,24 +553,22 @@ export default function MarketPage() {
                     {/* GREEN */}
                     <Box
                       sx={{
-                        width: `${performance?.riseCount + performance?.fallCount > 0
-                          ? (performance?.riseCount /
-                            (performance?.riseCount + performance?.fallCount)) *
-                          100
-                          : 50
-                          }%`,
+                        width: `${riseFallPercent}%`,
+                        minWidth: 0,
+                        flexShrink: 0,
                         bgcolor: AppColors.SUCCESS,
-
-                        clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)",
+                        clipPath: `polygon(0 0, 100% 0, calc(100% - ${tilt}px) 100%, 0 100%)`,
                       }}
                     />
 
                     {/* RED */}
                     <Box
                       sx={{
-                        flex: 1,
+                        width: `${100 - riseFallPercent}%`,
+                        minWidth: 0,
+                        flexShrink: 0,
                         bgcolor: AppColors.ERROR,
-                        clipPath: `polygon(8px 0, 100% 0, 100% 100%, 0 100%)`,
+                        clipPath: `polygon(${tilt}px 0, 100% 0, 100% 100%, 0 100%)`,
                       }}
                     />
                   </Box>

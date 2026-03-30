@@ -5,24 +5,22 @@ import {
   Typography,
   IconButton,
   Avatar,
-  Button,
 } from "@mui/material";
 import {
-  AccountCircleRounded,
   CheckCircle,
   ChevronLeft,
   ContentCopy,
   KeyboardArrowRight,
-  Person,
 } from "@mui/icons-material";
 import { AppColors } from "../../constant/appColors";
 import useAuth from "../../hooks/useAuth";
 import useSnackbar from "../../hooks/useSnackbar";
 import { copyToClipboard } from "../../utils/utils";
-import { FONT_SIZE, ICON_SIZE, SPACING } from "../../constant/lookUpConstant";
+import { ICON_SIZE } from "../../constant/lookUpConstant";
 import userService from "../../services/secondGameServices/userService";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
+import ConfirmationModal from "../../components/ConfirmationModal.jsx";
 
 const Row = ({ label, value, onCopy, onClick, labelColor, valueColor, rightIcon = "arrow", copied }) => (
   <Box
@@ -85,6 +83,7 @@ const Profile = () => {
   const { showSnackbar } = useSnackbar();
   const { t } = useTranslation(TRADE_NAMESPACE);
   const [copied, setCopied] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [rewardHubProfile, setRewardHubProfile] = useState(null);
   const user = userData;
 
@@ -93,7 +92,7 @@ const Profile = () => {
       try {
         const response = await userService.getProfile();
         setRewardHubProfile(response?.data ?? response);
-      } catch (_) {
+      } catch {
         // Non-blocking; 2FA row falls back to userData
       }
     };
@@ -231,6 +230,10 @@ const Profile = () => {
           onClick={() => navigate("/reward-hub/two-factor-authentication")}
         />
         <Row
+          label={t("rewardHub.profile.rows.updateEmail", "Update Email")}
+          onClick={() => { navigate("/update-email") }}
+        />
+        <Row
           label={t("rewardHub.profile.rows.changePassword", "Change Password")}
           onClick={() => { navigate("/change-password") }}
         />
@@ -241,10 +244,22 @@ const Profile = () => {
         <Row
           label={t("rewardHub.profile.rows.logout", "Log out current account")}
           labelColor={AppColors.ERROR}
-          onClick={handleLogout}
+          onClick={() => setLogoutConfirmOpen(true)}
           rightIcon="arrow"
         />
       </Box>
+
+      <ConfirmationModal
+        open={logoutConfirmOpen}
+        onClose={() => setLogoutConfirmOpen(false)}
+        onConfirm={handleLogout}
+        title={t("rewardHub.profile.logoutConfirmTitle", "Log out?")}
+        description={t(
+          "rewardHub.profile.logoutConfirmDescription",
+          "You will be signed out of this account. You can sign in again anytime.",
+        )}
+        okText={t("rewardHub.profile.logoutConfirmOk", "Log out")}
+      />
     </Box>
   );
 };

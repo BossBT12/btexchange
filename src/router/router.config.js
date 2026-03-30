@@ -13,7 +13,9 @@ export const publicRouters = [
   },
   {
     path: "/trade/guide",
-    component: asyncComponent(() => import("../pages/trade/TradeGuidePage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/TradeGuidePage.jsx"),
+    ),
   },
   {
     path: "/market",
@@ -22,11 +24,15 @@ export const publicRouters = [
   },
   {
     path: "/market/list",
-    component: asyncComponent(() => import("../pages/trade/MarketListPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/MarketListPage.jsx"),
+    ),
   },
   {
     path: "/agent-service",
-    component: asyncComponent(() => import("../pages/trade/promotion/AgentServicePage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/promotion/AgentServicePage.jsx"),
+    ),
   },
   {
     path: "/coming-soon",
@@ -60,7 +66,9 @@ export const protectedRouters = [
   },
   {
     path: "/deposit-history",
-    component: asyncComponent(() => import("../pages/trade/DepositHistoryPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/DepositHistoryPage.jsx"),
+    ),
   },
   {
     path: "/withdraw",
@@ -68,7 +76,9 @@ export const protectedRouters = [
   },
   {
     path: "/history/totalDeposit",
-    component: asyncComponent(() => import("../pages/trade/DepositHistoryPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/DepositHistoryPage.jsx"),
+    ),
   },
   {
     path: "/menu",
@@ -83,13 +93,19 @@ export const protectedRouters = [
     component: asyncComponent(() => import("../pages/auth/ChangePassword.jsx")),
   },
   {
+    path: "/update-email",
+    component: asyncComponent(() => import("../pages/auth/updateEmail.jsx")),
+  },
+  {
     path: "/trade/asset",
     component: asyncComponent(() => import("../pages/trade/AssetsPage.jsx")),
     isBottomNav: true,
   },
   {
     path: "/trade-history",
-    component: asyncComponent(() => import("../pages/trade/GameHistoryPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/GameHistoryPage.jsx"),
+    ),
   },
   {
     path: "/promotion",
@@ -98,27 +114,39 @@ export const protectedRouters = [
   },
   {
     path: "/promotion/partner-rewards",
-    component: asyncComponent(() => import("../pages/trade/promotion/PartnerRewardsPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/promotion/PartnerRewardsPage.jsx"),
+    ),
   },
   {
     path: "/promotion/subordinate-data",
-    component: asyncComponent(() => import("../pages/trade/promotion/SubordinateData.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/promotion/SubordinateData.jsx"),
+    ),
   },
   {
     path: "/promotion/rules",
-    component: asyncComponent(() => import("../pages/trade/promotion/RulesPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/promotion/RulesPage.jsx"),
+    ),
   },
   {
     path: "/promotion/commission-detail",
-    component: asyncComponent(() => import("../pages/trade/promotion/CommissionDetailPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/promotion/CommissionDetailPage.jsx"),
+    ),
   },
   {
     path: "/promotion/rebate-ratio",
-    component: asyncComponent(() => import("../pages/trade/promotion/RebateRatioPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/promotion/RebateRatioPage.jsx"),
+    ),
   },
   {
     path: "/promotion/agent-service",
-    component: asyncComponent(() => import("../pages/trade/promotion/AgentServicePage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/promotion/AgentServicePage.jsx"),
+    ),
   },
   {
     path: "/feedback",
@@ -126,11 +154,15 @@ export const protectedRouters = [
   },
   {
     path: "/transaction-history",
-    component: asyncComponent(() => import("../pages/trade/TransactionHistoryPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/TransactionHistoryPage.jsx"),
+    ),
   },
   {
     path: "/two-factor-authentication",
-    component: asyncComponent(() => import("../pages/trade/TwoFactorAuthPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/TwoFactorAuthPage.jsx"),
+    ),
   },
   {
     path: "/about",
@@ -138,19 +170,27 @@ export const protectedRouters = [
   },
   {
     path: "/about/privacy-policy",
-    component: asyncComponent(() => import("../pages/trade/AboutDocumentPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/AboutDocumentPage.jsx"),
+    ),
   },
   {
     path: "/about/risk-disclosure",
-    component: asyncComponent(() => import("../pages/trade/AboutDocumentPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/AboutDocumentPage.jsx"),
+    ),
   },
   {
     path: "/announcement",
-    component: asyncComponent(() => import("../pages/trade/AnnouncementPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/AnnouncementPage.jsx"),
+    ),
   },
   {
     path: "/notifications",
-    component: asyncComponent(() => import("../pages/trade/NotificationsPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/NotificationsPage.jsx"),
+    ),
   },
   {
     path: "/copy-trading",
@@ -158,7 +198,9 @@ export const protectedRouters = [
   },
   {
     path: "/copy-trading/setting",
-    component: asyncComponent(() => import("../pages/trade/CopyTradeSetting.jsx")),
+    component: asyncComponent(
+      () => import("../pages/trade/CopyTradeSetting.jsx"),
+    ),
   },
 ];
 
@@ -175,7 +217,9 @@ export const protectedRouters2 = [
   },
   {
     path: "/reward-hub/reporting",
-    component: asyncComponent(() => import("../pages/rewardHub/ReportingPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/rewardHub/ReportingPage.jsx"),
+    ),
     isBottomNav: true,
   },
   {
@@ -185,41 +229,64 @@ export const protectedRouters2 = [
   },
   {
     path: "/reward-hub/deposit",
-    component: asyncComponent(() => import("../pages/rewardHub/DepositPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/rewardHub/DepositPage.jsx"),
+    ),
   },
   {
     path: "/reward-hub/verify-deposit",
-    component: asyncComponent(() => import("../pages/rewardHub/VerifyDeposit.jsx")),
+    component: asyncComponent(
+      () => import("../pages/rewardHub/VerifyDeposit.jsx"),
+    ),
   },
   {
     path: "/reward-hub/withdraw",
-    component: asyncComponent(() => import("../pages/rewardHub/WithdrawPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/rewardHub/WithdrawPage.jsx"),
+    ),
   },
   {
     path: "/reward-hub/transaction-history",
-    component: asyncComponent(() => import("../pages/rewardHub/TransactionHistoryPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/rewardHub/TransactionHistoryPage.jsx"),
+    ),
   },
   {
     path: "/reward-hub/two-factor-authentication",
-    component: asyncComponent(() => import("../pages/rewardHub/TwoFactorAuthPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/rewardHub/TwoFactorAuthPage.jsx"),
+    ),
   },
   {
     path: "/reward-hub/wallet",
-    component: asyncComponent(() => import("../pages/rewardHub/WalletPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/rewardHub/WalletPage.jsx"),
+    ),
     isBottomNav: true,
   },
   {
     path: "/reward-hub/future-copy",
-    component: asyncComponent(() => import("../pages/rewardHub/CopeirPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/rewardHub/CopeirPage.jsx"),
+    ),
   },
   {
     path: "/reward-hub/copy-trading-setting",
-    component: asyncComponent(() => import("../pages/rewardHub/CopyTradingSettingPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/rewardHub/CopyTradingSettingPage.jsx"),
+    ),
   },
   {
     path: "/reward-hub/capital-withdraw",
-    component: asyncComponent(() => import("../pages/rewardHub/CapitalWithdrawPage.jsx")),
+    component: asyncComponent(
+      () => import("../pages/rewardHub/CapitalWithdrawPage.jsx"),
+    ),
   },
 ];
 
-export const routers = [...publicRouters, ...authRouters, ...protectedRouters, ...protectedRouters2];
+export const routers = [
+  ...publicRouters,
+  ...authRouters,
+  ...protectedRouters,
+  ...protectedRouters2,
+];

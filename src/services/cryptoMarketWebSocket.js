@@ -80,16 +80,32 @@ export function createMarketInsightsSocket(onData) {
     }
   }
 
-  function mergeTickers(arr) {
-    if (!Array.isArray(arr)) return;
-    for (const t of arr) {
-      const symbol = t.s;
-      if (!symbol || !symbol.endsWith("USDT")) continue;
-      const pct = t.P != null ? parseFloat(t.P) : null;
-      const quoteVol = t.q != null ? parseFloat(t.q) : 0;
+  /** WebSocket tickers use P / q; REST /api/v3/ticker/24hr uses priceChangePercent / quoteVolume. */
+  function mergeTickers(raw) {
+    const batch = Array.isArray(raw) ? raw : raw && typeof raw === "object" ? [raw] : [];
+    if (batch.length === 0) return;
+    for (const t of batch) {
+      if (!t || typeof t !== "object") continue;
+      const symbol = t.s ?? t.symbol;
+      if (!symbol || !String(symbol).endsWith("USDT")) continue;
+      const pctRaw = t.P ?? t.priceChangePercent;
+      const volRaw = t.q ?? t.quoteVolume;
+      const pct = pctRaw != null && pctRaw !== "" ? parseFloat(pctRaw) : null;
+      const quoteVol =
+        volRaw != null && volRaw !== "" ? parseFloat(volRaw) : 0;
       tickerMap.set(symbol, { pct, quoteVolume: quoteVol });
     }
-    emit();
+    scheduleEmit();
+  }
+
+  /** Coalesce many WS messages per frame so React gets one update with the latest map (still live). */
+  let emitRaf = null;
+  function scheduleEmit() {
+    if (emitRaf != null) return;
+    emitRaf = requestAnimationFrame(() => {
+      emitRaf = null;
+      emit();
+    });
   }
 
   async function fetchInitialSnapshot() {
@@ -102,7 +118,7 @@ export function createMarketInsightsSocket(onData) {
       mergeTickers(data);
     } catch (err) {
       console.warn("[MarketWS] Initial snapshot failed:", err?.message);
-      emit();
+      scheduleEmit();
     }
   }
 
@@ -112,11 +128,13 @@ export function createMarketInsightsSocket(onData) {
     ws.onopen = () => {
       fetchInitialSnapshot();
     };
-
     ws.onmessage = (event) => {
       try {
         const msg = JSON.parse(event.data);
-        if (msg.data) mergeTickers(msg.data);
+        // Combined stream: { stream, data }. Raw stream may be array or single ticker.
+        const payload = msg.data !== undefined ? msg.data : msg;
+        if (payload == null) return;
+        mergeTickers(payload);
       } catch {
         // ignore parse errors
       }
@@ -136,6 +154,10 @@ export function createMarketInsightsSocket(onData) {
 
   return {
     close() {
+      if (emitRaf != null) {
+        cancelAnimationFrame(emitRaf);
+        emitRaf = null;
+      }
       if (reconnectTimer) {
         clearTimeout(reconnectTimer);
         reconnectTimer = null;

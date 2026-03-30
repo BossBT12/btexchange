@@ -183,7 +183,7 @@
     "common": {
       "rewardsHub": "Rewards Hub",
       "accountSecurity": "Account & Security",
-      "settings": "Settings",
+      "settings": "Customer service",
       "network": "Network"
     },
     "footerVersion": "BLOCK APP v1.0.0"
@@ -308,9 +308,13 @@
       "enabled": "Enabled",
       "disabled": "Disabled"
     },
+    "updateEmail": "Update Email",
     "changePassword": "Change Password",
     "switchAccount": "Switch account",
-    "logoutCurrent": "Log out current account"
+    "logoutCurrent": "Log out current account",
+    "logoutConfirmTitle": "Log out?",
+    "logoutConfirmDescription": "You will be signed out of this account. You can sign in again anytime.",
+    "logoutConfirmOk": "Log out"
   },
   "twoFactor": {
     "title": "Two-Factor Authentication",
@@ -568,7 +572,7 @@
         "main": "Main",
         "deposit": "Deposit",
         "withdraw": "Withdraw",
-        "trade": "Trade",
+        "trade": "Capt WD",
         "referral": "Referral"
       },
       "referralCard": {
@@ -805,6 +809,9 @@
     "profile": {
       "title": "User Center",
       "loggedOut": "Logged out",
+      "logoutConfirmTitle": "Log out?",
+      "logoutConfirmDescription": "You will be signed out of this account. You can sign in again anytime.",
+      "logoutConfirmOk": "Log out",
       "rows": {
         "uid": "UID",
         "fullName": "Full Name",
@@ -814,6 +821,7 @@
         "twoFactor": "Two-Factor Authentication",
         "twoFactorEnabled": "Enabled",
         "twoFactorDisabled": "Disabled",
+        "updateEmail": "Update Email",
         "changePassword": "Change Password",
         "switchAccount": "Switch account",
         "logout": "Log out current account"

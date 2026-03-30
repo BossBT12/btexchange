@@ -183,7 +183,7 @@
     "common": {
       "rewardsHub": "रिवॉर्ड्स हब",
       "accountSecurity": "खाता और सुरक्षा",
-      "settings": "सेटिंग्स",
+      "settings": "ग्राहक सेवा",
       "network": "नेटवर्क"
     },
     "footerVersion": "BLOCK APP v1.0.0"
@@ -308,9 +308,13 @@
       "enabled": "सक्रिय",
       "disabled": "निष्क्रिय"
     },
+    "updateEmail": "ईमेल अपडेट करें",
     "changePassword": "पासवर्ड बदलें",
     "switchAccount": "खाता बदलें",
-    "logoutCurrent": "वर्तमान खाते से लॉग आउट करें"
+    "logoutCurrent": "वर्तमान खाते से लॉग आउट करें",
+    "logoutConfirmTitle": "लॉग आउट करें?",
+    "logoutConfirmDescription": "आप इस खाते से साइन आउट हो जाएंगे। आप कभी भी फिर से साइन इन कर सकते हैं।",
+    "logoutConfirmOk": "लॉग आउट करें"
   },
   "twoFactor": {
     "title": "दो-चरण प्रमाणीकरण",
@@ -529,7 +533,7 @@
         "main": "मुख्य",
         "deposit": "डिपॉज़िट",
         "withdraw": "विदड्रॉ",
-        "trade": "ट्रेड",
+        "trade": "कैप्टन वार्ड",
         "referral": "रेफरल"
       },
       "referralCard": {
@@ -684,6 +688,9 @@
     "profile": {
       "title": "यूज़र सेंटर",
       "loggedOut": "लॉग आउट हो गया",
+      "logoutConfirmTitle": "लॉग आउट करें?",
+      "logoutConfirmDescription": "आप इस खाते से साइन आउट हो जाएंगे। आप कभी भी फिर से साइन इन कर सकते हैं।",
+      "logoutConfirmOk": "लॉग आउट करें",
       "rows": {
         "uid": "UID",
         "fullName": "पूरा नाम",
@@ -693,6 +700,7 @@
         "twoFactor": "टू‑फैक्टर ऑथेंटिकेशन",
         "twoFactorEnabled": "सक्रिय",
         "twoFactorDisabled": "निष्क्रिय",
+        "updateEmail": "ईमेल अपडेट करें",
         "changePassword": "पासवर्ड बदलें",
         "switchAccount": "अकाउंट बदलें",
         "logout": "वर्तमान अकाउंट से लॉग आउट करें"

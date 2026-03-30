@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  Typography,
-  IconButton,
-  Avatar,
-} from "@mui/material";
+import { Box, Typography, IconButton, Avatar } from "@mui/material";
 import {
   CheckCircle,
   ChevronLeft,
@@ -17,11 +12,20 @@ import useAuth from "../../hooks/useAuth";
 import useSnackbar from "../../hooks/useSnackbar";
 import { copyToClipboard } from "../../utils/utils";
 import { ICON_SIZE } from "../../constant/lookUpConstant";
-import userService from "../../services/secondGameServices/userService";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
+import ConfirmationModal from "../../components/ConfirmationModal.jsx";
 
-const Row = ({ label, value, onCopy, onClick, labelColor, valueColor, rightIcon = "arrow", copied }) => (
+const Row = ({
+  label,
+  value,
+  onCopy,
+  onClick,
+  labelColor,
+  valueColor,
+  rightIcon = "arrow",
+  copied,
+}) => (
   <Box
     onClick={onClick}
     sx={{
@@ -67,11 +71,17 @@ const Row = ({ label, value, onCopy, onClick, labelColor, valueColor, rightIcon 
             "&:hover": { bgcolor: "rgba(255,255,255,0.08)" },
           }}
         >
-          {copied ? <CheckCircle sx={{ fontSize: ICON_SIZE.XS, color: "#4CAF50" }} /> : <ContentCopy sx={{ fontSize: ICON_SIZE.XS }} />}
+          {copied ? (
+            <CheckCircle sx={{ fontSize: ICON_SIZE.XS, color: "#4CAF50" }} />
+          ) : (
+            <ContentCopy sx={{ fontSize: ICON_SIZE.XS }} />
+          )}
         </IconButton>
       )}
       {rightIcon === "arrow" && (onClick || !onCopy) && (
-        <KeyboardArrowRight sx={{ color: AppColors.TXT_MAIN, fontSize: ICON_SIZE.SM }} />
+        <KeyboardArrowRight
+          sx={{ color: AppColors.TXT_MAIN, fontSize: ICON_SIZE.SM }}
+        />
       )}
     </Box>
   </Box>
@@ -82,7 +92,7 @@ const Profile = () => {
   const { userData, clear } = useAuth();
   const { showSnackbar } = useSnackbar();
   const [copied, setCopied] = useState(false);
-  const [profile, setProfile] = useState(null);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const user = userData;
   const { t } = useTranslation(TRADE_NAMESPACE);
 
@@ -125,6 +135,7 @@ const Profile = () => {
       >
         <IconButton
           onClick={() => navigate(-1)}
+          aria-label={t("tradeTop.backAriaLabel", "Back")}
           sx={{
             color: AppColors.TXT_MAIN,
             p: 0.5,
@@ -146,7 +157,14 @@ const Profile = () => {
       </Box>
 
       {/* Avatar + edit */}
-      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
         <Box sx={{ position: "relative" }}>
           <Avatar
             sx={{
@@ -155,9 +173,7 @@ const Profile = () => {
               width: 64,
               height: 64,
             }}
-          >
-
-          </Avatar>
+          ></Avatar>
         </Box>
         <Typography
           variant="h5"
@@ -191,13 +207,17 @@ const Profile = () => {
         <Row
           label={t("profile.fullName", "Full Name")}
           value={nickname}
-          onClick={() => { }}
+          onClick={() => {}}
         />
         <Row
           label={t("profile.identityVerification", "Identity Verification")}
-          value={isVerified ? t("profile.verified", "Verified") : t("profile.unverified", "Unverified")}
+          value={
+            isVerified
+              ? t("profile.verified", "Verified")
+              : t("profile.unverified", "Unverified")
+          }
           valueColor={isVerified ? AppColors.TXT_MAIN : AppColors.GOLD_PRIMARY}
-          onClick={() => { }}
+          onClick={() => {}}
         />
         <Row
           label={t("profile.twoFactorAuth", "Two-Factor Authentication")}
@@ -207,15 +227,21 @@ const Profile = () => {
               : t("profile.twoFactor.disabled", "Disabled")
           }
           valueColor={
-            isTwoFactorEnabled
-              ? AppColors.TXT_MAIN
-              : AppColors.GOLD_PRIMARY
+            isTwoFactorEnabled ? AppColors.TXT_MAIN : AppColors.GOLD_PRIMARY
           }
           onClick={() => navigate("/two-factor-authentication")}
         />
         <Row
+          label={t("profile.updateEmail", "Update Email")}
+          onClick={() => {
+            navigate("/update-email");
+          }}
+        />
+        <Row
           label={t("profile.changePassword", "Change Password")}
-          onClick={() => { navigate("/change-password") }}
+          onClick={() => {
+            navigate("/change-password");
+          }}
         />
         <Row
           label={t("profile.switchAccount", "Switch account")}
@@ -224,10 +250,22 @@ const Profile = () => {
         <Row
           label={t("profile.logoutCurrent", "Log out current account")}
           labelColor={AppColors.ERROR}
-          onClick={handleLogout}
+          onClick={() => setLogoutConfirmOpen(true)}
           rightIcon="arrow"
         />
       </Box>
+
+      <ConfirmationModal
+        open={logoutConfirmOpen}
+        onClose={() => setLogoutConfirmOpen(false)}
+        onConfirm={handleLogout}
+        title={t("profile.logoutConfirmTitle", "Log out?")}
+        description={t(
+          "profile.logoutConfirmDescription",
+          "You will be signed out of this account. You can sign in again anytime.",
+        )}
+        okText={t("profile.logoutConfirmOk", "Log out")}
+      />
     </Box>
   );
 };

@@ -6,6 +6,91 @@
 const COINGECKO_BASE = "https://api.coingecko.com/api/v3";
 const STABLECOIN_IDS = new Set(["tether", "usd-coin", "dai", "binance-usd", "first-digital-usd"]);
 
+/** CoinGecko free tier is strict; cache + dedupe avoid 429/CORS noise on refresh. */
+const GLOBAL_CACHE_TTL_MS = 3 * 60 * 1000; // 3 min — global stats change slowly
+const GLOBAL_STALE_MAX_MS = 24 * 60 * 60 * 1000; // use stale on 429 if under 24h old
+const SS_KEY_GLOBAL = "btexchange_cg_global_v1";
+
+let globalFetchInFlight = null;
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function parseGlobalJson(json) {
+  const data = json.data ?? json;
+  const marketCapUsd = data.total_market_cap?.usd ?? data.total_market_cap;
+  const volumeUsd = data.total_volume?.usd ?? data.total_volume;
+  const capChange = data.market_cap_change_percentage_24h_usd ?? 0;
+  const volChange = data.volume_change_percentage_24h_usd ?? 0;
+  return {
+    marketCap: {
+      value: formatCompact(Number(marketCapUsd)),
+      change: Number(capChange) || 0,
+    },
+    volume24h: {
+      value: formatCompact(Number(volumeUsd)),
+      change: Number(volChange) || 0,
+    },
+  };
+}
+
+function readGlobalSessionCache() {
+  try {
+    const raw = sessionStorage.getItem(SS_KEY_GLOBAL);
+    if (!raw) return null;
+    const { at, payload } = JSON.parse(raw);
+    if (!at || !payload) return null;
+    return { at, payload };
+  } catch {
+    return null;
+  }
+}
+
+function writeGlobalSessionCache(payload) {
+  try {
+    sessionStorage.setItem(
+      SS_KEY_GLOBAL,
+      JSON.stringify({ at: Date.now(), payload })
+    );
+  } catch {
+    /* quota / private mode */
+  }
+}
+
+let memoryGlobalCache = { payload: null, expires: 0, at: 0 };
+
+function getFreshGlobalCache() {
+  const now = Date.now();
+  if (memoryGlobalCache.payload && now < memoryGlobalCache.expires) {
+    return memoryGlobalCache.payload;
+  }
+  const ss = readGlobalSessionCache();
+  if (ss && now - ss.at < GLOBAL_CACHE_TTL_MS) {
+    memoryGlobalCache = {
+      payload: ss.payload,
+      expires: ss.at + GLOBAL_CACHE_TTL_MS,
+      at: ss.at,
+    };
+    return ss.payload;
+  }
+  return null;
+}
+
+function getStaleGlobalFallback() {
+  const now = Date.now();
+  if (
+    memoryGlobalCache.payload &&
+    memoryGlobalCache.at &&
+    now - memoryGlobalCache.at < GLOBAL_STALE_MAX_MS
+  ) {
+    return memoryGlobalCache.payload;
+  }
+  const ss = readGlobalSessionCache();
+  if (ss && now - ss.at < GLOBAL_STALE_MAX_MS) return ss.payload;
+  return null;
+}
+
 /**
  * Format large numbers for display (e.g. 1.28T, 28.5B).
  * @param {number} value
@@ -57,26 +142,72 @@ async function getTopCoins(count = 5) {
  * Uses CoinGecko /global endpoint.
  * @returns {Promise<{ marketCap: { value: string, change: number }, volume24h: { value: string, change: number } }>}
  */
-async function getGlobalMarketData() {
+async function fetchGlobalFromNetwork() {
   const url = `${COINGECKO_BASE}/global`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
-  if (!res.ok) throw new Error(`Global market data failed: ${res.status}`);
+  if (res.status === 429) {
+    const err = new Error("Global market data rate limited (429)");
+    err.status = 429;
+    throw err;
+  }
+  if (!res.ok) {
+    const err = new Error(`Global market data failed: ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
   const json = await res.json();
-  const data = json.data ?? json;
-  const marketCapUsd = data.total_market_cap?.usd ?? data.total_market_cap;
-  const volumeUsd = data.total_volume?.usd ?? data.total_volume;
-  const capChange = data.market_cap_change_percentage_24h_usd ?? 0;
-  const volChange = data.volume_change_percentage_24h_usd ?? 0;
-  return {
-    marketCap: {
-      value: formatCompact(Number(marketCapUsd)),
-      change: Number(capChange) || 0,
-    },
-    volume24h: {
-      value: formatCompact(Number(volumeUsd)),
-      change: Number(volChange) || 0,
-    },
-  };
+  return parseGlobalJson(json);
+}
+
+/**
+ * Global market cap / volume from CoinGecko. Uses TTL cache, sessionStorage, in-flight dedupe,
+ * stale fallback on 429, and one retry after backoff to reduce refresh storms.
+ */
+async function getGlobalMarketData() {
+  const fresh = getFreshGlobalCache();
+  if (fresh) return fresh;
+
+  if (globalFetchInFlight) return globalFetchInFlight;
+
+  globalFetchInFlight = (async () => {
+    try {
+      const data = await fetchGlobalFromNetwork();
+      const now = Date.now();
+      memoryGlobalCache = {
+        payload: data,
+        expires: now + GLOBAL_CACHE_TTL_MS,
+        at: now,
+      };
+      writeGlobalSessionCache(data);
+      return data;
+    } catch (e) {
+      if (e?.status === 429 || e?.message?.includes("429")) {
+        const stale = getStaleGlobalFallback();
+        if (stale) return stale;
+        await sleep(2500);
+        try {
+          const data = await fetchGlobalFromNetwork();
+          const now = Date.now();
+          memoryGlobalCache = {
+            payload: data,
+            expires: now + GLOBAL_CACHE_TTL_MS,
+            at: now,
+          };
+          writeGlobalSessionCache(data);
+          return data;
+        } catch {
+          throw new Error(
+            "Global market data temporarily unavailable. Please wait a minute and try again."
+          );
+        }
+      }
+      throw e;
+    } finally {
+      globalFetchInFlight = null;
+    }
+  })();
+
+  return globalFetchInFlight;
 }
 
 /**

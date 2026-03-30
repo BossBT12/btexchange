@@ -58,6 +58,16 @@ const authService = {
     const response = await api.post("/trade/disable2FA", body);
     return response.data;
   },
+  // changeEmail/request-otp
+  requestOtpForChangeEmail: async () => {
+    const response = await api.post("/trade/changeEmail/request-otp");
+    return response.data;
+  },
+  // changeEmail/confirm
+  confirmChangeEmail: async (body) => {
+    const response = await api.post("/trade/changeEmail/confirm", body);
+    return response.data;
+  },
 };
 
 export default authService;

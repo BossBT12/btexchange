@@ -351,14 +351,14 @@ const TeamPage = () => {
               <Typography sx={{ color: AppColors.TXT_MAIN, fontWeight: 600, fontSize: FONT_SIZE.BODY }}>
                 {t("rewardHub.team.directReferrals", "Downline Structure")}
               </Typography>
-              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              {/* <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
                   {t("rewardHub.team.userCount", "Total Users")}: <Typography component="span" sx={{ color: AppColors.TXT_MAIN, fontWeight: 600 }}>{downlineTotals.userCount}</Typography>
                 </Typography>
                 <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
                   {t("rewardHub.team.totalBusiness", "Total Business")}: <Typography component="span" sx={{ color: AppColors.GOLD_PRIMARY, fontWeight: 600 }}>${downlineTotals.totalBusiness}</Typography>
                 </Typography>
-              </Box>
+              </Box> */}
             </Box>
             {downlineCards.length === 0 ? (
               <Box sx={{ borderRadius: BORDER_RADIUS.XS, bgcolor: AppColors.BG_CARD, border: CARD_BORDER, p: SPACING.MD, mb: SPACING.LG }}>
