@@ -526,7 +526,7 @@
       "searchPlaceholder": "खोजें",
       "totalAssetsLabel": "कुल एसेट (USDT)",
       "loading": "लोड हो रहा है...",
-      "totalIncomeLabel": "कुल आय: ${{value}}",
+      "totalIncomeLabel": "आज की आय: ${{value}}",
       "depositCta": "डिपॉज़िट",
       "quickActions": {
         "hot": "HOT",
@@ -607,6 +607,7 @@
         "LEVEL": "लेवल आय",
         "RANK": "रैंक आय",
         "ROI": "ROI",
+        "DAILY_INCOME": "दैनिक आय",
         "other": "आय"
       },
       "pagination": {

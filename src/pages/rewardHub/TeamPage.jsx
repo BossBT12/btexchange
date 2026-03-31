@@ -242,7 +242,7 @@ const TeamPage = () => {
               />
               <SalesCard
                 icon={GroupOutlined}
-                value={`$${teamStats?.totalDirectBusiness ?? 0}`}
+                value={`$${teamStats?.totalDirectBusiness.toFixed(2) ?? 0}`}
                 label={t("rewardHub.team.directBusiness", "Direct Business")}
               />
             </Box>
@@ -342,7 +342,7 @@ const TeamPage = () => {
               />
               <SalesCard
                 icon={GroupOutlined}
-                value={`$${teamStats?.totalTeamBusiness ?? 0}`}
+                value={`$${teamStats?.totalTeamBusiness.toFixed(2) ?? 0}`}
                 label={t("rewardHub.team.teamBusiness", "Team Business")}
               />
             </Box>

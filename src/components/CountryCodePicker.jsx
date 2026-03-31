@@ -109,9 +109,9 @@ export default function CountryCodePicker({
     const found = options.find((o) => o.iso2 === valueIso2);
     return (
       found || {
-        iso2: "IN",
-        name: displayNames?.of("IN") || "India",
-        dialCode: "+91",
+        iso2: "US",
+        name: displayNames?.of("US") || "US",
+        dialCode: "+1",
       }
     );
   }, [displayNames, options, valueIso2]);

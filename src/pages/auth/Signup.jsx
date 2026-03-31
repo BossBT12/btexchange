@@ -142,10 +142,10 @@ export default function Signup() {
   const captchaRef = useRef(null);
   const captchaBlockedRef = useRef(false);
   const [selectedCountry, setSelectedCountry] = useState({
-    iso2: "IN",
-    dialCode: "+91",
-    name: "India",
-    flag: "🇮🇳",
+    iso2: "US",
+    dialCode: "+1",
+    name: "US",
+    flag: "us",
   });
   const [signupMethod, setSignupMethod] = useState("email"); // "email" | "mobile"
   const { showSnackbar } = useSnackbar();
@@ -244,7 +244,7 @@ export default function Signup() {
       const body = {
         fullName: values.fullName.trim(),
         email: values.email.trim(),
-        countryCode: selectedCountry?.dialCode || "+91",
+        countryCode: selectedCountry?.dialCode || "+1",
         mobile: nationalNumber,
         password: values.password,
         referrerId: values.referrerId.trim(),

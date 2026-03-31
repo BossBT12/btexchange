@@ -725,7 +725,7 @@ export default function CapitalWithdrawPage() {
                   variant="caption"
                   sx={{ color: AppColors.TXT_SUB, display: "block" }}
                 >
-                  {t("rewardHub.capitalWithdraw.totalRoiLabel", "Total ROI")}:{" "}
+                  {t("rewardHub.capitalWithdraw.totalRoiLabel", "Total Trade Profit")}:{" "}
                   {Number(penalty.totalROI ?? 0).toFixed(2)} USDT
                 </Typography>
                 <Typography
@@ -734,7 +734,7 @@ export default function CapitalWithdrawPage() {
                 >
                   {t(
                     "rewardHub.capitalWithdraw.penaltyExplain",
-                    "A penalty applies because your ROI does not qualify for a penalty-free withdrawal yet.",
+                    "A penalty applies because your Trade Profit does not qualify for a penalty-free withdrawal yet.",
                   )}
                 </Typography>
               </Box>

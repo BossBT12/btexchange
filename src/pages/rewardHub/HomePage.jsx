@@ -82,12 +82,17 @@ const HomePage = () => {
   const [cryptoError, setCryptoError] = useState("");
   const [selectedCrypto, setSelectedCrypto] = useState(null);
   const [posterModalOpen, setPosterModalOpen] = useState(false);
+  const [todayIncome, setTodayIncome] = useState(null);
 
   const fetchData = async () => {
     try {
       setIsLoadingWallet(true);
-      const response = await walletService.getWalletBalanceAndStats();
-      setWalletStats(response?.data ?? null);
+      const [response1, response2] = await Promise.all([
+        walletService.getWalletBalanceAndStats(),
+        walletService.getTodayIncome(),
+      ]);
+      setWalletStats(response1?.data ?? null);
+      setTodayIncome(response2?.data ?? null);
     } catch (error) {
       console.log('error: ', error);
     } finally {
@@ -127,7 +132,6 @@ const HomePage = () => {
   const wallet = walletStats?.wallet ?? {};
   const user = walletStats?.user ?? {};
   const totalAssets = Number((wallet?.WITHDRAWABLE_BALANCE + wallet?.CAPITAL_BALANCE) || 0);
-  const totalIncome = Number(wallet?.WITHDRAWABLE_BALANCE ?? 0); // Placeholder - API may not provide this
   const walletAddress = userData?.UID.substring(0, 6) + "..." + userData?.UID.substring(userData?.UID.length - 4);
 
   return (
@@ -257,8 +261,8 @@ const HomePage = () => {
           <Typography sx={{ color: AppColors.GOLD_PRIMARY, fontWeight: 600, fontSize: "0.9rem" }}>
             {t(
               "rewardHub.home.totalIncomeLabel",
-              "Total Income: ${{value}}",
-              { value: formatNumber(totalIncome) }
+              "Today Income: ${{value}}",
+              { value: formatNumber(todayIncome?.totalTodayIncome ?? 0) }
             )}
           </Typography>
           <Button

@@ -28,19 +28,12 @@ import DatePicker from "../../components/input/datePicker";
 
 const REPORT_TYPES = [
   { value: "", labelKey: "all" },
+  { value: "DAILY_INCOME", labelKey: "DAILY_INCOME" },
   { value: "DAILY_ROI", labelKey: "DAILY_ROI" },
   { value: "LEVEL_INCOME", labelKey: "LEVEL_INCOME" },
   { value: "RANK_INCOME", labelKey: "RANK_INCOME" },
   { value: "SAME_RANK_INCOME", labelKey: "SAME_RANK_INCOME" },
 ];
-
-// const toYYYYMMDD = (d) => {
-//   const date = d instanceof Date ? d : new Date(d);
-//   const y = date.getFullYear();
-//   const m = String(date.getMonth() + 1).padStart(2, "0");
-//   const day = String(date.getDate()).padStart(2, "0");
-//   return `${y}-${m}-${day}`;
-// };
 
 const formatDate = (dateStr) => {
   const d = new Date(dateStr);
@@ -82,10 +75,21 @@ const ReportingPage = () => {
         const params = {
           page,
           limit: PAGE_SIZE,
-          ...(reportType ? { type: reportType } : {}),
         };
-        if (dateRange.startDate) params.startDate = dateRange.startDate;
-        if (dateRange.endDate) params.endDate = dateRange.endDate;
+        if (reportType === "DAILY_INCOME") {
+          setDateRange({ startDate: "", endDate: "" });
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, "0");
+          const day = String(today.getDate()).padStart(2, "0");
+          const formattedDate = `${year}-${month}-${day}`;
+          params.startDate = formattedDate;
+          params.endDate = formattedDate;
+        }else{
+          if (reportType) params.type = reportType;
+          if (dateRange.startDate) params.startDate = dateRange.startDate;
+          if (dateRange.endDate) params.endDate = dateRange.endDate;
+        }
         const res = await walletService.getIncomeHistory(params);
         const records = res?.data?.incomeRecords ?? [];
         const list = Array.isArray(records) ? records : [];
@@ -232,7 +236,7 @@ const ReportingPage = () => {
             </Box>
             <Box
               sx={{
-                display: "flex",
+                display: reportType === "DAILY_INCOME" ? "none" : "flex",
                 gap: 1.5,
                 minWidth: 0,
               }}

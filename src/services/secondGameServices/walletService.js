@@ -64,6 +64,12 @@ const walletService = {
     const response = await api2.post("/wallet/withdraw-capital", body);
     return response.data;
   },
+
+  //today-income
+  getTodayIncome: async () => {
+    const response = await api2.get("/wallet/today-income");
+    return response.data;
+  },
 };
 
 export default walletService;
