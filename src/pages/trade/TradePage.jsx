@@ -1,11 +1,11 @@
 import { useState, useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Box, Container, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { AppColors } from "../../constant/appColors";
 import TradingChart from "../../components/trading/TradingChart";
 import BottomTradingPane from "../../components/BottomTradingPane";
 import TradePageTopView from "../../components/TradePageTopView";
-import TradingTabs from "../../components/trading/TradingTabs";
+// import TradingTabs from "../../components/trading/TradingTabs";
 import { createTradeSocket } from "../../services/tradingSocketService";
 import useTradeSocket from "../../hooks/useTradeSocket";
 import { ArrowBackIosNew as ArrowBackIcon } from "@mui/icons-material";
@@ -15,7 +15,11 @@ import { TRADE_NAMESPACE } from "../../i18n";
 
 const api = createTradeSocket();
 
-const DEFAULT_PAIRS = [{ pair: "BTC-USD" }, { pair: "ETH-USD" }, { pair: "SOL-USD" }];
+const DEFAULT_PAIRS = [
+  { pair: "BTC-USD" },
+  { pair: "ETH-USD" },
+  { pair: "SOL-USD" },
+];
 
 export default function TradePage() {
   const { t } = useTranslation(TRADE_NAMESPACE);
@@ -26,11 +30,12 @@ export default function TradePage() {
   const { isConnected, joinPublic } = useTradeSocket();
   const [tradeEntryMarkers, setTradeEntryMarkers] = useState([]);
   const [pairsData, setPairsData] = useState(DEFAULT_PAIRS);
-  const [selectedPair, setSelectedPair] = useState(pairFromState || pairsData[0]?.pair);
+  const [selectedPair, setSelectedPair] = useState(
+    pairFromState || pairsData[0]?.pair,
+  );
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [betProfitPercent, setBetProfitPercent] = useState(100);
-
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -53,7 +58,7 @@ export default function TradePage() {
     const getBetConfig = async () => {
       const response = await tradingService.getBetConfig();
       setBetProfitPercent(response?.data?.betProfitPercent || 100);
-    }
+    };
     getBetConfig();
   }, []);
 
@@ -63,9 +68,9 @@ export default function TradePage() {
       await api.pairPrices((prices) => {
         setPairsData(prices);
       });
-    }
+    };
     if (isConnected) {
-      tradeChagne()
+      tradeChagne();
     }
   }, [isConnected]);
 
@@ -116,11 +121,23 @@ export default function TradePage() {
       >
         <Grid container sx={{ height: "100%" }}>
           <Grid size={12}>
-            <TradingChart selectedPair={selectedPair} tradeEntryMarkers={tradeEntryMarkers} />
+            <TradingChart
+              selectedPair={selectedPair}
+              tradeEntryMarkers={tradeEntryMarkers}
+            />
           </Grid>
         </Grid>
-        <BottomTradingPane selectedPair={selectedPair} currency={currency} setCurrency={setCurrency} betProfitPercent={betProfitPercent} />
-        <TradingTabs onBetStarted={handleBetStarted} betProfitPercent={betProfitPercent} />
+        <BottomTradingPane
+          selectedPair={selectedPair}
+          currency={currency}
+          setCurrency={setCurrency}
+          betProfitPercent={betProfitPercent}
+          onBetStarted={handleBetStarted}
+        />
+        {/* <TradingTabs
+          onBetStarted={handleBetStarted}
+          betProfitPercent={betProfitPercent}
+        /> */}
       </Box>
     </div>
   );

@@ -10,12 +10,144 @@ import BTLoader from "../Loader";
 
 
 const TIMEFRAMES = [
-  { label: "5m", granularity: 300 },
-  { label: "15m", granularity: 900 },
-  { label: "1h", granularity: 3600 },
-  { label: "6h", granularity: 21600 },
-  { label: "1D", granularity: 86400 },
+  // Coinbase has no 30s candles; fetch 1m and split each bar into two 30s candles (linear O→C path)
+  { label: "30s", type: "split", subdivisions: 2, reference: "1m" },
+  { label: "1m", apiGranularity: 60, type: "direct" },
+  { label: "3m", apiGranularity: 60, type: "merge", factor: 3, reference: "1m" },
+  { label: "5m", apiGranularity: 300, type: "direct" },
+  { label: "10m", apiGranularity: 300, type: "merge", factor: 2, reference: "5m" },
+  { label: "30m", apiGranularity: 300, type: "merge", factor: 6, reference: "5m" },
+  { label: "1h", apiGranularity: 3600, type: "direct" },
+  { label: "1D", apiGranularity: 86400, type: "direct" },
 ];
+
+/**
+ * Coinbase REST + WS use `baseGranularity` (direct API values only).
+ * Chart candles use `displayGranularity` (merge: base * factor; split: base / subdivisions).
+ */
+function resolveTimeframe(tf) {
+  if (tf.type === "direct") {
+    return {
+      baseGranularity: tf.apiGranularity,
+      displayGranularity: tf.apiGranularity,
+      mergeFactor: 1,
+      splitFromBase: false,
+    };
+  }
+  if (tf.type === "split") {
+    const ref = TIMEFRAMES.find((t) => t.label === tf.reference);
+    if (!ref || ref.type !== "direct") {
+      console.error("[TradingChart] Invalid split reference for", tf.label);
+      return {
+        baseGranularity: 60,
+        displayGranularity: 60,
+        mergeFactor: 1,
+        splitFromBase: false,
+      };
+    }
+    const base = ref.apiGranularity;
+    const subs = tf.subdivisions;
+    if (!subs || subs < 2 || base % subs !== 0) {
+      console.error("[TradingChart] Invalid subdivisions for", tf.label);
+      return {
+        baseGranularity: base,
+        displayGranularity: base,
+        mergeFactor: 1,
+        splitFromBase: false,
+      };
+    }
+    return {
+      baseGranularity: base,
+      displayGranularity: base / subs,
+      mergeFactor: 1,
+      splitFromBase: true,
+    };
+  }
+  const ref = TIMEFRAMES.find((t) => t.label === tf.reference);
+  if (!ref || ref.type !== "direct") {
+    console.error("[TradingChart] Invalid merge reference for", tf.label);
+    return {
+      baseGranularity: 60,
+      displayGranularity: 60,
+      mergeFactor: 1,
+      splitFromBase: false,
+    };
+  }
+  return {
+    baseGranularity: ref.apiGranularity,
+    displayGranularity: ref.apiGranularity * tf.factor,
+    mergeFactor: tf.factor,
+    splitFromBase: false,
+  };
+}
+
+/**
+ * Combine consecutive base-period OHLC candles into longer periods (oldest first).
+ * Open = first candle in bucket; close = last; high/low = max/min.
+ */
+function aggregateCandles(baseCandles, baseGranularity, mergeFactor) {
+  if (!Array.isArray(baseCandles) || baseCandles.length === 0) return [];
+  if (mergeFactor <= 1) return baseCandles;
+
+  const period = baseGranularity * mergeFactor;
+  const sorted = [...baseCandles].sort((a, b) => a.time - b.time);
+  const buckets = new Map();
+
+  for (const c of sorted) {
+    const bucketStart = Math.floor(c.time / period) * period;
+    const agg = buckets.get(bucketStart);
+    if (!agg) {
+      buckets.set(bucketStart, {
+        time: bucketStart,
+        open: c.open,
+        high: c.high,
+        low: c.low,
+        close: c.close,
+      });
+    } else {
+      agg.high = Math.max(agg.high, c.high);
+      agg.low = Math.min(agg.low, c.low);
+      agg.close = c.close;
+    }
+  }
+
+  return Array.from(buckets.values()).sort((a, b) => a.time - b.time);
+}
+
+/**
+ * Split each base-period candle into shorter sub-intervals (e.g. 1m → 2×30s).
+ * Linear interpolation open→close per sub-step; high/low are max/min of segment endpoints.
+ * (Coinbase has no true 30s OHLC — this is a calculated approximation.)
+ */
+function splitCandlesFromBase(baseCandles, baseGranularity, displayGranularity) {
+  if (!Array.isArray(baseCandles) || baseCandles.length === 0) return [];
+  const n = baseGranularity / displayGranularity;
+  if (!Number.isInteger(n) || n < 2) return baseCandles;
+
+  const sorted = [...baseCandles].sort((a, b) => a.time - b.time);
+  const out = [];
+
+  for (const c of sorted) {
+    const t = c.time;
+    const O = c.open;
+    const C = c.close;
+
+    for (let i = 0; i < n; i++) {
+      const tStart = t + i * displayGranularity;
+      const o_i = O + ((C - O) * i) / n;
+      const c_i = O + ((C - O) * (i + 1)) / n;
+      out.push({
+        time: tStart,
+        open: o_i,
+        high: Math.max(o_i, c_i),
+        low: Math.min(o_i, c_i),
+        close: c_i,
+      });
+    }
+  }
+
+  return out;
+}
 
 function formatPriceMetricPrefix(price) {
   const n = Number(price);
@@ -40,32 +172,32 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
   const currentPairRef = useRef(null); // Track currently subscribed pair
   const onPriceUpdateRef = useRef(); // Store callback in ref to avoid stale closures
   const previousClosePriceRef = useRef(null); // Track previous candle's close price for direction
-  const [selectedTimeframe, setSelectedTimeframe] = useState(0);
+  /** Default 1m (index 1) so behavior matches pre–30s default */
+  const [selectedTimeframe, setSelectedTimeframe] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const productId = selectedPair;
-  const currentGranularity = TIMEFRAMES[selectedTimeframe].granularity;
 
-  const loadHistory = async (pair, granularity) => {
+  const loadHistory = useCallback(async (pair, timeframeIndex) => {
+    const tf = TIMEFRAMES[timeframeIndex];
+    const resolved = resolveTimeframe(tf);
+
     try {
       setIsLoading(true);
       setError(null);
 
-      // Coinbase API supports specific granularities: 60, 300, 900, 3600, 21600, 86400
-      const supportedGranularities = [300, 900, 3600, 21600, 86400];
-      if (!supportedGranularities.includes(granularity)) {
-        throw new Error(`Unsupported granularity: ${granularity} seconds. Supported: 60, 300, 900, 3600, 21600, 86400`);
-      }
-
       const res = await fetch(
-        `https://api.exchange.coinbase.com/products/${pair}/candles?granularity=${granularity}`
+        `https://api.exchange.coinbase.com/products/${pair}/candles?granularity=${resolved.baseGranularity}`,
       );
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || `Failed to fetch data: ${res.statusText} (${res.status})`);
+        throw new Error(
+          errorData.message ||
+            `Failed to fetch data: ${res.statusText} (${res.status})`,
+        );
       }
 
       const data = await res.json();
@@ -79,13 +211,26 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       }
 
       // Coinbase returns newest first, reverse to get oldest first
-      return data.reverse().map(c => ({
+      const mapped = data.reverse().map((c) => ({
         time: c[0],
         open: parseFloat(c[3]),
         high: parseFloat(c[2]),
         low: parseFloat(c[1]),
         close: parseFloat(c[4]),
       }));
+
+      if (resolved.splitFromBase) {
+        return splitCandlesFromBase(
+          mapped,
+          resolved.baseGranularity,
+          resolved.displayGranularity,
+        );
+      }
+      return aggregateCandles(
+        mapped,
+        resolved.baseGranularity,
+        resolved.mergeFactor,
+      );
     } catch (err) {
       console.error("Error loading history:", err);
       setError(err.message || "Failed to load chart data");
@@ -93,9 +238,10 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const connectWebSocket = (pair, granularity) => {
+  /** `candlePeriodSeconds` = bar width on chart (display period). Matches for direct; merged for merge TFs. */
+  const connectWebSocket = useCallback((pair, candlePeriodSeconds) => {
     // Clean up existing WebSocket connection
     if (wsRef.current) {
       try {
@@ -176,7 +322,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           const price = parseFloat(msg.price);
           const time = new Date(msg.time).getTime() / 1000;
 
-          const candleTime = Math.floor(time / granularity) * granularity;
+          const candleTime =
+            Math.floor(time / candlePeriodSeconds) * candlePeriodSeconds;
 
           if (price > 0) {
             let priceDirection = null; // null = no change, 'up' = increase, 'down' = decrease
@@ -233,7 +380,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         ) {
           // Ignore messages from other pairs (might be delayed messages from previous subscription)
           // Only log in development to avoid console spam
-          if (process.env.NODE_ENV === 'development') {
+          if (import.meta.env.DEV) {
             console.warn(`Ignoring message from wrong pair: ${msg.product_id} (current: ${currentPairRef.current || pair})`);
           }
         }
@@ -254,7 +401,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       // Only reconnect if it wasn't intentionally closed and we're still on the same pair
       if (!isIntentionallyClosed && chartRef.current && seriesRef.current && currentPairRef.current === pair) {
         reconnectTimeout = setTimeout(() => {
-          connectWebSocket(pair, granularity);
+          connectWebSocket(pair, candlePeriodSeconds);
         }, 3000);
       }
     };
@@ -265,7 +412,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         clearTimeout(reconnectTimeout);
       }
     };
-  };
+  }, []);
 
   const applyInitialView = useCallback((data) => {
     if (!chartRef.current || !Array.isArray(data) || data.length === 0) return;
@@ -342,7 +489,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         previousClosePriceRef.current = null;
       }
 
-      const data = await loadHistory(productId, currentGranularity);
+      const data = await loadHistory(productId, selectedTimeframe);
 
       if (data.length > 0 && seriesRef.current) {
         // Set new data for the selected timeframe only
@@ -368,8 +515,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         }
       }
 
-      // Connect WebSocket with the new granularity
-      connectWebSocket(productId, currentGranularity);
+      const { displayGranularity } = resolveTimeframe(TIMEFRAMES[selectedTimeframe]);
+      connectWebSocket(productId, displayGranularity);
     })();
 
     const handleResize = () => {
@@ -392,7 +539,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         }
         try {
           wsRef.current.close();
-        } catch (e) {
+        } catch {
+          /* ignore */
         }
         wsRef.current = null;
       }
@@ -405,7 +553,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       currentCandleRef.current = null;
       previousClosePriceRef.current = null;
     };
-  }, [productId, currentGranularity, applyInitialView]);
+  }, [productId, selectedTimeframe, applyInitialView, loadHistory, connectWebSocket]);
 
   // Apply trade entry markers when bets start (from betStarted socket)
   useEffect(() => {
@@ -434,8 +582,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
     setSelectedTimeframe(index);
   };
 
-  // Screenshot functionality
-  const handleScreenshot = useCallback(async () => {
+  // Screenshot functionality (wired when toolbar is enabled)
+  const _handleScreenshot = useCallback(async () => {
     if (!chartRef.current || !chartContainerRef.current) return;
 
     try {
@@ -443,7 +591,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       let canvas;
       try {
         canvas = chartRef.current.takeScreenshot();
-      } catch (e) {
+      } catch {
         // Fallback: use html2canvas or create canvas from container
         console.warn("Chart takeScreenshot not available, using fallback");
         canvas = null;
@@ -489,8 +637,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
     }
   }, [selectedPair]);
 
-  // Fullscreen functionality
-  const handleFullscreen = useCallback(() => {
+  // Fullscreen functionality (wired when toolbar is enabled)
+  const _handleFullscreen = useCallback(() => {
     const container = chartContainerRef.current?.parentElement?.parentElement;
     if (!container) return;
 
@@ -666,8 +814,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
             <Button
               size="small"
               onClick={() => {
-                const data = loadHistory(productId, currentGranularity);
-                data.then((d) => {
+                loadHistory(productId, selectedTimeframe).then((d) => {
                   if (d.length > 0 && seriesRef.current) {
                     seriesRef.current.setData(d);
                     applyInitialView(d);

@@ -15,8 +15,6 @@ import { AppColors } from "../../../constant/appColors";
 import useSnackbar from "../../../hooks/useSnackbar";
 import { copyToClipboard } from "../../../utils/utils";
 import { FONT_SIZE } from "../../../constant/lookUpConstant";
-import promotionService from "../../../services/promotionService";
-import { encryptData } from "../../../utils/encryption";
 import useAuth from "../../../hooks/useAuth";
 import { TRADE_NAMESPACE } from "../../../i18n";
 
@@ -48,7 +46,7 @@ const PartnerRewardsPage = () => {
       // console.log('result: ', result);
       // setData(result);
       const baseUrl = window.location.origin;
-      setReferralLink(`${baseUrl}/signup?ref=${encodeURIComponent(encryptData(userData?.UID))}`);
+      setReferralLink(`${baseUrl}/signup?ref=${userData?.UID}`);
     } catch (err) {
       const message = err?.message || t("promotion.partnerRewards.loadFailed", "Failed to load partner rewards");
       showSnackbar(message, "error");

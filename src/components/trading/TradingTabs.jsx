@@ -11,6 +11,7 @@ import { TRADE_NAMESPACE } from "../../i18n";
 import { formatPairForDisplay } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import { IoDocumentTextOutline } from "react-icons/io5";
+import { useLiveClockMs } from "../../hooks/useLiveClockMs";
 
 const api = createTradeSocket();
 
@@ -49,30 +50,13 @@ const formatPrice = (value) => {
 
 /** Live countdown from now until expiryTime; updates every second */
 const RemainingTimeRing = ({ startTime, expiryTime }) => {
-  const [tick, setTick] = useState(0);
-
-  useEffect(() => {
-    if (!expiryTime) return;
-    const expiry = expiryTime instanceof Date ? expiryTime : new Date(expiryTime);
-    const expiryMs = expiry.getTime();
-    if (Number.isNaN(expiryMs)) return;
-
-    const id = setInterval(() => {
-      if (Date.now() >= expiryMs) {
-        setTick((t) => t + 1);
-        return;
-      }
-      setTick((t) => t + 1);
-    }, 1000);
-    return () => clearInterval(id);
-  }, [expiryTime]);
+  const nowMs = useLiveClockMs();
 
   if (!expiryTime) return "0s";
   const expiry = expiryTime instanceof Date ? expiryTime : new Date(expiryTime);
   const expiryMs = expiry.getTime();
   if (Number.isNaN(expiryMs)) return "0s";
 
-  const nowMs = Date.now();
   const start =
     startTime instanceof Date
       ? startTime
@@ -88,11 +72,11 @@ const RemainingTimeRing = ({ startTime, expiryTime }) => {
     progress = (remainingMs / totalMs) * 100;
   }
 
-  const formatRemainingTime = (expiryVal) => {
+  const formatRemainingTime = (expiryVal, currentMs) => {
     const exp = expiryVal instanceof Date ? expiryVal : new Date(expiryVal);
     const expMs = exp.getTime();
     if (Number.isNaN(expMs)) return "0s";
-    const rem = expMs - Date.now();
+    const rem = expMs - currentMs;
     if (rem <= 0) return "0s";
     const hours = Math.floor((rem % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((rem % (1000 * 60 * 60)) / (1000 * 60));
@@ -123,7 +107,7 @@ const RemainingTimeRing = ({ startTime, expiryTime }) => {
         }}
       />
       <Typography variant="body2" sx={{ color: AppColors.TXT_MAIN, ml: 0.5 }}>
-        {formatRemainingTime(expiry)}
+        {formatRemainingTime(expiry, nowMs)}
       </Typography>
     </Box>
   );
@@ -360,6 +344,7 @@ function TradingTabs({ onBetStarted, betProfitPercent }) {
                 {field.label}
               </Typography>
               <Typography
+                component="div"
                 variant="body1"
                 sx={{
                   fontWeight: field.id === "direction" ? 600 : 500,
@@ -498,6 +483,7 @@ function TradingTabs({ onBetStarted, betProfitPercent }) {
                 {field.label}
               </Typography>
               <Typography
+                component="div"
                 variant="body1"
                 sx={{
                   fontWeight:

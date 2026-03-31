@@ -13,7 +13,6 @@ import { AppColors } from "../constant/appColors";
 import { FONT_SIZE, BORDER_RADIUS, SPACING } from "../constant/lookUpConstant";
 import useAuth from "../hooks/useAuth";
 import useSnackbar from "../hooks/useSnackbar";
-import { encryptData } from "../utils/encryption";
 import { copyToClipboard } from "../utils/utils";
 import html2canvas from "html2canvas";
 import { useTranslation } from "react-i18next";
@@ -36,7 +35,7 @@ const InvitePosterModal = ({
   useEffect(() => {
     if (!open || !userData?.UID) return;
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-    const link = `${baseUrl}/signup?ref=${encodeURIComponent(encryptData(userData.UID))}`;
+    const link = `${baseUrl}/signup?ref=${userData?.UID}`;
     let cancelled = false;
     QRCode.toDataURL(link, { width: 280, margin: 1 })
       .then((url) => {

@@ -26,7 +26,6 @@ import {
 import { AppColors } from "../../constant/appColors";
 import authService from "../../services/authService";
 import useSnackbar from "../../hooks/useSnackbar";
-import { decryptData } from "../../utils/encryption";
 import { FONT_SIZE } from "../../constant/lookUpConstant";
 import CountryCodePicker from "../../components/CountryCodePicker";
 import { getCountries, getCountryCallingCode } from "libphonenumber-js";
@@ -129,7 +128,6 @@ export default function Signup() {
 
   const [searchParams] = useSearchParams();
   const referralId = searchParams.get("ref") || "";
-  const decryptedReferralId = decryptData(referralId) ?? referralId;
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -158,9 +156,9 @@ export default function Signup() {
         ? String(verifyEmailResume.mobile).replace(/\D/g, "").slice(0, 14)
         : "",
       password: "",
-      referrerId: verifyEmailResume?.referrerId ?? decryptedReferralId,
+      referrerId: verifyEmailResume?.referrerId ?? referralId,
     }),
-    [verifyEmailResume, initialEmail, decryptedReferralId],
+    [verifyEmailResume, initialEmail, referralId],
   );
 
   useEffect(() => {
