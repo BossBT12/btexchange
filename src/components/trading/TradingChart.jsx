@@ -20,6 +20,7 @@ const TIMEFRAMES = [
   { label: "1h", apiGranularity: 3600, type: "direct" },
   { label: "1D", apiGranularity: 86400, type: "direct" },
 ];
+const TIMEFRAME_STORAGE_KEY = "tradingChart.selectedTimeframe";
 
 /**
  * Coinbase REST + WS use `baseGranularity` (direct API values only).
@@ -149,6 +150,44 @@ function splitCandlesFromBase(baseCandles, baseGranularity, displayGranularity) 
   return out;
 }
 
+/** Map Coinbase candle rows (newest first) to display candles for the resolved timeframe. */
+function mapCoinbaseRowsToDisplayCandles(rawRows, resolved) {
+  if (!Array.isArray(rawRows) || rawRows.length === 0) return [];
+  const mapped = [...rawRows].reverse().map((c) => ({
+    time: c[0],
+    open: parseFloat(c[3]),
+    high: parseFloat(c[2]),
+    low: parseFloat(c[1]),
+    close: parseFloat(c[4]),
+  }));
+  if (resolved.splitFromBase) {
+    return splitCandlesFromBase(
+      mapped,
+      resolved.baseGranularity,
+      resolved.displayGranularity,
+    );
+  }
+  return aggregateCandles(
+    mapped,
+    resolved.baseGranularity,
+    resolved.mergeFactor,
+  );
+}
+
+/** Merge prepended + existing OHLC by `time` (later series wins on duplicate). */
+function mergeCandlesDedupeByTime(prepended, existing) {
+  const byTime = new Map();
+  for (const c of prepended) byTime.set(c.time, c);
+  for (const c of existing) byTime.set(c.time, c);
+  return Array.from(byTime.values()).sort((a, b) => a.time - b.time);
+}
+
+const LOGICAL_RANGE_LOAD_MORE_BARS = 24;
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 function formatPriceMetricPrefix(price) {
   const n = Number(price);
   if (!Number.isFinite(n)) return String(price);
@@ -172,8 +211,29 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
   const currentPairRef = useRef(null); // Track currently subscribed pair
   const onPriceUpdateRef = useRef(); // Store callback in ref to avoid stale closures
   const previousClosePriceRef = useRef(null); // Track previous candle's close price for direction
+  const seriesDataRef = useRef([]); // Mirrors series data for oldest time + prepend merges
+  const isLoadingOlderRef = useRef(false);
+  const hasMoreHistoryRef = useRef(true);
   /** Default 1m (index 1) so behavior matches pre–30s default */
-  const [selectedTimeframe, setSelectedTimeframe] = useState(1);
+  const [selectedTimeframe, setSelectedTimeframe] = useState(() => {
+    const defaultIndex = 1;
+    if (typeof window === "undefined") return defaultIndex;
+    try {
+      const stored = window.localStorage.getItem(TIMEFRAME_STORAGE_KEY);
+      if (stored == null) return defaultIndex;
+      const parsed = Number(stored);
+      if (
+        Number.isInteger(parsed) &&
+        parsed >= 0 &&
+        parsed < TIMEFRAMES.length
+      ) {
+        return parsed;
+      }
+    } catch (err) {
+      console.warn("Failed to read saved timeframe:", err);
+    }
+    return defaultIndex;
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -210,33 +270,51 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         throw new Error("No historical data available for this timeframe");
       }
 
-      // Coinbase returns newest first, reverse to get oldest first
-      const mapped = data.reverse().map((c) => ({
-        time: c[0],
-        open: parseFloat(c[3]),
-        high: parseFloat(c[2]),
-        low: parseFloat(c[1]),
-        close: parseFloat(c[4]),
-      }));
-
-      if (resolved.splitFromBase) {
-        return splitCandlesFromBase(
-          mapped,
-          resolved.baseGranularity,
-          resolved.displayGranularity,
-        );
-      }
-      return aggregateCandles(
-        mapped,
-        resolved.baseGranularity,
-        resolved.mergeFactor,
-      );
+      return mapCoinbaseRowsToDisplayCandles(data, resolved);
     } catch (err) {
       console.error("Error loading history:", err);
       setError(err.message || "Failed to load chart data");
       return [];
     } finally {
       setIsLoading(false);
+    }
+  }, []);
+
+  const loadOlderHistory = useCallback(async (pair, timeframeIndex, oldestTimeExclusive) => {
+    const tf = TIMEFRAMES[timeframeIndex];
+    const resolved = resolveTimeframe(tf);
+    const spanSeconds = 300 * resolved.baseGranularity;
+    const endSec = oldestTimeExclusive;
+    const startSec = endSec - spanSeconds;
+    if (!Number.isFinite(startSec) || !Number.isFinite(endSec) || startSec >= endSec) {
+      return [];
+    }
+
+    try {
+      const startIso = new Date(startSec * 1000).toISOString();
+      const endIso = new Date(endSec * 1000).toISOString();
+      const url =
+        `https://api.exchange.coinbase.com/products/${encodeURIComponent(pair)}/candles` +
+        `?granularity=${resolved.baseGranularity}` +
+        `&start=${encodeURIComponent(startIso)}` +
+        `&end=${encodeURIComponent(endIso)}`;
+
+      const res = await fetch(url);
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(
+          errorData.message ||
+            `Failed to fetch older candles: ${res.statusText} (${res.status})`,
+        );
+      }
+
+      const raw = await res.json();
+      if (!Array.isArray(raw) || raw.length === 0) return [];
+
+      return mapCoinbaseRowsToDisplayCandles(raw, resolved);
+    } catch (err) {
+      console.error("Error loading older history:", err);
+      return [];
     }
   }, []);
 
@@ -481,25 +559,128 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
 
     seriesMarkersRef.current = createSeriesMarkers(seriesRef.current, []);
 
+    let isCancelled = false;
+    const cancelSwitchRef = { current: false };
+    let scrollSubscriptionActive = true;
+    let lastVisibleLogicalFrom = null;
+
+    const onVisibleLogicalRangeChange = (logicalRange) => {
+      if (!scrollSubscriptionActive || logicalRange === null) return;
+      if (!chartRef.current || !seriesRef.current) return;
+      if (isLoadingOlderRef.current || !hasMoreHistoryRef.current) return;
+
+      const from = logicalRange.from;
+      const prevFrom = lastVisibleLogicalFrom;
+      lastVisibleLogicalFrom = from;
+
+      if (from > LOGICAL_RANGE_LOAD_MORE_BARS) return;
+      if (prevFrom === null) return;
+      if (from >= prevFrom) return;
+
+      if (!seriesDataRef.current || seriesDataRef.current.length === 0) return;
+
+      const run = async () => {
+        if (isLoadingOlderRef.current || !scrollSubscriptionActive) return;
+        isLoadingOlderRef.current = true;
+        const timeScale = chartRef.current.timeScale();
+        const visibleBefore = timeScale.getVisibleRange();
+
+        let baseForMerge = seriesDataRef.current;
+        if (!baseForMerge || baseForMerge.length === 0) {
+          isLoadingOlderRef.current = false;
+          return;
+        }
+        const oldestTime = baseForMerge[0].time;
+        const tfResolved = resolveTimeframe(TIMEFRAMES[selectedTimeframe]);
+        const currentBucketStart =
+          Math.floor(Date.now() / 1000 / tfResolved.displayGranularity) *
+          tfResolved.displayGranularity;
+
+        const older = await loadOlderHistory(productId, selectedTimeframe, oldestTime);
+        if (!scrollSubscriptionActive || isCancelled) {
+          isLoadingOlderRef.current = false;
+          return;
+        }
+
+        if (!older || older.length === 0) {
+          hasMoreHistoryRef.current = false;
+          isLoadingOlderRef.current = false;
+          return;
+        }
+
+        const olderClosed = older.filter((c) => c.time < currentBucketStart);
+        const olderUse = olderClosed.length > 0 ? olderClosed : older;
+        baseForMerge = seriesDataRef.current;
+        if (currentCandleRef.current && baseForMerge.length > 0) {
+          const lastIdx = baseForMerge.length - 1;
+          if (currentCandleRef.current.time === baseForMerge[lastIdx].time) {
+            baseForMerge = [...baseForMerge];
+            baseForMerge[lastIdx] = { ...currentCandleRef.current };
+          }
+        }
+        const merged = mergeCandlesDedupeByTime(olderUse, baseForMerge);
+        if (merged.length === baseForMerge.length) {
+          hasMoreHistoryRef.current = false;
+          isLoadingOlderRef.current = false;
+          return;
+        }
+
+        seriesRef.current.setData(merged);
+        seriesDataRef.current = merged;
+
+        if (visibleBefore) {
+          timeScale.setVisibleRange(visibleBefore);
+        }
+
+        isLoadingOlderRef.current = false;
+      };
+
+      void run();
+    };
+
     (async () => {
+      setIsLoading(true);
+
       // Clear existing data when timeframe changes
       if (seriesRef.current) {
         seriesRef.current.setData([]);
         currentCandleRef.current = null;
         previousClosePriceRef.current = null;
       }
+      seriesDataRef.current = [];
+      hasMoreHistoryRef.current = true;
+      isLoadingOlderRef.current = false;
+
+      // Give UI/socket a short pause before loading the next timeframe to avoid candle glitches
+      await sleep(1000);
+      if (isCancelled || cancelSwitchRef.current) return;
 
       const data = await loadHistory(productId, selectedTimeframe);
+      if (isCancelled || cancelSwitchRef.current) return;
 
-      if (data.length > 0 && seriesRef.current) {
+      const { displayGranularity } = resolveTimeframe(TIMEFRAMES[selectedTimeframe]);
+      const currentBucketStart =
+        Math.floor(Date.now() / 1000 / displayGranularity) * displayGranularity;
+
+      // Remove the currently forming candle so timeframe switches stay smooth.
+      const closedCandlesOnly = data.filter((c) => c.time < currentBucketStart);
+      const candlesToRender =
+        closedCandlesOnly.length > 0 ? closedCandlesOnly : data;
+
+      if (candlesToRender.length > 0 && seriesRef.current) {
         // Set new data for the selected timeframe only
-        seriesRef.current.setData(data);
-        applyInitialView(data);
+        seriesRef.current.setData(candlesToRender);
+        seriesDataRef.current = candlesToRender;
+        applyInitialView(candlesToRender);
 
-        // Initialize current candle with the last historical candle
-        const lastCandle = data[data.length - 1];
+        chartRef.current
+          .timeScale()
+          .subscribeVisibleLogicalRangeChange(onVisibleLogicalRangeChange);
+
+        // Keep socket candle empty after timeframe switch; first tick creates a fresh candle.
+        const lastCandle = candlesToRender[candlesToRender.length - 1];
         if (lastCandle) {
-          currentCandleRef.current = { ...lastCandle };
+          currentCandleRef.current = null;
           previousClosePriceRef.current = lastCandle.close;
 
           // Initialize price from last historical candle's close price
@@ -515,7 +696,6 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         }
       }
 
-      const { displayGranularity } = resolveTimeframe(TIMEFRAMES[selectedTimeframe]);
       connectWebSocket(productId, displayGranularity);
     })();
 
@@ -532,6 +712,18 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
     window.addEventListener("resize", handleResize);
 
     return () => {
+      isCancelled = true;
+      cancelSwitchRef.current = true;
+      scrollSubscriptionActive = false;
+      if (chartRef.current) {
+        try {
+          chartRef.current
+            .timeScale()
+            .unsubscribeVisibleLogicalRangeChange(onVisibleLogicalRangeChange);
+        } catch {
+          /* ignore */
+        }
+      }
       window.removeEventListener("resize", handleResize);
       if (wsRef.current) {
         if (wsRef.current._cleanup) {
@@ -552,8 +744,9 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       seriesMarkersRef.current = null;
       currentCandleRef.current = null;
       previousClosePriceRef.current = null;
+      seriesDataRef.current = [];
     };
-  }, [productId, selectedTimeframe, applyInitialView, loadHistory, connectWebSocket]);
+  }, [productId, selectedTimeframe, applyInitialView, loadHistory, loadOlderHistory, connectWebSocket]);
 
   // Apply trade entry markers when bets start (from betStarted socket)
   useEffect(() => {
@@ -581,6 +774,18 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
   const handleTimeframeChange = (index) => {
     setSelectedTimeframe(index);
   };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(
+        TIMEFRAME_STORAGE_KEY,
+        String(selectedTimeframe),
+      );
+    } catch (err) {
+      console.warn("Failed to save selected timeframe:", err);
+    }
+  }, [selectedTimeframe]);
 
   // Screenshot functionality (wired when toolbar is enabled)
   const _handleScreenshot = useCallback(async () => {
@@ -817,6 +1022,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
                 loadHistory(productId, selectedTimeframe).then((d) => {
                   if (d.length > 0 && seriesRef.current) {
                     seriesRef.current.setData(d);
+                    seriesDataRef.current = d;
+                    hasMoreHistoryRef.current = true;
                     applyInitialView(d);
                   }
                 });
