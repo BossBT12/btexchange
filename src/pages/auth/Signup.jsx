@@ -29,7 +29,6 @@ import useSnackbar from "../../hooks/useSnackbar";
 import { FONT_SIZE } from "../../constant/lookUpConstant";
 import CountryCodePicker from "../../components/CountryCodePicker";
 import { getCountries, getCountryCallingCode } from "libphonenumber-js";
-import userService from "../../services/secondGameServices/userService";
 import {
   SignupCaptcha,
   validateSignupCaptcha,
@@ -248,11 +247,8 @@ export default function Signup() {
         referrerId: values.referrerId.trim(),
       };
       try {
-        const [signup1Res, signup2Res] = await Promise.all([
-          authService.register(body),
-          userService.register(body),
-        ]);
-        if (signup1Res?.success || signup2Res?.success) {
+        const signup1Res = await authService.register(body);
+        if (signup1Res?.success) {
           handleVerificationSuccess();
           showSnackbar(
             signup1Res?.message ||

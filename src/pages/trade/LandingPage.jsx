@@ -36,9 +36,9 @@ import { BORDER_RADIUS, FONT_SIZE, SPACING } from "../../constant/lookUpConstant
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
-import dashboardServices from "../../services/dashboardServices";
-import BTLoader from "../../components/Loader";
-import { IoIosPeople } from "react-icons/io";
+// import dashboardServices from "../../services/dashboardServices";
+// import BTLoader from "../../components/Loader";
+// import { IoIosPeople } from "react-icons/io";
 
 const TraderChart = memo(({ tradeValue, idx }) => {
   const chartData = useMemo(() => {
@@ -194,8 +194,8 @@ const LandingPage = () => {
   const [isCollapse, setIsCollapse] = useState(false);
   const [collapseTimerKey, setCollapseTimerKey] = useState(0);
   const [activeTab, setActiveTab] = useState("Coin");
-  const [userStats, setUserStats] = useState(null);
-  const [isLoadingUserStats, setIsLoadingUserStats] = useState(false);
+  // const [userStats, setUserStats] = useState(null);
+  // const [isLoadingUserStats, setIsLoadingUserStats] = useState(false);
 
   const heroCards = useMemo(
     () =>
@@ -217,27 +217,29 @@ const LandingPage = () => {
     [t]
   );
 
-  useEffect(() => {
-    const fetchUserStats = async () => {
-      try {
-        setIsLoadingUserStats(true);
-        const response = await dashboardServices.getUserStats();
-        if (response?.success) {
-          setUserStats(response?.data ?? null);
-        }
-      } catch (error) {
-        console.log('error: ', error);
-      } finally {
-        setIsLoadingUserStats(false);
-      }
-    };
-    fetchUserStats();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUserStats = async () => {
+  //     try {
+  //       setIsLoadingUserStats(true);
+  //       const response = await dashboardServices.getUserStats();
+  //       if (response?.success) {
+  //         setUserStats(response?.data ?? null);
+  //       }
+  //     } catch (error) {
+  //       console.log('error: ', error);
+  //     } finally {
+  //       setIsLoadingUserStats(false);
+  //     }
+  //   };
+  //   fetchUserStats();
+  // }, []);
 
   // Toggle hero section every 5 seconds when user is logged in.
   useEffect(() => {
     if (!isLoggedIn) {
-      setIsCollapse(false);
+      setTimeout(() => {
+        setIsCollapse(false);
+      }, 0);
       return;
     }
 
@@ -528,7 +530,7 @@ const LandingPage = () => {
       <FeatureCardsCarousel cards={featureCards} />
 
       {/* Super Snipe Card */}
-      <Box
+      {/* <Box
         sx={{
           mx: SPACING.LG,
           mb: 4,
@@ -679,7 +681,7 @@ const LandingPage = () => {
             ))}
           </Box>
         )}
-      </Box>
+      </Box> */}
     </Box>
   );
 };

@@ -2,7 +2,7 @@ import api from "../utils/axios";
 
 const authService = {
   register: async (body) => {
-    const response = await api.post("/trade/register", body);
+    const response = await api.post("/api/onboard/onboardUser", body);
     return response.data;
   },
   login: async (body) => {
