@@ -29,8 +29,8 @@ function applyCaptchaTexture(canvas) {
   const w = canvas.width;
   const h = canvas.height;
 
-  for (let i = 0; i < 14; i++) {
-    ctx.strokeStyle = `rgba(255,255,255,${0.6 + Math.random() * 0.6})`;
+  for (let i = 0; i < 8; i++) {
+    ctx.strokeStyle = `rgba(255,255,255,${1 + Math.random() * 1})`;
     ctx.lineWidth = 0.4 + Math.random() * 1.1;
     ctx.beginPath();
     ctx.moveTo(Math.random() * w, Math.random() * h);
@@ -38,21 +38,21 @@ function applyCaptchaTexture(canvas) {
     ctx.stroke();
   }
 
-  for (let i = 0; i < 5; i++) {
-    ctx.strokeStyle = `rgba(212,168,95,${0.3 + Math.random() * 0.1})`;
-    ctx.lineWidth = 0.5;
-    ctx.beginPath();
-    ctx.moveTo(Math.random() * w, Math.random() * h);
-    ctx.quadraticCurveTo(
-      Math.random() * w,
-      Math.random() * h,
-      Math.random() * w,
-      Math.random() * h,
-    );
-    ctx.stroke();
-  }
+  // for (let i = 0; i < 5; i++) {
+  //   ctx.strokeStyle = `rgba(212,168,95,${0.3 + Math.random() * 0.1})`;
+  //   ctx.lineWidth = 0.5;
+  //   ctx.beginPath();
+  //   ctx.moveTo(Math.random() * w, Math.random() * h);
+  //   ctx.quadraticCurveTo(
+  //     Math.random() * w,
+  //     Math.random() * h,
+  //     Math.random() * w,
+  //     Math.random() * h,
+  //   );
+  //   ctx.stroke();
+  // }
 
-  for (let i = 0; i < 70; i++) {
+  for (let i = 0; i < 10; i++) {
     ctx.fillStyle = `rgba(255,255,255,${0.2 + Math.random() * 0.2})`;
     ctx.beginPath();
     ctx.arc(
@@ -65,7 +65,7 @@ function applyCaptchaTexture(canvas) {
     ctx.fill();
   }
 
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < 200; i++) {
     ctx.fillStyle = `rgba(255,255,255,${0.2 + Math.random() * 0.2})`;
     ctx.fillRect(Math.random() * w, Math.random() * h, 1, 1);
   }
