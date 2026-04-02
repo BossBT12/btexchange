@@ -27,6 +27,7 @@ import OtpVerification from "../../components/otpVerification";
 import { createTradeSocket } from "../../services/tradingSocketService";
 import userService from "../../services/secondGameServices/userService";
 import { FONT_SIZE } from "../../constant/lookUpConstant";
+import { normalizeEmail } from "../../utils/normalizeEmail";
 
 const tradeSocket = createTradeSocket();
 
@@ -44,6 +45,7 @@ export default function Login() {
 
   const emailValidationSchema = Yup.object({
     email: Yup.string()
+      .transform((v) => normalizeEmail(v))
       .required(t("auth.validation.emailRequired"))
       .email(t("auth.validation.emailInvalid"))
       .max(100, t("auth.validation.emailMaxLength")),
@@ -63,23 +65,27 @@ export default function Login() {
 
   const formik = useFormik({
     initialValues: {
-      email: initialEmail,
+      email: normalizeEmail(initialEmail),
       password: "",
     },
     validationSchema:
       loginMethod === "email" ? emailValidationSchema : mobileValidationSchema,
     onSubmit: async (values) => {
       setLoading(true);
+      const emailForApi =
+        loginMethod === "email"
+          ? normalizeEmail(values.email)
+          : values.email.trim();
       try {
         const [tradeUser, networkUser] = await Promise.all([
           authService.login({
-            email: values.email.trim(),
+            email: emailForApi,
             password: values.password,
             deviceType: "web",
             deviceToken: "",
           }),
           userService.login({
-            email: values.email.trim(),
+            email: emailForApi,
             password: values.password,
           }),
         ]);
@@ -91,7 +97,7 @@ export default function Login() {
           loginData?.isEmailVerified === false ||
           networkLoginData?.isEmailVerified === false
         ) {
-          setPendingEmail(values.email.trim());
+          setPendingEmail(emailForApi);
           showSnackbar(t("auth.login.verifyEmailInfo"), "info");
           return;
         }
@@ -111,7 +117,7 @@ export default function Login() {
           };
           setUser(userData);
           showSnackbar(message || t("auth.login.success"), "success");
-          tradeSocket.joinUser(values.email.trim());
+          tradeSocket.joinUser(emailForApi);
           navigate("/");
         }
       } catch (err) {
@@ -427,7 +433,7 @@ export default function Login() {
                 variant="text"
                 onClick={() =>
                   navigate("/forgot-password", {
-                    state: { email: formik.values.email },
+                    state: { email: normalizeEmail(formik.values.email) },
                   })
                 }
                 sx={{

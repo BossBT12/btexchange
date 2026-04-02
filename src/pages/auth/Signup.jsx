@@ -37,6 +37,7 @@ import {
   formatCaptchaLockoutCountdown,
   SIGNUP_CAPTCHA_MAX_ATTEMPTS,
 } from "../../features/signupCaptcha";
+import { normalizeEmail } from "../../utils/normalizeEmail";
 
 function countryFromDialCode(dialCode) {
   if (!dialCode) return null;
@@ -73,6 +74,7 @@ const validationSchema = Yup.object({
     .max(50, "Full name must be less than 50 characters")
     .matches(/^[a-zA-Z\s]+$/, "Full name can only contain letters and spaces"),
   email: Yup.string()
+    .transform((v) => normalizeEmail(v))
     .required("Email is required")
     .email("Please enter a valid email address")
     .max(100, "Email must be less than 100 characters"),
@@ -150,7 +152,7 @@ export default function Signup() {
   const initialFormValues = useMemo(
     () => ({
       fullName: verifyEmailResume?.fullName ?? "",
-      email: verifyEmailResume?.email ?? initialEmail,
+      email: normalizeEmail(verifyEmailResume?.email ?? initialEmail),
       mobile: verifyEmailResume?.mobile
         ? String(verifyEmailResume.mobile).replace(/\D/g, "").slice(0, 14)
         : "",
@@ -240,7 +242,7 @@ export default function Signup() {
         .slice(0, 14);
       const body = {
         fullName: values.fullName.trim(),
-        email: values.email.trim(),
+        email: normalizeEmail(values.email),
         countryCode: selectedCountry?.dialCode || "+1",
         mobile: nationalNumber,
         password: values.password,
@@ -277,7 +279,9 @@ export default function Signup() {
   };
 
   const handleVerificationSuccess = () => {
-    navigate("/login", { state: { email: formik.values.email } });
+    navigate("/login", {
+      state: { email: normalizeEmail(formik.values.email) },
+    });
   };
 
   const signupDisabledByCaptcha = captchaBlocked;
