@@ -38,7 +38,8 @@ import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
 // import dashboardServices from "../../services/dashboardServices";
 // import BTLoader from "../../components/Loader";
-// import { IoIosPeople } from "react-icons/io";
+import { IoIosPeople } from "react-icons/io";
+import { FaUsers } from "react-icons/fa";
 
 const TraderChart = memo(({ tradeValue, idx }) => {
   const chartData = useMemo(() => {
@@ -530,7 +531,7 @@ const LandingPage = () => {
       <FeatureCardsCarousel cards={featureCards} />
 
       {/* Super Snipe Card */}
-      {/* <Box
+      <Box
         sx={{
           mx: SPACING.LG,
           mb: 4,
@@ -586,13 +587,13 @@ const LandingPage = () => {
                 </linearGradient>
               </defs>
             </svg>
-            <IoIosPeople 
+            <FaUsers 
               style={{ fill: "url(#landingIconGoldGrad)", width: 75, height: 75 }}
               aria-hidden
             />
           </Box>
         </Box>
-        {isLoadingUserStats ? (
+        {/* {isLoadingUserStats ? (
           <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
             <BTLoader />
           </Box>
@@ -680,8 +681,8 @@ const LandingPage = () => {
               </Box>
             ))}
           </Box>
-        )}
-      </Box> */}
+        )} */}
+      </Box>
     </Box>
   );
 };
