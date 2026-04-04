@@ -103,7 +103,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     clear();
-    showSnackbar(t("profile.loggedOut", "Logged out"), "success");
+    // showSnackbar(t("profile.loggedOut", "Logged out"), "success");
     navigate("/login");
   };
 

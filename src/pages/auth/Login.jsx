@@ -116,7 +116,7 @@ export default function Login() {
             },
           };
           setUser(userData);
-          showSnackbar(message || t("auth.login.success"), "success");
+          // showSnackbar(message || t("auth.login.success"), "success");
           tradeSocket.joinUser(emailForApi);
           navigate("/");
         }

@@ -874,6 +874,7 @@
         "DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE": "सभी",
         "DEPOSIT": "जमा",
         "WITHDRAWAL": "निकासी",
+        "CAPITAL_WITHDRAWAL": "पूंजी निकासी",
         "WITHDRAW_WINNINGS": "विनिंग्स निकासी",
         "WITHDRAW_WORKING": "वर्किंग निकासी",
         "TRADE": "ट्रेड",

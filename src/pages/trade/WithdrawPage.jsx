@@ -251,9 +251,7 @@ export default function WithdrawPage() {
         amount: numericAmount,
         receiverAddress: walletAddress,
         chain: selectedChain,
-        ...(isTwoFactorEnabled && twoFATokenTrimmed
-          ? { twoFactorToken: twoFATokenTrimmed }
-          : {}),
+        twoFactorToken: twoFATokenTrimmed,
       };
 
       const response = await withdrawalService.withdrawWinnings(payload);

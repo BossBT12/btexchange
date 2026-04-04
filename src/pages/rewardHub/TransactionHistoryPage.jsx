@@ -23,6 +23,7 @@ const TYPE_OPTIONS = [
   { value: "all", labelKey: "transactionHistory.filters.typeOption.all" },
   { value: "DEPOSIT", labelKey: "transactionHistory.filters.typeOption.DEPOSIT" },
   { value: "WITHDRAWAL", labelKey: "transactionHistory.filters.typeOption.WITHDRAWAL" },
+  { value: "CAPITAL_WITHDRAWAL", labelKey: "transactionHistory.filters.typeOption.CAPITAL_WITHDRAWAL" },
 ];
 
 const PAGE_SIZE = 20;
@@ -124,13 +125,15 @@ export default function TransactionHistoryPage() {
   const valueSx = {
     color: AppColors.TXT_MAIN,
     fontSize: FONT_SIZE.BODY,
-    fontWeight: 400,
+    fontWeight: 400, 
+    textAlign: "right",
   };
 
   const renderTransactionCard = (item) => {
     const status = item.status || "PENDING";
     const isCredit = item.type === "DEPOSIT";
-    const detailValue = [item.type, item.chain, status].filter(Boolean).join(" · ");
+    const typeLabel = TYPE_OPTIONS.find((o) => o.value === item.type)?.labelKey;
+    const detailValue = [t(typeLabel), item.chain, status].filter(Boolean).join(" · ");
 
     return (
       <Box

@@ -997,6 +997,7 @@
         "DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE": "全部",
         "DEPOSIT": "充值",
         "WITHDRAWAL": "提现",
+        "CAPITAL_WITHDRAWAL": "资本提取",
         "WITHDRAW_WINNINGS": "提现盈利",
         "WITHDRAW_WORKING": "提现工作收入",
         "TRADE": "交易",

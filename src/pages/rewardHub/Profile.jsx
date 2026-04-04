@@ -106,7 +106,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     clear();
-    showSnackbar(t("rewardHub.profile.loggedOut", "Logged out"), "success");
+    // showSnackbar(t("rewardHub.profile.loggedOut", "Logged out"), "success");
     navigate("/login");
   };
 

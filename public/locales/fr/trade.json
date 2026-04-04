@@ -1081,6 +1081,7 @@
         "DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE": "Tous",
         "DEPOSIT": "Dépôt",
         "WITHDRAWAL": "Retrait",
+        "CAPITAL_WITHDRAWAL": "Retrait de capital",
         "WITHDRAW_WINNINGS": "Retrait des gains",
         "WITHDRAW_WORKING": "Retrait de revenus de travail",
         "TRADE": "Trade",

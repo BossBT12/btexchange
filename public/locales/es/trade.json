@@ -997,6 +997,7 @@
         "DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE": "Todos",
         "DEPOSIT": "Depósito",
         "WITHDRAWAL": "Retiro",
+        "CAPITAL_WITHDRAWAL": "Kapitalentnahme",
         "WITHDRAW_WINNINGS": "Retiro de ganancias",
         "WITHDRAW_WORKING": "Retiro de ingresos de trabajo",
         "TRADE": "Operación",

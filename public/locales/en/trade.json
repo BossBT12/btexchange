@@ -1095,6 +1095,7 @@
         "DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE": "All",
         "DEPOSIT": "Deposit",
         "WITHDRAWAL": "Withdrawal",
+        "CAPITAL_WITHDRAWAL": "Capital Withdrawal",
         "WITHDRAW_WINNINGS": "Withdraw Winnings",
         "WITHDRAW_WORKING": "Withdraw Working",
         "TRADE": "Trade",
