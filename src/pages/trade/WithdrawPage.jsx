@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
@@ -15,12 +14,16 @@ import {
   DialogContent,
   DialogActions,
   CircularProgress,
+  Grid,
+  Chip,
+  Tooltip,
 } from "@mui/material";
 import {
   ArrowBackIosNew,
   AssignmentOutlined,
   Security,
   Refresh,
+  OpenInNew,
 } from "@mui/icons-material";
 import { AppColors } from "../../constant/appColors";
 import { BORDER_RADIUS, FONT_SIZE } from "../../constant/lookUpConstant";
@@ -35,7 +38,10 @@ import { SiTether } from "react-icons/si";
 
 const RULE_KEYS = [
   { textKey: "withdraw.rules.instant" },
-  { textKey: "withdraw.rules.amountRange", highlightKey: "withdraw.rules.amountRangeHighlight" },
+  {
+    textKey: "withdraw.rules.amountRange",
+    highlightKey: "withdraw.rules.amountRangeHighlight",
+  },
   { textKey: "withdraw.rules.confirmBeneficiary" },
   { textKey: "withdraw.rules.contactService" },
 ];
@@ -44,7 +50,7 @@ const getExplorerUrl = (chain, txHash) => {
   if (!txHash) return null;
   const explorers = {
     BSC: `https://bscscan.com/tx/${txHash}`,
-    // ETH: `https://etherscan.io/tx/${txHash}`,  
+    // ETH: `https://etherscan.io/tx/${txHash}`,
     POLYGON: `https://polygonscan.com/tx/${txHash}`,
   };
   return explorers[chain] || null;
@@ -68,7 +74,8 @@ function getRuleSegments(text, highlight) {
   const segments = [];
   parts.forEach((part, i) => {
     if (part) segments.push({ text: part, highlighted: false });
-    if (i < parts.length - 1) segments.push({ text: highlight, highlighted: true });
+    if (i < parts.length - 1)
+      segments.push({ text: highlight, highlighted: true });
   });
   return segments.length ? segments : [{ text, highlighted: false }];
 }
@@ -92,17 +99,17 @@ export default function WithdrawPage() {
   const canSubmit = Boolean(amount && parseFloat(amount) > 0);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
-  const [selectedChain, setSelectedChain] = useState("")
-  const [walletAddress, setWalletAddress] = useState('')
-  const [twoFATkn, setTwoFATkn] = useState('')
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [selectedChain, setSelectedChain] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
+  const [twoFATkn, setTwoFATkn] = useState("");
   const [dashboardData, setDashboardData] = useState(null);
-  const [open2fa, setOpen2fa] = useState(false)
+  const [open2fa, setOpen2fa] = useState(false);
   const [dashboardLoading, setDashboardLoading] = useState(true);
-  const [withdrawalHistory, setWithdrawalHistory] = useState(null)
+  const [withdrawalHistory, setWithdrawalHistory] = useState(null);
   const [historyLoading, setHistoryLoading] = useState(true);
-  const [submitLoading, setSubmitLoading] = useState(false)
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const currentAvailable = dashboardData?.totalAvailableForWithdraw || 0;
   const totalNeedToTrade = dashboardData?.totalNeedToTrade || 0;
@@ -113,17 +120,17 @@ export default function WithdrawPage() {
 
   const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
 
   const handle2tfaClose = () => {
-    setOpen2fa(false)
-    setTwoFATkn('')
-  }
+    setOpen2fa(false);
+    setTwoFATkn("");
+  };
 
   const handleChainSelect = (v) => {
-    setSelectedChain(v)
+    setSelectedChain(v);
     setAnchorEl(null);
-  }
+  };
 
   const handleMaxClick = () => {
     if (currentAvailable > 0) setAmount(String(currentAvailable));
@@ -149,10 +156,22 @@ export default function WithdrawPage() {
       if (response?.success) {
         setWithdrawalHistory(response.data || []);
       } else {
-        setError(response?.message || t("withdraw.fetchHistoryFailed", "Failed to fetch withdrawal history"));
+        setError(
+          response?.message ||
+            t(
+              "withdraw.fetchHistoryFailed",
+              "Failed to fetch withdrawal history",
+            ),
+        );
       }
     } catch (err) {
-      setError(err?.message || t("withdraw.fetchHistoryFailed", "Failed to fetch withdrawal history"));
+      setError(
+        err?.message ||
+          t(
+            "withdraw.fetchHistoryFailed",
+            "Failed to fetch withdrawal history",
+          ),
+      );
     } finally {
       setHistoryLoading(false);
     }
@@ -163,7 +182,6 @@ export default function WithdrawPage() {
     fetchHistory();
   }, []);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -173,7 +191,10 @@ export default function WithdrawPage() {
 
     if (!numericAmount || numericAmount <= 0) {
       setError(
-        t("withdraw.errors.invalidAmount", "Please enter a valid withdrawal amount.")
+        t(
+          "withdraw.errors.invalidAmount",
+          "Please enter a valid withdrawal amount.",
+        ),
       );
       return;
     }
@@ -182,15 +203,18 @@ export default function WithdrawPage() {
       setError(
         t(
           "withdraw.errors.amountTooHigh",
-          "Amount cannot be more than your available balance."
-        )
+          "Amount cannot be more than your available balance.",
+        ),
       );
       return;
     }
 
     if (!walletAddress || walletAddress.length < 20) {
       setError(
-        t("withdraw.errors.invalidAddress", "Please enter a valid wallet address.")
+        t(
+          "withdraw.errors.invalidAddress",
+          "Please enter a valid wallet address.",
+        ),
       );
       return;
     }
@@ -200,7 +224,7 @@ export default function WithdrawPage() {
       return;
     }
 
-    setOpen2fa(true)
+    setOpen2fa(true);
   };
 
   const finalSubmit = async () => {
@@ -214,8 +238,8 @@ export default function WithdrawPage() {
         setError(
           t(
             "withdraw.errors.invalid2fa",
-            "Please enter the 6-digit code from your authenticator app."
-          )
+            "Please enter the 6-digit code from your authenticator app.",
+          ),
         );
         return;
       }
@@ -225,17 +249,23 @@ export default function WithdrawPage() {
       setSubmitLoading(true);
       const payload = {
         amount: numericAmount,
-        walletAddress,
+        receiverAddress: walletAddress,
         chain: selectedChain,
         ...(isTwoFactorEnabled && twoFATokenTrimmed
           ? { twoFactorToken: twoFATokenTrimmed }
           : {}),
       };
 
-      const response = await withdrawalService.withdrawWinnings(payload)
+      const response = await withdrawalService.withdrawWinnings(payload);
 
       if (response?.success) {
-        setSuccess(response.message || t("withdraw.submitSuccess", "Withdrawal request submitted successfully."));
+        setSuccess(
+          response.message ||
+            t(
+              "withdraw.submitSuccess",
+              "Withdrawal request submitted successfully.",
+            ),
+        );
         setAmount("");
         setWalletAddress("");
         setTwoFATkn("");
@@ -244,19 +274,25 @@ export default function WithdrawPage() {
       } else {
         setError(
           response?.message ||
-          t("withdraw.submitFailed", "Unable to submit withdrawal. Please check your details and try again.")
+            t(
+              "withdraw.submitFailed",
+              "Unable to submit withdrawal. Please check your details and try again.",
+            ),
         );
       }
     } catch (err) {
       setError(
         err?.message ||
-        t("withdraw.submitFailed", "Unable to submit withdrawal. Please check your details and try again.")
+          t(
+            "withdraw.submitFailed",
+            "Unable to submit withdrawal. Please check your details and try again.",
+          ),
       );
     } finally {
       setSubmitLoading(false);
-      handle2tfaClose()
+      handle2tfaClose();
     }
-  }
+  };
 
   return (
     <Box
@@ -339,7 +375,7 @@ export default function WithdrawPage() {
       )}
       <Box sx={{ px: 1, pt: !type && 2 }}>
         {/* Withdrawal amount card */}
-        {!type &&
+        {!type && (
           <>
             <Box
               sx={{
@@ -354,7 +390,7 @@ export default function WithdrawPage() {
                 alignItems: "center",
                 overflow: "hidden",
                 gap: 0,
-                mx: "auto"
+                mx: "auto",
               }}
             >
               {/* Left: chain selector (icon + label) */}
@@ -373,9 +409,14 @@ export default function WithdrawPage() {
                   borderRight: `1px solid ${AppColors.BORDER_MAIN}`,
                 }}
               >
-                {!selectedChain ?
-                  <Typography variant="body2" sx={{ color: AppColors.TXT_MAIN, fontWeight: 600 }}>Select Network</Typography>
-                  :
+                {!selectedChain ? (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: AppColors.TXT_MAIN, fontWeight: 600 }}
+                  >
+                    Select Network
+                  </Typography>
+                ) : (
                   <>
                     <Box sx={{ flexShrink: 0 }}>
                       <SiTether size={18} color={AppColors.GOLD_PRIMARY} />
@@ -392,10 +433,14 @@ export default function WithdrawPage() {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {t(`withdraw.chains.${selectedChain}`, CHAINS?.find((i) => i.value === selectedChain)?.label ?? selectedChain)}
+                      {t(
+                        `withdraw.chains.${selectedChain}`,
+                        CHAINS?.find((i) => i.value === selectedChain)?.label ??
+                          selectedChain,
+                      )}
                     </Typography>
                   </>
-                }
+                )}
               </Button>
               <Menu
                 anchorEl={anchorEl}
@@ -415,7 +460,10 @@ export default function WithdrawPage() {
                     onClick={() => handleChainSelect(chain.value)}
                     selected={selectedChain === chain.value}
                     sx={{
-                      backgroundColor: selectedChain === chain.value ? AppColors.BG_SECONDARY : undefined,
+                      backgroundColor:
+                        selectedChain === chain.value
+                          ? AppColors.BG_SECONDARY
+                          : undefined,
                     }}
                   >
                     {t(`withdraw.chains.${chain.value}`, chain.label)}
@@ -429,7 +477,10 @@ export default function WithdrawPage() {
                 fullWidth
                 multiline
                 value={walletAddress}
-                placeholder={t("withdraw.form.enterAddress", "Enter your address")}
+                placeholder={t(
+                  "withdraw.form.enterAddress",
+                  "Enter your address",
+                )}
                 onChange={(e) => setWalletAddress(e.target.value)}
                 sx={{
                   pl: 1,
@@ -464,7 +515,10 @@ export default function WithdrawPage() {
             >
               <TextField
                 fullWidth
-                placeholder={t("withdraw.placeholder", "Please enter the amount")}
+                placeholder={t(
+                  "withdraw.placeholder",
+                  "Please enter the amount",
+                )}
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 type="number"
@@ -520,10 +574,7 @@ export default function WithdrawPage() {
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: AppColors.TXT_SUB }}
-                  >
+                  <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
                     {t("withdraw.currentAvailable", "Withdrawable balance")}
                   </Typography>
                   <Typography
@@ -563,10 +614,7 @@ export default function WithdrawPage() {
                   mt: 1,
                 }}
               >
-                <Typography
-                  variant="body2"
-                  sx={{ color: AppColors.TXT_SUB }}
-                >
+                <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
                   {t("withdraw.amountReceived", "Withdrawal amount received")}
                 </Typography>
                 <Typography
@@ -647,12 +695,17 @@ export default function WithdrawPage() {
                       >
                         ${totalNeedToTrade}
                       </Box>
-                      {t("withdraw.needToTradeAfter", " to be able to withdraw")}
+                      {t(
+                        "withdraw.needToTradeAfter",
+                        " to be able to withdraw",
+                      )}
                     </Typography>
                   </Box>
                   {RULE_KEYS.map((item, index) => {
                     const text = t(item.textKey);
-                    const highlight = item.highlightKey ? t(item.highlightKey) : undefined;
+                    const highlight = item.highlightKey
+                      ? t(item.highlightKey)
+                      : undefined;
                     const segments = getRuleSegments(text, highlight);
                     const isLast = index === RULE_KEYS.length - 1;
                     return (
@@ -700,7 +753,7 @@ export default function WithdrawPage() {
                               </Box>
                             ) : (
                               <span key={i}>{seg.text}</span>
-                            )
+                            ),
                           )}
                         </Typography>
                       </Box>
@@ -710,10 +763,10 @@ export default function WithdrawPage() {
               </Box>
             </Box>
           </>
-        }
+        )}
         {/* Withdrawal history link */}
         <Box>
-          {!type &&
+          {!type && (
             <Box
               sx={{
                 display: "flex",
@@ -743,11 +796,10 @@ export default function WithdrawPage() {
                 {t("withdraw.historyLink", "Withdrawal history")}
               </Typography>
             </Box>
-          }
+          )}
           <Box
             sx={{
               mt: 1,
-              bgcolor: AppColors.BG_CARD,
               overflow: "hidden",
             }}
           >
@@ -762,7 +814,7 @@ export default function WithdrawPage() {
               >
                 <BTLoader />
               </Box>
-            ) : withdrawalHistory.length === 0 ? (
+            ) : withdrawalHistory?.length === 0 ? (
               <Box
                 sx={{
                   textAlign: "center",
@@ -770,33 +822,34 @@ export default function WithdrawPage() {
                   color: AppColors.TXT_SUB,
                 }}
               >
-                <IconButton onClick={fetchHistory}
+                <IconButton
+                  onClick={fetchHistory}
                   disabled={dashboardLoading}
                   sx={{
                     color: AppColors.GOLD_PRIMARY,
                     "&:hover": {
                       bgcolor: `${AppColors.GOLD_PRIMARY}15`,
                     },
-                  }}>
+                  }}
+                >
                   <Refresh />
                 </IconButton>
                 <Typography variant="body1" sx={{ mb: 1 }}>
                   {t(
                     "withdraw.history.emptyTitle",
-                    "No withdrawal history found"
+                    "No withdrawal history found",
                   )}
                 </Typography>
                 <Typography variant="body2">
                   {t(
                     "withdraw.history.emptyDescription",
-                    "Your withdrawal requests will appear here after you submit them."
+                    "Your withdrawal requests will appear here after you submit them.",
                   )}
                 </Typography>
               </Box>
             ) : (
               <Box
                 sx={{
-                  px: { xs: 2, md: 3 },
                   pb: 3,
                   display: "flex",
                   flexDirection: "column",
@@ -805,8 +858,16 @@ export default function WithdrawPage() {
               >
                 {withdrawalHistory.map((withdrawal, index) => {
                   const status = withdrawal.status || "REQUESTED";
-                  const statusKeyMap = { REQUESTED: "statusRequested", CONFIRMED: "statusConfirmed", SENT: "statusSent", FAILED: "statusFailed" };
-                  const statusLabel = t(`withdraw.history.${statusKeyMap[status] || status}`, status);
+                  const statusKeyMap = {
+                    REQUESTED: "statusRequested",
+                    CONFIRMED: "statusConfirmed",
+                    SENT: "statusSent",
+                    FAILED: "statusFailed",
+                  };
+                  const statusLabel = t(
+                    `withdraw.history.${statusKeyMap[status] || status}`,
+                    status,
+                  );
                   const type =
                     withdrawal.type === "WITHDRAW_WORKING"
                       ? t("withdraw.history.typeWorking", "Working Income")
@@ -834,7 +895,7 @@ export default function WithdrawPage() {
                       }}
                     >
                       <Grid container spacing={2} alignItems="center">
-                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                        <Grid size={{ xs: 6, md: 3 }}>
                           <Typography
                             variant="caption"
                             sx={{
@@ -855,7 +916,7 @@ export default function WithdrawPage() {
                             {withdrawal.amount} USDT
                           </Typography>
                         </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                        <Grid size={{ xs: 6, md: 3 }}>
                           <Typography
                             variant="caption"
                             sx={{
@@ -876,7 +937,7 @@ export default function WithdrawPage() {
                             }}
                           />
                         </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 2 }}>
+                        <Grid size={{ xs: 6, md: 2 }}>
                           <Typography
                             variant="caption"
                             sx={{
@@ -897,7 +958,7 @@ export default function WithdrawPage() {
                             }}
                           />
                         </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                        <Grid size={{ xs: 6, md: 3 }}>
                           <Typography
                             variant="caption"
                             sx={{
@@ -917,19 +978,19 @@ export default function WithdrawPage() {
                             {formatDate(withdrawal.createdAt)}
                           </Typography>
                         </Grid>
-                        <Grid size={{ xs: 12, md: 1 }}>
+                        <Grid size={{ xs: 6, md: 1 }}>
                           {withdrawal.txHash && (
                             <Tooltip
                               title={t(
                                 "withdraw.history.viewOnExplorer",
-                                "View on blockchain explorer"
+                                "View on blockchain explorer",
                               )}
                             >
                               <IconButton
                                 component="a"
                                 href={getExplorerUrl(
                                   withdrawal.chain,
-                                  withdrawal.txHash
+                                  withdrawal.txHash,
                                 )}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -986,14 +1047,14 @@ export default function WithdrawPage() {
             )}
           </Box>
         </Box>
-      </Box >
+      </Box>
       <Dialog
         open={open2fa}
         onClose={handle2tfaClose}
         maxWidth="xs"
         fullWidth
         PaperProps={{
-          sx: { borderRadius: 3, padding: 1 }
+          sx: { borderRadius: 3, padding: 1 },
         }}
       >
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -1003,7 +1064,10 @@ export default function WithdrawPage() {
 
         <DialogContent>
           <Typography variant="body2" color="text.secondary" mb={2}>
-            {t("withdraw.twofaDialog.description", "Please enter the 6-digit verification code from your authenticator app.")}
+            {t(
+              "withdraw.twofaDialog.description",
+              "Please enter the 6-digit verification code from your authenticator app.",
+            )}
           </Typography>
 
           <Box mt={1}>
@@ -1018,7 +1082,11 @@ export default function WithdrawPage() {
                 maxLength: 6,
                 inputMode: "numeric",
                 pattern: "[0-9]*",
-                style: { textAlign: "center", fontSize: "1.2rem", letterSpacing: "8px" }
+                style: {
+                  textAlign: "center",
+                  fontSize: "1.2rem",
+                  letterSpacing: "8px",
+                },
               }}
             />
           </Box>
@@ -1034,14 +1102,17 @@ export default function WithdrawPage() {
             onClick={finalSubmit}
             disabled={submitLoading}
           >
-            {submitLoading ? <CircularProgress size={22} color="inherit" /> : t("withdraw.twofaDialog.verify", "Verify")}
+            {submitLoading ? (
+              <CircularProgress size={22} color="inherit" />
+            ) : (
+              t("withdraw.twofaDialog.verify", "Verify")
+            )}
           </Button>
         </DialogActions>
       </Dialog>
-    </Box >
+    </Box>
   );
 }
-
 
 // import { useEffect, useMemo, useState } from "react";
 // import {
