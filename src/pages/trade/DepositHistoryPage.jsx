@@ -23,7 +23,7 @@ import { TRADE_NAMESPACE } from "../../i18n";
 const getExplorerUrl = (chain, txHash) => {
   const explorers = {
     BSC: `https://bscscan.com/tx/${txHash}`,
-    ETH: `https://etherscan.io/tx/${txHash}`,
+    // ETH: `https://etherscan.io/tx/${txHash}`,
     POLYGON: `https://polygonscan.com/tx/${txHash}`,
   };
   return explorers[chain] || "#";

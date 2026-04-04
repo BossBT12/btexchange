@@ -40,6 +40,27 @@ const RULE_KEYS = [
   { textKey: "withdraw.rules.contactService" },
 ];
 
+const getExplorerUrl = (chain, txHash) => {
+  if (!txHash) return null;
+  const explorers = {
+    BSC: `https://bscscan.com/tx/${txHash}`,
+    // ETH: `https://etherscan.io/tx/${txHash}`,  
+    POLYGON: `https://polygonscan.com/tx/${txHash}`,
+  };
+  return explorers[chain] || null;
+};
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
 /** Splits rule text into segments for normal vs highlighted display. */
 function getRuleSegments(text, highlight) {
   if (!highlight) return [{ text, highlighted: false }];
@@ -406,12 +427,14 @@ export default function WithdrawPage() {
               {/* Right: wallet address input */}
               <TextField
                 fullWidth
+                multiline
                 value={walletAddress}
                 placeholder={t("withdraw.form.enterAddress", "Enter your address")}
                 onChange={(e) => setWalletAddress(e.target.value)}
                 sx={{
                   pl: 1,
                   "& .MuiInputBase-root": {
+                    p: 0,
                     border: "none",
                     background: "none",
                     color: AppColors.TXT_MAIN,
@@ -903,6 +926,7 @@ export default function WithdrawPage() {
                               )}
                             >
                               <IconButton
+                                component="a"
                                 href={getExplorerUrl(
                                   withdrawal.chain,
                                   withdrawal.txHash

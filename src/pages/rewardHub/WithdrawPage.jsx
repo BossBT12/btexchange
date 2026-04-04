@@ -36,7 +36,6 @@ export default function WithdrawPage() {
   const [balanceData, setBalanceData] = useState(null);
   const [profile, setProfile] = useState(null);
   const [balanceLoading, setBalanceLoading] = useState(true);
-  const [profileLoading, setProfileLoading] = useState(true);
 
   const [toAddress, setToAddress] = useState("");
   const [amount, setAmount] = useState("");
@@ -66,13 +65,10 @@ export default function WithdrawPage() {
 
   const fetchProfile = async () => {
     try {
-      setProfileLoading(true);
       const response = await userService.getProfile();
       setProfile(response?.data ?? response);
     } catch (err) {
       console.log('error: ', err);
-    } finally {
-      setProfileLoading(false);
     }
   };
 
@@ -318,6 +314,7 @@ export default function WithdrawPage() {
             <TextField
               label={t("rewardHub.withdraw.addressLabel", "Withdrawal address (USDT wallet)")}
               value={toAddress}
+              multiline
               onChange={(e) => setToAddress(e.target.value)}
               placeholder={t("rewardHub.withdraw.addressPlaceholder", "0x...")}
               fullWidth

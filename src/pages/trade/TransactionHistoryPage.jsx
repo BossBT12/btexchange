@@ -10,10 +10,7 @@ import {
   MenuItem,
   Grid,
 } from "@mui/material";
-import {
-  ChevronLeft,
-  Refresh,
-} from "@mui/icons-material";
+import { ChevronLeft, Refresh } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import BTLoader from "../../components/Loader";
 import { AppColors } from "../../constant/appColors";
@@ -92,13 +89,22 @@ const datePickerLikeSx = {
     "& .MuiSelect-select": { textAlign: "start" },
     "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
     "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-    "&.Mui-focused fieldset": { borderColor: AppColors.TXT_SUB, borderWidth: 1 },
+    "&.Mui-focused fieldset": {
+      borderColor: AppColors.TXT_SUB,
+      borderWidth: 1,
+    },
     "&.Mui-error fieldset": { borderColor: AppColors.ERROR },
   },
   "& .MuiFormLabel-root": { fontSize: FONT_SIZE.BODY2 },
   "& .MuiInputBase-input": { py: 1, fontSize: FONT_SIZE.BODY2 },
-  "& .MuiInputBase-input::placeholder": { color: AppColors.TXT_SUB, opacity: 1 },
-  "& .MuiFormHelperText-root": { color: AppColors.ERROR, fontSize: FONT_SIZE.CAPTION },
+  "& .MuiInputBase-input::placeholder": {
+    color: AppColors.TXT_SUB,
+    opacity: 1,
+  },
+  "& .MuiFormHelperText-root": {
+    color: AppColors.ERROR,
+    fontSize: FONT_SIZE.CAPTION,
+  },
 };
 
 const filterLabelSx = {
@@ -118,7 +124,7 @@ export default function TransactionHistoryPage() {
   const [totalPages, setTotalPages] = useState(0);
 
   const [typeFilter, setTypeFilter] = useState(
-    initialType ? [initialType].join(",") : ""
+    initialType ? [initialType].join(",") : "",
   );
   const [statusFilter, setStatusFilter] = useState("");
   const [chainFilter, setChainFilter] = useState("");
@@ -158,10 +164,10 @@ export default function TransactionHistoryPage() {
     } catch (err) {
       setError(
         err?.message ??
-        t(
-          "transactionHistory.errors.fetchFailed",
-          "Failed to load transaction history"
-        )
+          t(
+            "transactionHistory.errors.fetchFailed",
+            "Failed to load transaction history",
+          ),
       );
       setList([]);
       setTotal(0);
@@ -169,7 +175,17 @@ export default function TransactionHistoryPage() {
     } finally {
       setLoading(false);
     }
-  }, [typeFilter, statusFilter, chainFilter, startDate, endDate, sortBy, sortOrder, page, t]);
+  }, [
+    typeFilter,
+    statusFilter,
+    chainFilter,
+    startDate,
+    endDate,
+    sortBy,
+    sortOrder,
+    page,
+    t,
+  ]);
 
   useEffect(() => {
     fetchHistory();
@@ -182,9 +198,9 @@ export default function TransactionHistoryPage() {
     type
       ? t(`transactionHistory.filters.typeOption.${type}`, type)
       : t(
-        "transactionHistory.filters.typeOption.DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE",
-        "All"
-      );
+          "transactionHistory.filters.typeOption.DEPOSIT,WITHDRAW_WINNINGS,WITHDRAW_WORKING,TRADE",
+          "All",
+        );
 
   const getChainLabel = (chain) =>
     chain
@@ -238,14 +254,26 @@ export default function TransactionHistoryPage() {
             {headerTitle}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, mx: 1, py: 1.25 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 0.5,
+            mx: 1,
+            py: 1.25,
+          }}
+        >
           <Box sx={cardRowSx}>
             <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
               {t("transactionHistory.card.detail", "Detail")}
             </Typography>
             <Typography variant="body2" sx={{ color: AppColors.TXT_MAIN }}>
               {getTypeLabel(item.type)}
-              {["DEPOSIT", "WITHDRAW_WINNINGS", "WITHDRAW_WORKING"].includes(item.type) && item.chain ? ` · ${getChainLabel(item.chain)}` : ""}
+              {["DEPOSIT", "WITHDRAW_WINNINGS", "WITHDRAW_WORKING"].includes(
+                item.type,
+              ) && item.chain
+                ? ` · ${getChainLabel(item.chain)}`
+                : ""}
             </Typography>
           </Box>
           <Box sx={cardRowSx}>
@@ -260,7 +288,10 @@ export default function TransactionHistoryPage() {
             <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
               {t("transactionHistory.card.balance", "Balance")}
             </Typography>
-            <Typography variant="body1" sx={{ color: balanceColor, fontWeight: 600 }}>
+            <Typography
+              variant="body1"
+              sx={{ color: balanceColor, fontWeight: 600 }}
+            >
               {isCredit ? "+" : "-"}
               {formatAmount(item.amount, locale)} {item.currency || "USDT"}
             </Typography>
@@ -274,11 +305,12 @@ export default function TransactionHistoryPage() {
             mb: 1,
             border: `1px solid ${AppColors.BORDER_MAIN}`,
             borderRadius: 2,
-            minHeight: 60
+            minHeight: 60,
           }}
         >
           <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
-            {item?.note || t("transactionHistory.card.noRemark", "No remark")} 
+            {item?.note.replace("ADMIN: ", "") ||
+              t("transactionHistory.card.noRemark", "No remark")}
           </Typography>
           {/* <Box sx={{ minHeight: 40 }}>
             {item.txHash ? (
@@ -335,7 +367,15 @@ export default function TransactionHistoryPage() {
             {t("transactionHistory.filters.typeOption.TRADE", "Trade")}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, mx: 1, py: 1.25 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 0.5,
+            mx: 1,
+            py: 1.25,
+          }}
+        >
           <Box sx={cardRowSx}>
             <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
               {t("transactionHistory.card.detail", "Detail")}
@@ -369,7 +409,7 @@ export default function TransactionHistoryPage() {
             mb: 1,
             border: `1px solid ${AppColors.BORDER_MAIN}`,
             borderRadius: 2,
-            minHeight: 60
+            minHeight: 60,
           }}
         >
           <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
@@ -410,7 +450,11 @@ export default function TransactionHistoryPage() {
       >
         <IconButton
           onClick={() => navigate(-1)}
-          sx={{ color: AppColors.TXT_MAIN, p: 0.5, "&:hover": { bgcolor: AppColors.HLT_LIGHT } }}
+          sx={{
+            color: AppColors.TXT_MAIN,
+            p: 0.5,
+            "&:hover": { bgcolor: AppColors.HLT_LIGHT },
+          }}
         >
           <ChevronLeft sx={{ fontSize: 28 }} />
         </IconButton>
@@ -424,17 +468,17 @@ export default function TransactionHistoryPage() {
           onClick={() => fetchHistory()}
           disabled={loading}
           aria-label={t("transactionHistory.refreshAriaLabel", "Refresh")}
-          sx={{ color: AppColors.GOLD_PRIMARY, "&:hover": { bgcolor: AppColors.HLT_LIGHT } }}
+          sx={{
+            color: AppColors.GOLD_PRIMARY,
+            "&:hover": { bgcolor: AppColors.HLT_LIGHT },
+          }}
         >
           <Refresh />
         </IconButton>
       </Box>
       {error && (
         <Box sx={{ px: 1, pb: SPACING.MD }}>
-          <Typography
-            variant="body2"
-            sx={{ color: AppColors.ERROR }}
-          >
+          <Typography variant="body2" sx={{ color: AppColors.ERROR }}>
             {error}
           </Typography>
         </Box>
@@ -492,7 +536,7 @@ export default function TransactionHistoryPage() {
                   <MenuItem key={opt.value} value={opt.value}>
                     {t(
                       `transactionHistory.filters.typeOption.${opt.value || "all"}`,
-                      opt.label
+                      opt.label,
                     )}
                   </MenuItem>
                 ))}
@@ -518,7 +562,7 @@ export default function TransactionHistoryPage() {
                   <MenuItem key={opt.value || "all"} value={opt.value}>
                     {t(
                       `transactionHistory.filters.statusOption.${opt.value || "all"}`,
-                      opt.label
+                      opt.label,
                     )}
                   </MenuItem>
                 ))}
@@ -544,7 +588,7 @@ export default function TransactionHistoryPage() {
                   <MenuItem key={opt.value || "all"} value={opt.value}>
                     {t(
                       `transactionHistory.filters.chainOption.${opt.value || "all"}`,
-                      opt.label
+                      opt.label,
                     )}
                   </MenuItem>
                 ))}
@@ -578,7 +622,10 @@ export default function TransactionHistoryPage() {
               label={t("transactionHistory.filters.startDate", "Start Date")}
               value={startDate}
               onChange={(e) => setStartDate(e)}
-              placeholder={t("transactionHistory.filters.startDate", "Start Date")}
+              placeholder={t(
+                "transactionHistory.filters.startDate",
+                "Start Date",
+              )}
             />
           </Grid>
           <Grid size={4}>
@@ -608,28 +655,19 @@ export default function TransactionHistoryPage() {
                 sx={{ color: AppColors.TXT_MAIN }}
               >
                 <MenuItem value="createdAt-desc">
-                  {t(
-                    "transactionHistory.filters.sortNewest",
-                    "Newest"
-                  )}
+                  {t("transactionHistory.filters.sortNewest", "Newest")}
                 </MenuItem>
                 <MenuItem value="createdAt-asc">
-                  {t(
-                    "transactionHistory.filters.sortOldest",
-                    "Oldest"
-                  )}
+                  {t("transactionHistory.filters.sortOldest", "Oldest")}
                 </MenuItem>
                 <MenuItem value="amount-desc">
                   {t(
                     "transactionHistory.filters.sortAmountHigh",
-                    "Amount high"
+                    "Amount high",
                   )}
                 </MenuItem>
                 <MenuItem value="amount-asc">
-                  {t(
-                    "transactionHistory.filters.sortAmountLow",
-                    "Amount low"
-                  )}
+                  {t("transactionHistory.filters.sortAmountLow", "Amount low")}
                 </MenuItem>
               </Select>
             </FormControl>
@@ -645,22 +683,21 @@ export default function TransactionHistoryPage() {
         ) : list.length === 0 ? (
           <Box sx={{ textAlign: "center", py: 6, color: AppColors.TXT_SUB }}>
             <Typography variant="body2">
-              {t(
-                "transactionHistory.empty.title",
-                "No transactions yet"
-              )}
+              {t("transactionHistory.empty.title", "No transactions yet")}
             </Typography>
             <Typography variant="body2" sx={{ mt: 0.5 }}>
               {t(
                 "transactionHistory.empty.subtitle",
-                "Your unified transaction history will appear here."
+                "Your unified transaction history will appear here.",
               )}
             </Typography>
           </Box>
         ) : (
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {list.map((item) =>
-              item.source === "trade" || item.type === "TRADE" ? renderTradeCard(item) : renderTransactionCard(item)
+              item.source === "trade" || item.type === "TRADE"
+                ? renderTradeCard(item)
+                : renderTransactionCard(item),
             )}
           </Box>
         )}
@@ -692,7 +729,7 @@ export default function TransactionHistoryPage() {
               {t(
                 "transactionHistory.pagination.summary",
                 "Page {{page}} of {{totalPages}} ({{total}} total)",
-                { page, totalPages, total }
+                { page, totalPages, total },
               )}
             </Typography>
             <Button
@@ -712,5 +749,5 @@ export default function TransactionHistoryPage() {
         )}
       </Box>
     </Box>
-  )
+  );
 }

@@ -36,7 +36,6 @@ const CURRENCY_TO_USDT_RATES = {
   CNY: 7.24,
   AUD: 1.5,
   THB: 35,
-  INR: 95,
   PHP: 55,
   JPY: 150,
   KRW: 1300,     // ko
@@ -56,7 +55,7 @@ export const getCurrencyDisplayRate = (currency = "USDT") =>
  * @returns {object} { mainValue, displayValue, currency }
  */
 export const formatCurrencyForDisplay = (value, currency = "USDT") => {
-  const num = Number(value) ?? 0;
+  const num = Number(value);
   const rate = getCurrencyDisplayRate(currency);
   const displayNum = num * rate;
   return {

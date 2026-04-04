@@ -549,6 +549,7 @@ export default function CapitalWithdrawPage() {
                 "0x...",
               )}
               fullWidth
+              multiline
               sx={{
                 "& .MuiOutlinedInput-root": {
                   bgcolor: AppColors.BG_CARD,
