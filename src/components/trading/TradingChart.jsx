@@ -117,7 +117,8 @@ function aggregateCandles(baseCandles, baseGranularity, mergeFactor) {
 
 /**
  * Split each base-period candle into shorter sub-intervals (e.g. 1m → 2×30s).
- * Linear interpolation open→close per sub-step; high/low are max/min of segment endpoints.
+ * Linear interpolation open→close per sub-step. High/low must extend to the parent
+ * bar's H/L on the right sub-bars or wicks disappear (high === max(open,close)).
  * (Coinbase has no true 30s OHLC — this is a calculated approximation.)
  */
 function splitCandlesFromBase(baseCandles, baseGranularity, displayGranularity) {
@@ -132,16 +133,58 @@ function splitCandlesFromBase(baseCandles, baseGranularity, displayGranularity) 
     const t = c.time;
     const O = c.open;
     const C = c.close;
+    const H = c.high;
+    const L = c.low;
+
+    if (O === C) {
+      // Doji: put lower wick on the first sub-bar, upper wick on the last (continuous wick path).
+      for (let i = 0; i < n; i++) {
+        const tStart = t + i * displayGranularity;
+        let high_i = O;
+        let low_i = O;
+        if (i === 0) {
+          low_i = Math.min(L, O);
+          high_i = O;
+        } else if (i === n - 1) {
+          low_i = O;
+          high_i = Math.max(H, O);
+        }
+        out.push({
+          time: tStart,
+          open: O,
+          high: high_i,
+          low: low_i,
+          close: O,
+        });
+      }
+      continue;
+    }
+
+    const bodyTop = Math.max(O, C);
+    const bodyBot = Math.min(O, C);
+    // Along a monotonic O→C path, the body extreme for upper/lower wicks lands on a known segment.
+    const upperSeg = C >= O ? n - 1 : 0;
+    const lowerSeg = C >= O ? 0 : n - 1;
 
     for (let i = 0; i < n; i++) {
       const tStart = t + i * displayGranularity;
       const o_i = O + ((C - O) * i) / n;
       const c_i = O + ((C - O) * (i + 1)) / n;
+      let high_i = Math.max(o_i, c_i);
+      let low_i = Math.min(o_i, c_i);
+
+      if (H > bodyTop && i === upperSeg) {
+        high_i = Math.max(high_i, H);
+      }
+      if (L < bodyBot && i === lowerSeg) {
+        low_i = Math.min(low_i, L);
+      }
+
       out.push({
         time: tStart,
         open: o_i,
-        high: Math.max(o_i, c_i),
-        low: Math.min(o_i, c_i),
+        high: high_i,
+        low: low_i,
         close: c_i,
       });
     }
