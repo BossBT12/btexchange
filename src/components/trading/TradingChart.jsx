@@ -257,8 +257,9 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
   const seriesDataRef = useRef([]); // Mirrors series data for oldest time + prepend merges
   const isLoadingOlderRef = useRef(false);
   const hasMoreHistoryRef = useRef(true);
-  const resyncRef = useRef(null); // Holds the resync function, updated when deps change
+  const resyncRef = useRef(null);
   const isSyncingRef = useRef(false);
+  const renderRafRef = useRef(0); // rAF id for throttled chart rendering
   /** Default 1m (index 1) so behavior matches pre–30s default */
   const [selectedTimeframe, setSelectedTimeframe] = useState(() => {
     const defaultIndex = 1;
@@ -449,18 +450,15 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
             Math.floor(time / candlePeriodSeconds) * candlePeriodSeconds;
 
           if (price > 0) {
-            let priceDirection = null; // null = no change, 'up' = increase, 'down' = decrease
+            let priceDirection = null;
 
             if (!currentCandleRef.current || currentCandleRef.current.time !== candleTime) {
-              // New candle - compare with previous candle's close
               const previousClose = currentCandleRef.current?.close || previousClosePriceRef.current || price;
 
-              // Determine direction based on comparison with previous close
               if (previousClose > 0 && price !== previousClose) {
                 priceDirection = price > previousClose ? 'up' : 'down';
               }
 
-              // Store previous close before updating
               if (currentCandleRef.current?.close) {
                 previousClosePriceRef.current = currentCandleRef.current.close;
               }
@@ -473,7 +471,6 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
                 close: price,
               };
             } else {
-              // Same candle - compare with candle's open price for direction
               const candleOpen = currentCandleRef.current.open;
               if (candleOpen > 0 && price !== candleOpen) {
                 priceDirection = price > candleOpen ? 'up' : 'down';
@@ -484,15 +481,24 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
               currentCandleRef.current.close = price;
             }
 
-            // Update parent component with latest price and direction
             if (onPriceUpdateRef.current) {
               onPriceUpdateRef.current(price, priceDirection);
             }
 
-            try {
-              seriesRef.current.update(currentCandleRef.current);
-            } catch (err) {
-              console.error("Error updating chart:", err);
+            // Throttle chart repaints to once per animation frame.
+            // The ref update above is instant; the expensive series.update()
+            // is batched so mobile browsers don't fall behind.
+            if (!renderRafRef.current) {
+              renderRafRef.current = requestAnimationFrame(() => {
+                renderRafRef.current = 0;
+                try {
+                  if (seriesRef.current && currentCandleRef.current) {
+                    seriesRef.current.update(currentCandleRef.current);
+                  }
+                } catch (err) {
+                  console.error("Error updating chart:", err);
+                }
+              });
             }
           }
         } else if (
@@ -780,6 +786,10 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         }
       }
       window.removeEventListener("resize", handleResize);
+      if (renderRafRef.current) {
+        cancelAnimationFrame(renderRafRef.current);
+        renderRafRef.current = 0;
+      }
       if (wsRef.current) {
         if (wsRef.current._cleanup) {
           wsRef.current._cleanup();
