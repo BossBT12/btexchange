@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -32,7 +32,7 @@ import EthImg from "../../assets/images/ethDep.png";
 import BinImg from "../../assets/images/binDep.png";
 import ReferralImg from "../../assets/images/service.webp";
 import useAuth from "../../hooks/useAuth";
-import InvitePosterModal from "../../components/InvitePosterModal";
+const InvitePosterModal = React.lazy(() => import("../../components/InvitePosterModal"));
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
 
@@ -658,11 +658,15 @@ const HomePage = () => {
           </Box>
         )}
       </Box>
-      <InvitePosterModal
-        open={posterModalOpen}
-        onClose={() => setPosterModalOpen(false)}
-        inviteIncomeText={formatNumber(user?.inviteIncome) || "10 billion"}
-      />
+      {posterModalOpen && (
+        <Suspense fallback={null}>
+          <InvitePosterModal
+            open={posterModalOpen}
+            onClose={() => setPosterModalOpen(false)}
+            inviteIncomeText={formatNumber(user?.inviteIncome) || "10 billion"}
+          />
+        </Suspense>
+      )}
     </Box>
   );
 };
