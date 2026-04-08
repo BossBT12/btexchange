@@ -825,32 +825,43 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         const freshForming = freshCandles.find((c) => c.time >= currentBucketStart);
 
         const existing = seriesDataRef.current || [];
-        const merged = mergeCandlesDedupeByTime(existing, freshClosed);
+        const mergedClosed = mergeCandlesDedupeByTime(existing, freshClosed);
 
         if (!seriesRef.current) return;
 
-        // Preserve scroll position across setData
-        const timeScale = chartRef.current.timeScale();
-        const rangeBefore = timeScale.getVisibleLogicalRange();
-
-        seriesRef.current.setData(merged);
-        seriesDataRef.current = merged;
-
+        // Build the forming candle by merging REST truth with live WS data.
+        // REST has the canonical open; WS has the most recent close.
+        let formingToRender = null;
         if (freshForming) {
-          if (currentCandleRef.current && currentCandleRef.current.time === freshForming.time) {
-            currentCandleRef.current.high = Math.max(currentCandleRef.current.high, freshForming.high);
-            currentCandleRef.current.low = Math.min(currentCandleRef.current.low, freshForming.low);
-            if (freshForming.close !== undefined) {
-              currentCandleRef.current.close = freshForming.close;
-            }
+          const live = currentCandleRef.current;
+          if (live && live.time === freshForming.time) {
+            formingToRender = {
+              time: freshForming.time,
+              open: freshForming.open,
+              high: Math.max(freshForming.high, live.high),
+              low: Math.min(freshForming.low, live.low),
+              close: live.close,
+            };
           } else {
-            currentCandleRef.current = { ...freshForming };
+            formingToRender = { ...freshForming };
             previousClosePriceRef.current = freshClosed.length > 0
               ? freshClosed[freshClosed.length - 1].close
               : freshForming.open;
           }
-          seriesRef.current.update(currentCandleRef.current);
+          currentCandleRef.current = { ...formingToRender };
         }
+
+        // Single atomic setData with closed + forming candle together.
+        // No more flash where the forming candle vanishes and reappears.
+        const fullData = formingToRender
+          ? [...mergedClosed, formingToRender]
+          : mergedClosed;
+
+        const timeScale = chartRef.current.timeScale();
+        const rangeBefore = timeScale.getVisibleLogicalRange();
+
+        seriesRef.current.setData(fullData);
+        seriesDataRef.current = mergedClosed;
 
         if (rangeBefore) {
           timeScale.setVisibleLogicalRange(rangeBefore);
