@@ -231,17 +231,21 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function formatPriceMetricPrefix(price) {
+function formatPrice(price) {
   const n = Number(price);
   if (!Number.isFinite(n)) return String(price);
   const abs = Math.abs(n);
-  const sign = n < 0 ? "-" : "";
-  if (abs >= 1e9) return sign + (abs / 1e9).toFixed(2).replace(/\.?0+$/, "") + "B";
-  if (abs >= 1e6) return sign + (abs / 1e6).toFixed(2).replace(/\.?0+$/, "") + "M";
-  if (abs >= 1e3) return sign + (abs / 1e3).toFixed(2).replace(/\.?0+$/, "") + "K";
-  if (abs >= 1) return sign + abs.toFixed(2);
-  if (abs >= 0.01) return sign + abs.toFixed(4);
-  return sign + abs.toFixed(6);
+
+  let decimals;
+  if (abs >= 1) decimals = 2;
+  else if (abs >= 0.01) decimals = 4;
+  else if (abs >= 0.0001) decimals = 6;
+  else decimals = 8;
+
+  return n.toLocaleString("en-US", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
 }
 
 export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarkers = [] }) {
@@ -586,6 +590,10 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         vertLines: { color: `${AppColors.HLT_NONE}20` },
         horzLines: { color: `${AppColors.HLT_NONE}20` },
       },
+      rightPriceScale: {
+        borderColor: `${AppColors.HLT_NONE}40`,
+        minimumWidth: 70,
+      },
       timeScale: {
         borderColor: `${AppColors.HLT_NONE}40`,
         rightOffset: 2,
@@ -605,7 +613,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       wickDownColor: AppColors.ERROR,
       priceFormat: {
         type: "custom",
-        formatter: formatPriceMetricPrefix,
+        formatter: formatPrice,
         minMove: 0.01,
       },
     });
