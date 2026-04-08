@@ -562,13 +562,12 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
 
     const visibleBarsTarget = 80;
     const totalBars = data.length;
+    const rightGap = 8;
 
-    // Use logical range so rightOffset is respected, keeping the last
-    // candle away from the right edge like TradingView.
     const from = totalBars <= visibleBarsTarget
       ? 0
       : totalBars - visibleBarsTarget;
-    const to = totalBars - 1;
+    const to = totalBars - 1 + rightGap;
 
     timeScale.setVisibleLogicalRange({ from, to });
   }, []);
