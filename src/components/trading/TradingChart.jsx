@@ -554,9 +554,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
 
     const timeScale = chartRef.current.timeScale();
 
-    // Base timescale configuration for consistent appearance
     timeScale.applyOptions({
-      rightOffset: 2,
+      rightOffset: 8,
       barSpacing: 8,
       minBarSpacing: 6,
     });
@@ -596,7 +595,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       },
       timeScale: {
         borderColor: `${AppColors.HLT_NONE}40`,
-        rightOffset: 2,
+        rightOffset: 8,
         barSpacing: 8,
         minBarSpacing: 6,
       },
