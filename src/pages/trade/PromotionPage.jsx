@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -27,7 +27,7 @@ import { FONT_SIZE, ICON_SIZE } from "../../constant/lookUpConstant";
 import promotionService from "../../services/promotionService";
 import { copyToClipboard } from "../../utils/utils";
 import promotionBg from "../../assets/images/bldto.webp";
-import InvitePosterModal from "../../components/InvitePosterModal";
+const InvitePosterModal = React.lazy(() => import("../../components/InvitePosterModal"));
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
 import dashboardServices from "../../services/dashboardServices";
@@ -486,11 +486,15 @@ const PromotionPage = () => {
         </Box>
       </Box>
 
-      <InvitePosterModal
-        open={posterModalOpen}
-        onClose={() => setPosterModalOpen(false)}
-        inviteIncomeText={formatNumber(dashboard?.inviteIncome) || "10 billion"}
-      />
+      {posterModalOpen && (
+        <Suspense fallback={null}>
+          <InvitePosterModal
+            open={posterModalOpen}
+            onClose={() => setPosterModalOpen(false)}
+            inviteIncomeText={formatNumber(dashboard?.inviteIncome) || "10 billion"}
+          />
+        </Suspense>
+      )}
     </Box >
   );
 };
