@@ -241,16 +241,18 @@ function splitFetchedIntoClosedAndForming(mappedCandles) {
 }
 
 /** Last trade price from Coinbase REST — pairs with candle poll (no WebSocket). */
-async function fetchCoinbaseTickerPrice(productId) {
+async function fetchCoinbaseTickerPrice(productId, signal) {
   try {
     const res = await fetch(
       `https://api.exchange.coinbase.com/products/${encodeURIComponent(productId)}/ticker`,
+      signal ? { signal } : undefined,
     );
     if (!res.ok) return null;
     const j = await res.json();
     const p = parseFloat(j?.price);
     return Number.isFinite(p) && p > 0 ? p : null;
-  } catch {
+  } catch (e) {
+    if (e?.name === "AbortError") throw e;
     return null;
   }
 }
@@ -290,7 +292,8 @@ export default function TradingChart({
   const isLoadingOlderRef = useRef(false);
   const hasMoreHistoryRef = useRef(true);
   const resyncRef = useRef(null);
-  const isSyncingRef = useRef(false);
+  /** Abort in-flight resync so a slow desktop request cannot apply after a newer poll (latest wins). */
+  const resyncAbortRef = useRef(null);
   /** Canonical forming candle from REST (before last-trade overlay). */
   const restFormingRef = useRef(null);
   /** Start time of the current forming bucket (from API), for load-more filter — not Date.now(). */
@@ -431,8 +434,9 @@ export default function TradingChart({
 
     const container = chartContainerRef.current;
     chartRef.current = createChart(container, {
+      // Match wrapper (BG_MAIN) so no darker/lighter vertical strip at the right edge.
       layout: {
-        background: { type: ColorType.Solid, color: AppColors.BG_CARD },
+        background: { type: ColorType.Solid, color: AppColors.BG_MAIN },
         textColor: AppColors.TXT_MAIN,
         fontSize: 8,
       },
@@ -441,8 +445,8 @@ export default function TradingChart({
         horzLines: { color: `${AppColors.HLT_NONE}20` },
       },
       rightPriceScale: {
-        borderColor: `${AppColors.HLT_NONE}40`,
-        minimumWidth: 70,
+        borderVisible: false,
+        minimumWidth: 0,
       },
       timeScale: {
         borderColor: `${AppColors.HLT_NONE}40`,
@@ -630,6 +634,7 @@ export default function TradingChart({
       isCancelled = true;
       cancelSwitchRef.current = true;
       scrollSubscriptionActive = false;
+      resyncAbortRef.current?.abort();
       if (chartRef.current) {
         try {
           chartRef.current
@@ -657,8 +662,11 @@ export default function TradingChart({
   // Resync: parallel REST candles + /ticker (no WebSocket). Same code path on every device.
   useEffect(() => {
     resyncRef.current = async () => {
-      if (isSyncingRef.current || !seriesRef.current || !chartRef.current) return;
-      isSyncingRef.current = true;
+      if (!seriesRef.current || !chartRef.current) return;
+
+      resyncAbortRef.current?.abort();
+      const ac = new AbortController();
+      resyncAbortRef.current = ac;
 
       try {
         const tf = TIMEFRAMES[selectedTimeframe];
@@ -667,13 +675,14 @@ export default function TradingChart({
           `https://api.exchange.coinbase.com/products/${encodeURIComponent(productId)}/candles?granularity=${resolved.baseGranularity}`;
 
         const [rawRows, tickerPrice] = await Promise.all([
-          fetch(candlesUrl).then(async (r) => {
+          fetch(candlesUrl, { signal: ac.signal }).then(async (r) => {
             if (!r.ok) return null;
             return r.json();
           }),
-          fetchCoinbaseTickerPrice(productId),
+          fetchCoinbaseTickerPrice(productId, ac.signal),
         ]);
 
+        if (ac.signal.aborted) return;
         if (!Array.isArray(rawRows) || rawRows.length === 0) return;
 
         const freshCandles = mapCoinbaseRowsToDisplayCandles(rawRows, resolved);
@@ -755,10 +764,12 @@ export default function TradingChart({
           seriesRef.current.update(formingToRender);
         }
       } catch (err) {
+        if (err?.name === "AbortError") return;
         console.error("[TradingChart] resync error:", err);
-      } finally {
-        isSyncingRef.current = false;
       }
+    };
+    return () => {
+      resyncAbortRef.current?.abort();
     };
   }, [productId, selectedTimeframe]);
 
@@ -1094,6 +1105,8 @@ export default function TradingChart({
             width: "100%",
             height: "100%",
             flex: 1,
+            minWidth: 0,
+            bgcolor: AppColors.BG_MAIN,
           }}
         />
       </Box>
