@@ -257,6 +257,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
   const seriesDataRef = useRef([]); // Mirrors series data for oldest time + prepend merges
   const isLoadingOlderRef = useRef(false);
   const hasMoreHistoryRef = useRef(true);
+  const resyncRef = useRef(null); // Holds the resync function, updated when deps change
+  const isSyncingRef = useRef(false);
   /** Default 1m (index 1) so behavior matches pre–30s default */
   const [selectedTimeframe, setSelectedTimeframe] = useState(() => {
     const defaultIndex = 1;
@@ -523,6 +525,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       if (!isIntentionallyClosed && chartRef.current && seriesRef.current && currentPairRef.current === pair) {
         reconnectTimeout = setTimeout(() => {
           connectWebSocket(pair, candlePeriodSeconds);
+          // Fill candle gaps accumulated while the socket was down
+          if (resyncRef.current) resyncRef.current();
         }, 3000);
       }
     };
@@ -798,6 +802,96 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       seriesDataRef.current = [];
     };
   }, [productId, selectedTimeframe, applyInitialView, loadHistory, loadOlderHistory, connectWebSocket]);
+
+  // Keep resyncRef up to date so the visibility handler always uses current state.
+  useEffect(() => {
+    resyncRef.current = async () => {
+      if (isSyncingRef.current || !seriesRef.current || !chartRef.current) return;
+      isSyncingRef.current = true;
+
+      try {
+        const tf = TIMEFRAMES[selectedTimeframe];
+        const resolved = resolveTimeframe(tf);
+
+        const res = await fetch(
+          `https://api.exchange.coinbase.com/products/${encodeURIComponent(productId)}/candles?granularity=${resolved.baseGranularity}`,
+        );
+        if (!res.ok) return;
+        const raw = await res.json();
+        if (!Array.isArray(raw) || raw.length === 0) return;
+
+        const freshCandles = mapCoinbaseRowsToDisplayCandles(raw, resolved);
+        const currentBucketStart =
+          Math.floor(Date.now() / 1000 / resolved.displayGranularity) *
+          resolved.displayGranularity;
+
+        const freshClosed = freshCandles.filter((c) => c.time < currentBucketStart);
+        const freshForming = freshCandles.find((c) => c.time >= currentBucketStart);
+
+        const existing = seriesDataRef.current || [];
+        const merged = mergeCandlesDedupeByTime(existing, freshClosed);
+
+        if (!seriesRef.current) return;
+        seriesRef.current.setData(merged);
+        seriesDataRef.current = merged;
+
+        if (freshForming) {
+          if (currentCandleRef.current && currentCandleRef.current.time === freshForming.time) {
+            currentCandleRef.current.high = Math.max(currentCandleRef.current.high, freshForming.high);
+            currentCandleRef.current.low = Math.min(currentCandleRef.current.low, freshForming.low);
+            currentCandleRef.current.close = freshForming.close;
+          } else {
+            currentCandleRef.current = { ...freshForming };
+            previousClosePriceRef.current = freshClosed.length > 0
+              ? freshClosed[freshClosed.length - 1].close
+              : freshForming.open;
+          }
+          seriesRef.current.update(currentCandleRef.current);
+        }
+
+        // Ensure WebSocket is alive; reconnect if dead
+        const ws = wsRef.current;
+        if (!ws || (ws.readyState !== WebSocket.OPEN && ws.readyState !== WebSocket.CONNECTING)) {
+          connectWebSocket(productId, resolved.displayGranularity);
+          // Re-seed refs after connectWebSocket resets them
+          if (freshForming) {
+            currentCandleRef.current = { ...freshForming };
+            previousClosePriceRef.current = freshClosed.length > 0
+              ? freshClosed[freshClosed.length - 1].close
+              : freshForming.open;
+          } else {
+            const last = merged[merged.length - 1];
+            previousClosePriceRef.current = last ? last.close : null;
+          }
+        }
+      } catch (err) {
+        console.error("[TradingChart] resync error:", err);
+      } finally {
+        isSyncingRef.current = false;
+      }
+    };
+  }, [productId, selectedTimeframe, connectWebSocket]);
+
+  // Resync chart data when the page becomes visible again (mobile tab switch,
+  // screen lock, app switch). Fills candle gaps the WebSocket missed.
+  useEffect(() => {
+    let hiddenAt = null;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        hiddenAt = Date.now();
+      } else {
+        const hiddenMs = hiddenAt ? Date.now() - hiddenAt : 0;
+        hiddenAt = null;
+        if (hiddenMs > 3000 && resyncRef.current) {
+          resyncRef.current();
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
 
   // Apply trade entry markers when bets start (from betStarted socket)
   useEffect(() => {
