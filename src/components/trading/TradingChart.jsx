@@ -227,10 +227,6 @@ function mergeCandlesDedupeByTime(prepended, existing) {
 
 const LOGICAL_RANGE_LOAD_MORE_BARS = 24;
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 function formatPrice(price) {
   const n = Number(price);
   if (!Number.isFinite(n)) return String(price);
@@ -368,12 +364,9 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
     }
   }, []);
 
-  /** `candlePeriodSeconds` = bar width on chart (display period). Matches for direct; merged for merge TFs. */
   const connectWebSocket = useCallback((pair, candlePeriodSeconds) => {
-    // Clean up existing WebSocket connection
     if (wsRef.current) {
       try {
-        // Unsubscribe from previous pair before closing
         if (currentPairRef.current && wsRef.current.readyState === WebSocket.OPEN) {
           try {
             wsRef.current.send(JSON.stringify({
@@ -385,24 +378,22 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
             console.warn("Error unsubscribing from previous pair:", e);
           }
         }
-
-        // Mark as intentionally closed before closing
         if (wsRef.current._cleanup) {
           wsRef.current._cleanup();
         }
-
         wsRef.current.close();
       } catch (e) {
         console.warn("Error closing WebSocket:", e);
       }
     }
 
-    // Reset current candle when switching pairs
-    currentCandleRef.current = null;
-    previousClosePriceRef.current = null;
-
-    // Update current pair reference
-    currentPairRef.current = pair;
+    // Only reset candle refs when switching to a different pair.
+    // On reconnections for the same pair, preserve live candle data.
+    if (currentPairRef.current !== pair) {
+      currentCandleRef.current = null;
+      previousClosePriceRef.current = null;
+      currentPairRef.current = pair;
+    }
 
     const ws = new WebSocket("wss://ws-feed.exchange.coinbase.com");
     wsRef.current = ws;
@@ -531,13 +522,12 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         clearTimeout(reconnectTimeout);
       }
 
-      // Only reconnect if it wasn't intentionally closed and we're still on the same pair
       if (!isIntentionallyClosed && chartRef.current && seriesRef.current && currentPairRef.current === pair) {
         reconnectTimeout = setTimeout(() => {
           connectWebSocket(pair, candlePeriodSeconds);
-          // Fill candle gaps accumulated while the socket was down
+          // Immediate resync to fill any candle gaps from the disconnect
           if (resyncRef.current) resyncRef.current();
-        }, 3000);
+        }, 2000);
       }
     };
 
@@ -698,19 +688,14 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
     (async () => {
       setIsLoading(true);
 
-      // Clear existing data when timeframe changes
       if (seriesRef.current) {
         seriesRef.current.setData([]);
-        currentCandleRef.current = null;
-        previousClosePriceRef.current = null;
       }
+      currentCandleRef.current = null;
+      previousClosePriceRef.current = null;
       seriesDataRef.current = [];
       hasMoreHistoryRef.current = true;
       isLoadingOlderRef.current = false;
-
-      // Give UI/socket a short pause before loading the next timeframe to avoid candle glitches
-      await sleep(1000);
-      if (isCancelled || cancelSwitchRef.current) return;
 
       const data = await loadHistory(productId, selectedTimeframe);
       if (isCancelled || cancelSwitchRef.current) return;
@@ -719,7 +704,6 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       const currentBucketStart =
         Math.floor(Date.now() / 1000 / displayGranularity) * displayGranularity;
 
-      // Separate closed candles from the currently forming (in-progress) candle.
       const closedCandles = data.filter((c) => c.time < currentBucketStart);
       const formingCandle = data.find((c) => c.time >= currentBucketStart);
       const candlesToRender =
@@ -734,11 +718,6 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           .timeScale()
           .subscribeVisibleLogicalRangeChange(onVisibleLogicalRangeChange);
 
-        // Connect WS first — it resets currentCandleRef/previousClosePriceRef
-        // as part of its cleanup. We seed refs AFTER so the reset doesn't
-        // wipe the forming candle (this was the mobile bug).
-        connectWebSocket(productId, displayGranularity);
-
         if (formingCandle) {
           currentCandleRef.current = { ...formingCandle };
           previousClosePriceRef.current = closedCandles.length > 0
@@ -747,7 +726,6 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           seriesRef.current.update(currentCandleRef.current);
         } else {
           const lastCandle = candlesToRender[candlesToRender.length - 1];
-          currentCandleRef.current = null;
           previousClosePriceRef.current = lastCandle ? lastCandle.close : null;
         }
 
@@ -759,9 +737,11 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           }
           onPriceUpdateRef.current(displayCandle.close, initialDirection);
         }
-      } else {
-        connectWebSocket(productId, displayGranularity);
       }
+
+      // Connect WS after seeding refs — connectWebSocket won't wipe them
+      // for the same pair anymore, so ordering doesn't matter.
+      connectWebSocket(productId, displayGranularity);
     })();
 
     const handleResize = () => {
@@ -817,7 +797,9 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
     };
   }, [productId, selectedTimeframe, applyInitialView, loadHistory, loadOlderHistory, connectWebSocket]);
 
-  // Keep resyncRef up to date so the visibility handler always uses current state.
+  // Resync: fetch latest candles from REST API and merge into the chart.
+  // This is the canonical data source — runs periodically, on visibility
+  // change, and on WS reconnection to guarantee consistency across devices.
   useEffect(() => {
     resyncRef.current = async () => {
       if (isSyncingRef.current || !seriesRef.current || !chartRef.current) return;
@@ -846,6 +828,11 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         const merged = mergeCandlesDedupeByTime(existing, freshClosed);
 
         if (!seriesRef.current) return;
+
+        // Preserve scroll position across setData
+        const timeScale = chartRef.current.timeScale();
+        const rangeBefore = timeScale.getVisibleLogicalRange();
+
         seriesRef.current.setData(merged);
         seriesDataRef.current = merged;
 
@@ -853,7 +840,9 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           if (currentCandleRef.current && currentCandleRef.current.time === freshForming.time) {
             currentCandleRef.current.high = Math.max(currentCandleRef.current.high, freshForming.high);
             currentCandleRef.current.low = Math.min(currentCandleRef.current.low, freshForming.low);
-            currentCandleRef.current.close = freshForming.close;
+            if (freshForming.close !== undefined) {
+              currentCandleRef.current.close = freshForming.close;
+            }
           } else {
             currentCandleRef.current = { ...freshForming };
             previousClosePriceRef.current = freshClosed.length > 0
@@ -863,20 +852,15 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           seriesRef.current.update(currentCandleRef.current);
         }
 
-        // Ensure WebSocket is alive; reconnect if dead
+        if (rangeBefore) {
+          timeScale.setVisibleLogicalRange(rangeBefore);
+        }
+
+        // Ensure WebSocket is alive; reconnect if dead.
+        // connectWebSocket won't reset refs for the same pair.
         const ws = wsRef.current;
         if (!ws || (ws.readyState !== WebSocket.OPEN && ws.readyState !== WebSocket.CONNECTING)) {
           connectWebSocket(productId, resolved.displayGranularity);
-          // Re-seed refs after connectWebSocket resets them
-          if (freshForming) {
-            currentCandleRef.current = { ...freshForming };
-            previousClosePriceRef.current = freshClosed.length > 0
-              ? freshClosed[freshClosed.length - 1].close
-              : freshForming.open;
-          } else {
-            const last = merged[merged.length - 1];
-            previousClosePriceRef.current = last ? last.close : null;
-          }
         }
       } catch (err) {
         console.error("[TradingChart] resync error:", err);
@@ -886,8 +870,9 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
     };
   }, [productId, selectedTimeframe, connectWebSocket]);
 
-  // Resync chart data when the page becomes visible again (mobile tab switch,
-  // screen lock, app switch). Fills candle gaps the WebSocket missed.
+  // Periodic poll + visibility handler.
+  // The poll is the backbone that keeps the chart in sync on every device.
+  // Even if the WebSocket fails completely, candles update every 10 seconds.
   useEffect(() => {
     let hiddenAt = null;
 
@@ -897,14 +882,23 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       } else {
         const hiddenMs = hiddenAt ? Date.now() - hiddenAt : 0;
         hiddenAt = null;
-        if (hiddenMs > 3000 && resyncRef.current) {
+        if (hiddenMs > 2000 && resyncRef.current) {
           resyncRef.current();
         }
       }
     };
 
+    const pollId = setInterval(() => {
+      if (!document.hidden && resyncRef.current) {
+        resyncRef.current();
+      }
+    }, 5_000);
+
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      clearInterval(pollId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   // Apply trade entry markers when bets start (from betStarted socket)
@@ -1191,8 +1185,6 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
                     hasMoreHistoryRef.current = true;
                     applyInitialView(toRender);
 
-                    connectWebSocket(productId, dg);
-
                     if (forming) {
                       currentCandleRef.current = { ...forming };
                       previousClosePriceRef.current = closed.length > 0
@@ -1201,9 +1193,10 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
                       seriesRef.current.update(currentCandleRef.current);
                     } else {
                       const last = toRender[toRender.length - 1];
-                      currentCandleRef.current = null;
                       previousClosePriceRef.current = last ? last.close : null;
                     }
+
+                    connectWebSocket(productId, dg);
                   }
                 });
               }}
