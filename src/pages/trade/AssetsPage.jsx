@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import {
   Box,
   Typography,
@@ -33,7 +33,7 @@ import { FONT_SIZE, SPACING } from "../../constant/lookUpConstant";
 import dashboardServices from "../../services/dashboardServices";
 import { useTranslation } from "react-i18next";
 import { SUPPORTED_LANGUAGES, TRADE_NAMESPACE } from "../../i18n";
-import PdfViewerModal from "../../components/PdfViewerModal";
+const PdfViewerModal = React.lazy(() => import("../../components/PdfViewerModal"));
 
 const AssetsPage = () => {
   const { t, i18n } = useTranslation(TRADE_NAMESPACE);
@@ -507,11 +507,15 @@ const AssetsPage = () => {
         ))}
       </Box>
 
-      <PdfViewerModal
-        open={guideModalOpen}
-        onClose={() => setGuideModalOpen(false)}
-        title={t("assets.serviceCenter.beginnerGuide", "Beginner's Guide")}
-      />
+      {guideModalOpen && (
+        <Suspense fallback={null}>
+          <PdfViewerModal
+            open={guideModalOpen}
+            onClose={() => setGuideModalOpen(false)}
+            title={t("assets.serviceCenter.beginnerGuide", "Beginner's Guide")}
+          />
+        </Suspense>
+      )}
     </Box>
   );
 };
