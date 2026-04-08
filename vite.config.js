@@ -10,6 +10,27 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': [
+            'react',
+            'react-dom',
+            'react-router-dom',
+            'react-redux',
+            '@reduxjs/toolkit',
+          ],
+          'vendor-mui': [
+            '@mui/material',
+            '@mui/icons-material',
+            '@emotion/react',
+            '@emotion/styled',
+          ],
+          'vendor-charts': ['lightweight-charts'],
+          'vendor-heavy': ['html2canvas', 'qrcode', 'react-pdf'],
+        },
+      },
+    },
   },
   server: {
     historyApiFallback: true,
