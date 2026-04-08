@@ -705,13 +705,13 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       const currentBucketStart =
         Math.floor(Date.now() / 1000 / displayGranularity) * displayGranularity;
 
-      // Remove the currently forming candle so timeframe switches stay smooth.
-      const closedCandlesOnly = data.filter((c) => c.time < currentBucketStart);
+      // Separate closed candles from the currently forming (in-progress) candle.
+      const closedCandles = data.filter((c) => c.time < currentBucketStart);
+      const formingCandle = data.find((c) => c.time >= currentBucketStart);
       const candlesToRender =
-        closedCandlesOnly.length > 0 ? closedCandlesOnly : data;
+        closedCandles.length > 0 ? closedCandles : data;
 
       if (candlesToRender.length > 0 && seriesRef.current) {
-        // Set new data for the selected timeframe only
         seriesRef.current.setData(candlesToRender);
         seriesDataRef.current = candlesToRender;
         applyInitialView(candlesToRender);
@@ -720,22 +720,29 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           .timeScale()
           .subscribeVisibleLogicalRangeChange(onVisibleLogicalRangeChange);
 
-        // Keep socket candle empty after timeframe switch; first tick creates a fresh candle.
-        const lastCandle = candlesToRender[candlesToRender.length - 1];
-        if (lastCandle) {
+        // Seed currentCandleRef from the REST API's forming candle so the
+        // chart immediately shows the correct in-progress bar. WebSocket
+        // trades will only extend it (update high/low/close), avoiding the
+        // "broken candle" that appeared when building from scratch.
+        if (formingCandle) {
+          currentCandleRef.current = { ...formingCandle };
+          previousClosePriceRef.current = closedCandles.length > 0
+            ? closedCandles[closedCandles.length - 1].close
+            : formingCandle.open;
+          seriesRef.current.update(currentCandleRef.current);
+        } else {
+          const lastCandle = candlesToRender[candlesToRender.length - 1];
           currentCandleRef.current = null;
-          previousClosePriceRef.current = lastCandle.close;
+          previousClosePriceRef.current = lastCandle ? lastCandle.close : null;
+        }
 
-          // Initialize price from last historical candle's close price
-          // Determine direction from candle's open vs close
+        const displayCandle = formingCandle || candlesToRender[candlesToRender.length - 1];
+        if (displayCandle && onPriceUpdateRef.current && displayCandle.close > 0) {
           let initialDirection = null;
-          if (lastCandle.open > 0 && lastCandle.close > 0 && lastCandle.close !== lastCandle.open) {
-            initialDirection = lastCandle.close > lastCandle.open ? 'up' : 'down';
+          if (displayCandle.open > 0 && displayCandle.close > 0 && displayCandle.close !== displayCandle.open) {
+            initialDirection = displayCandle.close > displayCandle.open ? 'up' : 'down';
           }
-
-          if (onPriceUpdateRef.current && lastCandle.close > 0) {
-            onPriceUpdateRef.current(lastCandle.close, initialDirection);
-          }
+          onPriceUpdateRef.current(displayCandle.close, initialDirection);
         }
       }
 
@@ -1064,10 +1071,30 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
               onClick={() => {
                 loadHistory(productId, selectedTimeframe).then((d) => {
                   if (d.length > 0 && seriesRef.current) {
-                    seriesRef.current.setData(d);
-                    seriesDataRef.current = d;
+                    const { displayGranularity: dg } = resolveTimeframe(TIMEFRAMES[selectedTimeframe]);
+                    const bucketStart = Math.floor(Date.now() / 1000 / dg) * dg;
+                    const closed = d.filter((c) => c.time < bucketStart);
+                    const forming = d.find((c) => c.time >= bucketStart);
+                    const toRender = closed.length > 0 ? closed : d;
+
+                    seriesRef.current.setData(toRender);
+                    seriesDataRef.current = toRender;
                     hasMoreHistoryRef.current = true;
-                    applyInitialView(d);
+                    applyInitialView(toRender);
+
+                    if (forming) {
+                      currentCandleRef.current = { ...forming };
+                      previousClosePriceRef.current = closed.length > 0
+                        ? closed[closed.length - 1].close
+                        : forming.open;
+                      seriesRef.current.update(currentCandleRef.current);
+                    } else {
+                      const last = toRender[toRender.length - 1];
+                      currentCandleRef.current = null;
+                      previousClosePriceRef.current = last ? last.close : null;
+                    }
+
+                    connectWebSocket(productId, dg);
                   }
                 });
               }}
