@@ -560,19 +560,17 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       minBarSpacing: 6,
     });
 
-    // Show only the most recent candles so they are clearly visible
     const visibleBarsTarget = 80;
+    const totalBars = data.length;
 
-    if (data.length <= visibleBarsTarget) {
-      timeScale.fitContent();
-      return;
-    }
+    // Use logical range so rightOffset is respected, keeping the last
+    // candle away from the right edge like TradingView.
+    const from = totalBars <= visibleBarsTarget
+      ? 0
+      : totalBars - visibleBarsTarget;
+    const to = totalBars - 1;
 
-    const from = data[data.length - visibleBarsTarget].time;
-    const to = data[data.length - 1].time;
-
-    // Focus on the recent window instead of the entire history
-    timeScale.setVisibleRange({ from, to });
+    timeScale.setVisibleLogicalRange({ from, to });
   }, []);
 
   useEffect(() => {
