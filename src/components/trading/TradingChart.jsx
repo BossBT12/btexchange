@@ -225,6 +225,21 @@ function mergeCandlesDedupeByTime(prepended, existing) {
   return Array.from(byTime.values()).sort((a, b) => a.time - b.time);
 }
 
+/**
+ * Coinbase includes the current incomplete candle as the last row. Partition using
+ * that fact instead of client Date.now(), so two devices with skewed clocks still
+ * agree on which bars are closed vs forming (fixes mobile lagging by N candles).
+ */
+function splitFetchedIntoClosedAndForming(mappedCandles) {
+  if (!Array.isArray(mappedCandles) || mappedCandles.length === 0) {
+    return { closed: [], forming: null };
+  }
+  const sorted = [...mappedCandles].sort((a, b) => a.time - b.time);
+  const forming = sorted[sorted.length - 1];
+  const closed = sorted.slice(0, -1);
+  return { closed, forming };
+}
+
 const LOGICAL_RANGE_LOAD_MORE_BARS = 24;
 
 function formatPrice(price) {
@@ -263,6 +278,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
   /** Last REST snapshot for the current bucket — canonical open + base H/L for live merges. */
   const restFormingRef = useRef(null);
   const bucketResyncTimerRef = useRef(0);
+  /** Start time of the current forming bucket (from API), for load-more filter — not Date.now(). */
+  const lastBucketStartRef = useRef(null);
   /** Default 1m (index 1) so behavior matches pre–30s default */
   const [selectedTimeframe, setSelectedTimeframe] = useState(() => {
     const defaultIndex = 1;
@@ -672,9 +689,10 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         }
         const oldestTime = baseForMerge[0].time;
         const tfResolved = resolveTimeframe(TIMEFRAMES[selectedTimeframe]);
-        const currentBucketStart =
+        const bucketCutoff =
+          lastBucketStartRef.current ??
           Math.floor(Date.now() / 1000 / tfResolved.displayGranularity) *
-          tfResolved.displayGranularity;
+            tfResolved.displayGranularity;
 
         const older = await loadOlderHistory(productId, selectedTimeframe, oldestTime);
         if (!scrollSubscriptionActive || isCancelled) {
@@ -688,7 +706,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           return;
         }
 
-        const olderClosed = older.filter((c) => c.time < currentBucketStart);
+        const olderClosed = older.filter((c) => c.time < bucketCutoff);
         const olderUse = olderClosed.length > 0 ? olderClosed : older;
         baseForMerge = seriesDataRef.current;
         if (currentCandleRef.current && baseForMerge.length > 0) {
@@ -727,6 +745,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       currentCandleRef.current = null;
       previousClosePriceRef.current = null;
       restFormingRef.current = null;
+      lastBucketStartRef.current = null;
       seriesDataRef.current = [];
       hasMoreHistoryRef.current = true;
       isLoadingOlderRef.current = false;
@@ -735,11 +754,11 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       if (isCancelled || cancelSwitchRef.current) return;
 
       const { displayGranularity } = resolveTimeframe(TIMEFRAMES[selectedTimeframe]);
-      const currentBucketStart =
-        Math.floor(Date.now() / 1000 / displayGranularity) * displayGranularity;
 
-      const closedCandles = data.filter((c) => c.time < currentBucketStart);
-      const formingCandle = data.find((c) => c.time >= currentBucketStart);
+      const { closed: closedCandles, forming: formingCandle } =
+        splitFetchedIntoClosedAndForming(data);
+      lastBucketStartRef.current = formingCandle?.time ?? null;
+
       const candlesToRender =
         closedCandles.length > 0 ? closedCandles : data;
 
@@ -830,6 +849,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       currentCandleRef.current = null;
       previousClosePriceRef.current = null;
       restFormingRef.current = null;
+      lastBucketStartRef.current = null;
       if (bucketResyncTimerRef.current) {
         clearTimeout(bucketResyncTimerRef.current);
         bucketResyncTimerRef.current = 0;
@@ -858,12 +878,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         if (!Array.isArray(raw) || raw.length === 0) return;
 
         const freshCandles = mapCoinbaseRowsToDisplayCandles(raw, resolved);
-        const currentBucketStart =
-          Math.floor(Date.now() / 1000 / resolved.displayGranularity) *
-          resolved.displayGranularity;
-
-        const freshClosed = freshCandles.filter((c) => c.time < currentBucketStart);
-        const freshForming = freshCandles.find((c) => c.time >= currentBucketStart);
+        const { closed: freshClosed, forming: freshForming } =
+          splitFetchedIntoClosedAndForming(freshCandles);
 
         if (!seriesRef.current) return;
 
@@ -897,6 +913,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         } else {
           restFormingRef.current = null;
         }
+
+        lastBucketStartRef.current = formingToRender?.time ?? freshForming?.time ?? null;
 
         const hasNewClosed = lastFreshTime > lastExistingTime;
 
@@ -944,20 +962,11 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
 
   // Periodic poll + visibility handler.
   // The poll is the backbone that keeps the chart in sync on every device.
-  // Even if the WebSocket fails completely, candles update every 5 seconds.
+  // Resync as soon as the tab is visible again (mobile often lags after backgrounding).
   useEffect(() => {
-    let hiddenAt = null;
-
     const handleVisibilityChange = () => {
-      if (document.hidden) {
-        hiddenAt = Date.now();
-      } else {
-        const hiddenMs = hiddenAt ? Date.now() - hiddenAt : 0;
-        hiddenAt = null;
-        if (hiddenMs > 2000 && resyncRef.current) {
-          resyncRef.current();
-        }
-      }
+      if (document.hidden) return;
+      resyncRef.current?.();
     };
 
     const pollId = setInterval(() => {
@@ -1247,13 +1256,12 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
                 loadHistory(productId, selectedTimeframe).then((d) => {
                   if (d.length > 0 && seriesRef.current) {
                     const { displayGranularity: dg } = resolveTimeframe(TIMEFRAMES[selectedTimeframe]);
-                    const bucketStart = Math.floor(Date.now() / 1000 / dg) * dg;
-                    const closed = d.filter((c) => c.time < bucketStart);
-                    const forming = d.find((c) => c.time >= bucketStart);
+                    const { closed, forming } = splitFetchedIntoClosedAndForming(d);
+                    lastBucketStartRef.current = forming?.time ?? null;
                     const toRender = closed.length > 0 ? closed : d;
 
                     seriesRef.current.setData(toRender);
-                    seriesDataRef.current = toRender;
+                    seriesDataRef.current = closed;
                     hasMoreHistoryRef.current = true;
                     applyInitialView(toRender);
 
@@ -1265,6 +1273,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
                         : forming.open;
                       seriesRef.current.update(currentCandleRef.current);
                     } else {
+                      restFormingRef.current = null;
                       const last = toRender[toRender.length - 1];
                       previousClosePriceRef.current = last ? last.close : null;
                     }
