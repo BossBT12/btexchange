@@ -720,10 +720,11 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           .timeScale()
           .subscribeVisibleLogicalRangeChange(onVisibleLogicalRangeChange);
 
-        // Seed currentCandleRef from the REST API's forming candle so the
-        // chart immediately shows the correct in-progress bar. WebSocket
-        // trades will only extend it (update high/low/close), avoiding the
-        // "broken candle" that appeared when building from scratch.
+        // Connect WS first — it resets currentCandleRef/previousClosePriceRef
+        // as part of its cleanup. We seed refs AFTER so the reset doesn't
+        // wipe the forming candle (this was the mobile bug).
+        connectWebSocket(productId, displayGranularity);
+
         if (formingCandle) {
           currentCandleRef.current = { ...formingCandle };
           previousClosePriceRef.current = closedCandles.length > 0
@@ -744,9 +745,9 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           }
           onPriceUpdateRef.current(displayCandle.close, initialDirection);
         }
+      } else {
+        connectWebSocket(productId, displayGranularity);
       }
-
-      connectWebSocket(productId, displayGranularity);
     })();
 
     const handleResize = () => {
@@ -1082,6 +1083,8 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
                     hasMoreHistoryRef.current = true;
                     applyInitialView(toRender);
 
+                    connectWebSocket(productId, dg);
+
                     if (forming) {
                       currentCandleRef.current = { ...forming };
                       previousClosePriceRef.current = closed.length > 0
@@ -1093,8 +1096,6 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
                       currentCandleRef.current = null;
                       previousClosePriceRef.current = last ? last.close : null;
                     }
-
-                    connectWebSocket(productId, dg);
                   }
                 });
               }}
