@@ -454,13 +454,20 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
                 priceDirection = price > previousClose ? 'up' : 'down';
               }
 
-              if (currentCandleRef.current?.close) {
+              // Freeze the outgoing candle into the closed-candles array
+              // so resync sees up-to-date data without needing setData().
+              if (currentCandleRef.current) {
                 previousClosePriceRef.current = currentCandleRef.current.close;
+                const frozen = { ...currentCandleRef.current };
+                const arr = seriesDataRef.current;
+                if (arr.length === 0 || arr[arr.length - 1].time < frozen.time) {
+                  arr.push(frozen);
+                }
               }
 
               currentCandleRef.current = {
                 time: candleTime,
-                open: previousClose,
+                open: price,
                 high: price,
                 low: price,
                 close: price,
@@ -711,7 +718,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
 
       if (candlesToRender.length > 0 && seriesRef.current) {
         seriesRef.current.setData(candlesToRender);
-        seriesDataRef.current = candlesToRender;
+        seriesDataRef.current = closedCandles;
         applyInitialView(candlesToRender);
 
         chartRef.current
@@ -824,13 +831,16 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         const freshClosed = freshCandles.filter((c) => c.time < currentBucketStart);
         const freshForming = freshCandles.find((c) => c.time >= currentBucketStart);
 
-        const existing = seriesDataRef.current || [];
-        const mergedClosed = mergeCandlesDedupeByTime(existing, freshClosed);
-
         if (!seriesRef.current) return;
 
-        // Build the forming candle by merging REST truth with live WS data.
-        // REST has the canonical open; WS has the most recent close.
+        const existingClosed = seriesDataRef.current || [];
+        const lastExistingTime = existingClosed.length > 0
+          ? existingClosed[existingClosed.length - 1].time : 0;
+        const lastFreshTime = freshClosed.length > 0
+          ? freshClosed[freshClosed.length - 1].time : 0;
+
+        // Merge REST forming candle with live WS data.
+        // REST has canonical open; WS has the most recent close.
         let formingToRender = null;
         if (freshForming) {
           const live = currentCandleRef.current;
@@ -851,20 +861,34 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           currentCandleRef.current = { ...formingToRender };
         }
 
-        // Single atomic setData with closed + forming candle together.
-        // No more flash where the forming candle vanishes and reappears.
-        const fullData = formingToRender
-          ? [...mergedClosed, formingToRender]
-          : mergedClosed;
+        const hasNewClosed = lastFreshTime > lastExistingTime;
 
-        const timeScale = chartRef.current.timeScale();
-        const rangeBefore = timeScale.getVisibleLogicalRange();
+        if (hasNewClosed) {
+          // New closed candle(s) arrived (period boundary or WS gap).
+          // Need setData() because update() can't insert before the forming bar.
+          const mergedClosed = mergeCandlesDedupeByTime(existingClosed, freshClosed);
+          const fullData = formingToRender
+            ? [...mergedClosed, formingToRender]
+            : mergedClosed;
 
-        seriesRef.current.setData(fullData);
-        seriesDataRef.current = mergedClosed;
+          if (renderRafRef.current) {
+            cancelAnimationFrame(renderRafRef.current);
+            renderRafRef.current = 0;
+          }
 
-        if (rangeBefore) {
-          timeScale.setVisibleLogicalRange(rangeBefore);
+          const timeScale = chartRef.current.timeScale();
+          const rangeBefore = timeScale.getVisibleLogicalRange();
+
+          seriesRef.current.setData(fullData);
+          seriesDataRef.current = mergedClosed;
+
+          if (rangeBefore) {
+            timeScale.setVisibleLogicalRange(rangeBefore);
+          }
+        } else if (formingToRender) {
+          // Common path: no new closed candles — just update the forming candle.
+          // Lightweight update(), no full chart redraw, no flicker.
+          seriesRef.current.update(formingToRender);
         }
 
         // Ensure WebSocket is alive; reconnect if dead.
