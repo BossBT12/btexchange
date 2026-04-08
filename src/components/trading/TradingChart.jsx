@@ -259,7 +259,10 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
   const hasMoreHistoryRef = useRef(true);
   const resyncRef = useRef(null);
   const isSyncingRef = useRef(false);
-  const renderRafRef = useRef(0); // rAF id for throttled chart rendering
+  const renderRafRef = useRef(0); // rAF id for throttled chart rendering (unused for ticker path)
+  /** Last REST snapshot for the current bucket — canonical open + base H/L for live merges. */
+  const restFormingRef = useRef(null);
+  const bucketResyncTimerRef = useRef(0);
   /** Default 1m (index 1) so behavior matches pre–30s default */
   const [selectedTimeframe, setSelectedTimeframe] = useState(() => {
     const defaultIndex = 1;
@@ -372,7 +375,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
             wsRef.current.send(JSON.stringify({
               type: "unsubscribe",
               product_ids: [currentPairRef.current],
-              channels: ["matches"]
+              channels: ["ticker"],
             }));
           } catch (e) {
             console.warn("Error unsubscribing from previous pair:", e);
@@ -392,6 +395,11 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
     if (currentPairRef.current !== pair) {
       currentCandleRef.current = null;
       previousClosePriceRef.current = null;
+      restFormingRef.current = null;
+      if (bucketResyncTimerRef.current) {
+        clearTimeout(bucketResyncTimerRef.current);
+        bucketResyncTimerRef.current = 0;
+      }
       currentPairRef.current = pair;
     }
 
@@ -399,6 +407,14 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
     wsRef.current = ws;
     let reconnectTimeout = null;
     let isIntentionallyClosed = false;
+
+    const scheduleBucketResync = () => {
+      if (bucketResyncTimerRef.current) clearTimeout(bucketResyncTimerRef.current);
+      bucketResyncTimerRef.current = setTimeout(() => {
+        bucketResyncTimerRef.current = 0;
+        resyncRef.current?.();
+      }, 80);
+    };
 
     ws.onopen = () => {
       isIntentionallyClosed = false;
@@ -408,9 +424,9 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
         ws.send(JSON.stringify({
           type: "subscribe",
           product_ids: [pair],
-          channels: ["matches"]
+          channels: ["ticker"],
         }));
-        console.log(`WebSocket subscribed to pair: ${pair}`);
+        console.log(`WebSocket subscribed to ticker for pair: ${pair}`);
       } catch (err) {
         console.error("Error subscribing to WebSocket:", err);
       }
@@ -429,33 +445,32 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
           return;
         }
 
-        // Only process match messages for the current pair
-        // Check if the message is for the currently subscribed pair
+        // Ticker: low-frequency last price — same stream on mobile and desktop (unlike `matches` floods + rAF batching).
+        // Live bar always merges into REST canonical OHLC (`restFormingRef`) so open/high/low stay exchange-consistent.
         if (
-          msg.type === "match" &&
+          msg.type === "ticker" &&
           seriesRef.current &&
           msg.price &&
-          msg.size &&
-          (msg.product_id === pair || msg.product_id === currentPairRef.current) // Verify message is for current pair
+          (msg.product_id === pair || msg.product_id === currentPairRef.current)
         ) {
           const price = parseFloat(msg.price);
-          const time = new Date(msg.time).getTime() / 1000;
-
+          const time = msg.time
+            ? new Date(msg.time).getTime() / 1000
+            : Date.now() / 1000;
           const candleTime =
             Math.floor(time / candlePeriodSeconds) * candlePeriodSeconds;
 
-          if (price > 0) {
+          if (price > 0 && Number.isFinite(price)) {
             let priceDirection = null;
+            const rf = restFormingRef.current;
 
             if (!currentCandleRef.current || currentCandleRef.current.time !== candleTime) {
               const previousClose = currentCandleRef.current?.close || previousClosePriceRef.current || price;
 
               if (previousClose > 0 && price !== previousClose) {
-                priceDirection = price > previousClose ? 'up' : 'down';
+                priceDirection = price > previousClose ? "up" : "down";
               }
 
-              // Freeze the outgoing candle into the closed-candles array
-              // so resync sees up-to-date data without needing setData().
               if (currentCandleRef.current) {
                 previousClosePriceRef.current = currentCandleRef.current.close;
                 const frozen = { ...currentCandleRef.current };
@@ -465,54 +480,65 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
                 }
               }
 
-              currentCandleRef.current = {
-                time: candleTime,
-                open: price,
-                high: price,
-                low: price,
-                close: price,
-              };
+              if (rf && rf.time === candleTime) {
+                currentCandleRef.current = {
+                  time: candleTime,
+                  open: rf.open,
+                  high: Math.max(rf.high, price),
+                  low: Math.min(rf.low, price),
+                  close: price,
+                };
+              } else {
+                currentCandleRef.current = {
+                  time: candleTime,
+                  open: price,
+                  high: price,
+                  low: price,
+                  close: price,
+                };
+                scheduleBucketResync();
+              }
             } else {
               const candleOpen = currentCandleRef.current.open;
               if (candleOpen > 0 && price !== candleOpen) {
-                priceDirection = price > candleOpen ? 'up' : 'down';
+                priceDirection = price > candleOpen ? "up" : "down";
               }
 
-              currentCandleRef.current.high = Math.max(currentCandleRef.current.high, price);
-              currentCandleRef.current.low = Math.min(currentCandleRef.current.low, price);
-              currentCandleRef.current.close = price;
+              if (rf && rf.time === candleTime) {
+                currentCandleRef.current = {
+                  time: candleTime,
+                  open: rf.open,
+                  high: Math.max(rf.high, price, currentCandleRef.current.high),
+                  low: Math.min(rf.low, price, currentCandleRef.current.low),
+                  close: price,
+                };
+              } else {
+                currentCandleRef.current.high = Math.max(currentCandleRef.current.high, price);
+                currentCandleRef.current.low = Math.min(currentCandleRef.current.low, price);
+                currentCandleRef.current.close = price;
+              }
             }
 
             if (onPriceUpdateRef.current) {
               onPriceUpdateRef.current(price, priceDirection);
             }
 
-            // Throttle chart repaints to once per animation frame.
-            // The ref update above is instant; the expensive series.update()
-            // is batched so mobile browsers don't fall behind.
-            if (!renderRafRef.current) {
-              renderRafRef.current = requestAnimationFrame(() => {
-                renderRafRef.current = 0;
-                try {
-                  if (seriesRef.current && currentCandleRef.current) {
-                    seriesRef.current.update(currentCandleRef.current);
-                  }
-                } catch (err) {
-                  console.error("Error updating chart:", err);
-                }
-              });
+            try {
+              if (seriesRef.current && currentCandleRef.current) {
+                seriesRef.current.update(currentCandleRef.current);
+              }
+            } catch (err) {
+              console.error("Error updating chart:", err);
             }
           }
         } else if (
-          msg.type === "match" &&
+          msg.type === "ticker" &&
           msg.product_id &&
           msg.product_id !== pair &&
           msg.product_id !== currentPairRef.current
         ) {
-          // Ignore messages from other pairs (might be delayed messages from previous subscription)
-          // Only log in development to avoid console spam
           if (import.meta.env.DEV) {
-            console.warn(`Ignoring message from wrong pair: ${msg.product_id} (current: ${currentPairRef.current || pair})`);
+            console.warn(`Ignoring ticker from wrong pair: ${msg.product_id} (current: ${currentPairRef.current || pair})`);
           }
         }
       } catch (err) {
@@ -700,6 +726,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       }
       currentCandleRef.current = null;
       previousClosePriceRef.current = null;
+      restFormingRef.current = null;
       seriesDataRef.current = [];
       hasMoreHistoryRef.current = true;
       isLoadingOlderRef.current = false;
@@ -727,11 +754,13 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
 
         if (formingCandle) {
           currentCandleRef.current = { ...formingCandle };
+          restFormingRef.current = { ...formingCandle };
           previousClosePriceRef.current = closedCandles.length > 0
             ? closedCandles[closedCandles.length - 1].close
             : formingCandle.open;
           seriesRef.current.update(currentCandleRef.current);
         } else {
+          restFormingRef.current = null;
           const lastCandle = candlesToRender[candlesToRender.length - 1];
           previousClosePriceRef.current = lastCandle ? lastCandle.close : null;
         }
@@ -800,6 +829,11 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
       seriesMarkersRef.current = null;
       currentCandleRef.current = null;
       previousClosePriceRef.current = null;
+      restFormingRef.current = null;
+      if (bucketResyncTimerRef.current) {
+        clearTimeout(bucketResyncTimerRef.current);
+        bucketResyncTimerRef.current = 0;
+      }
       seriesDataRef.current = [];
     };
   }, [productId, selectedTimeframe, applyInitialView, loadHistory, loadOlderHistory, connectWebSocket]);
@@ -859,6 +893,9 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
               : freshForming.open;
           }
           currentCandleRef.current = { ...formingToRender };
+          restFormingRef.current = { ...formingToRender };
+        } else {
+          restFormingRef.current = null;
         }
 
         const hasNewClosed = lastFreshTime > lastExistingTime;
@@ -907,7 +944,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
 
   // Periodic poll + visibility handler.
   // The poll is the backbone that keeps the chart in sync on every device.
-  // Even if the WebSocket fails completely, candles update every 10 seconds.
+  // Even if the WebSocket fails completely, candles update every 5 seconds.
   useEffect(() => {
     let hiddenAt = null;
 
@@ -1222,6 +1259,7 @@ export default function TradingChart({ selectedPair = "BTCUSDT", tradeEntryMarke
 
                     if (forming) {
                       currentCandleRef.current = { ...forming };
+                      restFormingRef.current = { ...forming };
                       previousClosePriceRef.current = closed.length > 0
                         ? closed[closed.length - 1].close
                         : forming.open;
