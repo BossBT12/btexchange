@@ -173,8 +173,7 @@
     "screenshotTooltip": "स्क्रीनशॉट"
   },
   "rewardHubDeposit": {
-    "networkBsc": "BSC (Binance Smart Chain)",
-    "networkEth": "ETH (Ethereum)",
+    "networkBsc": "BEP20 (Binance Smart Chain)",
     "networkPolygon": "POLYGON"
   },
   "menu": {

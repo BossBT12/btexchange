@@ -177,7 +177,7 @@ export default function DepositPage() {
             fontWeight: 600,
           }}
         >
-          {t("rewardHub.deposit.title", "Deposit")}
+          {t("rewardHub.deposit.title", "Earn Hub Deposit")}
         </Typography>
         <IconButton
           onClick={() =>
@@ -467,39 +467,41 @@ export default function DepositPage() {
           </Box>
         </Box>
 
-        <Button
-          fullWidth
-          onClick={handleShareAddress}
-          startIcon={<Share />}
-          className="btn-primary"
-        >
-          {t("rewardHub.deposit.shareButton", "Share address")}
-        </Button>
-        <Typography
-          variant="caption"
-          sx={{ color: AppColors.TXT_SUB, textAlign: "center" }}
-        >
-          {t(
-            "rewardHub.deposit.verifyHelperHint",
-            "Only use verification if your deposit has not been credited after network confirmation.",
-          )}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
           <Button
-            variant="text"
-            size="small"
-            onClick={() =>
-              navigate("/reward-hub/verify-deposit", {
-                state: { chain: selectedChain },
-              })
-            }
-            sx={{
-              textTransform: "none",
-              color: AppColors.GOLD_PRIMARY,
-              fontSize: FONT_SIZE.CAPTION,
-            }}
+            fullWidth
+            onClick={handleShareAddress}
+            startIcon={<Share />}
+            className="btn-primary"
           >
-            {t("rewardHub.deposit.verifyCta", "Verify transaction")}
+            {t("rewardHub.deposit.shareButton", "Share address")}
           </Button>
-        </Typography>
+          <Typography
+            variant="caption"
+            sx={{ color: AppColors.TXT_SUB, textAlign: "center" }}
+          >
+            {t(
+              "rewardHub.deposit.verifyHelperHint",
+              "Only use verification if your deposit has not been credited after network confirmation.",
+            )}
+            <Button
+              variant="text"
+              size="small"
+              onClick={() =>
+                navigate("/reward-hub/verify-deposit", {
+                  state: { chain: selectedChain },
+                })
+              }
+              sx={{
+                textTransform: "none",
+                color: AppColors.GOLD_PRIMARY,
+                fontSize: FONT_SIZE.CAPTION,
+              }}
+            >
+              {t("rewardHub.deposit.verifyCta", "Verify transaction")}
+            </Button>
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

@@ -216,7 +216,7 @@ export default function DepositPage() {
                         src={CHAIN_ICONS[chainValue]}
                         alt={t(
                           `deposit.chains.${chainValue}.label`,
-                          chainValue === "BSC" ? "Bep20" : "POLYGON",
+                          chainValue === "BSC" ? "BEP20 (Binance Smart Chain)" : "POLYGON",
                         )}
                         style={{ width: "100%", height: "100%" }}
                       />
@@ -231,7 +231,7 @@ export default function DepositPage() {
                       >
                         {t(
                           `deposit.chains.${chainValue}.label`,
-                          chainValue === "BSC" ? "Bep20" : "POLYGON",
+                          chainValue === "BSC" ? "BEP20 (Binance Smart Chain)" : "POLYGON",
                         )}
                       </Typography>
                       {/* <Typography
@@ -437,38 +437,39 @@ export default function DepositPage() {
             ))}
           </Box>
         </Box>
-
-        <Button
-          className="btn-primary"
-          fullWidth
-          onClick={handleShareAddress}
-          startIcon={<Share />}
-        >
-          {t("deposit.shareCta", "Share Address")}
-        </Button>
-        <Typography
-          variant="caption"
-          sx={{ color: AppColors.TXT_SUB, textAlign: "center" }}
-        >
-          {t(
-            "deposit.verifyHelperHint",
-            "Only use verification if your deposit has not been credited after network confirmation.",
-          )}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
           <Button
-            variant="text"
-            size="small"
-            onClick={() =>
-              navigate("/verify-deposit", { state: { chain: selectedChain } })
-            }
-            sx={{
-              textTransform: "none",
-              color: AppColors.GOLD_PRIMARY,
-              fontSize: FONT_SIZE.CAPTION,
-            }}
+            className="btn-primary"
+            fullWidth
+            onClick={handleShareAddress}
+            startIcon={<Share />}
           >
-            {t("rewardHub.deposit.verifyCta", "Verify transaction")}
+            {t("deposit.shareCta", "Share Address")}
           </Button>
-        </Typography>
+          <Typography
+            variant="caption"
+            sx={{ color: AppColors.TXT_SUB, textAlign: { xs: "center", md: "left" } }}
+          >
+            {t(
+              "deposit.verifyHelperHint",
+              "Only use verification if your deposit has not been credited after network confirmation.",
+            )}
+            <Button
+              variant="text"
+              size="small"
+              onClick={() =>
+                navigate("/verify-deposit", { state: { chain: selectedChain } })
+              }
+              sx={{
+                textTransform: "none",
+                color: AppColors.GOLD_PRIMARY,
+                fontSize: FONT_SIZE.CAPTION,
+              }}
+            >
+              {t("rewardHub.deposit.verifyCta", "Verify transaction")}
+            </Button>
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
