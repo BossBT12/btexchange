@@ -133,7 +133,7 @@ export default function DepositPage() {
             color: AppColors.TXT_MAIN,
           }}
         >
-          {t("deposit.header.title", "Deposit")}
+          {t("deposit.header.title", "Trade Deposit")}
         </Typography>
         <IconButton
           onClick={() => navigate("/deposit-history")}
@@ -316,7 +316,7 @@ export default function DepositPage() {
               }}
             >
               {t("deposit.onlySupport", "Only support {{chain}}", {
-                chain: selectedChain,
+                chain: selectedChain === "BSC" ? "BEP20" : "POLYGON",
               })}
             </Typography>
 
@@ -400,7 +400,7 @@ export default function DepositPage() {
               t(
                 "deposit.tips.onlyThisAsset",
                 "Please do not deposit assets other than {{chain}} to the above address, otherwise it may result in asset loss.",
-                { chain: selectedChain },
+                { chain: selectedChain === "BSC" ? "BEP20" : "POLYGON" },
               ),
               t(
                 "deposit.tips.security",

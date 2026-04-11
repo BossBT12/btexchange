@@ -867,13 +867,14 @@ export default function BottomTradingPane({
               </Typography>
               <Button
                 size="small"
-                sx={{ py: 0, px: 0.5, borderRadius: 12 }}
+                sx={{ py: 0, px: 0.5, borderRadius: 12, textTransform: "none", display: "flex", alignItems: "center", gap: 0.5 }}
                 onClick={(e) => setCurrencyMenuAnchor(e.currentTarget)}
                 aria-haspopup="true"
                 aria-controls={currencyMenuAnchor ? "currency-menu" : undefined}
                 endIcon={<AiOutlineSwap />}
               >
-                {currency}
+                <span style={{ color: AppColors.TXT_MAIN }}>Currency </span>{"   "}
+                <span>{currency}</span>
               </Button>
             </Box>
             <Grid container spacing={1}>
@@ -915,19 +916,26 @@ export default function BottomTradingPane({
                   color: AppColors.TXT_MAIN,
                 }}
               >
-                {t("tradingPane.amount", "Amount")} ({currency})
+                {t("tradingPane.amountTitle", "Amount")} ({currency})
               </Typography>
               <Typography
                 component="div"
                 variant="body2"
-                sx={{ color: AppColors.TXT_SUB, display: "flex", alignItems: "center", gap: 0.5 }}
+                sx={{
+                  color: AppColors.TXT_SUB,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.5,
+                }}
               >
                 <IconButton
                   size="small"
                   sx={{ py: 0, px: 0.5 }}
                   onClick={fetchUserBalance}
                 >
-                  <HiOutlineRefresh style={{ fontSize: "14px", color: AppColors.GOLD_PRIMARY }} />
+                  <HiOutlineRefresh
+                    style={{ fontSize: "14px", color: AppColors.GOLD_PRIMARY }}
+                  />
                 </IconButton>
                 {t("tradingPane.avail", "Avail.")}{" "}
                 <span style={{ color: AppColors.TXT_MAIN, fontWeight: 600 }}>

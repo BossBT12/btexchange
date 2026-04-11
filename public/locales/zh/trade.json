@@ -69,7 +69,12 @@
     "rewardHubDescription": "为奖励中心钱包充值，用于团队奖励与活动。",
     "closeAriaLabel": "关闭",
     "tradeAriaLabel": "充值到交易账户",
-    "rewardHubAriaLabel": "充值到奖励中心"
+    "rewardHubAriaLabel": "充值到奖励中心",
+    "badgeMostUsed": "常用",
+    "badgeEarnRewards": "赚取奖励",
+    "balancePlaceholder": "—",
+    "balanceLine": "余额：{{amount}}",
+    "closeButton": "关闭"
   },
   "common": {
     "ok": "确定",

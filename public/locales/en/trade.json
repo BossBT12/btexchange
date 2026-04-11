@@ -63,10 +63,10 @@
   "depositDestinationModal": {
     "title": "Choose where to deposit",
     "subtitle": "Pick the wallet you want to fund. You can open either page again anytime.",
-    "tradeTitle": "Trading",
-    "tradeDescription": "Add funds to your trading balance for spot and futures.",
-    "rewardHubTitle": "Reward Hub",
-    "rewardHubDescription": "Add funds to your Reward Hub wallet for team rewards and programs.",
+    "tradeTitle": "Trade Zone",
+    "tradeDescription": "Add funds to your trading balance.",
+    "rewardHubTitle": "Earn Hub",
+    "rewardHubDescription": "Add funds to your Reward Hub wallet.",
     "closeAriaLabel": "Close",
     "tradeAriaLabel": "Deposit to trading account",
     "rewardHubAriaLabel": "Deposit to Reward Hub"
@@ -1337,6 +1337,7 @@
   },
   "tradingPane": {
     "timeUnit": "Time Unit",
+    "amountTitle": "Amount",
     "amount": "Enter trade amount",
     "avail": "Avail.",
     "loading": "Loading...",
