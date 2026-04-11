@@ -133,7 +133,7 @@ export default function DepositPage() {
     t(
       "rewardHub.deposit.tips.assetWarning",
       "Do not send assets other than {{currency}} on {{chain}} to this address, or they may be lost.",
-      { currency, chain: selectedChain },
+      { currency, chain: selectedChain === "BSC" ? "BEP20" : "POLYGON" },
     ),
     t(
       "rewardHub.deposit.tips.security",
@@ -279,14 +279,6 @@ export default function DepositPage() {
                       >
                         {t("rewardHubDeposit." + chain.labelKey)}
                       </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: FONT_SIZE.CAPTION,
-                          color: AppColors.TXT_SUB,
-                        }}
-                      >
-                        {chain.value}
-                      </Typography>
                     </Box>
                   </Box>
                 </MenuItem>
@@ -364,7 +356,7 @@ export default function DepositPage() {
               {t(
                 "rewardHub.deposit.networkNote",
                 "Only {{chain}} network is supported for this address",
-                { chain: selectedChain },
+                { chain: selectedChain === "BSC" ? "BEP20" : "POLYGON" },
               )}
             </Typography>
 
@@ -478,7 +470,7 @@ export default function DepositPage() {
           </Button>
           <Typography
             variant="caption"
-            sx={{ color: AppColors.TXT_SUB, textAlign: "center" }}
+            sx={{ color: AppColors.TXT_SUB, textAlign: { xs: "center", md: "left" } }}
           >
             {t(
               "rewardHub.deposit.verifyHelperHint",
