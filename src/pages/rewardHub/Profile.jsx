@@ -14,7 +14,6 @@ import {
 } from "@mui/icons-material";
 import { AppColors } from "../../constant/appColors";
 import useAuth from "../../hooks/useAuth";
-import useSnackbar from "../../hooks/useSnackbar";
 import { copyToClipboard } from "../../utils/utils";
 import { ICON_SIZE } from "../../constant/lookUpConstant";
 import userService from "../../services/secondGameServices/userService";
@@ -80,7 +79,6 @@ const Row = ({ label, value, onCopy, onClick, labelColor, valueColor, rightIcon 
 const Profile = () => {
   const navigate = useNavigate();
   const { userData, clear } = useAuth();
-  const { showSnackbar } = useSnackbar();
   const { t } = useTranslation(TRADE_NAMESPACE);
   const [copied, setCopied] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);

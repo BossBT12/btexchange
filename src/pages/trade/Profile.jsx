@@ -9,7 +9,6 @@ import {
 } from "@mui/icons-material";
 import { AppColors } from "../../constant/appColors";
 import useAuth from "../../hooks/useAuth";
-import useSnackbar from "../../hooks/useSnackbar";
 import { copyToClipboard } from "../../utils/utils";
 import { ICON_SIZE } from "../../constant/lookUpConstant";
 import { useTranslation } from "react-i18next";
@@ -90,7 +89,6 @@ const Row = ({
 const Profile = () => {
   const navigate = useNavigate();
   const { userData, clear } = useAuth();
-  const { showSnackbar } = useSnackbar();
   const [copied, setCopied] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const user = userData;
