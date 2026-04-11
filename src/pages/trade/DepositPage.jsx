@@ -234,14 +234,6 @@ export default function DepositPage() {
                           chainValue === "BSC" ? "BEP20 (Binance Smart Chain)" : "POLYGON",
                         )}
                       </Typography>
-                      {/* <Typography
-                        variant="body2"
-                        sx={{
-                          color: "#999999",
-                        }}
-                      >
-                        {chainValue === "BSC" ? "Bep20" : "POLYGON"}
-                      </Typography> */}
                     </Box>
                   </Box>
                 </MenuItem>

@@ -64,12 +64,12 @@
     "title": "选择充值位置",
     "subtitle": "选择要充值的账户。您可随时从各板块再次进入。",
     "tradeTitle": "交易",
-    "tradeDescription": "为现货与合约交易余额充值。",
+    "tradeDescription": "为交易余额充值。",
     "rewardHubTitle": "奖励中心",
-    "rewardHubDescription": "为奖励中心钱包充值，用于团队奖励与活动。",
+    "rewardHubDescription": "为Earn Hub钱包充值。",
     "closeAriaLabel": "关闭",
     "tradeAriaLabel": "充值到交易账户",
-    "rewardHubAriaLabel": "充值到奖励中心",
+    "rewardHubAriaLabel": "充值到Earn Hub",
     "badgeMostUsed": "常用",
     "badgeEarnRewards": "赚取奖励",
     "balancePlaceholder": "—",
@@ -704,7 +704,7 @@
       "networkLabel": "网络",
       "selectNetworkPlaceholder": "选择网络",
       "chains": {
-        "BSC": "Bep20",
+        "BSC": "BSC",
         "POLYGON": "POLYGON"
       },
       "twoFactorLabel": "2FA 验证码",
@@ -743,7 +743,7 @@
       "addressLabel": "提现地址 (USDT 钱包)",
       "addressPlaceholder": "0x...",
       "networkLabel": "网络",
-      "chains": { "BSC": "Bep20", "POLYGON": "POLYGON" },
+      "chains": { "BSC": "BSC", "POLYGON": "POLYGON" },
       "twoFactorLabel": "2FA 验证码",
       "twoFactorPlaceholder": "000000",
       "receiveLabel": "您将收到",
@@ -868,7 +868,7 @@
     "qrCodeAlt": "二维码",
     "chains": {
       "BSC": {
-        "label": "Bep20"
+        "label": "BEP20 (Binance Smart Chain)"
       },
       "POLYGON": {
         "label": "POLYGON"
@@ -905,7 +905,7 @@
     "historyLink": "提现记录",
     "needToTradeBefore": "需交易 ",
     "needToTradeAfter": " 方可提现",
-    "chains": { "BSC": "Bep20", "POLYGON": "POLYGON" },
+    "chains": { "BSC": "BSC", "POLYGON": "POLYGON" },
     "tabs": { "withdraw": "提现", "history": "历史" },
     "types": {
       "winnings": { "menuLabel": "提现盈利", "description": "已解锁可提现的交易盈利。" },

@@ -227,7 +227,7 @@ export default function DepositDestinationModal({ open, onClose }) {
       title: t("depositDestinationModal.tradeTitle", "Trading"),
       description: t(
         "depositDestinationModal.tradeDescription",
-        "Add funds to your trading balance for spot and futures."
+        "Add funds to your trading balance."
       ),
       icon: <ShowChart sx={{ fontSize: 26 }} />,
       ariaLabel: t("depositDestinationModal.tradeAriaLabel", "Deposit to trading account"),
@@ -235,13 +235,13 @@ export default function DepositDestinationModal({ open, onClose }) {
     },
     {
       id: "rewardHub",
-      title: t("depositDestinationModal.rewardHubTitle", "Reward Hub"),
+      title: t("depositDestinationModal.rewardHubTitle", "Earn Hub"),
       description: t(
         "depositDestinationModal.rewardHubDescription",
-        "Add funds to your Reward Hub wallet for team rewards and programs."
+        "Add funds to your Earn Hub wallet."
       ),
       icon: <CardGiftcard sx={{ fontSize: 26 }} />,
-      ariaLabel: t("depositDestinationModal.rewardHubAriaLabel", "Deposit to Reward Hub"),
+      ariaLabel: t("depositDestinationModal.rewardHubAriaLabel", "Deposit to Earn Hub"),
       onClick: () => navigate(PATH_REWARD_HUB_DEPOSIT),
     },
   ];

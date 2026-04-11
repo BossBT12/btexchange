@@ -66,10 +66,10 @@
     "tradeTitle": "Trade Zone",
     "tradeDescription": "Add funds to your trading balance.",
     "rewardHubTitle": "Earn Hub",
-    "rewardHubDescription": "Add funds to your Reward Hub wallet.",
+    "rewardHubDescription": "Add funds to your Earn Hub wallet.",
     "closeAriaLabel": "Close",
     "tradeAriaLabel": "Deposit to trading account",
-    "rewardHubAriaLabel": "Deposit to Reward Hub"
+    "rewardHubAriaLabel": "Deposit to Earn Hub"
   },
   "common": {
     "ok": "OK",
@@ -737,7 +737,7 @@
       "networkLabel": "Network",
       "selectNetworkPlaceholder": "Select network",
       "chains": {
-        "BSC": "Bep20",
+        "BSC": "BEP20 (Binance Smart Chain)",
         "POLYGON": "POLYGON"
       },
       "twoFactorLabel": "2FA code",
@@ -779,7 +779,7 @@
       "networkLabel": "Network",
       "selectNetworkPlaceholder": "Select network",
       "chains": {
-        "BSC": "Bep20",
+        "BSC": "BEP20 (Binance Smart Chain)",
         "POLYGON": "POLYGON"
       },
       "twoFactorLabel": "2FA code",
@@ -924,7 +924,7 @@
       "history": "History"
     },
     "chains": {
-      "BSC": "Bep20",
+      "BSC": "BEP20 (Binance Smart Chain)",
       "POLYGON": "POLYGON"
     },
     "types": {
@@ -1122,7 +1122,6 @@
       "chainOption": {
         "all": "All chains",
         "BSC": "BSC",
-        "ETH": "ETH",
         "POLYGON": "POLYGON"
       }
     },

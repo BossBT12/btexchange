@@ -81,8 +81,7 @@ function getRuleSegments(text, highlight) {
 }
 
 const CHAINS = [
-  { value: "BSC", label: "BEP20 (Binance Smart Chain)", disabled: false },
-  // { value: "ETH", label: "ETH (Ethereum)", disabled: true },
+  { value: "BSC", label: "BSC", disabled: false },
   { value: "POLYGON", label: "POLYGON", disabled: false },
 ];
 
@@ -1034,7 +1033,7 @@ export default function WithdrawPage() {
                             }}
                           >
                             {t("withdraw.history.networkLabel", "Network:")}{" "}
-                            {withdrawal.chain}
+                            {withdrawal.chain === "BSC" ? "BEP20" : "POLYGON"}
                           </Typography>
                         )}
                       </Box>

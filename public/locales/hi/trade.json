@@ -64,12 +64,12 @@
     "title": "जमा कहाँ करें चुनें",
     "subtitle": "जिस वॉलेट को फंड करना है उसे चुनें। आप किसी भी समय इन सेक्शन को दोबारा खोल सकते हैं।",
     "tradeTitle": "ट्रेडिंग",
-    "tradeDescription": "स्पॉट और फ्यूचर्स के लिए अपने ट्रेडिंग बैलेंस में राशि जोड़ें।",
-    "rewardHubTitle": "रिवार्ड हब",
-    "rewardHubDescription": "टीम रिवार्ड और प्रोग्राम के लिए रिवार्ड हब वॉलेट में राशि जोड़ें।",
+    "tradeDescription": "अपने ट्रेडिंग बैलेंस में राशि जोड़ें।",
+    "rewardHubTitle": "ईअर्न हब",
+    "rewardHubDescription": "अपने ईअर्न हब वॉलेट में राशि जोड़ें।",
     "closeAriaLabel": "बंद करें",
     "tradeAriaLabel": "ट्रेडिंग खाते में जमा",
-    "rewardHubAriaLabel": "रिवार्ड हब में जमा"
+    "rewardHubAriaLabel": "ईअर्न हब में जमा"
   },
   "common": {
     "ok": "ठीक",
@@ -676,7 +676,7 @@
       "addressPlaceholder": "0x...",
       "networkLabel": "नेटवर्क",
       "chains": {
-        "BSC": "Bep20",
+        "BSC": "BSC",
         "POLYGON": "POLYGON"
       },
       "twoFactorLabel": "2FA कोड",
@@ -769,7 +769,7 @@
     "qrCodeAlt": "QR कोड",
     "chains": {
       "BSC": {
-        "label": "Bep20"
+        "label": "BEP20 (Binance Smart Chain)"
       },
       "POLYGON": {
         "label": "POLYGON"

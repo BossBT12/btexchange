@@ -64,12 +64,12 @@
     "title": "Choisissez où déposer",
     "subtitle": "Sélectionnez le portefeuille à approvisionner. Vous pouvez rouvrir chaque section à tout moment.",
     "tradeTitle": "Trading",
-    "tradeDescription": "Ajoutez des fonds à votre solde de trading pour le spot et les futures.",
-    "rewardHubTitle": "Reward Hub",
-    "rewardHubDescription": "Ajoutez des fonds à votre portefeuille Reward Hub pour les récompenses d'équipe et les programmes.",
+    "tradeDescription": "Ajoutez des fonds à votre solde de trading.",
+    "rewardHubTitle": "Earn Hub",
+    "rewardHubDescription": "Ajoutez des fonds à votre portefeuille Earn Hub.",
     "closeAriaLabel": "Fermer",
     "tradeAriaLabel": "Déposer sur le compte de trading",
-    "rewardHubAriaLabel": "Déposer sur Reward Hub"
+    "rewardHubAriaLabel": "Déposer sur Earn Hub"
   },
   "common": {
     "ok": "OK",
@@ -698,7 +698,7 @@
       "networkLabel": "Réseau",
       "selectNetworkPlaceholder": "Sélectionner le réseau",
       "chains": {
-        "BSC": "Bep20",
+        "BSC": "BSC",
         "POLYGON": "POLYGON"
       },
       "twoFactorLabel": "Code 2FA",
@@ -738,7 +738,7 @@
       "addressPlaceholder": "0x...",
       "networkLabel": "Réseau",
       "chains": {
-        "BSC": "Bep20",
+        "BSC": "BSC",
         "POLYGON": "POLYGON"
       },
       "twoFactorLabel": "Code 2FA",
@@ -865,7 +865,7 @@
     "qrCodeAlt": "Code QR",
     "chains": {
       "BSC": {
-        "label": "Bep20"
+        "label": "BEP20 (Binance Smart Chain)"
       },
       "POLYGON": {
         "label": "POLYGON"
@@ -903,7 +903,7 @@
     "needToTradeBefore": "Vous devez trader ",
     "needToTradeAfter": " pour pouvoir retirer",
     "chains": {
-      "BSC": "Bep20",
+      "BSC": "BSC",
       "POLYGON": "POLYGON"
     },
     "tabs": {

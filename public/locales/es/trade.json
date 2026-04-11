@@ -64,12 +64,12 @@
     "title": "Elija dónde depositar",
     "subtitle": "Seleccione la cartera que desea financiar. Puede volver a abrir cualquier sección en cualquier momento.",
     "tradeTitle": "Trading",
-    "tradeDescription": "Añada fondos a su saldo de trading para spot y futuros.",
-    "rewardHubTitle": "Reward Hub",
-    "rewardHubDescription": "Añada fondos a su cartera de Reward Hub para recompensas de equipo y programas.",
+    "tradeDescription": "Añada fondos a su saldo de trading.",
+    "rewardHubTitle": "Earn Hub",
+    "rewardHubDescription": "Añada fondos a su cartera de Earn Hub.",
     "closeAriaLabel": "Cerrar",
     "tradeAriaLabel": "Depositar en cuenta de trading",
-    "rewardHubAriaLabel": "Depositar en Reward Hub"
+    "rewardHubAriaLabel": "Depositar en Earn Hub"
   },
   "common": {
     "ok": "OK",
@@ -698,7 +698,7 @@
       "networkLabel": "Red",
       "selectNetworkPlaceholder": "Seleccionar red",
       "chains": {
-        "BSC": "Bep20",
+        "BSC": "BSC",
         "POLYGON": "POLYGON"
       },
       "twoFactorLabel": "Código 2FA",
@@ -737,7 +737,7 @@
       "addressLabel": "Dirección de retiro (cartera USDT)",
       "addressPlaceholder": "0x...",
       "networkLabel": "Red",
-      "chains": { "BSC": "Bep20", "POLYGON": "POLYGON" },
+      "chains": { "BSC": "BSC", "POLYGON": "POLYGON" },
       "twoFactorLabel": "Código 2FA",
       "twoFactorPlaceholder": "000000",
       "receiveLabel": "Recibirá",
@@ -862,7 +862,7 @@
     "qrCodeAlt": "Código QR",
     "chains": {
       "BSC": {
-        "label": "Bep20"
+        "label": "BEP20 (Binance Smart Chain)"
       },
       "POLYGON": {
         "label": "POLYGON"
@@ -899,7 +899,7 @@
     "historyLink": "Historial de retiros",
     "needToTradeBefore": "Necesitas operar ",
     "needToTradeAfter": " para poder retirar",
-    "chains": { "BSC": "Bep20", "POLYGON": "POLYGON" },
+    "chains": { "BSC": "BSC", "POLYGON": "POLYGON" },
     "tabs": { "withdraw": "Retirar", "history": "Historial" },
     "types": {
       "winnings": { "menuLabel": "Retirar ganancias", "description": "Ganancias del trading desbloqueadas para retiro." },
