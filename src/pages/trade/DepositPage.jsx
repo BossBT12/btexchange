@@ -216,11 +216,7 @@ export default function DepositPage() {
                         src={CHAIN_ICONS[chainValue]}
                         alt={t(
                           `deposit.chains.${chainValue}.label`,
-                          chainValue === "BSC"
-                            ? "BSC (Binance Smart Chain)"
-                            : chainValue === "ETH"
-                              ? "ETH (Ethereum)"
-                              : "POLYGON",
+                          chainValue === "BSC" ? "Bep20" : "POLYGON",
                         )}
                         style={{ width: "100%", height: "100%" }}
                       />
@@ -235,21 +231,17 @@ export default function DepositPage() {
                       >
                         {t(
                           `deposit.chains.${chainValue}.label`,
-                          chainValue === "BSC"
-                            ? "BSC (Binance Smart Chain)"
-                            : chainValue === "ETH"
-                              ? "ETH (Ethereum)"
-                              : "POLYGON",
+                          chainValue === "BSC" ? "Bep20" : "POLYGON",
                         )}
                       </Typography>
-                      <Typography
+                      {/* <Typography
                         variant="body2"
                         sx={{
                           color: "#999999",
                         }}
                       >
-                        {chainValue}
-                      </Typography>
+                        {chainValue === "BSC" ? "Bep20" : "POLYGON"}
+                      </Typography> */}
                     </Box>
                   </Box>
                 </MenuItem>

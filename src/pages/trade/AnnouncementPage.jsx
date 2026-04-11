@@ -16,13 +16,13 @@ const ANNOUNCEMENTS = [
   {
     id: "welcome",
     icon: "📢",
-    title: "Welcome to BT EXCHANGE",
+    title: "Welcome to BT Market",
     subtitle: "A smart and secure trading platform.",
     points: [
       "Enjoy smooth trading with a transparent and efficient system.",
       "Experience a clean, user-friendly interface across all devices.",
       "Stay tuned for the latest updates and new features.",
-      "Thank you for choosing BT EXCHANGE.",
+      "Thank you for choosing BT Market.",
     ],
   },
   {
@@ -32,7 +32,7 @@ const ANNOUNCEMENTS = [
     subtitle: "Fast, secure deposits 24/7.",
     highlightIcon: AccountBalanceWalletOutlined,
     points: [
-      "Deposits on BT EXCHANGE are processed quickly and securely.",
+      "Deposits on BT Market are processed quickly and securely.",
       "Always double-check your network and address before depositing.",
       "If your deposit is delayed, contact support with full transaction details.",
       "Your funds are protected by our security and risk-control systems.",
@@ -48,7 +48,7 @@ const ANNOUNCEMENTS = [
       "Withdrawals are processed instantly after approval.",
       "Please ensure all withdrawal details are correct to avoid issues.",
       "Network congestion or third‑party delays may affect arrival time.",
-      "Enjoy fast and reliable withdrawals with BT EXCHANGE.",
+      "Enjoy fast and reliable withdrawals with BT Market.",
     ],
   },
 ];
@@ -145,7 +145,7 @@ const AnnouncementPage = () => {
               mb: 0.5,
             }}
           >
-            {t("announcement.hero.title", "BT EXCHANGE Center")}
+            {t("announcement.hero.title", "BT Market Center")}
           </Typography>
           <Typography
             variant="body2"
@@ -324,7 +324,7 @@ const AnnouncementPage = () => {
         >
           {t(
             "announcement.footer",
-            "The above announcements are for reference only. Please refer to the latest information on BT EXCHANGE for final details."
+            "The above announcements are for reference only. Please refer to the latest information on BT Market for final details."
           )}
         </Typography>
       </Box>

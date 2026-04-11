@@ -15,10 +15,10 @@ import { TRADE_NAMESPACE } from "../../i18n";
 import { AppColors } from "../../constant/appColors";
 import { TrendingUp, TrendingDown, LocalAtm } from "@mui/icons-material";
 import ConfirmationModal from "../ConfirmationModal";
+import DepositDestinationModal from "../DepositDestinationModal";
 import tradingService from "../../services/tradingService";
 import useSnackbar from "../../hooks/useSnackbar";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
 import NumberSpinner from "../input/numberSpinner";
 import authService from "../../services/authService";
 import LoaderMessageModal from "../LoaderMessageModal";
@@ -28,6 +28,7 @@ export default function TradingPanel({ selectedPair }) {
   const [amount, setAmount] = useState(10);
   const [duration, setDuration] = useState("1m");
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [depositChoiceOpen, setDepositChoiceOpen] = useState(false);
   const [pendingDirection, setPendingDirection] = useState(null); // "UP" | "DOWN"
   const [placing, setPlacing] = useState({
     loading: false,
@@ -39,8 +40,6 @@ export default function TradingPanel({ selectedPair }) {
   });
   const { showSnackbar } = useSnackbar();
   const { isLoggedIn } = useAuth();
-  const navigate = useNavigate();
-
   const formattedPairForApi = useMemo(() => {
     if (!selectedPair) return "BTC-USD";
     if (selectedPair.includes("-")) return selectedPair;
@@ -97,7 +96,7 @@ export default function TradingPanel({ selectedPair }) {
   };
 
   const handleDeposit = () => {
-    navigate("/deposit");
+    setDepositChoiceOpen(true);
   };
 
   const fetchUserBalance = async () => {
@@ -249,7 +248,7 @@ export default function TradingPanel({ selectedPair }) {
             startIcon={<LocalAtm />}
             onClick={() => handleDeposit()}
           >
-            Deposit
+            {t("assets.deposit", "Deposit")}
           </Button>
           <Divider />
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -276,6 +275,10 @@ export default function TradingPanel({ selectedPair }) {
         cancelText={t("common.cancel")}
       />
       <LoaderMessageModal loading={placing?.loading} status={placing?.status} />
+      <DepositDestinationModal
+        open={depositChoiceOpen}
+        onClose={() => setDepositChoiceOpen(false)}
+      />
     </Box>
   );
 }

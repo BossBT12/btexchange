@@ -113,7 +113,7 @@ const AboutUsPage = () => {
               mb: 0.5,
             }}
           >
-            {t("about.hero.title", "BT EXCHANGE Legal Center")}
+            {t("about.hero.title", "BT Market Legal Center")}
           </Typography>
           <Typography
             variant="body2"

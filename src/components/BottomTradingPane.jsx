@@ -1025,7 +1025,7 @@ export default function BottomTradingPane({
             </Box>
             <NumberSpinner
               key={`amount-${currency}-${amountSpinnerResetSeq}`}
-              label={t("tradingPane.amount", "Amount")}
+              label={t("tradingPane.amount", "Enter trade amount")}
               min={0}
               max={1000000}
               size="small"

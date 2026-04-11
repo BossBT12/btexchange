@@ -111,6 +111,7 @@ const Profile = () => {
   };
 
   const displayName = user?.fullName || user?.username || "—";
+  const email = user?.email || "—";
   const nickname = user?.nickname ?? displayName;
   const uid = user?.UID != null ? String(user.UID) : "—";
   const isVerified = user?.isVerified ?? user?.isEmailVerified ?? false;
@@ -180,6 +181,14 @@ const Profile = () => {
           }}
         >
           {displayName}
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{
+            color: AppColors.TXT_SUB,
+          }}
+        >
+          {email}
         </Typography>
       </Box>
 

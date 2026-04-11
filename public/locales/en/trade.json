@@ -60,6 +60,17 @@
       "symbol": "Symbol"
     }
   },
+  "depositDestinationModal": {
+    "title": "Choose where to deposit",
+    "subtitle": "Pick the wallet you want to fund. You can open either page again anytime.",
+    "tradeTitle": "Trading",
+    "tradeDescription": "Add funds to your trading balance for spot and futures.",
+    "rewardHubTitle": "Reward Hub",
+    "rewardHubDescription": "Add funds to your Reward Hub wallet for team rewards and programs.",
+    "closeAriaLabel": "Close",
+    "tradeAriaLabel": "Deposit to trading account",
+    "rewardHubAriaLabel": "Deposit to Reward Hub"
+  },
   "common": {
     "ok": "OK",
     "cancel": "Cancel",
@@ -410,7 +421,7 @@
       "invitationLink": "Invitation link",
       "invitationRules": "Invitation rules",
       "ruleTitle": "🎉 Get 10% Referral Bonus on Deposit",
-      "ruleInvite": "🔗 Invite your friends to BT EXCHANGE",
+      "ruleInvite": "🔗 Invite your friends to BT Market",
       "ruleMinDeposit": "💵 Bonus starts from minimum 10 USDT deposit",
       "ruleNoTurnover": "🎁 No turnover condition",
       "ruleAutoCredit": "⚡ Bonus credited automatically",
@@ -419,7 +430,7 @@
       "youGetBonus": "You get {{bonus}} USDT bonus (10%)",
       "oneDepositOneBonus": "✅ One deposit = one bonus",
       "unlimitedReferrals": "♾ Unlimited referrals — invite more, earn more",
-      "cta": "BT EXCHANGE — Deposit 10 USDT & Earn 10% Referral Bonus."
+      "cta": "BT Market — Deposit 10 USDT & Earn 10% Referral Bonus."
     },
     "commissionDetail": {
       "title": "Commission detail",
@@ -508,7 +519,7 @@
     "rebateRatio": {
       "title": "Rebate ratio",
       "loadFailed": "Failed to load rebate ratio",
-      "bannerTitle": "BT EXCHANGE – Commission & Rebate System",
+      "bannerTitle": "BT Market – Commission & Rebate System",
       "bannerIntro": "At BT Exchange, you don't just trade — you also earn commission from your network's trading activity.",
       "bannerRefer": "When you refer users to BT Exchange and they place trades, you receive a percentage of their trading fees as commission.",
       "structureTitle": "Multi-Level Commission Structure:",
@@ -521,7 +532,7 @@
       "bullet2": "Commission credited automatically",
       "bullet3": "Fully transparent system",
       "bullet4": "Real-time earnings tracking",
-      "ctaTagline": "Trade smart. Build your network. Earn more — with BT EXCHANGE."
+      "ctaTagline": "Trade smart. Build your network. Earn more — with BT Market."
     },
     "rulesPage": {
       "title": "Invitation rules",
@@ -727,8 +738,7 @@
       "networkLabel": "Network",
       "selectNetworkPlaceholder": "Select network",
       "chains": {
-        "BSC": "BSC (Binance Smart Chain)",
-        "ETH": "ETH (Ethereum)",
+        "BSC": "Bep20",
         "POLYGON": "POLYGON"
       },
       "twoFactorLabel": "2FA code",
@@ -770,8 +780,7 @@
       "networkLabel": "Network",
       "selectNetworkPlaceholder": "Select network",
       "chains": {
-        "BSC": "BSC (Binance Smart Chain)",
-        "ETH": "ETH (Ethereum)",
+        "BSC": "Bep20",
         "POLYGON": "POLYGON"
       },
       "twoFactorLabel": "2FA code",
@@ -874,10 +883,7 @@
     "qrCodeAlt": "QR Code",
     "chains": {
       "BSC": {
-        "label": "BSC (Binance Smart Chain)"
-      },
-      "ETH": {
-        "label": "ETH (Ethereum)"
+        "label": "Bep20"
       },
       "POLYGON": {
         "label": "POLYGON"
@@ -919,8 +925,7 @@
       "history": "History"
     },
     "chains": {
-      "BSC": "BSC (Binance Smart Chain)",
-      "ETH": "ETH (Ethereum)",
+      "BSC": "Bep20",
       "POLYGON": "POLYGON"
     },
     "types": {
@@ -1332,7 +1337,7 @@
   },
   "tradingPane": {
     "timeUnit": "Time Unit",
-    "amount": "Amount",
+    "amount": "Enter trade amount",
     "avail": "Avail.",
     "loading": "Loading...",
     "upPayout": "Up payout",
@@ -1356,25 +1361,25 @@
   "announcement": {
     "title": "Announcement",
     "hero": {
-      "title": "BT EXCHANGE Center",
+      "title": "BT Market Center",
       "subtitle": "Stay up to date with the latest platform announcements, deposit tips, and withdrawal notifications."
     },
     "items": {
       "welcome": {
-        "title": "Welcome to BT EXCHANGE",
+        "title": "Welcome to BT Market",
         "subtitle": "",
         "points": [
           "Enjoy smooth trading with a transparent and efficient system.",
           "Experience a clean, user-friendly interface across all devices.",
           "Stay tuned for the latest updates and new features.",
-          "Thank you for choosing BT EXCHANGE."
+          "Thank you for choosing BT Market."
         ]
       },
       "deposit": {
         "title": "Deposit Announcement",
         "subtitle": "Fast, secure deposits 24/7.",
         "points": [
-          "Deposits on BT EXCHANGE are processed quickly and securely.",
+          "Deposits on BT Market are processed quickly and securely.",
           "Always double-check your network and address before depositing.",
           "If your deposit is delayed, contact support with full transaction details.",
           "Your funds are protected by our security and risk-control systems."
@@ -1387,16 +1392,16 @@
           "Withdrawals are processed instantly after approval.",
           "Please ensure all withdrawal details are correct to avoid issues.",
           "Network congestion or third‑party delays may affect arrival time.",
-          "Enjoy fast and reliable withdrawals with BT EXCHANGE."
+          "Enjoy fast and reliable withdrawals with BT Market."
         ]
       }
     },
-    "footer": "The above announcements are for reference only. Please refer to the latest information on BT EXCHANGE for final details."
+    "footer": "The above announcements are for reference only. Please refer to the latest information on BT Market for final details."
   },
   "about": {
     "headerTitle": "About us",
     "hero": {
-      "title": "BT EXCHANGE Legal Center",
+      "title": "BT Market Legal Center",
       "description": "Review our privacy, confidentiality, and risk terms in one place. Stay informed and trade with confidence."
     },
     "options": {
@@ -1410,7 +1415,7 @@
     "documents": {
       "privacy": {
         "title": "Privacy Policy & Confidentiality Agreement",
-        "intro": "This Privacy Policy explains how BT EXCHANGE (\"we\", \"us\", \"our\") collects, uses, stores, and protects your information when you use our website, application, or services.",
+        "intro": "This Privacy Policy explains how BT Market (\"we\", \"us\", \"our\") collects, uses, stores, and protects your information when you use our website, application, or services.",
         "sections": {
           "0": {
             "heading": "1. Our Commitment to Your Privacy",
@@ -1425,10 +1430,10 @@
             },
             "bullets": {
               "0": "User / You – the individual accessing or using the Service.",
-              "1": "Company – BT EXCHANGE.",
+              "1": "Company – BT Market.",
               "2": "Account – the unique account created for you to access our Service.",
-              "3": "Website – the official BT EXCHANGE platform.",
-              "4": "Service – trading, investment, and related services provided by BT EXCHANGE.",
+              "3": "Website – the official BT Market platform.",
+              "4": "Service – trading, investment, and related services provided by BT Market.",
               "5": "Country – the operational jurisdiction as per applicable laws.",
               "6": "Service Provider – any third party or individual who processes data on behalf of the Company.",
               "7": "Personal Data – any information that identifies or can be used to identify an individual.",
@@ -1461,13 +1466,13 @@
               "3": "Pages visited, time spent, and activity logs"
             },
             "extra": {
-              "0": "When accessing BT EXCHANGE via mobile, additional device-related data may be collected for security and performance optimisation."
+              "0": "When accessing BT Market via mobile, additional device-related data may be collected for security and performance optimisation."
             }
           },
           "4": {
             "heading": "4. Cookies & Tracking Technologies",
             "body": {
-              "0": "BT EXCHANGE uses cookies and similar tracking technologies to improve user experience and analyse platform performance."
+              "0": "BT Market uses cookies and similar tracking technologies to improve user experience and analyse platform performance."
             },
             "bullets": {
               "0": "Essential Cookies (Session Cookies) – required for account login, security, and basic platform functionality.",
@@ -1521,32 +1526,32 @@
               "3": "Withdraw consent at any time where processing is based on consent."
             },
             "extra": {
-              "0": "Requests can be made through official BT EXCHANGE support channels. We will respond within a reasonable timeframe, subject to legal and regulatory obligations."
+              "0": "Requests can be made through official BT Market support channels. We will respond within a reasonable timeframe, subject to legal and regulatory obligations."
             }
           },
           "9": {
             "heading": "9. Changes to This Privacy Policy",
             "body": {
-              "0": "BT EXCHANGE reserves the right to update this policy at any time to reflect changes in legal, regulatory, or operational requirements.",
+              "0": "BT Market reserves the right to update this policy at any time to reflect changes in legal, regulatory, or operational requirements.",
               "1": "Any changes will be posted on this page and become effective immediately upon publication."
             }
           },
           "10": {
             "heading": "10. Contact Us",
             "body": {
-              "0": "If you have any questions regarding this Privacy Policy, confidentiality, or how your data is handled, please contact BT EXCHANGE through official support channels."
+              "0": "If you have any questions regarding this Privacy Policy, confidentiality, or how your data is handled, please contact BT Market through official support channels."
             }
           }
         }
       },
       "risk": {
         "title": "Risk Disclosure & User Agreement",
-        "intro": "Please read this Risk Disclosure & User Agreement carefully before using BT EXCHANGE. By accessing or using our platform, you acknowledge that you understand and agree to the following terms and risks.",
+        "intro": "Please read this Risk Disclosure & User Agreement carefully before using BT Market. By accessing or using our platform, you acknowledge that you understand and agree to the following terms and risks.",
         "sections": {
           "0": {
             "heading": "1. Acceptance of Agreement",
             "bullets": {
-              "0": "By registering, logging in, or using BT EXCHANGE, you confirm that you have read, understood, and agreed to this User Agreement and all applicable rules.",
+              "0": "By registering, logging in, or using BT Market, you confirm that you have read, understood, and agreed to this User Agreement and all applicable rules.",
               "1": "Your continued use of the platform constitutes acceptance of any future updates to this agreement."
             }
           },
@@ -1557,14 +1562,14 @@
               "1": "All activities performed using your account will be considered authorised by you."
             },
             "extra": {
-              "0": "BT EXCHANGE is not responsible for any loss resulting from unauthorised access, stolen credentials, or negligence in securing your account.",
+              "0": "BT Market is not responsible for any loss resulting from unauthorised access, stolen credentials, or negligence in securing your account.",
               "1": "Users are strongly advised to update passwords regularly and enable all available security features."
             }
           },
           "2": {
             "heading": "3. Modification of Terms",
             "bullets": {
-              "0": "BT EXCHANGE reserves the right to modify, update, or change this agreement, platform rules, or related policies at any time without prior notice.",
+              "0": "BT Market reserves the right to modify, update, or change this agreement, platform rules, or related policies at any time without prior notice.",
               "1": "Revised terms become effective immediately upon publication on the platform.",
               "2": "The Company reserves the final right to interpret and decide on all disputes."
             }
@@ -1572,14 +1577,14 @@
           "3": {
             "heading": "4. Legal Age Requirement",
             "bullets": {
-              "0": "Users must be of legal age under the laws of their country or region of residence to access or use BT EXCHANGE services.",
+              "0": "Users must be of legal age under the laws of their country or region of residence to access or use BT Market services.",
               "1": "Any transactions or actions that are incomplete or not successfully submitted will be considered invalid."
             }
           },
           "4": {
             "heading": "5. Technical & Network Risks",
             "body": {
-              "0": "Digital platforms are subject to technical limitations and external factors. BT EXCHANGE is not responsible for losses caused by:"
+              "0": "Digital platforms are subject to technical limitations and external factors. BT Market is not responsible for losses caused by:"
             },
             "bullets": {
               "0": "Internet disruptions or connectivity issues.",
@@ -1603,7 +1608,7 @@
               "2": "Understand that past performance does not guarantee future results."
             },
             "extra": {
-              "0": "BT EXCHANGE does not guarantee profits, fixed returns, or the absence of losses."
+              "0": "BT Market does not guarantee profits, fixed returns, or the absence of losses."
             }
           },
           "6": {
@@ -1611,20 +1616,20 @@
             "bullets": {
               "0": "All trading decisions are made independently by users.",
               "1": "You are solely responsible for any gains, losses, or legal consequences arising from your actions on the platform.",
-              "2": "BT EXCHANGE shall not be liable for any direct or indirect losses arising from user actions, investment decisions, or misunderstanding of market conditions."
+              "2": "BT Market shall not be liable for any direct or indirect losses arising from user actions, investment decisions, or misunderstanding of market conditions."
             }
           },
           "7": {
             "heading": "8. Final Decision Authority",
             "bullets": {
-              "0": "In the event of disputes, system errors, abnormal activity, or suspected violations, BT EXCHANGE's decision shall be final and binding, to the fullest extent permitted by applicable law."
+              "0": "In the event of disputes, system errors, abnormal activity, or suspected violations, BT Market's decision shall be final and binding, to the fullest extent permitted by applicable law."
             }
           },
           "8": {
             "heading": "9. Disclaimer",
             "body": {
-              "0": "BT EXCHANGE is provided on an \"as‑is\" and \"as‑available\" basis. While we strive to maintain a secure and stable trading environment, we do not warrant that the platform will be uninterrupted, error‑free, or free of risks.",
-              "1": "By using BT EXCHANGE, you acknowledge that digital asset trading carries inherent risks and agree to assume full responsibility for your participation."
+              "0": "BT Market is provided on an \"as‑is\" and \"as‑available\" basis. While we strive to maintain a secure and stable trading environment, we do not warrant that the platform will be uninterrupted, error‑free, or free of risks.",
+              "1": "By using BT Market, you acknowledge that digital asset trading carries inherent risks and agree to assume full responsibility for your participation."
             }
           }
         }

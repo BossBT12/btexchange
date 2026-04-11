@@ -136,7 +136,7 @@ const RebateRatioPage = () => {
                   overflow: "hidden",
                 }}
               >
-                {t("promotion.rebateRatio.bannerTitle", "BT EXCHANGE – Commission & Rebate System")}
+                {t("promotion.rebateRatio.bannerTitle", "BT Market – Commission & Rebate System")}
               </Typography>
             </Box>
             <Typography
@@ -313,7 +313,7 @@ const RebateRatioPage = () => {
           >
             <BsRocketTakeoffFill size={18} />
           </Box>
-          {t("promotion.rebateRatio.ctaTagline", "Trade smart. Build your network. Earn more — with BT EXCHANGE.")}
+          {t("promotion.rebateRatio.ctaTagline", "Trade smart. Build your network. Earn more — with BT Market.")}
         </Typography>
       </Box>
     </Box>

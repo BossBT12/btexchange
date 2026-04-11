@@ -33,6 +33,7 @@ import { FONT_SIZE, SPACING } from "../../constant/lookUpConstant";
 import dashboardServices from "../../services/dashboardServices";
 import { useTranslation } from "react-i18next";
 import { SUPPORTED_LANGUAGES, TRADE_NAMESPACE } from "../../i18n";
+import DepositDestinationModal from "../../components/DepositDestinationModal";
 const PdfViewerModal = React.lazy(() => import("../../components/PdfViewerModal"));
 
 const AssetsPage = () => {
@@ -50,6 +51,7 @@ const AssetsPage = () => {
   });
   const [loading, setLoading] = useState(false);
   const [guideModalOpen, setGuideModalOpen] = useState(false);
+  const [depositChoiceOpen, setDepositChoiceOpen] = useState(false);
 
   const handleOpenLanguageMenu = (event) => {
     setLanguageAnchorEl(event.currentTarget);
@@ -150,7 +152,7 @@ const AssetsPage = () => {
       <Box sx={{ display: "flex", gap: 1, mb: 2.5 }}>
         <Button
           className="btn-primary"
-          onClick={() => navigate("/deposit")}
+          onClick={() => setDepositChoiceOpen(true)}
           fullWidth
           sx={{
             textTransform: "none",
@@ -516,6 +518,11 @@ const AssetsPage = () => {
           />
         </Suspense>
       )}
+
+      <DepositDestinationModal
+        open={depositChoiceOpen}
+        onClose={() => setDepositChoiceOpen(false)}
+      />
     </Box>
   );
 };

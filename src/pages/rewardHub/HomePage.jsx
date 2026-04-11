@@ -35,6 +35,7 @@ import useAuth from "../../hooks/useAuth";
 const InvitePosterModal = React.lazy(() => import("../../components/InvitePosterModal"));
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
+import DepositDestinationModal from "../../components/DepositDestinationModal";
 
 const LOCAL_ICONS = { BTC: BitcoinImg, ETH: EthImg, BNB: BinImg };
 
@@ -46,7 +47,7 @@ const formatNumber = (value) => {
 
 const QUICK_ACTIONS = [
   { id: "main", label: "Main", icon: HomeOutlined, path: "/" },
-  { id: "deposit", label: "Deposit", icon: AddIcon, path: "/reward-hub/deposit" },
+  { id: "deposit", label: "Deposit", icon: AddIcon },
   { id: "withdraw", label: "Withdraw", icon: RemoveIcon, path: "/reward-hub/withdraw" },
   { id: "trade", label: "Capt WD", icon: BoltOutlined, path: "/reward-hub/capital-withdraw" },
   { id: "referral", label: "Referral", icon: GroupOutlined },
@@ -82,6 +83,7 @@ const HomePage = () => {
   const [cryptoError, setCryptoError] = useState("");
   const [selectedCrypto, setSelectedCrypto] = useState(null);
   const [posterModalOpen, setPosterModalOpen] = useState(false);
+  const [depositChoiceOpen, setDepositChoiceOpen] = useState(false);
   const [todayIncome, setTodayIncome] = useState(null);
 
   const fetchData = async () => {
@@ -268,7 +270,7 @@ const HomePage = () => {
           <Button
             variant="contained"
             size="small"
-            onClick={() => navigate("/reward-hub/deposit")}
+            onClick={() => setDepositChoiceOpen(true)}
             sx={{
               bgcolor: AppColors.TXT_MAIN,
               color: AppColors.BG_MAIN,
@@ -308,7 +310,13 @@ const HomePage = () => {
               flexShrink: 0,
               position: "relative",
             }}
-            onClick={() => item.id === "referral" ? setPosterModalOpen(true) : item.path && navigate(item.path)}
+            onClick={() =>
+              item.id === "referral"
+                ? setPosterModalOpen(true)
+                : item.id === "deposit"
+                  ? setDepositChoiceOpen(true)
+                  : item.path && navigate(item.path)
+            }
           >
             <Box
               sx={{
@@ -667,6 +675,10 @@ const HomePage = () => {
           />
         </Suspense>
       )}
+      <DepositDestinationModal
+        open={depositChoiceOpen}
+        onClose={() => setDepositChoiceOpen(false)}
+      />
     </Box>
   );
 };

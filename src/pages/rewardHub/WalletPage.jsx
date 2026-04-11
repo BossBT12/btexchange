@@ -30,6 +30,7 @@ import { SUPPORTED_LANGUAGES, TRADE_NAMESPACE } from "../../i18n";
 import { useTranslation } from "react-i18next";
 import dashboardServices from "../../services/dashboardServices";
 import userService from "../../services/secondGameServices/userService";
+import DepositDestinationModal from "../../components/DepositDestinationModal";
 
 const formatNumber = (value, maximumFractionDigits = 3) => {
   const num = typeof value === "number" ? value : Number(value ?? 0);
@@ -52,6 +53,7 @@ const AssetsPage = () => {
   const [isLoadingWallet, setIsLoadingWallet] = useState(false);
   const [telegramLink, setTelegramLink] = useState(null);
   const [statsSummary, setStatsSummary] = useState(null);
+  const [depositChoiceOpen, setDepositChoiceOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleOpenLanguageMenu = (event) => {
@@ -180,7 +182,7 @@ const AssetsPage = () => {
       {/* Deposit, Withdraw, Transfer */}
       <Box sx={{ display: "flex", gap: 1, mb: 2.5 }}>
         <Button
-          onClick={() => navigate("/reward-hub/deposit")}
+          onClick={() => setDepositChoiceOpen(true)}
           fullWidth
           className="btn-primary"
           sx={{
@@ -689,6 +691,11 @@ const AssetsPage = () => {
           </Box>
         </Box>
       </Box>
+
+      <DepositDestinationModal
+        open={depositChoiceOpen}
+        onClose={() => setDepositChoiceOpen(false)}
+      />
     </Box>
   );
 };

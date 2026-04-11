@@ -36,6 +36,7 @@ import { BORDER_RADIUS, FONT_SIZE, SPACING } from "../../constant/lookUpConstant
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
+import DepositDestinationModal from "../../components/DepositDestinationModal";
 // import dashboardServices from "../../services/dashboardServices";
 // import BTLoader from "../../components/Loader";
 import { IoIosPeople } from "react-icons/io";
@@ -195,6 +196,7 @@ const LandingPage = () => {
   const [isCollapse, setIsCollapse] = useState(false);
   const [collapseTimerKey, setCollapseTimerKey] = useState(0);
   const [activeTab, setActiveTab] = useState("Coin");
+  const [depositChoiceOpen, setDepositChoiceOpen] = useState(false);
   // const [userStats, setUserStats] = useState(null);
   // const [isLoadingUserStats, setIsLoadingUserStats] = useState(false);
 
@@ -310,7 +312,7 @@ const LandingPage = () => {
           </Box>
           <Button
             className="btn-primary"
-            onClick={() => navigate("/deposit")}
+            onClick={() => setDepositChoiceOpen(true)}
             sx={{
               py: 0.75,
               px: SPACING.MD,
@@ -354,7 +356,7 @@ const LandingPage = () => {
             <Button
               fullWidth
               className="btn-primary"
-              onClick={() => navigate("/deposit")}
+              onClick={() => setDepositChoiceOpen(true)}
               startIcon={<img src={GiftIcon} alt="" style={{ width: 20, height: 20 }} />}
               sx={{
                 py: 0.75,
@@ -683,6 +685,11 @@ const LandingPage = () => {
           </Box>
         )} */}
       </Box>
+
+      <DepositDestinationModal
+        open={depositChoiceOpen}
+        onClose={() => setDepositChoiceOpen(false)}
+      />
     </Box>
   );
 };

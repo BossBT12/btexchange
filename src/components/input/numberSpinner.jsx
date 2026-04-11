@@ -11,7 +11,7 @@ import { AppColors } from '../../constant/appColors';
 
 function NumberSpinner({
   id: idProp,
-  label,
+  label = 'Amount',
   error = false,
   errorMessage,
   success = false,
@@ -178,11 +178,7 @@ function NumberSpinner({
           onKeyDown={handleKeyDown}
           disabled={disabled}
           required={required}
-          placeholder={
-            min !== undefined && max !== undefined
-              ? `${min}-${max} USDT`
-              : label
-          }
+          placeholder={label}
           inputProps={{
             ...other,
             type: 'number',

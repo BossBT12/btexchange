@@ -26,13 +26,13 @@ import { copyToClipboard } from "../../utils/utils";
 import useAuth from "../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { SUPPORTED_LANGUAGES, TRADE_NAMESPACE } from "../../i18n";
+import DepositDestinationModal from "../../components/DepositDestinationModal";
 
 const recommendedFeatures = [
   {
     key: "deposit",
     labelKey: "menu.recommended.deposit",
     icon: <AccountBalanceWalletOutlinedIcon fontSize="medium" />,
-    path: "/deposit",
   },
   {
     key: "trade",
@@ -151,6 +151,7 @@ const MenuPage = () => {
 
   const [copied, setCopied] = useState(false);
   const [languageAnchorEl, setLanguageAnchorEl] = useState(null);
+  const [depositChoiceOpen, setDepositChoiceOpen] = useState(false);
 
   const handleOpenLanguageMenu = (event) => {
     setLanguageAnchorEl(event.currentTarget);
@@ -285,9 +286,11 @@ const MenuPage = () => {
                 onClick={
                   key === "language"
                     ? handleOpenLanguageMenu
-                    : path
-                      ? () => handleTileClick(path, state)
-                      : undefined
+                    : key === "deposit"
+                      ? () => setDepositChoiceOpen(true)
+                      : path
+                        ? () => handleTileClick(path, state)
+                        : undefined
                 }
               />
             </Grid>
@@ -336,6 +339,11 @@ const MenuPage = () => {
           </MenuItem>
         ))}
       </Menu>
+
+      <DepositDestinationModal
+        open={depositChoiceOpen}
+        onClose={() => setDepositChoiceOpen(false)}
+      />
     </Box >
   );
 };

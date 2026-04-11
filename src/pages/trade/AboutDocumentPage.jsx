@@ -22,10 +22,10 @@ const PRIVACY_DOC_BASE = {
       ],
       bullets: [
         "User / You – the individual accessing or using the Service.",
-        "Company – BT EXCHANGE.",
+        "Company – BT Market.",
         "Account – the unique account created for you to access our Service.",
-        "Website – the official BT EXCHANGE platform.",
-        "Service – trading, investment, and related services provided by BT EXCHANGE.",
+        "Website – the official BT Market platform.",
+        "Service – trading, investment, and related services provided by BT Market.",
         "Country – the operational jurisdiction as per applicable laws.",
         "Service Provider – any third party or individual who processes data on behalf of the Company.",
         "Personal Data – any information that identifies or can be used to identify an individual.",
@@ -58,13 +58,13 @@ const PRIVACY_DOC_BASE = {
         "Pages visited, time spent, and activity logs",
       ],
       extra: [
-        "When accessing BT EXCHANGE via mobile, additional device-related data may be collected for security and performance optimisation.",
+        "When accessing BT Market via mobile, additional device-related data may be collected for security and performance optimisation.",
       ],
     },
     {
       heading: "4. Cookies & Tracking Technologies",
       body: [
-        "BT EXCHANGE uses cookies and similar tracking technologies to improve user experience and analyse platform performance.",
+        "BT Market uses cookies and similar tracking technologies to improve user experience and analyse platform performance.",
       ],
       bullets: [
         "Essential Cookies (Session Cookies) – required for account login, security, and basic platform functionality.",
@@ -118,20 +118,20 @@ const PRIVACY_DOC_BASE = {
         "Withdraw consent at any time where processing is based on consent.",
       ],
       extra: [
-        "Requests can be made through official BT EXCHANGE support channels. We will respond within a reasonable timeframe, subject to legal and regulatory obligations.",
+        "Requests can be made through official BT Market support channels. We will respond within a reasonable timeframe, subject to legal and regulatory obligations.",
       ],
     },
     {
       heading: "9. Changes to This Privacy Policy",
       body: [
-        "BT EXCHANGE reserves the right to update this policy at any time to reflect changes in legal, regulatory, or operational requirements.",
+        "BT Market reserves the right to update this policy at any time to reflect changes in legal, regulatory, or operational requirements.",
         "Any changes will be posted on this page and become effective immediately upon publication.",
       ],
     },
     {
       heading: "10. Contact Us",
       body: [
-        "If you have any questions regarding this Privacy Policy, confidentiality, or how your data is handled, please contact BT EXCHANGE through official support channels.",
+        "If you have any questions regarding this Privacy Policy, confidentiality, or how your data is handled, please contact BT Market through official support channels.",
       ],
     },
   ],
@@ -142,7 +142,7 @@ const RISK_DOC_BASE = {
     {
       heading: "1. Acceptance of Agreement",
       bullets: [
-        "By registering, logging in, or using BT EXCHANGE, you confirm that you have read, understood, and agreed to this User Agreement and all applicable rules.",
+        "By registering, logging in, or using BT Market, you confirm that you have read, understood, and agreed to this User Agreement and all applicable rules.",
         "Your continued use of the platform constitutes acceptance of any future updates to this agreement.",
       ],
     },
@@ -153,14 +153,14 @@ const RISK_DOC_BASE = {
         "All activities performed using your account will be considered authorised by you.",
       ],
       extra: [
-        "BT EXCHANGE is not responsible for any loss resulting from unauthorised access, stolen credentials, or negligence in securing your account.",
+        "BT Market is not responsible for any loss resulting from unauthorised access, stolen credentials, or negligence in securing your account.",
         "Users are strongly advised to update passwords regularly and enable all available security features.",
       ],
     },
     {
       heading: "3. Modification of Terms",
       bullets: [
-        "BT EXCHANGE reserves the right to modify, update, or change this agreement, platform rules, or related policies at any time without prior notice.",
+        "BT Market reserves the right to modify, update, or change this agreement, platform rules, or related policies at any time without prior notice.",
         "Revised terms become effective immediately upon publication on the platform.",
         "The Company reserves the final right to interpret and decide on all disputes.",
       ],
@@ -168,14 +168,14 @@ const RISK_DOC_BASE = {
     {
       heading: "4. Legal Age Requirement",
       bullets: [
-        "Users must be of legal age under the laws of their country or region of residence to access or use BT EXCHANGE services.",
+        "Users must be of legal age under the laws of their country or region of residence to access or use BT Market services.",
         "Any transactions or actions that are incomplete or not successfully submitted will be considered invalid.",
       ],
     },
     {
       heading: "5. Technical & Network Risks",
       body: [
-        "Digital platforms are subject to technical limitations and external factors. BT EXCHANGE is not responsible for losses caused by:",
+        "Digital platforms are subject to technical limitations and external factors. BT Market is not responsible for losses caused by:",
       ],
       bullets: [
         "Internet disruptions or connectivity issues.",
@@ -199,7 +199,7 @@ const RISK_DOC_BASE = {
         "Understand that past performance does not guarantee future results.",
       ],
       extra: [
-        "BT EXCHANGE does not guarantee profits, fixed returns, or the absence of losses.",
+        "BT Market does not guarantee profits, fixed returns, or the absence of losses.",
       ],
     },
     {
@@ -207,20 +207,20 @@ const RISK_DOC_BASE = {
       bullets: [
         "All trading decisions are made independently by users.",
         "You are solely responsible for any gains, losses, or legal consequences arising from your actions on the platform.",
-        "BT EXCHANGE shall not be liable for any direct or indirect losses arising from user actions, investment decisions, or misunderstanding of market conditions.",
+        "BT Market shall not be liable for any direct or indirect losses arising from user actions, investment decisions, or misunderstanding of market conditions.",
       ],
     },
     {
       heading: "8. Final Decision Authority",
       bullets: [
-        "In the event of disputes, system errors, abnormal activity, or suspected violations, BT EXCHANGE’s decision shall be final and binding, to the fullest extent permitted by applicable law.",
+        "In the event of disputes, system errors, abnormal activity, or suspected violations, BT Market’s decision shall be final and binding, to the fullest extent permitted by applicable law.",
       ],
     },
     {
       heading: "9. Disclaimer",
       body: [
-        "BT EXCHANGE is provided on an “as‑is” and “as‑available” basis. While we strive to maintain a secure and stable trading environment, we do not warrant that the platform will be uninterrupted, error‑free, or free of risks.",
-        "By using BT EXCHANGE, you acknowledge that digital asset trading carries inherent risks and agree to assume full responsibility for your participation.",
+        "BT Market is provided on an “as‑is” and “as‑available” basis. While we strive to maintain a secure and stable trading environment, we do not warrant that the platform will be uninterrupted, error‑free, or free of risks.",
+        "By using BT Market, you acknowledge that digital asset trading carries inherent risks and agree to assume full responsibility for your participation.",
       ],
     },
   ],
@@ -242,7 +242,7 @@ const AboutDocumentPage = () => {
         ),
         intro: t(
           "about.documents.privacy.intro",
-          "This Privacy Policy explains how BT EXCHANGE (“we”, “us”, “our”) collects, uses, stores, and protects your information when you use our website, application, or services."
+          "This Privacy Policy explains how BT Market (“we”, “us”, “our”) collects, uses, stores, and protects your information when you use our website, application, or services."
         ),
         sections: PRIVACY_DOC_BASE.sections.map((section, si) => ({
           ...section,
@@ -278,7 +278,7 @@ const AboutDocumentPage = () => {
       ),
       intro: t(
         "about.documents.risk.intro",
-        "Please read this Risk Disclosure & User Agreement carefully before using BT EXCHANGE. By accessing or using our platform, you acknowledge that you understand and agree to the following terms and risks."
+        "Please read this Risk Disclosure & User Agreement carefully before using BT Market. By accessing or using our platform, you acknowledge that you understand and agree to the following terms and risks."
       ),
       sections: RISK_DOC_BASE.sections.map((section, si) => ({
         ...section,

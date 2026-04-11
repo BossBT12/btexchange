@@ -329,7 +329,7 @@ const PartnerRewardsPage = () => {
             {t("promotion.partnerRewards.ruleTitle", "🎉 Get 10% Referral Bonus on Deposit")}
           </Typography>
           <Typography sx={{ fontSize: "0.875rem", color: AppColors.TXT_SUB }}>
-            {t("promotion.partnerRewards.ruleInvite", "🔗 Invite your friends to BT EXCHANGE")}
+            {t("promotion.partnerRewards.ruleInvite", "🔗 Invite your friends to BT Market")}
           </Typography>
           <Typography sx={{ fontSize: "0.875rem", color: AppColors.TXT_SUB }}>
             {t("promotion.partnerRewards.ruleMinDeposit", "💵 Bonus starts from minimum 10 USDT deposit")}
@@ -412,7 +412,7 @@ const PartnerRewardsPage = () => {
               mt: 0.5,
             }}
           >
-            {t("promotion.partnerRewards.cta", "BT EXCHANGE — Deposit 10 USDT & Earn 10% Referral Bonus.")}
+            {t("promotion.partnerRewards.cta", "BT Market — Deposit 10 USDT & Earn 10% Referral Bonus.")}
           </Typography>
         </Box>
       </Box>
