@@ -69,7 +69,10 @@
     "rewardHubDescription": "Add funds to your Earn Hub wallet.",
     "closeAriaLabel": "Close",
     "tradeAriaLabel": "Deposit to trading account",
-    "rewardHubAriaLabel": "Deposit to Earn Hub"
+    "rewardHubAriaLabel": "Deposit to Earn Hub",
+    "tradeFoot": "Add funds to your trading wallet",
+    "rewardHubFoot": "Earn Hub | 1%–3% Daily Returns | Start Small, Scale Fast",
+    "closeButton": "Close"
   },
   "common": {
     "ok": "OK",
@@ -670,7 +673,7 @@
         "LEVEL": "Level Income",
         "RANK": "Rank Income",
         "ROI": "ROI",
-        "DAILY_ROI": "Trade Profit",
+        "DAILY_ROI": "Daily Income",
         "DAILY_INCOME": "Daily Income",
         "LEVEL_INCOME": "Level Income",
         "RANK_INCOME": "Rank Income",

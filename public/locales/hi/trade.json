@@ -69,7 +69,10 @@
     "rewardHubDescription": "अपने ईअर्न हब वॉलेट में राशि जोड़ें।",
     "closeAriaLabel": "बंद करें",
     "tradeAriaLabel": "ट्रेडिंग खाते में जमा",
-    "rewardHubAriaLabel": "ईअर्न हब में जमा"
+    "rewardHubAriaLabel": "ईअर्न हब में जमा",
+    "tradeFoot": "अपने ट्रेडिंग वॉलेट में राशि जोड़ें",
+    "rewardHubFoot": "Earn Hub | 1%–3% दैनिक रिटर्न | छोटे से शुरू करें, तेज़ी से बढ़ाएं",
+    "closeButton": "बंद करें"
   },
   "common": {
     "ok": "ठीक",
@@ -188,6 +191,7 @@
       "market": "मार्केट",
       "twoFA": "2FA",
       "couponCenter": "कूपन केंद्र",
+      "insights": "इनसाइट्स",
       "more": "और"
     },
     "common": {
@@ -453,7 +457,12 @@
       "rowTime": "समय",
       "rowBalance": "बैलेंस",
       "levelLabel": "स्तर {{level}}",
-      "viewMore": "और देखें"
+      "viewMore": "और देखें",
+      "pagination": {
+        "previous": "पिछला",
+        "next": "अगला",
+        "pageOf": "पृष्ठ {{current}} / {{total}}"
+      }
     },
     "subordinateData": {
       "title": "अधीनस्थ डेटा",
@@ -463,6 +472,15 @@
       "empty": "कोई अधीनस्थ नहीं मिला",
       "copyUidSuccess": "UID कॉपी हो गया",
       "loadMore": "और लोड करें",
+      "applyDate": "लागू करें",
+      "clearDate": "साफ़ करें",
+      "datePlaceholder": "तारीख से फ़िल्टर करें",
+      "refreshAriaLabel": "रीफ़्रेश करें और फ़िल्टर रीसेट करें",
+      "pagination": {
+        "previous": "पिछला",
+        "next": "अगला",
+        "pageOf": "पृष्ठ {{current}} / {{total}}"
+      },
       "types": {
         "all": "सभी",
         "direct": "प्रत्यक्ष",
@@ -590,6 +608,20 @@
       }
     },
     "team": {
+      "name": "नाम:",
+      "email": "ईमेल",
+      "userCount": "कुल उपयोगकर्ता",
+      "totalBusiness": "कुल बिज़नेस",
+      "uidShort": "UID",
+      "status": "स्थिति",
+      "statusActive": "सक्रिय",
+      "statusInactive": "निष्क्रिय",
+      "rankLabel": "रैंक",
+      "rankIncome": "रैंक आय",
+      "directUsers": "प्रत्यक्ष",
+      "directBusiness": "प्रत्यक्ष बिज़नेस",
+      "teamCount": "टीम",
+      "teamBusiness": "टीम बिज़नेस",
       "teamStatsTitle": "टीम स्टैट्स",
       "referral": "रेफरल",
       "group": "ग्रुप",
@@ -618,6 +650,10 @@
         "RANK": "रैंक आय",
         "ROI": "ROI",
         "DAILY_INCOME": "दैनिक आय",
+        "DAILY_ROI": "दैनिक आय",
+        "LEVEL_INCOME": "स्तर आय",
+        "RANK_INCOME": "रैंक आय",
+        "SAME_RANK_INCOME": "समान रैंक आय",
         "other": "आय"
       },
       "pagination": {
@@ -641,6 +677,7 @@
         "security": "अपने डिवाइस को सुरक्षित रखें ताकि किसी भी तरह की छेड़छाड़ या लीक से बचा जा सके।"
       },
       "shareButton": "एड्रेस शेयर करें",
+      "verifyHelperHint": "केवल तभी सत्यापन उपयोग करें जब नेटवर्क पुष्टि के बाद भी आपकी जमा जमा न हुई हो।",
       "verifyCta": "ट्रांज़ैक्शन सत्यापित करें",
       "shareTitle": "{{chain}} डिपॉज़िट एड्रेस",
       "shareText": "इस एड्रेस पर {{chain}} डिपॉज़िट करें:\n{{address}}",
@@ -668,6 +705,9 @@
     "withdraw": {
       "title": "निकासी",
       "backAriaLabel": "वापस",
+      "capitalWithdrawAriaLabel": "पूंजी निकासी",
+      "capitalWithdrawButton": "पूंजी निकासी",
+      "selectNetworkPlaceholder": "नेटवर्क चुनें",
       "historyAriaLabel": "निकासी इतिहास",
       "withdrawableBalance": "निकासी योग्य बैलेंस",
       "amountLabel": "राशि (USDT)",
@@ -688,11 +728,70 @@
         "invalidAmount": "कृपया वैध राशि दर्ज करें।",
         "amountExceeded": "राशि आपके निकासी योग्य बैलेंस से अधिक नहीं हो सकती।",
         "invalidAddress": "कृपया वैध वॉलेट पता दर्ज करें।",
+        "selectNetwork": "कृपया नेटवर्क चुनें।",
         "twoFactorRequired": "कृपया अपना 2FA कोड दर्ज करें।",
         "failed": "निकासी विफल। कृपया पुनः प्रयास करें।"
       },
       "success": {
         "default": "निकासी सफलतापूर्वक संसाधित।"
+      }
+    },
+    "capitalWithdraw": {
+      "title": "पूंजी निकासी",
+      "backAriaLabel": "वापस",
+      "regularWithdrawButton": "सामान्य निकासी",
+      "regularWithdrawAriaLabel": "सामान्य निकासी",
+      "historyAriaLabel": "निकासी इतिहास",
+      "loading": "निवेश लोड हो रहे हैं...",
+      "totalCapitalBalance": "कुल पूंजी बैलेंस",
+      "maxWithdrawable": "अधिकतम निकासी योग्य",
+      "amountLabel": "निकासी राशि (USDT)",
+      "amountPlaceholder": "राशि दर्ज करें",
+      "maxButton": "अधिकतम उपयोग करें",
+      "earnedRoi": "कुल ROI अर्जित",
+      "penaltyNote": "समय से पहले निकासी पर जुर्माना",
+      "selectInvestment": "निकासी के लिए निवेश चुनें",
+      "investedAt": "निवेश तिथि",
+      "penaltyApplied": "जुर्माना",
+      "addressLabel": "निकासी पता (USDT वॉलेट)",
+      "addressPlaceholder": "0x...",
+      "networkLabel": "नेटवर्क",
+      "selectNetworkPlaceholder": "नेटवर्क चुनें",
+      "chains": {
+        "BSC": "BEP20 (Binance Smart Chain)",
+        "POLYGON": "POLYGON"
+      },
+      "twoFactorLabel": "2FA कोड",
+      "twoFactorPlaceholder": "000000",
+      "receiveLabel": "आपको मिलेगा",
+      "penaltyDeducted": "अनुमानित जुर्माना",
+      "penaltyDetailsTitle": "जुर्माने का विवरण",
+      "penaltyPercentageLabel": "जुर्माने का प्रतिशत",
+      "totalInvestmentLabel": "कुल निवेश",
+      "totalRoiLabel": "कुल ट्रेड लाभ",
+      "penaltyExplain": "जुर्माना इसलिए लागू होता है क्योंकि आपका ट्रेड लाभ अभी बिना जुर्माने की निकासी के लिए योग्य नहीं है।",
+      "notice": "पूंजी निकासी चयनित निवेश की पूरी राशि आपके वॉलेट में भेजती है। जब आपका अर्जित ट्रेड लाभ राशि को कवर करता है तो कोई जुर्माना नहीं। पता और नेटवर्क अपने USDT वॉलेट से मेल खाएँ।",
+      "submitButton": "पूंजी निकालें",
+      "errors": {
+        "loadFailed": "सक्रिय निवेश लोड करने में विफल",
+        "selectInvestment": "कृपया निकासी के लिए एक निवेश चुनें।",
+        "invalidAmount": "वैध राशि दर्ज करें।",
+        "amountExceedsMax": "राशि अधिकतम निकासी योग्य से अधिक नहीं हो सकती।",
+        "nothingToWithdraw": "अभी निकासी योग्य राशि उपलब्ध नहीं है।",
+        "invalidAddress": "कृपया वैध वॉलेट पता दर्ज करें।",
+        "selectNetwork": "कृपया नेटवर्क चुनें।",
+        "twoFactorRequired": "कृपया अपना 2FA कोड दर्ज करें।",
+        "failed": "पूंजी निकासी विफल। कृपया पुनः प्रयास करें।"
+      },
+      "success": {
+        "default": "पूंजी निकासी सफल।",
+        "netAmount": "शुद्ध राशि",
+        "viewExplorer": "एक्सप्लोरर पर देखें"
+      },
+      "empty": {
+        "title": "कोई सक्रिय निवेश नहीं",
+        "description": "पूंजी निकासी के लिए आपके पास कोई योग्य सक्रिय निवेश नहीं है।",
+        "depositCta": "जमा"
       }
     },
     "profile": {
@@ -758,9 +857,27 @@
       "security": "कृपया अपने मोबाइल उपकरणों की सुरक्षा सुनिश्चित करें ताकि जानकारी को छेड़छाड़ या लीक होने से रोका जा सके"
     },
     "shareCta": "पता साझा करें",
+    "verifyHelperHint": "केवल तभी सत्यापन उपयोग करें जब नेटवर्क पुष्टि के बाद भी आपकी जमा जमा न हुई हो।",
     "share": {
       "title": "{{chain}} जमा पता",
       "text": "इस पते पर {{chain}} जमा करें:\n{{address}}"
+    },
+    "verifyDeposit": {
+      "title": "जमा सत्यापन (मैन्युअल सहायता)",
+      "backAriaLabel": "वापस",
+      "networkLabel": "नेटवर्क",
+      "txHashLabel": "ट्रांज़ैक्शन हैश",
+      "txHashPlaceholder": "0x...",
+      "help": "इसका उपयोग केवल तब करें जब ब्लॉकचेन पर पुष्टि दिखने के बाद भी जमा जमा न हुई हो। समीक्षा के लिए अपना जमा ट्रांज़ैक्शन हैश पेस्ट करें।",
+      "verifyButton": "ट्रांज़ैक्शन सत्यापित करें",
+      "verifiedTitle": "सत्यापन अनुरोध किया गया",
+      "viewExplorer": "एक्सप्लोरर पर देखें",
+      "goToHistory": "जमा इतिहास",
+      "success": "ट्रांज़ैक्शन सत्यापन के लिए सबमिट किया गया।",
+      "errors": {
+        "invalidInput": "कृपया वैध ट्रांज़ैक्शन हैश दर्ज करें और नेटवर्क चुनें।",
+        "failed": "सत्यापन विफल। कृपया हैश जाँचकर पुनः प्रयास करें।"
+      }
     },
     "errors": {
       "fetchFailed": "जमा पता प्राप्त करने में विफल"
@@ -938,6 +1055,19 @@
     }
   },
   "withdraw": {
+    "headerTitle": "निकासी",
+    "backAriaLabel": "वापस",
+    "placeholder": "कृपया राशि दर्ज करें",
+    "currentAvailable": "निकासी योग्य बैलेंस",
+    "all": "सभी",
+    "amountReceived": "प्राप्त निकासी राशि",
+    "historyLink": "निकासी इतिहास",
+    "needToTradeBefore": "निकासी के लिए कम से कम ",
+    "needToTradeAfter": " का ट्रेड करना होगा",
+    "chains": {
+      "BSC": "BEP20 (Binance Smart Chain)",
+      "POLYGON": "POLYGON"
+    },
     "tabs": {
       "withdraw": "निकासी",
       "history": "इतिहास"
@@ -973,6 +1103,7 @@
     "form": {
       "amountLabel": "राशि (USDT)",
       "max": "अधिकतम",
+      "enterAddress": "अपना पता दर्ज करें",
       "walletLabel": "USDT वॉलेट पता",
       "networkLabel": "नेटवर्क",
       "comingSoon": " (जल्द आ रहा है)",
@@ -984,7 +1115,23 @@
       "processing": "निकासी रिक्वेस्ट एडमिन द्वारा मैन्युअल रूप से प्रोसेस की जाती हैं। आपकी बैलेंस तुरंत डेबिट हो जाएगी और स्टेटस प्रोसेस के साथ अपडेट होगा।"
     },
     "actions": {
-      "submit": "निकासी सबमिट करें"
+      "submit": "निकासी सबमिट करें",
+      "withdraw": "निकासी"
+    },
+    "rules": {
+      "ariaLabel": "निकासी नियम",
+      "instant": "तत्काल निकासी",
+      "amountRange": "निकासी राशि सीमा $1.00-$100,000.00",
+      "amountRangeHighlight": "$1.00-$100,000.00",
+      "confirmBeneficiary": "निकासी से पहले कृपया अपना प्राप्ति पता सही पुष्टि करें। गलत जानकारी पर हानि की जिम्मेदारी हमारी नहीं होगी।",
+      "contactService": "यदि प्राप्ति पता गलत है तो कृपया ग्राहक सेवा से संपर्क करें"
+    },
+    "twofaDialog": {
+      "title": "दो-चरण प्रमाणीकरण",
+      "description": "कृपया अपने ऑथेंटिकेटर ऐप से 6-अंकीय सत्यापन कोड दर्ज करें।",
+      "label": "प्रमाणीकरण कोड",
+      "cancel": "रद्द करें",
+      "verify": "सत्यापित करें"
     },
     "overview": {
       "title": "निकासी ओवरव्यू",
@@ -1008,7 +1155,11 @@
       "walletLabel": "वॉलेट:",
       "networkLabel": "नेटवर्क:",
       "typeWinnings": "विनिंग्स",
-      "typeWorking": "वर्किंग आय"
+      "typeWorking": "वर्किंग आय",
+      "statusRequested": "अनुरोधित",
+      "statusConfirmed": "पुष्टि की गई",
+      "statusSent": "भेजा गया",
+      "statusFailed": "असफल"
     },
     "fetchHistoryFailed": "निकासी इतिहास लोड करने में विफल",
     "submitSuccess": "निकासी अनुरोध सफलतापूर्वक सबमिट हो गया।",
@@ -1095,6 +1246,7 @@
   },
   "tradingPane": {
     "timeUnit": "समय इकाई",
+    "amountTitle": "राशि",
     "amount": "व्यापार राशि दर्ज करें",
     "avail": "उपलब्ध",
     "loading": "लोड हो रहा है...",
@@ -1292,6 +1444,10 @@
           "period": "अवधि",
           "closingPrice": "क्लोजिंग प्राइस",
           "transactionFee": "लेनदेन शुल्क (1%)"
+        },
+        "pagination": {
+          "rowsPerPage": "प्रति पृष्ठ पंक्तियाँ:",
+          "displayedRows": "{{from}}–{{to}} में से {{count}}"
         }
       }
     },

@@ -70,6 +70,8 @@
     "closeAriaLabel": "关闭",
     "tradeAriaLabel": "充值到交易账户",
     "rewardHubAriaLabel": "充值到Earn Hub",
+    "tradeFoot": "为交易钱包充值",
+    "rewardHubFoot": "Earn Hub | 每日回报 1%–3% | 小额起步，快速放大",
     "badgeMostUsed": "常用",
     "badgeEarnRewards": "赚取奖励",
     "balancePlaceholder": "—",
@@ -194,6 +196,7 @@
       "market": "行情",
       "twoFA": "二次验证",
       "couponCenter": "券中心",
+      "insights": "资讯",
       "more": "更多"
     },
     "common": {
@@ -459,7 +462,12 @@
       "rowTime": "时间",
       "rowBalance": "余额",
       "levelLabel": "等级 {{level}}",
-      "viewMore": "加载更多"
+      "viewMore": "加载更多",
+      "pagination": {
+        "previous": "上一页",
+        "next": "下一页",
+        "pageOf": "第 {{current}} 页，共 {{total}} 页"
+      }
     },
     "subordinateData": {
       "title": "下级数据",
@@ -469,6 +477,15 @@
       "empty": "暂无下级数据",
       "copyUidSuccess": "UID 已复制",
       "loadMore": "加载更多",
+      "applyDate": "应用",
+      "clearDate": "清除",
+      "datePlaceholder": "按日期筛选",
+      "refreshAriaLabel": "刷新并重置筛选",
+      "pagination": {
+        "previous": "上一页",
+        "next": "下一页",
+        "pageOf": "第 {{current}} 页，共 {{total}} 页"
+      },
       "types": {
         "all": "全部",
         "direct": "直推",
@@ -637,7 +654,7 @@
         "LEVEL": "等级收益",
         "RANK": "排名收益",
         "ROI": "ROI",
-        "DAILY_ROI": "交易利润",
+        "DAILY_ROI": "日收益",
         "DAILY_INCOME": "日收益",
         "LEVEL_INCOME": "等级收益",
         "RANK_INCOME": "排名收益",
@@ -716,6 +733,7 @@
         "invalidAmount": "请输入有效金额。",
         "amountExceeded": "金额不能超过可提现余额。",
         "invalidAddress": "请输入有效的钱包地址。",
+        "selectNetwork": "请选择网络。",
         "twoFactorRequired": "请输入您的 2FA 验证码。",
         "failed": "提现失败，请重试。"
       },
@@ -743,6 +761,7 @@
       "addressLabel": "提现地址 (USDT 钱包)",
       "addressPlaceholder": "0x...",
       "networkLabel": "网络",
+      "selectNetworkPlaceholder": "选择网络",
       "chains": { "BSC": "BSC", "POLYGON": "POLYGON" },
       "twoFactorLabel": "2FA 验证码",
       "twoFactorPlaceholder": "000000",
@@ -762,6 +781,7 @@
         "amountExceedsMax": "金额不能超过最大可提现金额。",
         "nothingToWithdraw": "当前暂无可提现金额。",
         "invalidAddress": "请输入有效的钱包地址。",
+        "selectNetwork": "请选择网络。",
         "twoFactorRequired": "请输入您的 2FA 验证码。",
         "failed": "本金提现失败，请重试。"
       },
@@ -1113,6 +1133,12 @@
         "infoAriaLabel": "更多信息",
         "profileName": "牛夫人的鎏金岁月",
         "followIntro": "跟我的单,请注意以下几点:",
+        "tabs": {
+          "performance": "表现",
+          "openPosition": "持仓",
+          "positionHistory": "历史持仓",
+          "copiers": "跟单者"
+        },
         "point1": "1.仅做以太和比特。",
         "point2": "2.我是用仓位控制强平而非定额止损,多空双开。如果有套单我是会处理的,不影响开新仓。",
         "point3": "3.跟单盈利到自己比较满意也可以手动止盈,因为我有时候单子会拿得跌宕起伏,或者拿长一些做趋势波段。",
@@ -1147,6 +1173,10 @@
           "period": "周期",
           "closingPrice": "平仓价",
           "transactionFee": "手续费 (1%)"
+        },
+        "pagination": {
+          "rowsPerPage": "每页行数：",
+          "displayedRows": "第 {{from}}–{{to}} 条，共 {{count}} 条"
         }
       }
     },
@@ -1236,6 +1266,7 @@
   },
   "tradingPane": {
     "timeUnit": "时间单位",
+    "amountTitle": "金额",
     "amount": "输入交易金额",
     "avail": "可用",
     "loading": "加载中...",

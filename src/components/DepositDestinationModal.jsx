@@ -36,14 +36,38 @@ export default function DepositDestinationModal({ open, onClose }) {
       <DialogContent className="deposit-modal" sx={{ p: 0 }}>
         <div className="wrap">
           <div className="modal">
-            <button className="close-btn" onClick={onClose}>
+            <button
+              type="button"
+              className="close-btn"
+              onClick={onClose}
+              aria-label={t("depositDestinationModal.closeAriaLabel", "Close")}
+            >
               ✕
             </button>
-            <h2>Deposit Funds</h2>
-            <p className="sub">Choose your wallet to add funds</p>
+            <h2 id="action-choice-modal-title">
+              {t("depositDestinationModal.title", "Choose where to deposit")}
+            </h2>
+            <p className="sub">
+              {t(
+                "depositDestinationModal.subtitle",
+                "Pick the wallet you want to fund. You can open either page again anytime.",
+              )}
+            </p>
 
             <div
               className="card-t"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  navigate(PATH_TRADE_DEPOSIT);
+                }
+              }}
+              aria-label={t(
+                "depositDestinationModal.tradeAriaLabel",
+                "Deposit to trading account",
+              )}
               onClick={() => navigate(PATH_TRADE_DEPOSIT)}
             >
               <div className="card-body">
@@ -88,9 +112,14 @@ export default function DepositDestinationModal({ open, onClose }) {
                   </div>
                 </div>
               </div>
-              <div class="divider"></div>
-              <div class="card-foot">
-                <span class="bal">Add funds to your trading wallet</span>
+              <div className="divider"></div>
+              <div className="card-foot">
+                <span className="bal">
+                  {t(
+                    "depositDestinationModal.tradeFoot",
+                    "Add funds to your trading wallet",
+                  )}
+                </span>
               </div>
               <div className="glow-t"></div>
               <div className="gloss-t"></div>
@@ -100,6 +129,18 @@ export default function DepositDestinationModal({ open, onClose }) {
 
             <div
               className="card-r"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  navigate(PATH_REWARD_HUB_DEPOSIT);
+                }
+              }}
+              aria-label={t(
+                "depositDestinationModal.rewardHubAriaLabel",
+                "Deposit to Earn Hub",
+              )}
               onClick={() => navigate(PATH_REWARD_HUB_DEPOSIT)}
             >
               <div className="card-body">
@@ -196,10 +237,13 @@ export default function DepositDestinationModal({ open, onClose }) {
                   </div>
                 </div>
               </div>
-              <div class="divider"></div>
-              <div class="card-foot">
-                <span class="bal">
-                  Earn Hub | 1%–3% Daily Returns | Start Small, Scale Fast
+              <div className="divider"></div>
+              <div className="card-foot">
+                <span className="bal">
+                  {t(
+                    "depositDestinationModal.rewardHubFoot",
+                    "Earn Hub | 1%–3% Daily Returns | Start Small, Scale Fast",
+                  )}
                 </span>
               </div>
               <div className="glow-t"></div>
@@ -208,8 +252,8 @@ export default function DepositDestinationModal({ open, onClose }) {
               <div className="glow-rb"></div>
             </div>
             <div className="close-btn-container">
-              <button className="cont" onClick={onClose}>
-                Close
+              <button type="button" className="cont" onClick={onClose}>
+                {t("depositDestinationModal.closeButton", "Close")}
               </button>
             </div>
           </div>

@@ -69,7 +69,10 @@
     "rewardHubDescription": "Añada fondos a su cartera de Earn Hub.",
     "closeAriaLabel": "Cerrar",
     "tradeAriaLabel": "Depositar en cuenta de trading",
-    "rewardHubAriaLabel": "Depositar en Earn Hub"
+    "rewardHubAriaLabel": "Depositar en Earn Hub",
+    "tradeFoot": "Añada fondos a su cartera de trading",
+    "rewardHubFoot": "Earn Hub | 1%–3% de rendimiento diario | Empiece pequeño, crezca rápido",
+    "closeButton": "Cerrar"
   },
   "common": {
     "ok": "OK",
@@ -188,6 +191,7 @@
       "market": "Mercado",
       "twoFA": "2FA",
       "couponCenter": "Centro de cupones",
+      "insights": "Perspectivas",
       "more": "Más"
     },
     "common": {
@@ -453,7 +457,12 @@
       "rowTime": "Fecha y hora",
       "rowBalance": "Saldo",
       "levelLabel": "Nivel {{level}}",
-      "viewMore": "Ver más"
+      "viewMore": "Ver más",
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "pageOf": "Página {{current}} de {{total}}"
+      }
     },
     "subordinateData": {
       "title": "Datos de subordinados",
@@ -463,6 +472,15 @@
       "empty": "No se encontraron subordinados",
       "copyUidSuccess": "UID copiado",
       "loadMore": "Cargar más",
+      "applyDate": "Aplicar",
+      "clearDate": "Borrar",
+      "datePlaceholder": "Filtrar por fecha",
+      "refreshAriaLabel": "Actualizar y restablecer filtros",
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "pageOf": "Página {{current}} de {{total}}"
+      },
       "types": {
         "all": "Todos",
         "direct": "Directo",
@@ -631,7 +649,7 @@
         "LEVEL": "Ingresos por nivel",
         "RANK": "Ingresos por rango",
         "ROI": "ROI",
-        "DAILY_ROI": "Handelsgewinn",
+        "DAILY_ROI": "Ingreso diario",
         "DAILY_INCOME": "Ingreso diario",
         "LEVEL_INCOME": "Ingresos por nivel",
         "RANK_INCOME": "Ingresos por rango",
@@ -710,6 +728,7 @@
         "invalidAmount": "Introduzca una cantidad válida.",
         "amountExceeded": "La cantidad no puede superar su saldo retirable.",
         "invalidAddress": "Introduzca una dirección de cartera válida.",
+        "selectNetwork": "Seleccione una red.",
         "twoFactorRequired": "Introduzca su código 2FA.",
         "failed": "Retiro fallido. Inténtelo de nuevo."
       },
@@ -737,6 +756,7 @@
       "addressLabel": "Dirección de retiro (cartera USDT)",
       "addressPlaceholder": "0x...",
       "networkLabel": "Red",
+      "selectNetworkPlaceholder": "Seleccionar red",
       "chains": { "BSC": "BSC", "POLYGON": "POLYGON" },
       "twoFactorLabel": "Código 2FA",
       "twoFactorPlaceholder": "000000",
@@ -756,6 +776,7 @@
         "amountExceedsMax": "El importe no puede superar el máximo retirable.",
         "nothingToWithdraw": "No hay importe retirable en este momento.",
         "invalidAddress": "Introduzca una dirección de cartera válida.",
+        "selectNetwork": "Seleccione una red.",
         "twoFactorRequired": "Introduzca su código 2FA.",
         "failed": "Retiro de capital fallido. Inténtelo de nuevo."
       },
@@ -1147,6 +1168,10 @@
           "period": "Período",
           "closingPrice": "Precio de cierre",
           "transactionFee": "Comisión de transacción (1%)"
+        },
+        "pagination": {
+          "rowsPerPage": "Filas por página:",
+          "displayedRows": "{{from}}–{{to}} de {{count}}"
         }
       }
     },
@@ -1236,7 +1261,8 @@
   },
   "tradingPane": {
     "timeUnit": "Unidad de tiempo",
-    "amount": "Handelsbetrag eingeben",
+    "amountTitle": "Importe",
+    "amount": "Introduzca el importe de la operación",
     "avail": "Disp.",
     "loading": "Cargando...",
     "upPayout": "Pago subir",

@@ -69,7 +69,10 @@
     "rewardHubDescription": "Ajoutez des fonds à votre portefeuille Earn Hub.",
     "closeAriaLabel": "Fermer",
     "tradeAriaLabel": "Déposer sur le compte de trading",
-    "rewardHubAriaLabel": "Déposer sur Earn Hub"
+    "rewardHubAriaLabel": "Déposer sur Earn Hub",
+    "tradeFoot": "Ajoutez des fonds à votre portefeuille de trading",
+    "rewardHubFoot": "Earn Hub | 1%–3% de rendement quotidien | Commencez petit, grandissez vite",
+    "closeButton": "Fermer"
   },
   "common": {
     "ok": "OK",
@@ -188,6 +191,7 @@
       "market": "Marché",
       "twoFA": "2FA",
       "couponCenter": "Centre de coupons",
+      "insights": "Analyses",
       "more": "Plus"
     },
     "common": {
@@ -453,7 +457,12 @@
       "rowTime": "Date et heure",
       "rowBalance": "Solde",
       "levelLabel": "Niveau {{level}}",
-      "viewMore": "Voir plus"
+      "viewMore": "Voir plus",
+      "pagination": {
+        "previous": "Précédent",
+        "next": "Suivant",
+        "pageOf": "Page {{current}} sur {{total}}"
+      }
     },
     "subordinateData": {
       "title": "Données des filleuls",
@@ -463,6 +472,15 @@
       "empty": "Aucun filleul trouvé",
       "copyUidSuccess": "UID copié",
       "loadMore": "Charger plus",
+      "applyDate": "Appliquer",
+      "clearDate": "Effacer",
+      "datePlaceholder": "Filtrer par date",
+      "refreshAriaLabel": "Actualiser et réinitialiser les filtres",
+      "pagination": {
+        "previous": "Précédent",
+        "next": "Suivant",
+        "pageOf": "Page {{current}} sur {{total}}"
+      },
       "types": {
         "all": "Tous",
         "direct": "Direct",
@@ -631,7 +649,7 @@
         "LEVEL": "Revenus de niveau",
         "RANK": "Revenus de rang",
         "ROI": "ROI",
-        "DAILY_ROI": "Profit commercial",
+        "DAILY_ROI": "Revenu quotidien",
         "DAILY_INCOME": "Revenu quotidien",
         "LEVEL_INCOME": "Revenus de niveau",
         "RANK_INCOME": "Revenus de rang",
@@ -710,6 +728,7 @@
         "invalidAmount": "Veuillez entrer un montant valide.",
         "amountExceeded": "Le montant ne peut pas dépasser votre solde retirable.",
         "invalidAddress": "Veuillez entrer une adresse de portefeuille valide.",
+        "selectNetwork": "Veuillez sélectionner un réseau.",
         "twoFactorRequired": "Veuillez entrer votre code 2FA.",
         "failed": "Retrait échoué. Veuillez réessayer."
       },
@@ -737,6 +756,7 @@
       "addressLabel": "Adresse de retrait (portefeuille USDT)",
       "addressPlaceholder": "0x...",
       "networkLabel": "Réseau",
+      "selectNetworkPlaceholder": "Sélectionner le réseau",
       "chains": {
         "BSC": "BSC",
         "POLYGON": "POLYGON"
@@ -759,6 +779,7 @@
         "amountExceedsMax": "Le montant ne peut pas dépasser le maximum retirable.",
         "nothingToWithdraw": "Aucun montant retirable pour le moment.",
         "invalidAddress": "Veuillez entrer une adresse de portefeuille valide.",
+        "selectNetwork": "Veuillez sélectionner un réseau.",
         "twoFactorRequired": "Veuillez entrer votre code 2FA.",
         "failed": "Retrait du capital échoué. Veuillez réessayer."
       },
@@ -1210,15 +1231,29 @@
           "down": "Short"
         },
         "fields": {
+          "pair": "Paire",
+          "direction": "Direction",
           "status": "Statut",
+          "amount": "Montant (USDT)",
           "grossAmount": "Montant brut (USDT)",
           "feeAmount": "Frais (USDT)",
           "netTradeAmount": "Montant net du trade (USDT)",
           "entryPrice": "Prix d’entrée (USDT)",
           "exitPrice": "Prix de sortie (USDT)",
+          "rewardRate": "Taux de récompense",
           "payout": "Payout (USDT)",
           "startTime": "Heure de début",
-          "expiryTime": "Heure d’expiration"
+          "expiryTime": "Heure d’expiration",
+          "settlementTime": "Heure de règlement",
+          "openingPrice": "Prix d’ouverture",
+          "buyAmount": "Montant d’achat",
+          "period": "Période",
+          "closingPrice": "Prix de clôture",
+          "transactionFee": "Frais de transaction (1 %)"
+        },
+        "pagination": {
+          "rowsPerPage": "Lignes par page :",
+          "displayedRows": "{{from}}–{{to}} sur {{count}}"
         }
       }
     },
@@ -1308,6 +1343,7 @@
   },
   "tradingPane": {
     "timeUnit": "Unité de temps",
+    "amountTitle": "Montant",
     "amount": "Entrez le montant de la transaction",
     "avail": "Dispo.",
     "loading": "Chargement...",
