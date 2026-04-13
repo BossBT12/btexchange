@@ -75,6 +75,7 @@ const DownlineUserCard = ({ level, user, t }) => (
     />
     <DownlineRow label={t("rewardHub.team.rankLabel", "Rank")} value={user.rank === "NONE" ? "V0" : (user.rank ?? "—")} last={false} />
     <DownlineRow label={t("rewardHub.team.depositAmount", "Deposit amount:")} value={`$${String(user.investment)}`} valueColor={AppColors.GOLD_PRIMARY} last={false} />
+    <DownlineRow label={t("rewardHub.team.teamBusiness", "Team Business:")} value={`$${String(user.teamBusiness)}`} valueColor={AppColors.GOLD_PRIMARY} last={false} />
     <DownlineRow label={t("rewardHub.team.time", "Joined:")} value={user.joinedAtFormatted} last />
   </Box>
 );
@@ -123,6 +124,7 @@ const TeamPage = () => {
             rank: user?.rank,
             investment: Number(user?.investment) || 0,
             joinedAtFormatted: joinedAt ? new Date(joinedAt).toLocaleDateString() : "—",
+            teamBusiness: Number(user?.teamBusiness) || 0,
           },
         });
       });
