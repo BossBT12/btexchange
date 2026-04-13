@@ -819,7 +819,7 @@
   },
   "deposit": {
     "header": {
-      "title": "Depósito"
+      "title": "Depósito de Trade Zone"
     },
     "selectCoinLabel": "Seleccionar moneda",
     "addressLabel": "Dirección de depósito",

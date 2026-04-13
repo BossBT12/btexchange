@@ -133,7 +133,7 @@ export default function DepositPage() {
             color: AppColors.TXT_MAIN,
           }}
         >
-          {t("deposit.header.title", "Trade Deposit")}
+          {t("deposit.header.title", "Trade Zone Deposit")}
         </Typography>
         <IconButton
           onClick={() => navigate("/deposit-history")}

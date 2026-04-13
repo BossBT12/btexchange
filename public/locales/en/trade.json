@@ -839,7 +839,7 @@
   },
   "deposit": {
     "header": {
-      "title": "Trade Deposit"
+      "title": "Trade Zone Deposit"
     },
     "selectCoinLabel": "Select Chain",
     "addressLabel": "Deposit Address",

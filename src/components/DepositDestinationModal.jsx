@@ -1,31 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  IconButton,
-  Typography,
-  Box,
-  Stack,
-} from "@mui/material";
-import { Close, ChevronRight, ShowChart, CardGiftcard } from "@mui/icons-material";
+import { Dialog, DialogContent } from "@mui/material";
 import { TRADE_NAMESPACE } from "../i18n";
 import { AppColors } from "../constant/appColors";
 
-/**
- * Reusable modal: title, optional description, and tappable choices.
- * Use for "pick a destination" flows (deposit, withdraw, etc.).
- */
-export function ActionChoiceModal({
-  open,
-  onClose,
-  title,
-  description,
-  choices = [],
-  closeAriaLabel,
-}) {
+const PATH_TRADE_DEPOSIT = "/deposit";
+const PATH_REWARD_HUB_DEPOSIT = "/reward-hub/deposit";
+
+export default function DepositDestinationModal({ open, onClose }) {
+  const { t } = useTranslation(TRADE_NAMESPACE);
+  const navigate = useNavigate();
   return (
     <Dialog
       open={open}
@@ -33,15 +18,14 @@ export function ActionChoiceModal({
       maxWidth="sm"
       scroll="paper"
       aria-labelledby="action-choice-modal-title"
-      aria-describedby={description ? "action-choice-modal-desc" : undefined}
       sx={{
         "& .MuiDialog-paper": {
-          background: "radial-gradient(ellipse at 50% 0%, #252525 0%, #0a0a0a 55%, #050505 100%)",
-          borderRadius: { xs: 2, sm: 2.5 },
+          background:
+            "radial-gradient(ellipse at 50% 0%, #252525 0%, #0a0a0a 55%, #050505 100%)",
           border: `1px solid ${AppColors.BORDER_MAIN}`,
           boxShadow: "0 24px 48px rgba(0,0,0,0.55)",
           overflow: "hidden",
-          m: 1,
+          m: 0,
         },
         "& .MuiBackdrop-root": {
           backgroundColor: "rgba(0,0,0,0.72)",
@@ -49,216 +33,189 @@ export function ActionChoiceModal({
         },
       }}
     >
-      <DialogTitle
-        id="action-choice-modal-title"
-        sx={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          gap: 1,
-          pt: 2.5,
-          pb: description ? 0.5 : 1.5,
-          px: 1,
-        }}
-      >
-        <Typography
-          component="span"
-          variant="h6"
-          sx={{
-            color: AppColors.TXT_MAIN,
-            fontWeight: 600,
-            fontSize: { xs: "1.05rem", sm: "1.15rem" },
-            lineHeight: 1.35,
-            pr: 1,
-          }}
-        >
-          {title}
-        </Typography>
-        <IconButton
-          size="small"
-          onClick={onClose}
-          aria-label={closeAriaLabel}
-          sx={{
-            color: AppColors.TXT_SUB,
-            mt: -0.5,
-            "&:hover": { color: AppColors.TXT_MAIN, bgcolor: AppColors.BG_CARD_HOVER },
-          }}
-        >
-          <Close fontSize="small" />
-        </IconButton>
-      </DialogTitle>
+      <DialogContent className="deposit-modal" sx={{ p: 0 }}>
+        <div className="wrap">
+          <div className="modal">
+            <button className="close-btn" onClick={onClose}>
+              ✕
+            </button>
+            <h2>Deposit Funds</h2>
+            <p className="sub">Choose your wallet to add coninue</p>
 
-      {description ? (
-        <Box sx={{ px: 1, pb: 1.5, pt: 0 }}>
-          <Typography
-            id="action-choice-modal-desc"
-            variant="body2"
-            sx={{ color: AppColors.TXT_SUB, lineHeight: 1.55 }}
-          >
-            {description}
-          </Typography>
-        </Box>
-      ) : null}
+            <div
+              className="card-t"
+              onClick={() => navigate(PATH_TRADE_DEPOSIT)}
+            >
+              <div className="card-body">
+                <div className="card-row">
+                  <div className="icon-box-gold">
+                    <svg width="30" height="24" viewBox="0 0 30 24" fill="none">
+                      <polyline
+                        points="1,21 10,10 16,15 29,2"
+                        stroke="#F0B90B"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <polyline
+                        points="22,2 29,2 29,9"
+                        stroke="#F0B90B"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div className="card-info">
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      <span className="card-name">
+                        {t("depositDestinationModal.tradeTitle", "Trading")}
+                      </span>
+                    </div>
+                    <div className="card-desc">
+                      {t(
+                        "depositDestinationModal.tradeDescription",
+                        "Add funds to your trading balance.",
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="card-foot">
+                <span class="bal">Trade smart, grow steady.</span>
+              </div>
+              <div className="glow-t"></div>
+              <div className="gloss-t"></div>
+              <div className="glow-lb"></div>
+              <div className="glow-rb"></div>
+            </div>
 
-       <DialogContent sx={{ pt: description ? 0.5 : 0, pb: 2.5, px: 1 }}>
-        <Stack spacing={1.25} role="list">
-          {choices.map((choice) => {
-            const { id, ...row } = choice;
-            return (
-              <Box key={id} role="listitem">
-                <ChoiceRow {...row} onClose={onClose} />
-              </Box>
-            );
-          })}
-        </Stack>
+            <div
+              className="card-r"
+              onClick={() => navigate(PATH_REWARD_HUB_DEPOSIT)}
+            >
+              <div className="card-body">
+                <div className="card-row">
+                  <div className="icon-box-purple">
+                    <svg width="32" height="28" viewBox="0 0 32 28" fill="none">
+                      <defs>
+                        <linearGradient
+                          id="g2"
+                          x1="0"
+                          y1="0"
+                          x2="32"
+                          y2="28"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0%" stopColor="#f09898" />
+                          <stop offset="100%" stopColor="#c03060" />
+                        </linearGradient>
+                      </defs>
+                      <rect
+                        x="2"
+                        y="13"
+                        width="28"
+                        height="14"
+                        rx="2.5"
+                        stroke="url(#g2)"
+                        strokeWidth="1.75"
+                        fill="none"
+                      />
+                      <rect
+                        x="0.5"
+                        y="9"
+                        width="31"
+                        height="5"
+                        rx="1.8"
+                        stroke="url(#g2)"
+                        strokeWidth="1.75"
+                        fill="none"
+                      />
+                      <line
+                        x1="16"
+                        y1="9"
+                        x2="16"
+                        y2="27"
+                        stroke="url(#g2)"
+                        strokeWidth="1.75"
+                      />
+                      <line
+                        x1="0.5"
+                        y1="11.5"
+                        x2="31.5"
+                        y2="11.5"
+                        stroke="url(#g2)"
+                        strokeWidth="1.75"
+                      />
+                      <path
+                        d="M16 9 C13.5 6.5 9.5 1.5 12 0C14.5 -1.2 16 4 16 9"
+                        stroke="url(#g2)"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        fill="none"
+                      />
+                      <path
+                        d="M16 9 C18.5 6.5 22.5 1.5 20 0C17.5 -1.2 16 4 16 9"
+                        stroke="url(#g2)"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        fill="none"
+                      />
+                    </svg>
+                  </div>
+                  <div className="card-info">
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      <span className="card-name">
+                        {t(
+                          "depositDestinationModal.rewardHubTitle",
+                          "Earn Hub",
+                        )}
+                      </span>
+                    </div>
+                    <div className="card-desc">
+                      {t(
+                        "depositDestinationModal.rewardHubDescription",
+                        "Add funds to your Earn Hub wallet.",
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="card-foot">
+                <span class="bal">
+                  Earn Hub | 📊 1%–3% Daily Returns | ⚡ Start Small, Scale Fast
+                  🚀
+                </span>
+              </div>
+              <div className="glow-t"></div>
+              <div className="gloss-t"></div>
+              <div className="glow-lb"></div>
+              <div className="glow-rb"></div>
+            </div>
+            <div className="close-btn-container">
+              <button className="cont" onClick={onClose}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
 }
-
-function ChoiceRow({ icon, title: rowTitle, description: rowDesc, onClick, onClose, ariaLabel }) {
-  const handleClick = () => {
-    onClick?.();
-    onClose?.();
-  };
-
-  return (
-    <Box
-      component="button"
-      type="button"
-      onClick={handleClick}
-      aria-label={ariaLabel}
-      sx={{
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        gap: 1.5,
-        p: 1,
-        m: 0,
-        textAlign: "left",
-        cursor: "pointer",
-        borderRadius: 2,
-        border: `1px solid ${AppColors.BORDER_MAIN}`,
-        bgcolor: AppColors.BG_CARD,
-        color: "inherit",
-        font: "inherit",
-        transition: "border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease",
-        "&:hover": {
-          borderColor: `${AppColors.GOLD_PRIMARY}55`,
-          bgcolor: AppColors.HLT_LIGHT,
-          boxShadow: `0 0 0 1px ${AppColors.GOLD_PRIMARY}22 inset`,
-        },
-        "&:focus-visible": {
-          outline: `2px solid ${AppColors.GOLD_PRIMARY}`,
-          outlineOffset: 2,
-        },
-      }}
-    >
-      {icon ? (
-        <Box
-          sx={{
-            flexShrink: 0,
-            width: 44,
-            height: 44,
-            borderRadius: 1.5,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            bgcolor: `${AppColors.GOLD_PRIMARY}18`,
-            color: AppColors.GOLD_PRIMARY,
-          }}
-          aria-hidden
-        >
-          {icon}
-        </Box>
-      ) : null}
-      <Box sx={{ flex: 1, minWidth: 0 }}>
-        <Typography
-          variant="subtitle1"
-          sx={{
-            color: AppColors.TXT_MAIN,
-            fontWeight: 600,
-            fontSize: "0.95rem",
-            lineHeight: 1.35,
-          }}
-        >
-          {rowTitle}
-        </Typography>
-        {rowDesc ? (
-          <Typography
-            variant="body2"
-            sx={{
-              color: AppColors.TXT_SUB,
-              mt: 0.35,
-              lineHeight: 1.45,
-              fontSize: "0.8rem",
-            }}
-          >
-            {rowDesc}
-          </Typography>
-        ) : null}
-      </Box>
-      <ChevronRight
-        sx={{
-          flexShrink: 0,
-          color: AppColors.TXT_SUB,
-          fontSize: 22,
-          opacity: 0.85,
-        }}
-        aria-hidden
-      />
-    </Box>
-  );
-}
-
-const PATH_TRADE_DEPOSIT = "/deposit";
-const PATH_REWARD_HUB_DEPOSIT = "/reward-hub/deposit";
-
-/**
- * Deposit entry modal: Trading deposit vs Reward Hub deposit.
- */
-export default function DepositDestinationModal({ open, onClose }) {
-  const { t } = useTranslation(TRADE_NAMESPACE);
-  const navigate = useNavigate();
-
-  const choices = [
-    {
-      id: "trade",
-      title: t("depositDestinationModal.tradeTitle", "Trading"),
-      description: t(
-        "depositDestinationModal.tradeDescription",
-        "Add funds to your trading balance."
-      ),
-      icon: <ShowChart sx={{ fontSize: 26 }} />,
-      ariaLabel: t("depositDestinationModal.tradeAriaLabel", "Deposit to trading account"),
-      onClick: () => navigate(PATH_TRADE_DEPOSIT),
-    },
-    {
-      id: "rewardHub",
-      title: t("depositDestinationModal.rewardHubTitle", "Earn Hub"),
-      description: t(
-        "depositDestinationModal.rewardHubDescription",
-        "Add funds to your Earn Hub wallet."
-      ),
-      icon: <CardGiftcard sx={{ fontSize: 26 }} />,
-      ariaLabel: t("depositDestinationModal.rewardHubAriaLabel", "Deposit to Earn Hub"),
-      onClick: () => navigate(PATH_REWARD_HUB_DEPOSIT),
-    },
-  ];
-
-  return (
-    <ActionChoiceModal
-      open={open}
-      onClose={onClose}
-      title={t("depositDestinationModal.title", "Choose where to deposit")}
-      description={t(
-        "depositDestinationModal.subtitle",
-        "Pick the wallet you want to fund. You can open either page again anytime."
-      )}
-      closeAriaLabel={t("depositDestinationModal.closeAriaLabel", "Close")}
-      choices={choices}
-    />
-  );
-}
-
-export { PATH_TRADE_DEPOSIT, PATH_REWARD_HUB_DEPOSIT };

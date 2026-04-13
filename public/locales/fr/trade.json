@@ -822,7 +822,7 @@
   },
   "deposit": {
     "header": {
-      "title": "Dépôt"
+      "title": "Dépôt de Trade Zone"
     },
     "selectCoinLabel": "Sélectionner la pièce",
     "addressLabel": "Adresse de dépôt",
