@@ -40,7 +40,7 @@ export default function DepositDestinationModal({ open, onClose }) {
               ✕
             </button>
             <h2>Deposit Funds</h2>
-            <p className="sub">Choose your wallet to add coninue</p>
+            <p className="sub">Choose your wallet to add funds</p>
 
             <div
               className="card-t"
@@ -90,7 +90,7 @@ export default function DepositDestinationModal({ open, onClose }) {
               </div>
               <div class="divider"></div>
               <div class="card-foot">
-                <span class="bal">Trade smart, grow steady.</span>
+                <span class="bal">Add funds to your trading wallet</span>
               </div>
               <div className="glow-t"></div>
               <div className="gloss-t"></div>
@@ -199,7 +199,7 @@ export default function DepositDestinationModal({ open, onClose }) {
               <div class="divider"></div>
               <div class="card-foot">
                 <span class="bal">
-                  Earn Hub | 📊 1%–3% Daily Returns | ⚡ Start Small, Scale Fast
+                  Earn Hub | 1%–3% Daily Returns | Start Small, Scale Fast
                   🚀
                 </span>
               </div>
