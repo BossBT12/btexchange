@@ -61,8 +61,8 @@
     }
   },
   "depositDestinationModal": {
-    "title": "Elija dónde depositar",
-    "subtitle": "Seleccione la cartera que desea financiar. Puede volver a abrir cualquier sección en cualquier momento.",
+    "title": "Depositar fondos",
+    "subtitle": "Seleccione su cartera para agregar fondos",
     "tradeTitle": "Trading",
     "tradeDescription": "Añada fondos a su saldo de trading.",
     "rewardHubTitle": "Earn Hub",

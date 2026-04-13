@@ -61,8 +61,8 @@
     }
   },
   "depositDestinationModal": {
-    "title": "选择充值位置",
-    "subtitle": "选择要充值的账户。您可随时从各板块再次进入。",
+    "title": "充值",
+    "subtitle": "选择要充值的账户",
     "tradeTitle": "交易",
     "tradeDescription": "为交易余额充值。",
     "rewardHubTitle": "奖励中心",

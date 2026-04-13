@@ -61,8 +61,8 @@
     }
   },
   "depositDestinationModal": {
-    "title": "Choose where to deposit",
-    "subtitle": "Pick the wallet you want to fund. You can open either page again anytime.",
+    "title": "Deposit Funds",
+    "subtitle": "Choose your wallet to add funds",
     "tradeTitle": "Trade Zone",
     "tradeDescription": "Add funds to your trading balance.",
     "rewardHubTitle": "Earn Hub",

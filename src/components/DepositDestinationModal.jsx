@@ -45,12 +45,12 @@ export default function DepositDestinationModal({ open, onClose }) {
               ✕
             </button>
             <h2 id="action-choice-modal-title">
-              {t("depositDestinationModal.title", "Choose where to deposit")}
+              {t("depositDestinationModal.title", "Deposit Funds")}
             </h2>
             <p className="sub">
               {t(
                 "depositDestinationModal.subtitle",
-                "Pick the wallet you want to fund. You can open either page again anytime.",
+                "Choose your wallet to add funds",
               )}
             </p>
 

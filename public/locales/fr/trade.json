@@ -61,8 +61,8 @@
     }
   },
   "depositDestinationModal": {
-    "title": "Choisissez où déposer",
-    "subtitle": "Sélectionnez le portefeuille à approvisionner. Vous pouvez rouvrir chaque section à tout moment.",
+    "title": "Déposer des fonds",
+    "subtitle": "Sélectionnez votre portefeuille pour ajouter des fonds",
     "tradeTitle": "Trading",
     "tradeDescription": "Ajoutez des fonds à votre solde de trading.",
     "rewardHubTitle": "Earn Hub",
