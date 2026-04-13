@@ -200,7 +200,6 @@ export default function DepositDestinationModal({ open, onClose }) {
               <div class="card-foot">
                 <span class="bal">
                   Earn Hub | 1%–3% Daily Returns | Start Small, Scale Fast
-                  🚀
                 </span>
               </div>
               <div className="glow-t"></div>
