@@ -18,7 +18,12 @@ import {
   ChevronRight,
 } from "@mui/icons-material";
 import { AppColors } from "../../constant/appColors";
-import { FONT_SIZE, BORDER_RADIUS, SPACING, ICON_SIZE } from "../../constant/lookUpConstant";
+import {
+  FONT_SIZE,
+  BORDER_RADIUS,
+  SPACING,
+  ICON_SIZE,
+} from "../../constant/lookUpConstant";
 import { LuChartBar } from "react-icons/lu";
 import walletService from "../../services/secondGameServices/walletService";
 import { useLocation } from "react-router-dom";
@@ -55,6 +60,8 @@ const ReportingPage = () => {
 
   const typeToLabel = (reportTypeValue) => {
     const found = REPORT_TYPES.find((r) => r.value === reportTypeValue);
+    if (reportType === "DAILY_INCOME")
+      return t("rewardHub.reporting.type.DAILY_INCOME", "Daily Income");
     if (found) return t(`rewardHub.reporting.type.${found.labelKey}`);
     return t("rewardHub.reporting.type.other", "Income");
   };
@@ -64,9 +71,15 @@ const ReportingPage = () => {
   const [loading, setLoading] = useState(true);
   const [isCollapse, setIsCollapse] = useState(false);
   const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
-  const [pagination, setPagination] = useState({ page: 1, limit: PAGE_SIZE, total: 0 });
+  const [todayIncome, setTodayIncome] = useState(null);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: PAGE_SIZE,
+    total: 0,
+  });
 
-  const hasActiveFilters = reportType !== "" || !!dateRange.startDate || !!dateRange.endDate;
+  const hasActiveFilters =
+    reportType !== "" || !!dateRange.startDate || !!dateRange.endDate;
 
   const fetchReports = useCallback(
     async (page = 1) => {
@@ -77,15 +90,20 @@ const ReportingPage = () => {
           limit: PAGE_SIZE,
         };
         if (reportType === "DAILY_INCOME") {
-          setDateRange({ startDate: "", endDate: "" });
-          const today = new Date();
-          const year = today.getFullYear();
-          const month = String(today.getMonth() + 1).padStart(2, "0");
-          const day = String(today.getDate()).padStart(2, "0");
-          const formattedDate = `${year}-${month}-${day}`;
-          params.startDate = formattedDate;
-          params.endDate = formattedDate;
-        }else{
+          // setDateRange({ startDate: "", endDate: "" });
+          // const today = new Date();
+          // const year = today.getFullYear();
+          // const month = String(today.getMonth() + 1).padStart(2, "0");
+          // const day = String(today.getDate()).padStart(2, "0");
+          // const formattedDate = `${year}-${month}-${day}`;
+          // params.startDate = formattedDate;
+          // params.endDate = formattedDate;
+
+          const rest = await walletService.getTodayIncome();
+          if (rest?.success) {
+            setTodayIncome(rest.data);
+          }
+        } else {
           if (reportType) params.type = reportType;
           if (dateRange.startDate) params.startDate = dateRange.startDate;
           if (dateRange.endDate) params.endDate = dateRange.endDate;
@@ -93,7 +111,11 @@ const ReportingPage = () => {
         const res = await walletService.getIncomeHistory(params);
         const records = res?.data?.incomeRecords ?? [];
         const list = Array.isArray(records) ? records : [];
-        const pag = res?.data?.pagination ?? { page, limit: PAGE_SIZE, total: list.length };
+        const pag = res?.data?.pagination ?? {
+          page,
+          limit: PAGE_SIZE,
+          total: list.length,
+        };
         setPagination(pag);
         setReports(list);
       } catch {
@@ -103,14 +125,17 @@ const ReportingPage = () => {
         setLoading(false);
       }
     },
-    [reportType, dateRange.startDate, dateRange.endDate]
+    [reportType, dateRange.startDate, dateRange.endDate],
   );
 
   useEffect(() => {
     fetchReports(1);
   }, [fetchReports]);
 
-  const totalPages = Math.max(1, Math.ceil(pagination.total / pagination.limit) || 1);
+  const totalPages = Math.max(
+    1,
+    Math.ceil(pagination.total / pagination.limit) || 1,
+  );
   const currentPage = Math.min(Math.max(1, pagination.page), totalPages);
   const hasPrev = currentPage > 1;
   const hasNext = currentPage < totalPages;
@@ -132,17 +157,43 @@ const ReportingPage = () => {
       {/* Page Title */}
       <Container maxWidth={false} sx={{ p: SPACING.MD }}>
         {/* Header */}
-        <Box sx={{ mb: 2, display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 1, flexWrap: "wrap" }}>
+        <Box
+          sx={{
+            mb: 2,
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            gap: 1,
+            flexWrap: "wrap",
+          }}
+        >
           <Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.25, mb: 0.5 }}>
-              <Box sx={{ transform: "scaleY(-1) rotate(90deg)", display: "flex", alignItems: "center" }}>
-                <LuChartBar size={ICON_SIZE.MD} color={AppColors.GOLD_PRIMARY} />
+            <Box
+              sx={{ display: "flex", alignItems: "center", gap: 1.25, mb: 0.5 }}
+            >
+              <Box
+                sx={{
+                  transform: "scaleY(-1) rotate(90deg)",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <LuChartBar
+                  size={ICON_SIZE.MD}
+                  color={AppColors.GOLD_PRIMARY}
+                />
               </Box>
-              <Typography variant="h3" sx={{ color: AppColors.GOLD_PRIMARY, fontWeight: 700 }}>
+              <Typography
+                variant="h3"
+                sx={{ color: AppColors.GOLD_PRIMARY, fontWeight: 700 }}
+              >
                 {t("rewardHub.reporting.title", "Reporting")}
               </Typography>
             </Box>
-            <Typography variant="body1" sx={{ color: AppColors.TXT_SUB, fontWeight: 400 }}>
+            <Typography
+              variant="body1"
+              sx={{ color: AppColors.TXT_SUB, fontWeight: 400 }}
+            >
               {t("rewardHub.reporting.subtitle", "View your income reports")}
             </Typography>
           </Box>
@@ -151,7 +202,9 @@ const ReportingPage = () => {
             sx={{
               position: "relative",
               color: AppColors.GOLD_PRIMARY,
-              bgcolor: isCollapse ? `${AppColors.GOLD_PRIMARY}15` : "transparent",
+              bgcolor: isCollapse
+                ? `${AppColors.GOLD_PRIMARY}15`
+                : "transparent",
               border: `1px solid ${AppColors.GOLD_PRIMARY}40`,
               "&:hover": { bgcolor: `${AppColors.GOLD_PRIMARY}20` },
             }}
@@ -187,8 +240,19 @@ const ReportingPage = () => {
               border: "1px solid rgba(255,255,255,0.06)",
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, flex: 1, minWidth: 0 }}>
-              <Typography variant="body2" sx={{ color: AppColors.TXT_SUB, fontWeight: 500 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 0.5,
+                flex: 1,
+                minWidth: 0,
+              }}
+            >
+              <Typography
+                variant="body2"
+                sx={{ color: AppColors.TXT_SUB, fontWeight: 500 }}
+              >
                 {t("rewardHub.reporting.reportTypeLabel", "Report Type")}
               </Typography>
               <FormControl
@@ -202,7 +266,10 @@ const ReportingPage = () => {
                     color: AppColors.TXT_MAIN,
                     transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                     "&:hover": { borderColor: "rgba(212, 168, 95, 0.4)" },
-                    "&.Mui-focused": { borderColor: AppColors.GOLD_PRIMARY, boxShadow: "0 0 0 2px rgba(212, 168, 95, 0.2)" },
+                    "&.Mui-focused": {
+                      borderColor: AppColors.GOLD_PRIMARY,
+                      boxShadow: "0 0 0 2px rgba(212, 168, 95, 0.2)",
+                    },
                     "& fieldset": { border: "none" },
                   },
                   "& .MuiSelect-select": { py: 1.5, px: 2 },
@@ -225,7 +292,10 @@ const ReportingPage = () => {
                         color: AppColors.TXT_MAIN,
                         bgcolor: AppColors.BG_CARD,
                         "&:hover": { bgcolor: AppColors.HLT_LIGHT },
-                        "&.Mui-selected": { bgcolor: AppColors.HLT_LIGHT, color: AppColors.GOLD_PRIMARY },
+                        "&.Mui-selected": {
+                          bgcolor: AppColors.HLT_LIGHT,
+                          color: AppColors.GOLD_PRIMARY,
+                        },
                       }}
                     >
                       {t(`rewardHub.reporting.type.${labelKey}`)}
@@ -241,24 +311,56 @@ const ReportingPage = () => {
                 minWidth: 0,
               }}
             >
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, flex: 1, minWidth: 0 }}>
-                <Typography variant="body2" sx={{ color: AppColors.TXT_SUB, fontWeight: 500 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 0.5,
+                  flex: 1,
+                  minWidth: 0,
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{ color: AppColors.TXT_SUB, fontWeight: 500 }}
+                >
                   {t("rewardHub.reporting.startDate", "Start Date")}
                 </Typography>
                 <DatePicker
                   value={dateRange.startDate}
-                  onChange={(date) => setDateRange((prev) => ({ ...prev, startDate: date ?? "" }))}
-                  placeholder={t("rewardHub.reporting.startDatePlaceholder", "Select start date")}
+                  onChange={(date) =>
+                    setDateRange((prev) => ({ ...prev, startDate: date ?? "" }))
+                  }
+                  placeholder={t(
+                    "rewardHub.reporting.startDatePlaceholder",
+                    "Select start date",
+                  )}
                 />
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, flex: 1, minWidth: 0 }}>
-                <Typography variant="body2" sx={{ color: AppColors.TXT_SUB, fontWeight: 500 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 0.5,
+                  flex: 1,
+                  minWidth: 0,
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{ color: AppColors.TXT_SUB, fontWeight: 500 }}
+                >
                   {t("rewardHub.reporting.endDate", "End Date")}
                 </Typography>
                 <DatePicker
                   value={dateRange.endDate}
-                  onChange={(date) => setDateRange((prev) => ({ ...prev, endDate: date ?? "" }))}
-                  placeholder={t("rewardHub.reporting.endDatePlaceholder", "Select end date")}
+                  onChange={(date) =>
+                    setDateRange((prev) => ({ ...prev, endDate: date ?? "" }))
+                  }
+                  placeholder={t(
+                    "rewardHub.reporting.endDatePlaceholder",
+                    "Select end date",
+                  )}
                 />
               </Box>
             </Box>
@@ -279,6 +381,87 @@ const ReportingPage = () => {
             >
               {t("rewardHub.reporting.loading", "Loading reports...")}
             </Typography>
+          ) : reportType === "DAILY_INCOME" ? (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: 1.5,
+                p: SPACING.MD,
+                borderRadius: BORDER_RADIUS.XS,
+                bgcolor: AppColors.BG_CARD,
+                border: "1px solid rgba(255,255,255,0.06)",
+                transition: "box-shadow 0.2s ease, border-color 0.2s ease",
+                "&:hover": {
+                  boxShadow: "0 4px 20px rgba(212, 168, 95, 0.06)",
+                  borderColor: "rgba(212, 168, 95, 0.12)",
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1.5,
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 44,
+                    height: 44,
+                    minWidth: 44,
+                    borderRadius: "50%",
+                    bgcolor: AppColors.HLT_LIGHT,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AttachMoneyOutlined
+                    sx={{ color: AppColors.GOLD_PRIMARY, fontSize: 22 }}
+                  />
+                </Box>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      color: AppColors.TXT_MAIN,
+                      fontWeight: 700,
+                      mb: 0.25,
+                    }}
+                  >
+                    {t("rewardHub.reporting.type.TODAY_INCOME", "Today Income")}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: AppColors.TXT_SUB,
+                      fontWeight: 400,
+                      mb: 0.5,
+                    }}
+                  >
+                    {formatDate(new Date())}
+                  </Typography>
+                </Box>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    color: AppColors.GOLD_PRIMARY,
+                    fontWeight: 700,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  + $
+                  {String(todayIncome?.totalTodayIncome ?? 0).replace(
+                    /(\.\d*?)0+$/,
+                    "$1",
+                  )}
+                </Typography>
+              </Box>
+            </Box>
           ) : reports.length === 0 ? (
             <Typography
               variant="body1"
@@ -294,7 +477,11 @@ const ReportingPage = () => {
           ) : (
             reports.map((report, index) => (
               <Box
-                key={report.id ?? report._id ?? `${report.date}-${report.amount}-${index}`}
+                key={
+                  report.id ??
+                  report._id ??
+                  `${report.date}-${report.amount}-${index}`
+                }
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -311,7 +498,15 @@ const ReportingPage = () => {
                   },
                 }}
               >
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, justifyContent: "space-between", width: "100%" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1.5,
+                    justifyContent: "space-between",
+                    width: "100%",
+                  }}
+                >
                   <Box
                     sx={{
                       width: 44,
@@ -347,7 +542,9 @@ const ReportingPage = () => {
                         mb: 0.5,
                       }}
                     >
-                      {report.date ? formatDate(report.date) : formatDate(new Date())}{" "}
+                      {report.date
+                        ? formatDate(report.date)
+                        : formatDate(new Date())}{" "}
                       {report.time ? `• ${report.time}` : ""}
                     </Typography>
                   </Box>
@@ -359,7 +556,11 @@ const ReportingPage = () => {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    + ${String(report.amount ?? report.amountUsd ?? 0).replace(/(\.\d*?)0+$/, "$1")}
+                    + $
+                    {String(report.amount ?? report.amountUsd ?? 0).replace(
+                      /(\.\d*?)0+$/,
+                      "$1",
+                    )}
                   </Typography>
                 </Box>
                 {/* {report.description && (
@@ -377,7 +578,8 @@ const ReportingPage = () => {
               </Box>
             ))
           )}
-          {!loading && reports.length > 0 && pagination.total > 0 && (
+
+          {reportType !== "DAILY_INCOME" && !loading && reports.length > 0 && pagination.total > 0 && (
             <Box
               sx={{
                 display: "flex",
@@ -395,7 +597,8 @@ const ReportingPage = () => {
                 sx={{
                   textTransform: "none",
                   color: AppColors.TXT_MAIN,
-                  borderColor: AppColors.BORDER_MAIN ?? "rgba(255,255,255,0.12)",
+                  borderColor:
+                    AppColors.BORDER_MAIN ?? "rgba(255,255,255,0.12)",
                   "&:hover": {
                     borderColor: AppColors.GOLD_PRIMARY,
                     bgcolor: AppColors.HLT_LIGHT,
@@ -416,10 +619,14 @@ const ReportingPage = () => {
                   textAlign: "center",
                 }}
               >
-                {t("rewardHub.reporting.pagination.pageOf", "Page {{current}} of {{total}}", {
-                  current: currentPage,
-                  total: totalPages,
-                })}
+                {t(
+                  "rewardHub.reporting.pagination.pageOf",
+                  "Page {{current}} of {{total}}",
+                  {
+                    current: currentPage,
+                    total: totalPages,
+                  },
+                )}
               </Typography>
               <Button
                 endIcon={<ChevronRight />}
@@ -428,7 +635,8 @@ const ReportingPage = () => {
                 sx={{
                   textTransform: "none",
                   color: AppColors.TXT_MAIN,
-                  borderColor: AppColors.BORDER_MAIN ?? "rgba(255,255,255,0.12)",
+                  borderColor:
+                    AppColors.BORDER_MAIN ?? "rgba(255,255,255,0.12)",
                   "&:hover": {
                     borderColor: AppColors.GOLD_PRIMARY,
                     bgcolor: AppColors.HLT_LIGHT,

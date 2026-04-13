@@ -106,7 +106,7 @@ export default function DepositDestinationModal({ open, onClose }) {
                     <div className="card-desc">
                       {t(
                         "depositDestinationModal.tradeDescription",
-                        "Add funds to your trading balance.",
+                        "Add funds to your trading wallet.",
                       )}
                     </div>
                   </div>
@@ -117,7 +117,7 @@ export default function DepositDestinationModal({ open, onClose }) {
                 <span className="bal">
                   {t(
                     "depositDestinationModal.tradeFoot",
-                    "Add funds to your trading wallet",
+                    "Trade smart, grow steady.",
                   )}
                 </span>
               </div>

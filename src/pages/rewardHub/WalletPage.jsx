@@ -98,7 +98,7 @@ const AssetsPage = () => {
     wallet?.WITHDRAWABLE_BALANCE + wallet?.CAPITAL_BALANCE || 0,
   );
 
-  const total = statsSummary?.totalIncome + statsSummary?.totalTeamIncome;
+  const total = statsSummary?.TotalROI + statsSummary?.totalTeamIncome;
 
   return (
     <Box
@@ -519,7 +519,7 @@ const AssetsPage = () => {
                       textAlign: "center",
                     }}
                   >
-                    {formatNumber(total ?? 0, 0)}
+                    {formatNumber(statsSummary?.totalActiveTeamCount ?? 0, 0)}
                   </Typography>
                 )}
               </Box>
@@ -529,6 +529,7 @@ const AssetsPage = () => {
             </Box>
           </Box>
         </Box>
+
         <Box sx={{ textAlign: "center", mt: 0.5 }}>
           <Typography
             variant="body1"
@@ -561,13 +562,13 @@ const AssetsPage = () => {
               ) : (
                 <>
                   {
-                  <Typography
-                    variant="h2"
-                    sx={{ fontWeight: 700, color: AppColors.GOLD_PRIMARY }}
-                  >
-                    {formatNumber(statsSummary?.TotalROI ?? 0, 3)}
-                  </Typography>
-                }
+                    <Typography
+                      variant="h2"
+                      sx={{ fontWeight: 700, color: AppColors.GOLD_PRIMARY }}
+                    >
+                      {formatNumber(total ?? 0, 3)}
+                    </Typography>
+                  }
                 </>
               )}
             </Box>
