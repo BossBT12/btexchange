@@ -26,6 +26,9 @@ import {
 } from "../../constant/lookUpConstant";
 import walletService from "../../services/secondGameServices/walletService";
 import userService from "../../services/secondGameServices/userService";
+import authService from "../../services/authService";
+import { isRewardHubTwoFactorEnabled } from "../../utils/twoFactorStatus";
+import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
@@ -51,11 +54,13 @@ const getExplorerUrl = (chain, txHash) => {
 
 export default function CapitalWithdrawPage() {
   const navigate = useNavigate();
+  const { userData: authUser } = useAuth();
   const { t } = useTranslation(TRADE_NAMESPACE);
   const { showSnackbar } = useSnackbar();
 
   const [investmentsData, setInvestmentsData] = useState(null);
   const [profile, setProfile] = useState(null);
+  const [tradeUserFromGetUser, setTradeUserFromGetUser] = useState(null);
   const [investmentsLoading, setInvestmentsLoading] = useState(true);
 
   const [toAddress, setToAddress] = useState("");
@@ -73,7 +78,11 @@ export default function CapitalWithdrawPage() {
   const penalty = investmentsData?.penalty ?? null;
   const penaltyPercentage = Number(penalty?.percentage ?? 0);
   const qualifiesForNoPenalty = Boolean(penalty?.qualifiesForNoPenalty);
-  const isTwoFactorEnabled = Boolean(profile?.user?.isTwoFactorEnabled);
+  const isTwoFactorEnabled = isRewardHubTwoFactorEnabled(
+    profile,
+    authUser,
+    tradeUserFromGetUser
+  );
 
   const parsedWithdrawAmount = useMemo(() => {
     const n = Number(withdrawAmount);
@@ -152,11 +161,24 @@ export default function CapitalWithdrawPage() {
   }, [t]);
 
   const fetchProfile = useCallback(async () => {
-    try {
-      const response = await userService.getProfile();
+    const [profileResult, tradeResult] = await Promise.allSettled([
+      userService.getProfile(),
+      authService.getUser(),
+    ]);
+    if (profileResult.status === "fulfilled") {
+      const response = profileResult.value;
       setProfile(response?.data ?? response);
-    } catch (err) {
-      console.error("Profile fetch error:", err);
+    } else {
+      console.error("Profile fetch error:", profileResult.reason);
+    }
+    if (tradeResult.status === "fulfilled") {
+      const response = tradeResult.value;
+      const user = response?.data?.user ?? response?.data ?? response;
+      setTradeUserFromGetUser(
+        user && typeof user === "object" ? user : null
+      );
+    } else {
+      setTradeUserFromGetUser(null);
     }
   }, []);
 
