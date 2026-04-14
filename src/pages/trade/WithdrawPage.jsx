@@ -91,7 +91,11 @@ export default function WithdrawPage() {
   const type = searchParams.get("type") || "";
 
   const { userData } = useAuth();
-  const isTwoFactorEnabled = Boolean(userData?.isTwoFactorEnabled);
+  const isTwoFactorEnabled = Boolean(
+    userData?.isTwoFactorEnabled ??
+      userData?.twoFactorEnabled ??
+      userData?.twoFactorAuth
+  );
   const { t } = useTranslation(TRADE_NAMESPACE);
   const [amount, setAmount] = useState("");
   const receivedAmount = amount ? parseFloat(amount) || 0 : 0;
