@@ -13,14 +13,20 @@ import BTLoader from "../../components/Loader";
 import { AppColors } from "../../constant/appColors";
 import { FONT_SIZE, SPACING, BORDER_RADIUS } from "../../constant/lookUpConstant";
 import userService from "../../services/secondGameServices/userService";
+import authService from "../../services/authService";
 import { copyToClipboard } from "../../utils/utils";
+import { isRewardHubTwoFactorEnabled } from "../../utils/twoFactorStatus";
+import useAuth from "../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
 
 export default function TwoFactorAuthPage() {
   const navigate = useNavigate();
+  const { userData: authUser } = useAuth();
   const { t } = useTranslation(TRADE_NAMESPACE);
   const [profile, setProfile] = useState(null);
+  /** Trade GET /trade/getUser → data.user (source of truth when /user/profile omits 2FA) */
+  const [tradeUserFromGetUser, setTradeUserFromGetUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [setupData, setSetupData] = useState(null); // { secret, qrCodeUrl, manualEntryKey }
   const [setupLoading, setSetupLoading] = useState(false);
@@ -32,33 +38,73 @@ export default function TwoFactorAuthPage() {
   const [success, setSuccess] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  const isTwoFactorEnabled = Boolean(profile?.user?.isTwoFactorEnabled);
+  const isTwoFactorEnabled = isRewardHubTwoFactorEnabled(
+    profile,
+    authUser,
+    tradeUserFromGetUser
+  );
 
   const fetchProfile = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await userService.getProfile();
+    setLoading(true);
+    setError(null);
+    const [profileResult, tradeResult] = await Promise.allSettled([
+      userService.getProfile(),
+      authService.getUser(),
+    ]);
+    if (profileResult.status === "fulfilled") {
+      const response = profileResult.value;
       setProfile(response?.data ?? response);
-    } catch (err) {
-      setError(err?.message ?? t("twoFactor.errors.loadProfile", "Failed to load profile"));
-    } finally {
-      setLoading(false);
+    } else {
+      const err = profileResult.reason;
+      setProfile(null);
+      setError(
+        err?.message ??
+          t("twoFactor.errors.loadProfile", "Failed to load profile")
+      );
     }
+    if (tradeResult.status === "fulfilled") {
+      const response = tradeResult.value;
+      const user = response?.data?.user ?? response?.data ?? response;
+      setTradeUserFromGetUser(
+        user && typeof user === "object" ? user : null
+      );
+    } else {
+      setTradeUserFromGetUser(null);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchProfile();
   }, []);
 
+  useEffect(() => {
+    if (isTwoFactorEnabled && setupData) {
+      setSetupData(null);
+      setVerifyToken("");
+    }
+  }, [isTwoFactorEnabled, setupData]);
+
   const handleStartSetup = async () => {
+    if (isTwoFactorEnabled) return;
     try {
       setSetupLoading(true);
       setError(null);
       setSuccess(null);
       setSetupData(null);
       const response = await userService.setup2FA();
-      if (response?.success && response?.data) {
+      const payload = response?.data ?? response;
+      const hasPayload =
+        payload &&
+        (payload.qrCodeUrl ||
+          payload.qrCodeDataUrl ||
+          payload.secret ||
+          payload.manualEntryKey);
+      if (response?.success === false && !hasPayload) {
+        setError(response?.message ?? t("twoFactor.errors.startSetupFailed", "Failed to start 2FA setup"));
+      } else if (hasPayload) {
+        setSetupData(payload);
+      } else if (response?.success && response?.data) {
         setSetupData(response.data);
       } else {
         setError(response?.message ?? t("twoFactor.errors.startSetupFailed", "Failed to start 2FA setup"));
@@ -81,7 +127,10 @@ export default function TwoFactorAuthPage() {
       setVerifyLoading(true);
       setError(null);
       setSuccess(null);
-      const response = await userService.verify2FA({ token });
+      const secret = setupData?.manualEntryKey || setupData?.secret;
+      const response = await userService.verify2FA(
+        secret ? { token, secret } : { token }
+      );
       if (response?.success) {
         setSuccess(t("twoFactor.success.enabled", "Two-factor authentication enabled successfully."));
         setVerifyToken("");
