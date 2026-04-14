@@ -17,6 +17,8 @@ import useAuth from "../../hooks/useAuth";
 import { copyToClipboard } from "../../utils/utils";
 import { ICON_SIZE } from "../../constant/lookUpConstant";
 import userService from "../../services/secondGameServices/userService";
+import authService from "../../services/authService";
+import { isRewardHubTwoFactorEnabled } from "../../utils/twoFactorStatus";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
 import ConfirmationModal from "../../components/ConfirmationModal.jsx";
@@ -83,15 +85,31 @@ const Profile = () => {
   const [copied, setCopied] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [rewardHubProfile, setRewardHubProfile] = useState(null);
+  const [tradeUserFromGetUser, setTradeUserFromGetUser] = useState(null);
   const user = userData;
+
+  const twoFactorEnabledRow = isRewardHubTwoFactorEnabled(
+    rewardHubProfile,
+    user,
+    tradeUserFromGetUser
+  );
 
   useEffect(() => {
     const fetchRewardHubProfile = async () => {
-      try {
-        const response = await userService.getProfile();
+      const [profileResult, tradeResult] = await Promise.allSettled([
+        userService.getProfile(),
+        authService.getUser(),
+      ]);
+      if (profileResult.status === "fulfilled") {
+        const response = profileResult.value;
         setRewardHubProfile(response?.data ?? response);
-      } catch {
-        // Non-blocking; 2FA row falls back to userData
+      }
+      if (tradeResult.status === "fulfilled") {
+        const response = tradeResult.value;
+        const u = response?.data?.user ?? response?.data ?? response;
+        setTradeUserFromGetUser(u && typeof u === "object" ? u : null);
+      } else {
+        setTradeUserFromGetUser(null);
       }
     };
     fetchRewardHubProfile();
@@ -225,12 +243,12 @@ const Profile = () => {
         <Row
           label={t("rewardHub.profile.rows.twoFactor", "Two-Factor Authentication")}
           value={
-            rewardHubProfile?.user?.isTwoFactorEnabled ?? user?.twoFactorAuth
+            twoFactorEnabledRow
               ? t("rewardHub.profile.rows.twoFactorEnabled", "Enabled")
               : t("rewardHub.profile.rows.twoFactorDisabled", "Disabled")
           }
           valueColor={
-            rewardHubProfile?.user?.isTwoFactorEnabled ?? user?.twoFactorAuth
+            twoFactorEnabledRow
               ? AppColors.TXT_MAIN
               : AppColors.GOLD_PRIMARY
           }
