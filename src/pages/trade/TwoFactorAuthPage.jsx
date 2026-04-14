@@ -36,7 +36,11 @@ export default function TwoFactorAuthPage() {
   const [success, setSuccess] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  const isTwoFactorEnabled = Boolean(profile?.isTwoFactorEnabled);
+  const isTwoFactorEnabled = Boolean(
+    profile?.isTwoFactorEnabled ??
+      profile?.twoFactorEnabled ??
+      profile?.twoFactorAuth
+  );
 
   const fetchProfile = async () => {
     try {
