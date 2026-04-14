@@ -110,7 +110,11 @@ const Profile = () => {
   const nickname = user?.nickname ?? displayName;
   const uid = user?.UID != null ? String(user.UID) : "—";
   const isVerified = user?.isVerified ?? user?.isEmailVerified ?? false;
-  const isTwoFactorEnabled = user?.isTwoFactorEnabled ?? false;
+  const isTwoFactorEnabled =
+    user?.isTwoFactorEnabled ??
+    user?.twoFactorEnabled ??
+    user?.twoFactorAuth ??
+    false;
 
   return (
     <Box
