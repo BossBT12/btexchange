@@ -37,7 +37,7 @@ import useSnackbar from "../../hooks/useSnackbar";
 const CHAINS = [
   { value: "BSC", labelKey: "BSC" },
   // { value: "ETH", labelKey: "ETH" },
-  { value: "POLYGON", labelKey: "POLYGON" },
+  // { value: "POLYGON", labelKey: "POLYGON" },
 ];
 
 const getExplorerUrl = (chain, txHash) => {

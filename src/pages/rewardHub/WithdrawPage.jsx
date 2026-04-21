@@ -29,7 +29,7 @@ import { TRADE_NAMESPACE } from "../../i18n";
 const CHAINS = [
   { value: "BSC", labelKey: "BSC" },
   // { value: "ETH", labelKey: "ETH" },
-  { value: "POLYGON", labelKey: "POLYGON" },
+  // { value: "POLYGON", labelKey: "POLYGON" },
 ];
 
 export default function WithdrawPage() {

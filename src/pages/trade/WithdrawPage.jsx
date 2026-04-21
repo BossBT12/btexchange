@@ -82,7 +82,7 @@ function getRuleSegments(text, highlight) {
 
 const CHAINS = [
   { value: "BSC", label: "BSC", disabled: false },
-  { value: "POLYGON", label: "POLYGON", disabled: false },
+  // { value: "POLYGON", label: "POLYGON", disabled: false },
 ];
 
 export default function WithdrawPage() {
