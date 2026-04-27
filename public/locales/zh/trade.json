@@ -43,6 +43,7 @@
       "notification": "通知",
       "telegramChannel": "电报频道",
       "telegramGroup": "电报群组",
+      "customersupportTelegram": "客服电报",
       "language": "语言",
       "currentLanguage": "中文"
     },
@@ -520,7 +521,7 @@
       "telegram": "Telegram",
       "imageAlt": "代理客服通道",
       "accounts": {
-        "agent": "BT GLOBAL AGENT",
+        "agent": "BT Global Customer Support",
         "agency": "BT GLOBAL AGENCY"
       }
     },

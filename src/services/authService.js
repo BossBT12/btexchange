@@ -68,6 +68,10 @@ const authService = {
     const response = await api.post("/trade/changeEmail/confirm", body);
     return response.data;
   },
+  updateName: async (fullName) => {
+    const response = await api.patch("/trade/updateName", { fullName });
+    return response.data;
+  },
 };
 
 export default authService;

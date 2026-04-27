@@ -4,12 +4,18 @@ import {
   Typography,
   IconButton,
   Button,
+  Chip,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
 } from "@mui/material";
-import { ChevronLeft, Refresh } from "@mui/icons-material";
+import {
+  ChevronLeft,
+  Refresh,
+  CheckCircle,
+  AccessTime,
+  ErrorOutline,
+} from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import BTLoader from "../../components/Loader";
 import { AppColors } from "../../constant/appColors";
@@ -17,6 +23,7 @@ import { FONT_SIZE, SPACING, BORDER_RADIUS } from "../../constant/lookUpConstant
 import walletService from "../../services/secondGameServices/walletService";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
+import { formatDateInt } from "../../utils/utils";
 
 // Only support DEPOSIT/WITHDRAWAL types for /wallet/transactions
 const TYPE_OPTIONS = [
@@ -27,18 +34,6 @@ const TYPE_OPTIONS = [
 ];
 
 const PAGE_SIZE = 20;
-
-const formatDate = (dateString) => {
-  if (!dateString) return "—";
-  const date = new Date(dateString);
-  return date.toLocaleString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-};
 
 const formatAmount = (value) => {
   if (value === null || value === undefined) return "—";
@@ -53,6 +48,40 @@ const selectSx = {
   "& .MuiOutlinedInput-notchedOutline": { borderColor: AppColors.HLT_NONE },
   "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: AppColors.GOLD_PRIMARY },
   borderRadius: BORDER_RADIUS.XS,
+};
+
+const getStatusColor = (status) => {
+  switch (status) {
+    case "CONFIRMED":
+    case "COMPLETED":
+    case "SUCCESS":
+      return "#4CAF50";
+    case "PENDING":
+    case "PROCESSING":
+      return "#FFA726";
+    case "FAILED":
+    case "REJECTED":
+      return "#EF5350";
+    default:
+      return "#999999";
+  }
+};
+
+const getStatusIcon = (status) => {
+  switch (status) {
+    case "CONFIRMED":
+    case "COMPLETED":
+    case "SUCCESS":
+      return <CheckCircle sx={{ fontSize: 16 }} />;
+    case "PENDING":
+    case "PROCESSING":
+      return <AccessTime sx={{ fontSize: 16 }} />;
+    case "FAILED":
+    case "REJECTED":
+      return <ErrorOutline sx={{ fontSize: 16 }} />;
+    default:
+      return null;
+  }
 };
 
 export default function TransactionHistoryPage() {
@@ -100,7 +129,7 @@ export default function TransactionHistoryPage() {
     } finally {
       setLoading(false);
     }
-  }, [typeFilter, page]);
+  }, [page, t, typeFilter]);
 
   useEffect(() => {
     fetchHistory();
@@ -109,55 +138,141 @@ export default function TransactionHistoryPage() {
   const hasPrev = page > 1;
   const hasNext = page < totalPages;
 
-  const rowSx = {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    py: 1.25,
-    px: 0,
-    "&:not(:last-of-type)": { borderBottom: `1px solid ${AppColors.BORDER_MAIN}` },
-  };
-  const labelSx = {
-    color: AppColors.TXT_MAIN,
-    fontSize: FONT_SIZE.BODY,
-    fontWeight: 400,
-  };
-  const valueSx = {
-    color: AppColors.TXT_MAIN,
-    fontSize: FONT_SIZE.BODY,
-    fontWeight: 400, 
-    textAlign: "right",
-  };
-
   const renderTransactionCard = (item) => {
     const status = item.status || "PENDING";
-    const isCredit = item.type === "DEPOSIT";
     const typeLabel = TYPE_OPTIONS.find((o) => o.value === item.type)?.labelKey;
-    const detailValue = [t(typeLabel), item.chain, status].filter(Boolean).join(" · ");
+    const typeText = typeLabel ? t(typeLabel) : item.type || "—";
+    const chainText = item.chain || "—";
+    const dateText = formatDateInt(item.createdAt);
+    const txnId = item.txHash || item.transactionId || item._id || "—";
 
     return (
       <Box
         key={item._id || `${item.createdAt}-${item.amount}`}
         sx={{
-          p: 2,
-          bgcolor: AppColors.BG_CARD,
-          borderRadius: BORDER_RADIUS.XS,
-          border: `1px solid ${AppColors.BORDER_MAIN}`,
+          bgcolor: "#1A1A1A",
+          borderRadius: "12px",
+          p: 1.5,
+          border: "1px solid rgba(255, 255, 255, 0.05)",
         }}
       >
-        <Box sx={rowSx}>
-          <Typography sx={labelSx}>{t("transactionHistory.card.detail", "Detail")}</Typography>
-          <Typography sx={valueSx}>{detailValue}</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            mb: 0.75,
+            gap: 1,
+          }}
+        >
+          <Box>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "#999999",
+                mb: 0.5,
+              }}
+            >
+              {t("transactionHistory.card.amount", "Amount")}
+            </Typography>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 700,
+                color: "#D4AF37",
+                lineHeight: 1.2,
+              }}
+            >
+              {formatAmount(item.amount)} {item.currency || "USDT"}
+            </Typography>
+          </Box>
+          <Chip
+            icon={getStatusIcon(status)}
+            label={status}
+            size="small"
+            sx={{
+              bgcolor: `${getStatusColor(status)}20`,
+              color: getStatusColor(status),
+              fontWeight: 600,
+              fontSize: "11px",
+              height: "24px",
+              "& .MuiChip-icon": {
+                color: getStatusColor(status),
+              },
+            }}
+          />
         </Box>
-        <Box sx={rowSx}>
-          <Typography sx={labelSx}>{t("transactionHistory.card.time", "Time")}</Typography>
-          <Typography sx={valueSx}>{formatDate(item.createdAt)}</Typography>
+
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 1.5,
+            mb: 0.75,
+          }}
+        >
+          <Box>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "#999999",
+                mb: 0.5,
+              }}
+            >
+              {t("transactionHistory.card.type", "Type")}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "#D4AF37",
+              }}
+            >
+              {typeText}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "#999999",
+                mb: 0.5,
+              }}
+            >
+              {t("transactionHistory.card.date", "Date")}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "#FFFFFF",
+                fontWeight: 500,
+              }}
+            >
+              {dateText}
+            </Typography>
+          </Box>
         </Box>
-        <Box sx={rowSx}>
-          <Typography sx={labelSx}>{t("transactionHistory.card.balance", "Balance")}</Typography>
-          <Typography sx={{ ...valueSx, color: isCredit ? AppColors.GOLD_PRIMARY : AppColors.TXT_MAIN }}>
-            {isCredit ? "+" : "-"}
-            {formatAmount(item.amount)} {item.currency || "USDT"}
+
+        <Box>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "#999999",
+              mb: 0.5,
+            }}
+          >
+            {t("transactionHistory.card.detail", "Detail")}
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "#CCCCCC",
+              fontFamily: "monospace",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {[chainText, txnId].filter(Boolean).join(" · ")}
           </Typography>
         </Box>
       </Box>
@@ -207,8 +322,8 @@ export default function TransactionHistoryPage() {
           <Typography sx={{ fontSize: FONT_SIZE.BODY2, color: AppColors.ERROR, mb: 2 }}>{error}</Typography>
         )}
 
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2 }}>
-          <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="body2" sx={{ color: AppColors.TXT_SUB, mb: 1 }}>
             {t("transactionHistory.filters.type", "Type")}
           </Typography>
           <FormControl fullWidth>

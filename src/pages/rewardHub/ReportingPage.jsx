@@ -30,6 +30,7 @@ import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
 import DatePicker from "../../components/input/datePicker";
+import { formatDateInt } from "../../utils/utils";
 
 const REPORT_TYPES = [
   { value: "", labelKey: "all" },
@@ -39,19 +40,6 @@ const REPORT_TYPES = [
   { value: "RANK_INCOME", labelKey: "RANK_INCOME" },
   { value: "SAME_RANK_INCOME", labelKey: "SAME_RANK_INCOME" },
 ];
-
-const formatDate = (dateStr) => {
-  const d = new Date(dateStr);
-  return d.toLocaleString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true,
-  });
-};
 
 const ReportingPage = () => {
   const { t } = useTranslation(TRADE_NAMESPACE);
@@ -71,7 +59,6 @@ const ReportingPage = () => {
   const [loading, setLoading] = useState(true);
   const [isCollapse, setIsCollapse] = useState(false);
   const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
-  const [todayIncome, setTodayIncome] = useState(null);
   const [pagination, setPagination] = useState({
     page: 1,
     limit: PAGE_SIZE,
@@ -90,34 +77,32 @@ const ReportingPage = () => {
           limit: PAGE_SIZE,
         };
         if (reportType === "DAILY_INCOME") {
-          // setDateRange({ startDate: "", endDate: "" });
-          // const today = new Date();
-          // const year = today.getFullYear();
-          // const month = String(today.getMonth() + 1).padStart(2, "0");
-          // const day = String(today.getDate()).padStart(2, "0");
-          // const formattedDate = `${year}-${month}-${day}`;
-          // params.startDate = formattedDate;
-          // params.endDate = formattedDate;
-
-          const rest = await walletService.getTodayIncome();
+          const rest = await walletService.getAllDailyIncome(params);
+          const records = rest?.data ?? [];
           if (rest?.success) {
-            setTodayIncome(rest.data);
+            setReports(records.rows);
+            setPagination({
+              page,
+              limit: PAGE_SIZE,
+              total: records.pagination.totalDays,
+            });
           }
         } else {
           if (reportType) params.type = reportType;
           if (dateRange.startDate) params.startDate = dateRange.startDate;
           if (dateRange.endDate) params.endDate = dateRange.endDate;
+
+          const res = await walletService.getIncomeHistory(params);
+          const records = res?.data?.incomeRecords ?? [];
+          const list = Array.isArray(records) ? records : [];
+          const pag = res?.data?.pagination ?? {
+            page,
+            limit: PAGE_SIZE,
+            total: list.length,
+          };
+          setPagination(pag);
+          setReports(list);
         }
-        const res = await walletService.getIncomeHistory(params);
-        const records = res?.data?.incomeRecords ?? [];
-        const list = Array.isArray(records) ? records : [];
-        const pag = res?.data?.pagination ?? {
-          page,
-          limit: PAGE_SIZE,
-          total: list.length,
-        };
-        setPagination(pag);
-        setReports(list);
       } catch {
         setReports([]);
         setPagination({ page: 1, limit: PAGE_SIZE, total: 0 });
@@ -381,87 +366,6 @@ const ReportingPage = () => {
             >
               {t("rewardHub.reporting.loading", "Loading reports...")}
             </Typography>
-          ) : reportType === "DAILY_INCOME" ? (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: 1.5,
-                p: SPACING.MD,
-                borderRadius: BORDER_RADIUS.XS,
-                bgcolor: AppColors.BG_CARD,
-                border: "1px solid rgba(255,255,255,0.06)",
-                transition: "box-shadow 0.2s ease, border-color 0.2s ease",
-                "&:hover": {
-                  boxShadow: "0 4px 20px rgba(212, 168, 95, 0.06)",
-                  borderColor: "rgba(212, 168, 95, 0.12)",
-                },
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1.5,
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 44,
-                    height: 44,
-                    minWidth: 44,
-                    borderRadius: "50%",
-                    bgcolor: AppColors.HLT_LIGHT,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <AttachMoneyOutlined
-                    sx={{ color: AppColors.GOLD_PRIMARY, fontSize: 22 }}
-                  />
-                </Box>
-                <Box sx={{ flex: 1, minWidth: 0 }}>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      color: AppColors.TXT_MAIN,
-                      fontWeight: 700,
-                      mb: 0.25,
-                    }}
-                  >
-                    {t("rewardHub.reporting.type.TODAY_INCOME", "Today Income")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: AppColors.TXT_SUB,
-                      fontWeight: 400,
-                      mb: 0.5,
-                    }}
-                  >
-                    {formatDate(new Date())}
-                  </Typography>
-                </Box>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    color: AppColors.GOLD_PRIMARY,
-                    fontWeight: 700,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  + $
-                  {String(todayIncome?.totalTodayIncome ?? 0).replace(
-                    /(\.\d*?)0+$/,
-                    "$1",
-                  )}
-                </Typography>
-              </Box>
-            </Box>
           ) : reports.length === 0 ? (
             <Typography
               variant="body1"
@@ -543,8 +447,8 @@ const ReportingPage = () => {
                       }}
                     >
                       {report.date
-                        ? formatDate(report.date)
-                        : formatDate(new Date())}{" "}
+                        ? formatDateInt(report.date)
+                        : formatDateInt(new Date())}{" "}
                       {report.time ? `• ${report.time}` : ""}
                     </Typography>
                   </Box>
@@ -557,10 +461,12 @@ const ReportingPage = () => {
                     }}
                   >
                     + $
-                    {String(report.amount ?? report.amountUsd ?? 0).replace(
-                      /(\.\d*?)0+$/,
-                      "$1",
-                    )}
+                    {String(
+                      report.amount ??
+                        report.amountUsd ??
+                        report.totalIncome ??
+                        0,
+                    ).replace(/(\.\d*?)0+$/, "$1")}
                   </Typography>
                 </Box>
                 {/* {report.description && (
@@ -579,7 +485,7 @@ const ReportingPage = () => {
             ))
           )}
 
-          {reportType !== "DAILY_INCOME" && !loading && reports.length > 0 && pagination.total > 0 && (
+          {!loading && reports.length > 0 && pagination.total > 0 && (
             <Box
               sx={{
                 display: "flex",

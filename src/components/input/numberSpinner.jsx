@@ -10,12 +10,9 @@ import { TRADE_NAMESPACE } from '../../i18n';
 import { AppColors } from '../../constant/appColors';
 
 function NumberSpinner({
-  id: idProp,
   label = 'Amount',
   error = false,
-  errorMessage,
   success = false,
-  successMessage,
   size = 'medium',
   min,
   max,

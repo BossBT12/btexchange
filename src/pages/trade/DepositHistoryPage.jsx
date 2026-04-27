@@ -19,6 +19,7 @@ import BTLoader from "../../components/Loader";
 import depositService from "../../services/depositService";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
+import { formatDateInt } from "../../utils/utils";
 
 const getExplorerUrl = (chain, txHash) => {
   const explorers = {
@@ -27,17 +28,6 @@ const getExplorerUrl = (chain, txHash) => {
     POLYGON: `https://polygonscan.com/tx/${txHash}`,
   };
   return explorers[chain] || "#";
-};
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 };
 
 const getStatusColor = (status) => {
@@ -343,7 +333,7 @@ export default function DepositHistoryPage() {
                         fontWeight: 500,
                       }}
                     >
-                      {formatDate(deposit.createdAt)}
+                      {formatDateInt(deposit.createdAt)}
                     </Typography>
                   </Box>
                 </Box>
@@ -384,6 +374,7 @@ export default function DepositHistoryPage() {
                       >
                         {deposit.txHash}
                       </Typography>
+                      {["BSC", "POLYGON", "ETH"].includes(deposit.chain) && (
                       <IconButton
                         size="small"
                         href={getExplorerUrl(deposit.chain, deposit.txHash)}
@@ -396,12 +387,13 @@ export default function DepositHistoryPage() {
                       >
                         <OpenInNew sx={{ fontSize: 16 }} />
                       </IconButton>
+                      )}
                     </Box>
                   </Box>
                 )}
 
                 {/* View on Explorer Button */}
-                {deposit.txHash && (
+                {deposit.txHash && ["BSC", "POLYGON", "ETH"].includes(deposit.chain) && (
                   <Button
                     fullWidth
                     variant="outlined"

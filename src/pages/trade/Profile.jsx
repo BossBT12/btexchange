@@ -1,12 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography, IconButton, Avatar } from "@mui/material";
 import {
+  Box,
+  Typography,
+  IconButton,
+  Avatar,
+  TextField,
+  InputAdornment,
+  CircularProgress,
+} from "@mui/material";
+import {
+  Check,
   CheckCircle,
   ChevronLeft,
+  Close,
   ContentCopy,
+  Edit,
   KeyboardArrowRight,
 } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
 import { AppColors } from "../../constant/appColors";
 import useAuth from "../../hooks/useAuth";
 import { copyToClipboard } from "../../utils/utils";
@@ -14,6 +26,10 @@ import { ICON_SIZE } from "../../constant/lookUpConstant";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
 import ConfirmationModal from "../../components/ConfirmationModal.jsx";
+import useSnackbar from "../../hooks/useSnackbar";
+import authService from "../../services/authService";
+import userService from "../../services/secondGameServices/userService";
+import { mergeAuthState } from "../../store/slices/userAuthSlice";
 
 const Row = ({
   label,
@@ -86,11 +102,129 @@ const Row = ({
   </Box>
 );
 
+const RowName = ({
+  label,
+  value,
+  labelColor,
+  valueColor,
+  isEditing,
+  editValue,
+  onStartEdit,
+  onEditChange,
+  onCancelEdit,
+  onSaveEdit,
+  isSaving,
+}) => (
+  <Box
+    sx={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      py: 1.5,
+      borderBottom: "1px solid",
+      borderColor: "rgba(255,255,255,0.08)",
+    }}
+  >
+    <Typography
+      variant="body1"
+      sx={{
+        color: labelColor || AppColors.TXT_MAIN,
+        fontWeight: 500,
+      }}
+    >
+      {label}
+    </Typography>
+    {isEditing ? (
+      <TextField
+        variant="standard"
+        value={editValue}
+        onChange={(e) => onEditChange(e.target.value)}
+        disabled={isSaving}
+        autoFocus
+        onKeyDown={(e) => {
+          if (e.key === "Enter") onSaveEdit();
+          if (e.key === "Escape") onCancelEdit();
+        }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end" sx={{ gap: 0.5 }}>
+              <IconButton
+                size="small"
+                onClick={onCancelEdit}
+                disabled={isSaving}
+                sx={{
+                  color: AppColors.TXT_SUB,
+                  "&:hover": {
+                    backgroundColor: `${AppColors.ERROR}20`,
+                    color: AppColors.ERROR,
+                  },
+                }}
+              >
+                <Close fontSize="small" sx={{ fontSize: 16 }} />
+              </IconButton>
+              <IconButton
+                size="small"
+                onClick={onSaveEdit}
+                disabled={isSaving}
+                sx={{
+                  color: AppColors.SUCCESS,
+                  "&:hover": { backgroundColor: `${AppColors.SUCCESS}20` },
+                }}
+              >
+                {isSaving ? (
+                  <CircularProgress size={16} sx={{ color: "inherit" }} />
+                ) : (
+                  <Check fontSize="small" sx={{ fontSize: 16 }} />
+                )}
+              </IconButton>
+            </InputAdornment>
+          ),
+          sx: {
+            bgcolor: "transparent",
+            borderRadius: 0,
+            "& fieldset": { borderColor: "none" },
+            "&:hover fieldset": { borderColor: "none" },
+            "&.Mui-focused fieldset": { borderColor: "none" },
+            "& input": { color: AppColors.TXT_MAIN, p: 0, fontSize: 12 },
+          },
+        }}
+      />
+    ) : (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 0.5,
+          cursor: "pointer",
+        }}
+        onClick={onStartEdit}
+      >
+        {value != null && value !== "" && (
+          <Typography
+            variant="body1"
+            sx={{
+              color: valueColor || AppColors.TXT_MAIN,
+            }}
+          >
+            {value}
+          </Typography>
+        )}
+        <Edit sx={{ color: AppColors.TXT_MAIN, fontSize: 16 }} />
+      </Box>
+    )}
+  </Box>
+);
+
 const Profile = () => {
   const navigate = useNavigate();
   const { userData, clear } = useAuth();
+  const dispatch = useDispatch();
+  const { showSnackbar } = useSnackbar();
   const [copied, setCopied] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [fullNameInput, setFullNameInput] = useState("");
+  const [isSavingName, setIsSavingName] = useState(false);
   const user = userData;
   const { t } = useTranslation(TRADE_NAMESPACE);
 
@@ -103,6 +237,57 @@ const Profile = () => {
     clear();
     // showSnackbar(t("profile.loggedOut", "Logged out"), "success");
     navigate("/login");
+  };
+
+  const handleStartEditName = () => {
+    setFullNameInput(user?.fullName || user?.username || "");
+    setIsEditingName(true);
+  };
+
+  const handleCancelEditName = () => {
+    setIsEditingName(false);
+    setFullNameInput("");
+  };
+
+  const handleSaveEditName = async () => {
+    const trimmedName = fullNameInput.trim();
+    if (!trimmedName) {
+      showSnackbar(
+        t("profile.fullNameRequired", "Please enter full name"),
+        "error",
+      );
+      return;
+    }
+
+    if (trimmedName === (user?.fullName || "").trim()) {
+      setIsEditingName(false);
+      return;
+    }
+
+    try {
+      setIsSavingName(true);
+      await Promise.all([authService.updateName(trimmedName), userService.updateName(trimmedName)]);
+      dispatch(
+        mergeAuthState({
+          userData: {
+            ...user,
+            fullName: trimmedName,
+          },
+        }),
+      );
+      setIsEditingName(false);
+      showSnackbar(
+        t("profile.fullNameUpdated", "Name updated successfully"),
+        "success",
+      );
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        t("profile.fullNameUpdateFailed", "Failed to update name");
+      showSnackbar(message, "error");
+    } finally {
+      setIsSavingName(false);
+    }
   };
 
   const displayName = user?.fullName || user?.username || "—";
@@ -215,10 +400,16 @@ const Profile = () => {
           onCopy={uid !== "—" ? handleCopyUid : undefined}
           copied={copied}
         />
-        <Row
+        <RowName
           label={t("profile.fullName", "Full Name")}
           value={nickname}
-          onClick={() => {}}
+          isEditing={isEditingName}
+          editValue={fullNameInput}
+          onStartEdit={handleStartEditName}
+          onEditChange={setFullNameInput}
+          onCancelEdit={handleCancelEditName}
+          onSaveEdit={handleSaveEditName}
+          isSaving={isSavingName}
         />
         <Row
           label={t("profile.identityVerification", "Identity Verification")}

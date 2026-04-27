@@ -36,7 +36,10 @@ const PartnerRewardsPage = () => {
   const handleCopyLink = async () => {
     if (!referralLink) return;
     await copyToClipboard(referralLink, setCopied);
-    showSnackbar(t("promotion.partnerRewards.copySuccess", "Invitation link copied"), "success");
+    showSnackbar(
+      t("promotion.partnerRewards.copySuccess", "Invitation link copied"),
+      "success",
+    );
   };
 
   const fetchRewards = useCallback(async () => {
@@ -48,7 +51,12 @@ const PartnerRewardsPage = () => {
       const baseUrl = window.location.origin;
       setReferralLink(`${baseUrl}/signup?ref=${userData?.UID}`);
     } catch (err) {
-      const message = err?.message || t("promotion.partnerRewards.loadFailed", "Failed to load partner rewards");
+      const message =
+        err?.message ||
+        t(
+          "promotion.partnerRewards.loadFailed",
+          "Failed to load partner rewards",
+        );
       showSnackbar(message, "error");
       setData(null);
     } finally {
@@ -165,7 +173,10 @@ const PartnerRewardsPage = () => {
                 mb: 0.5,
               }}
             >
-              {t("promotion.partnerRewards.inviteFriends", "Invite friends to get max rewards")}
+              {t(
+                "promotion.partnerRewards.inviteFriends",
+                "Invite friends to get max rewards",
+              )}
             </Typography>
             <Box
               sx={{
@@ -205,18 +216,37 @@ const PartnerRewardsPage = () => {
           mt: 2,
         }}
       >
-        <StatRow label={t("promotion.partnerRewards.invitationCount", "Invitation count")} value={referralRewardState?.invitationCount || 0} />
-        <StatRow label={t("promotion.partnerRewards.effectiveInvitationCount", "Effective Invitation count")} value={referralRewardState?.effectiveIntCount || 0} />
         <StatRow
-          label={t("promotion.partnerRewards.invitationTotalBonus", "Invitation total bonus")}
-          value={`$${referralRewardState?.intTotalBonus || 0.00}`}
-          valueColor={referralRewardState?.intTotalBonus > 0 ? AppColors.SUCCESS : AppColors.ERROR}
+          label={t(
+            "promotion.partnerRewards.invitationCount",
+            "Invitation count",
+          )}
+          value={referralRewardState?.invitationCount || 0}
+        />
+        <StatRow
+          label={t(
+            "promotion.partnerRewards.effectiveInvitationCount",
+            "Effective Invitation count",
+          )}
+          value={referralRewardState?.effectiveIntCount || 0}
+        />
+        <StatRow
+          label={t(
+            "promotion.partnerRewards.invitationTotalBonus",
+            "Invitation total bonus",
+          )}
+          value={`$${referralRewardState?.intTotalBonus || 0.0}`}
+          valueColor={
+            referralRewardState?.intTotalBonus > 0
+              ? AppColors.SUCCESS
+              : AppColors.ERROR
+          }
         />
       </Box>
 
       {/* Invitation Record Link */}
       <Box
-        onClick={() => { }}
+        onClick={() => {}}
         sx={{
           mx: 1,
           mt: 1.5,
@@ -237,7 +267,13 @@ const PartnerRewardsPage = () => {
         >
           {t("promotion.partnerRewards.invitationRecord", "Invitation record")}
         </Typography>
-        <IconButton onClick={() => navigate("/transaction-history", { state: { type: "REFERRAL_BONUS" } })}>
+        <IconButton
+          onClick={() =>
+            navigate("/transaction-history", {
+              state: { type: "REFERRAL_BONUS" },
+            })
+          }
+        >
           <KeyboardArrowRight sx={{ color: AppColors.TXT_SUB, fontSize: 20 }} />
         </IconButton>
       </Box>
@@ -245,7 +281,10 @@ const PartnerRewardsPage = () => {
       {/* Invitation Link Section */}
       <Box sx={{ mx: 1, mt: 1 }}>
         <SectionTitle
-          label={t("promotion.partnerRewards.invitationLink", "Invitation link")}
+          label={t(
+            "promotion.partnerRewards.invitationLink",
+            "Invitation link",
+          )}
           icon={
             <Box
               sx={{
@@ -266,7 +305,7 @@ const PartnerRewardsPage = () => {
             mt: 1,
             px: 1.52,
             py: 1,
-            borderRadius: 20,
+            borderRadius: 2,
             bgcolor: AppColors.BG_SECONDARY,
             border: "1px solid " + AppColors.BORDER_MAIN,
           }}
@@ -275,13 +314,15 @@ const PartnerRewardsPage = () => {
             variant="body1"
             sx={{
               flex: 1,
+              minWidth: 0,
               color: AppColors.TXT_SUB,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
+              wordBreak: "break-all", // breaks long strings (like URLs) properly
+              whiteSpace: "normal", // allows wrapping
             }}
           >
-            {loading ? t("promotion.loading", "Loading...") : referralLink ?? t("promotion.loading", "Loading...")}
+            {loading
+              ? t("promotion.loading", "Loading...")
+              : (referralLink ?? t("promotion.loading", "Loading..."))}
           </Typography>
           <IconButton
             onClick={handleCopyLink}
@@ -292,7 +333,13 @@ const PartnerRewardsPage = () => {
               "&:hover": { bgcolor: "#c49a55" },
             }}
           >
-            {copied ? <CheckCircle sx={{ fontSize: 20, color: AppColors.SUCCESS }} /> : <ContentCopy sx={{ fontSize: 20, color: AppColors.GOLD_PRIMARY }} />}
+            {copied ? (
+              <CheckCircle sx={{ fontSize: 20, color: AppColors.SUCCESS }} />
+            ) : (
+              <ContentCopy
+                sx={{ fontSize: 20, color: AppColors.GOLD_PRIMARY }}
+              />
+            )}
           </IconButton>
         </Box>
       </Box>
@@ -309,7 +356,10 @@ const PartnerRewardsPage = () => {
         }}
       >
         <SectionTitle
-          label={t("promotion.partnerRewards.invitationRules", "Invitation rules")}
+          label={t(
+            "promotion.partnerRewards.invitationRules",
+            "Invitation rules",
+          )}
           icon={
             <MenuBookOutlined
               sx={{ fontSize: 20, color: AppColors.GOLD_PRIMARY, mr: 1 }}
@@ -318,7 +368,9 @@ const PartnerRewardsPage = () => {
         />
 
         {/* High-level rules */}
-        <Box sx={{ mt: 1.25, display: "flex", flexDirection: "column", gap: 0.5 }}>
+        <Box
+          sx={{ mt: 1.25, display: "flex", flexDirection: "column", gap: 0.5 }}
+        >
           <Typography
             sx={{
               fontSize: "0.875rem",
@@ -326,19 +378,34 @@ const PartnerRewardsPage = () => {
               fontWeight: 600,
             }}
           >
-            {t("promotion.partnerRewards.ruleTitle", "🎉 Get 10% Referral Bonus on Deposit")}
+            {t(
+              "promotion.partnerRewards.ruleTitle",
+              "🎉 Get 10% Referral Bonus on Deposit",
+            )}
           </Typography>
           <Typography sx={{ fontSize: "0.875rem", color: AppColors.TXT_SUB }}>
-            {t("promotion.partnerRewards.ruleInvite", "🔗 Invite your friends to BT Market")}
+            {t(
+              "promotion.partnerRewards.ruleInvite",
+              "🔗 Invite your friends to BT Market",
+            )}
           </Typography>
           <Typography sx={{ fontSize: "0.875rem", color: AppColors.TXT_SUB }}>
-            {t("promotion.partnerRewards.ruleMinDeposit", "💵 Bonus starts from minimum 10 USDT deposit")}
+            {t(
+              "promotion.partnerRewards.ruleMinDeposit",
+              "💵 Bonus starts from minimum 10 USDT deposit",
+            )}
           </Typography>
           <Typography sx={{ fontSize: "0.875rem", color: AppColors.TXT_SUB }}>
-            {t("promotion.partnerRewards.ruleNoTurnover", "🎁 No turnover condition")}
+            {t(
+              "promotion.partnerRewards.ruleNoTurnover",
+              "🎁 No turnover condition",
+            )}
           </Typography>
           <Typography sx={{ fontSize: "0.875rem", color: AppColors.TXT_SUB }}>
-            {t("promotion.partnerRewards.ruleAutoCredit", "⚡ Bonus credited automatically")}
+            {t(
+              "promotion.partnerRewards.ruleAutoCredit",
+              "⚡ Bonus credited automatically",
+            )}
           </Typography>
         </Box>
 
@@ -380,7 +447,11 @@ const PartnerRewardsPage = () => {
                   color: AppColors.TXT_SUB,
                 }}
               >
-                {t("promotion.partnerRewards.friendDeposits", "Friend deposits {{amount}} USDT", { amount: item.deposit })}
+                {t(
+                  "promotion.partnerRewards.friendDeposits",
+                  "Friend deposits {{amount}} USDT",
+                  { amount: item.deposit },
+                )}
               </Typography>
               <Typography
                 sx={{
@@ -390,7 +461,11 @@ const PartnerRewardsPage = () => {
                   textAlign: "right",
                 }}
               >
-                {t("promotion.partnerRewards.youGetBonus", "You get {{bonus}} USDT bonus (10%)", { bonus: item.bonus })}
+                {t(
+                  "promotion.partnerRewards.youGetBonus",
+                  "You get {{bonus}} USDT bonus (10%)",
+                  { bonus: item.bonus },
+                )}
               </Typography>
             </Box>
           ))}
@@ -399,10 +474,16 @@ const PartnerRewardsPage = () => {
         {/* Extra notes */}
         <Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 0.5 }}>
           <Typography sx={{ fontSize: "0.8125rem", color: AppColors.TXT_SUB }}>
-            {t("promotion.partnerRewards.oneDepositOneBonus", "✅ One deposit = one bonus")}
+            {t(
+              "promotion.partnerRewards.oneDepositOneBonus",
+              "✅ One deposit = one bonus",
+            )}
           </Typography>
           <Typography sx={{ fontSize: "0.8125rem", color: AppColors.TXT_SUB }}>
-            {t("promotion.partnerRewards.unlimitedReferrals", "♾ Unlimited referrals — invite more, earn more")}
+            {t(
+              "promotion.partnerRewards.unlimitedReferrals",
+              "♾ Unlimited referrals — invite more, earn more",
+            )}
           </Typography>
           <Typography
             sx={{
@@ -412,7 +493,10 @@ const PartnerRewardsPage = () => {
               mt: 0.5,
             }}
           >
-            {t("promotion.partnerRewards.cta", "BT Market — Deposit 10 USDT & Earn 10% Referral Bonus.")}
+            {t(
+              "promotion.partnerRewards.cta",
+              "BT Market — Deposit 10 USDT & Earn 10% Referral Bonus.",
+            )}
           </Typography>
         </Box>
       </Box>

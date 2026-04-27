@@ -24,7 +24,9 @@ const walletService = {
   // POST /wallet/withdraw
   // body: { toAddress, amount, chain, twoFactorToken? }
   withdrawFunds: async (body) => {
-    const response = await api2.post("/wallet/withdraw", body);
+    const response = await api2.post("/wallet/withdraw", body, {
+      skipAuth: true,
+    });
     return response.data;
   },
 
@@ -61,7 +63,9 @@ const walletService = {
   // POST /wallet/withdraw-capital
   // body: { toAddress, investmentId, chain, twoFactorToken }
   withdrawCapital: async (body) => {
-    const response = await api2.post("/wallet/withdraw-capital", body);
+    const response = await api2.post("/wallet/withdraw-capital", body, {
+      skipAuth: true,
+    });
     return response.data;
   },
 
@@ -70,7 +74,11 @@ const walletService = {
     const response = await api2.get("/wallet/today-income");
     return response.data;
   },
+  // GET /wallet/today-income
+  getAllDailyIncome: async (params) => {
+    const response = await api2.get("/wallet/all-daily-income", { params });
+    return response.data;
+  },
 };
 
 export default walletService;
-

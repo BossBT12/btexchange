@@ -19,6 +19,7 @@ import promotionService from "../../../services/promotionService";
 import BTLoader from "../../../components/Loader";
 import DatePicker from "../../../components/input/datePicker";
 import { TRADE_NAMESPACE } from "../../../i18n";
+import { formatDateInt } from "../../../utils/utils";
 
 const TYPE_OPTIONS = [
   { value: "all", labelKey: "all" },
@@ -39,23 +40,7 @@ const formatNumber = (n) => {
   return Number.isFinite(num) ? num.toLocaleString() : "0";
 };
 
-const formatDate = (dateStr) => {
-  if (!dateStr) return "—";
-  try {
-    const d = new Date(dateStr);
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    const h = String(d.getHours()).padStart(2, "0");
-    const min = String(d.getMinutes()).padStart(2, "0");
-    const s = String(d.getSeconds()).padStart(2, "0");
-    return `${y}-${m}-${day} ${h}:${min}:${s}`;
-  } catch {
-    return dateStr;
-  }
-};
-
-const DetailRow = ({ label, value, valueColor, isAmount }) => (
+const DetailRow = ({ label, value, valueColor }) => (
   <Box
     sx={{
       display: "flex",
@@ -367,7 +352,7 @@ const CommissionDetailPage = () => {
                 </Box> */}
                 <Box sx={{ px: 1.5 }}>
                   <DetailRow label={t("promotion.commissionDetail.rowType", "Type")} value={detailValue} />
-                  <DetailRow label={t("promotion.commissionDetail.rowTime", "Time")} value={formatDate(tx.createdAt)} />
+                  <DetailRow label={t("promotion.commissionDetail.rowTime", "Time")} value={formatDateInt(tx.createdAt)} />
                   <DetailRow
                     label={t("promotion.commissionDetail.rowBalance", "Balance")}
                     value={balanceDisplay}

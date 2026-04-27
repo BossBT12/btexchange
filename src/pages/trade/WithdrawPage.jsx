@@ -35,6 +35,7 @@ import { Menu } from "@mui/material";
 import withdrawalService from "../../services/withdrawalService";
 import BTLoader from "../../components/Loader";
 import { SiTether } from "react-icons/si";
+import { formatDateInt } from "../../utils/utils";
 
 const RULE_KEYS = [
   { textKey: "withdraw.rules.instant" },
@@ -54,17 +55,6 @@ const getExplorerUrl = (chain, txHash) => {
     POLYGON: `https://polygonscan.com/tx/${txHash}`,
   };
   return explorers[chain] || null;
-};
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 };
 
 /** Splits rule text into segments for normal vs highlighted display. */
@@ -103,6 +93,7 @@ export default function WithdrawPage() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [error, setError] = useState("");
+  const [error2fa, setError2fa] = useState("");
   const [success, setSuccess] = useState("");
   const [selectedChain, setSelectedChain] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
@@ -238,7 +229,7 @@ export default function WithdrawPage() {
     const twoFATokenTrimmed = twoFATkn.replace(/\D/g, "").slice(0, 6);
     if (isTwoFactorEnabled) {
       if (!twoFATokenTrimmed || twoFATokenTrimmed.length !== 6) {
-        setError(
+        setError2fa(
           t(
             "withdraw.errors.invalid2fa",
             "Please enter the 6-digit code from your authenticator app.",
@@ -976,37 +967,8 @@ export default function WithdrawPage() {
                               color: AppColors.TXT_MAIN,
                             }}
                           >
-                            {formatDate(withdrawal.createdAt)}
+                            {formatDateInt(withdrawal.createdAt)}
                           </Typography>
-                        </Grid>
-                        <Grid size={{ xs: 6, md: 1 }}>
-                          {withdrawal.txHash && (
-                            <Tooltip
-                              title={t(
-                                "withdraw.history.viewOnExplorer",
-                                "View on blockchain explorer",
-                              )}
-                            >
-                              <IconButton
-                                component="a"
-                                href={getExplorerUrl(
-                                  withdrawal.chain,
-                                  withdrawal.txHash,
-                                )}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                size="small"
-                                sx={{
-                                  color: AppColors.GOLD_PRIMARY,
-                                  "&:hover": {
-                                    bgcolor: `${AppColors.GOLD_PRIMARY}15`,
-                                  },
-                                }}
-                              >
-                                <OpenInNew fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                          )}
                         </Grid>
                       </Grid>
 
@@ -1028,6 +990,31 @@ export default function WithdrawPage() {
                         >
                           {t("withdraw.history.walletLabel", "Wallet:")}{" "}
                           {withdrawal.walletAddress}
+                          <Tooltip
+                              title={t(
+                                "withdraw.history.viewOnExplorer",
+                                "View on blockchain explorer",
+                              )}
+                            >
+                              <IconButton
+                                component="a"
+                                href={getExplorerUrl(
+                                  withdrawal.chain,
+                                  withdrawal.txHash,
+                                )}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                size="small"
+                                sx={{
+                                  color: AppColors.GOLD_PRIMARY,
+                                  "&:hover": {
+                                    bgcolor: `${AppColors.GOLD_PRIMARY}15`,
+                                  },
+                                }}
+                              >
+                                <OpenInNew sx={{ fontSize: 16 }} />
+                              </IconButton>
+                            </Tooltip>
                         </Typography>
                         {withdrawal.chain && (
                           <Typography
@@ -1091,6 +1078,11 @@ export default function WithdrawPage() {
               }}
             />
           </Box>
+          {error2fa && (
+            <Alert severity="error" sx={{ mt: 1 }}>
+              {error2fa}
+            </Alert>
+          )}
         </DialogContent>
 
         <DialogActions sx={{ padding: "16px 24px" }}>

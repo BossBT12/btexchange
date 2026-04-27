@@ -47,7 +47,7 @@ api2.interceptors.response.use(
 
     const publicRoutes = authRouters.map((route) => route.path);
 
-    if (status === 401 && !originalRequest._retry && !publicRoutes.includes(window.location.pathname)) {
+    if (status === 401 && !originalRequest._retry && !publicRoutes.includes(window.location.pathname) && !originalRequest.skipAuth) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });

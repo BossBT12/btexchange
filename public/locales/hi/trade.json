@@ -43,6 +43,7 @@
       "notification": "सूचनाएं",
       "telegramChannel": "टेलीग्राम चैनल",
       "telegramGroup": "टेलीग्राम समूह",
+      "customersupportTelegram": "टेलीग्राम सपोर्ट",
       "language": "भाषा",
       "currentLanguage": "हिंदी"
     },
@@ -515,7 +516,7 @@
       "telegram": "Telegram",
       "imageAlt": "एजेंट लाइन कस्टमर सर्विस",
       "accounts": {
-        "agent": "BT GLOBAL AGENT",
+        "agent": "BT Global Customer Support",
         "agency": "BT GLOBAL AGENCY"
       }
     },

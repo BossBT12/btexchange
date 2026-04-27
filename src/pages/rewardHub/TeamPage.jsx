@@ -67,12 +67,12 @@ const DownlineUserCard = ({ level, user, t }) => (
     <DownlineRow label={t("rewardHub.team.email", "Email")} value={user.email ?? "—"} last={false} />
     <DownlineRow label={t("rewardHub.team.level", "Level:")} value={String(level)} last={false} />
     <DownlineRow label={t("rewardHub.team.uidShort", "UID")} value={user.UID ?? "—"} valueColor={AppColors.GOLD_PRIMARY} last={false} />
-    <DownlineRow
+    {/* <DownlineRow
       label={t("rewardHub.team.status", "Status")}
       value={user.isActive ? t("rewardHub.team.statusActive", "Active") : t("rewardHub.team.statusInactive", "Inactive")}
       valueColor={user.isActive ? AppColors.SUCCESS : AppColors.TXT_SUB}
       last={false}
-    />
+    /> */}
     <DownlineRow label={t("rewardHub.team.rankLabel", "Rank")} value={user.rank === "NONE" ? "V0" : (user.rank ?? "—")} last={false} />
     <DownlineRow label={t("rewardHub.team.depositAmount", "Deposit amount:")} value={`$${String(user.investment)}`} valueColor={AppColors.GOLD_PRIMARY} last={false} />
     <DownlineRow label={t("rewardHub.team.teamBusiness", "Team Business:")} value={`$${String(user.teamBusiness)}`} valueColor={AppColors.GOLD_PRIMARY} last={false} />

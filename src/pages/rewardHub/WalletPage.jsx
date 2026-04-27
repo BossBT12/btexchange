@@ -21,6 +21,7 @@ import {
   Language,
   ChevronRight,
   Telegram,
+  SupportAgent,
 } from "@mui/icons-material";
 import { AppColors } from "../../constant/appColors";
 import { useNavigate } from "react-router-dom";
@@ -332,6 +333,12 @@ const AssetsPage = () => {
             external: true,
           },
           {
+            labelKey: "assets.options.customersupportTelegram",
+            icon: SupportAgent,
+            path: telegramLink ?? "https://t.me/btexchange0",
+            external: true,
+          },
+          {
             labelKey: "assets.options.language",
             icon: Language,
             right: currentLanguageLabel,
@@ -362,7 +369,7 @@ const AssetsPage = () => {
               cursor: "pointer",
               bgcolor: "transparent",
               borderBottom:
-                idx < 3 ? "1px solid rgba(255,255,255,0.08)" : "none",
+                idx < 4 ? "1px solid rgba(255,255,255,0.08)" : "none",
               "&:hover": { bgcolor: "rgba(255,255,255,0.04)" },
             }}
           >

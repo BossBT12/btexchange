@@ -43,6 +43,7 @@
       "notification": "Notificación",
       "telegramChannel": "Canal de Telegram",
       "telegramGroup": "Grupo de Telegram",
+      "customersupportTelegram": "Soporte de Telegram",
       "language": "Idioma",
       "currentLanguage": "Español"
     },
@@ -515,7 +516,7 @@
       "telegram": "Telegram",
       "imageAlt": "Atención al cliente para agentes",
       "accounts": {
-        "agent": "BT GLOBAL AGENT",
+        "agent": "BT Global Customer Support",
         "agency": "BT GLOBAL AGENCY"
       }
     },

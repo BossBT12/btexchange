@@ -539,7 +539,7 @@ export default function CapitalWithdrawPage() {
                 "& .MuiFormHelperText-root": { color: AppColors.ERROR },
               }}
             />
-            <Button
+            {/* <Button
               type="button"
               variant="outlined"
               onClick={() => setWithdrawAmount(maxWithdrawable.toFixed(2))}
@@ -557,7 +557,7 @@ export default function CapitalWithdrawPage() {
               size="small"
             >
               {t("rewardHub.capitalWithdraw.maxButton", "Use max")}
-            </Button>
+            </Button> */}
 
             <TextField
               label={t(

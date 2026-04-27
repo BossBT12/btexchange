@@ -81,6 +81,10 @@ const userService = {
     const response = await api2.post("/user/update-email", { newEmail });
     return response.data;
   },
+  updateName: async (fullName) => {
+    const response = await api2.patch("/user/updateName", { fullName });
+    return response.data;
+  },
 };
 
 export default userService;

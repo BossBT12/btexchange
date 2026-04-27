@@ -277,7 +277,7 @@ const AgentServicePage = () => {
                     variant="body1"
                     color={AppColors.TXT_MAIN}
                   >
-                    {t(`promotion.agentService.${item.labelKey}`, item.id === "agent" ? "BT GLOBAL AGENT" : "BT GLOBAL AGENCY")}
+                    {t(`promotion.agentService.${item.labelKey}`, item.id === "agent" ? "BT Global Customer Support" : "BT GLOBAL AGENCY")}
                   </Typography>
                 </Box>
 

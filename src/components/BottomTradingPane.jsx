@@ -178,6 +178,7 @@ export default function BottomTradingPane({
     value: 0.0,
     loading: false,
   });
+  const [amountErrorMessage, setAmountErrorMessage] = useState("");
   const [liveTrades, setLiveTrades] = useState([]);
   const [tradeHistory, setTradeHistory] = useState([]);
   const [historyPagination, setHistoryPagination] = useState({
@@ -214,27 +215,99 @@ export default function BottomTradingPane({
 
   const amountNumber =
     amountDisplayValue != null ? Number(amountDisplayValue) : 0;
+  const currencyRate = getCurrencyDisplayRate(currency);
+  const maxUsdtInSelectedCurrency = Number((100 * currencyRate).toFixed(2));
+  const userBalanceInSelectedCurrency = Number(
+    ((Number(userBalance?.value) || 0) * currencyRate).toFixed(2),
+  );
+  const maxAllowedAmount = Math.max(
+    0,
+    Number(
+      Math.min(
+        maxUsdtInSelectedCurrency,
+        userBalanceInSelectedCurrency,
+      ).toFixed(2),
+    ),
+  );
+
+  /** Preview uses the legal cap; the input may still show a higher typed value. */
+  const amountStakeForPreview = Math.max(
+    0,
+    Math.min(amountNumber, maxAllowedAmount),
+  );
+
+  const buildLimitErrorMessage = useCallback(
+    (reason) => {
+      if (reason === "balance") {
+        return t(
+          "tradingPane.amountExceedsBalance",
+          `Amount cannot exceed your available balance (${userBalanceInSelectedCurrency.toFixed(2)} ${currency}).`,
+        );
+      }
+      if (reason === "usdtLimit") {
+        return t(
+          "tradingPane.amountExceedsUsdtLimit",
+          `Amount cannot exceed 100 USDT (${maxUsdtInSelectedCurrency.toFixed(2)} ${currency}).`,
+        );
+      }
+      return t(
+        "tradingPane.amountLimitMessage",
+        `Amount cannot exceed ${maxAllowedAmount.toFixed(2)} ${currency} (max 100 USDT).`,
+      );
+    },
+    [
+      currency,
+      maxAllowedAmount,
+      maxUsdtInSelectedCurrency,
+      t,
+      userBalanceInSelectedCurrency,
+    ],
+  );
 
   const handleAmountChange = useCallback(
     (displayValue) => {
       if (displayValue === "" || displayValue == null) {
         setAmountState(initialAmountState);
+        setAmountErrorMessage("");
         return;
       }
       const num = Number(displayValue);
       if (Number.isNaN(num)) return;
-      const rate = getCurrencyDisplayRate(currency);
-      const usdt = num / rate;
+
+      if (num > maxAllowedAmount) {
+        const exceedsBalance = num > userBalanceInSelectedCurrency;
+        const exceedsUsdtCap = num > maxUsdtInSelectedCurrency;
+        let reason = null;
+        if (exceedsBalance && !exceedsUsdtCap) reason = "balance";
+        if (exceedsUsdtCap && !exceedsBalance) reason = "usdtLimit";
+        setAmountErrorMessage(buildLimitErrorMessage(reason));
+      } else {
+        setAmountErrorMessage("");
+      }
+
+      const usdt = num / currencyRate;
       setAmountState((prev) => ({
         amountUsdt: usdt,
         displayCache: { ...prev.displayCache, [currency]: num },
       }));
     },
-    [currency],
+    [
+      buildLimitErrorMessage,
+      currency,
+      currencyRate,
+      maxAllowedAmount,
+      maxUsdtInSelectedCurrency,
+      userBalanceInSelectedCurrency,
+    ],
   );
+
   const draftAmountNumber = Number(draftAmount) || 0;
   const payoutPercent = Number(betProfitPercent) || 100;
-  const settlementAmount = amountNumber + (amountNumber * payoutPercent) / 100;
+  const settlementAmount =
+    amountNumber > 0
+      ? amountStakeForPreview +
+        (amountStakeForPreview * payoutPercent) / 100
+      : 0;
   const settlementDisplay =
     amountNumber > 0 ? settlementAmount.toFixed(2) : "--";
 
@@ -265,6 +338,13 @@ export default function BottomTradingPane({
         ),
         "error",
       );
+      return;
+    }
+    if (amountErrorMessage !== "") return;
+    if (amountNumber > maxAllowedAmount) {
+      const errorMessage = buildLimitErrorMessage();
+      setAmountErrorMessage(errorMessage);
+      showSnackbar(errorMessage, "error");
       return;
     }
     setDraftAmount(
@@ -867,13 +947,22 @@ export default function BottomTradingPane({
               </Typography>
               <Button
                 size="small"
-                sx={{ py: 0, px: 0.5, borderRadius: 12, textTransform: "none", display: "flex", alignItems: "center", gap: 0.5 }}
+                sx={{
+                  py: 0,
+                  px: 0.5,
+                  borderRadius: 12,
+                  textTransform: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.5,
+                }}
                 onClick={(e) => setCurrencyMenuAnchor(e.currentTarget)}
                 aria-haspopup="true"
                 aria-controls={currencyMenuAnchor ? "currency-menu" : undefined}
                 endIcon={<AiOutlineSwap />}
               >
-                <span style={{ color: AppColors.TXT_MAIN }}>Currency </span>{"   "}
+                <span style={{ color: AppColors.TXT_MAIN }}>Currency </span>
+                {"   "}
                 <span>{currency}</span>
               </Button>
             </Box>
@@ -1042,9 +1131,17 @@ export default function BottomTradingPane({
               }
               onChange={handleAmountChange}
               disableOnChangeOnBlur
-              error={amountNumber <= 0}
-              success={amountNumber > 0}
+              error={amountNumber <= 0 || Boolean(amountErrorMessage)}
+              success={amountNumber > 0 && !amountErrorMessage}
             />
+            {amountErrorMessage && (
+              <Typography
+                variant="caption"
+                sx={{ color: AppColors.ERROR, mt: 0.25 }}
+              >
+                {amountErrorMessage}
+              </Typography>
+            )}
           </Stack>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="body2" sx={{ color: AppColors.TXT_SUB }}>
@@ -1102,7 +1199,7 @@ export default function BottomTradingPane({
             <Button
               fullWidth
               startIcon={
-                <ArrowOutward sx={{ fontSize: "18px", color: "#fff" }} />
+                <ArrowOutward sx={{ fontSize: "18px" }} />
               }
               sx={{
                 borderRadius: 12,
@@ -1117,7 +1214,7 @@ export default function BottomTradingPane({
                   opacity: 0.9,
                 },
               }}
-              disabled={placing?.loading}
+              disabled={placing?.loading || Boolean(amountErrorMessage)}
               onClick={() => handleStartTrade("UP")}
             >
               {t("tradingPane.up", "Up")}
@@ -1142,7 +1239,7 @@ export default function BottomTradingPane({
                   opacity: 0.9,
                 },
               }}
-              disabled={placing?.loading}
+              disabled={placing?.loading || Boolean(amountErrorMessage)}
               onClick={() => handleStartTrade("DOWN")}
             >
               {t("tradingPane.down", "Down")}

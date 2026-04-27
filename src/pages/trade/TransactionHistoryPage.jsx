@@ -22,7 +22,7 @@ import {
 import withdrawalService from "../../services/withdrawalService";
 import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
-import { formatPairForDisplay } from "../../utils/utils";
+import { formatDateInt, formatPairForDisplay } from "../../utils/utils";
 import DatePicker from "../../components/input/datePicker";
 
 const TYPE_OPTIONS = [
@@ -56,18 +56,6 @@ const CHAIN_OPTIONS = [
 ];
 
 const PAGE_SIZE = 10;
-
-const formatDate = (dateString) => {
-  if (!dateString) return "—";
-  const date = new Date(dateString);
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  const h = String(date.getHours()).padStart(2, "0");
-  const min = String(date.getMinutes()).padStart(2, "0");
-  const s = String(date.getSeconds()).padStart(2, "0");
-  return `${y}-${m}-${d} ${h}:${min}:${s}`;
-};
 
 const formatAmount = (value, locale = "en-US") => {
   if (value === null || value === undefined) return "—";
@@ -281,7 +269,7 @@ export default function TransactionHistoryPage() {
               {t("transactionHistory.card.time", "Time")}
             </Typography>
             <Typography variant="body2" sx={{ color: AppColors.TXT_MAIN }}>
-              {formatDate(item.createdAt, locale)}
+              {formatDateInt(item.createdAt, locale)}
             </Typography>
           </Box>
           <Box sx={cardRowSx}>
@@ -389,7 +377,7 @@ export default function TransactionHistoryPage() {
               {t("transactionHistory.card.time", "Time")}
             </Typography>
             <Typography variant="body2" sx={{ color: AppColors.TXT_MAIN }}>
-              {formatDate(item.createdAt, locale)}
+              {formatDateInt(item.createdAt, locale)}
             </Typography>
           </Box>
           <Box sx={cardRowSx}>
