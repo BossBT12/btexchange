@@ -446,7 +446,7 @@ const ReportingPage = () => {
                         mb: 0.5,
                       }}
                     >
-                      {report.date
+                      { reportType === "DAILY_INCOME" ? report.date : report.date
                         ? formatDateInt(report.date)
                         : formatDateInt(new Date())}{" "}
                       {report.time ? `• ${report.time}` : ""}

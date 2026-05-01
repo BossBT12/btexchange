@@ -293,7 +293,7 @@ const LandingPage = () => {
                 textAlign: "start",
               }}
             >
-              {t("landing.depositBanner.title", "Deposit 100 USDT")}
+              {t("landing.depositBanner.title", "Deposit 1000 USDT")}
             </Typography>
             <Typography
               sx={{
@@ -337,7 +337,7 @@ const LandingPage = () => {
                 textAlign: "center",
               }}
             >
-              {t("landing.depositBanner.title", "Deposit 100 USDT")}
+              {t("landing.depositBanner.title", "Deposit 1000 USDT")}
             </Typography>
             <Typography
               sx={{
