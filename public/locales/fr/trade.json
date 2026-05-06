@@ -76,12 +76,11 @@
     "closeButton": "Fermer"
   },
   "depositLimitAlert": {
-    "title": "Avant de déposer",
+    "title": "Guides de dépôt",
     "subtitle": "Respectez cette limite pour un crédit rapide de vos fonds.",
-    "cardTitle": "Maximum par dépôt",
-    "badge": "Max. 1 000 $",
-    "message": "N'envoyez pas plus de 1 000 $ en un seul dépôt.",
-    "cardFoot": "Les montants supérieurs peuvent nécessiter une vérification ou être renvoyés.",
+    "cardTitle": "Maximum de dépôt autorisé",
+    "badge": "Max. 1 000 $ par compte",
+    "message": "Vous ne pouvez pas dépasser un dépôt total de 1 000 $ sur un seul compte.",
     "closeButton": "J'ai compris",
     "closeAriaLabel": "Fermer"
   },
@@ -655,6 +654,7 @@
       "endDate": "Date de fin",
       "loading": "Chargement des rapports...",
       "noData": "Aucune donnée",
+      "today": "Aujourd'hui",
       "type": {
         "all": "Tous",
         "LEVEL": "Revenus de niveau",

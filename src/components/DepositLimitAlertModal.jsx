@@ -25,7 +25,14 @@ function DepositLimitGraphic() {
   return (
     <svg width="30" height="28" viewBox="0 0 32 32" fill="none" aria-hidden>
       <defs>
-        <linearGradient id={gradId} x1="6" y1="4" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id={gradId}
+          x1="6"
+          y1="4"
+          x2="26"
+          y2="28"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#FFEBB0" />
           <stop offset="0.45" stopColor="#F0B90B" />
           <stop offset="1" stopColor="#B8860B" />
@@ -110,12 +117,12 @@ function DepositLimitAlertModal({ open, onClose }) {
               ✕
             </button>
             <h2 id="deposit-limit-alert-title">
-              {t("depositLimitAlert.title", "Before you deposit")}
+              {t("depositLimitAlert.title", "Deposit Guidelines")}
             </h2>
             <p id="deposit-limit-alert-desc" className="sub">
               {t(
                 "depositLimitAlert.subtitle",
-                "Keep this limit in mind so your funds are credited without delays.",
+                "keep this limit in mind to avoid any issues during the deposit process.",
               )}
             </p>
 
@@ -140,20 +147,26 @@ function DepositLimitAlertModal({ open, onClose }) {
                         flexWrap: "wrap",
                       }}
                     >
-                      <span className="card-name" id="deposit-limit-card-heading">
+                      <span
+                        className="card-name"
+                        id="deposit-limit-card-heading"
+                      >
                         {t(
                           "depositLimitAlert.cardTitle",
-                          "Maximum per deposit",
+                          "Maximum Allowed Deposit",
                         )}
                       </span>
                       <span className="badge-gold">
-                        {t("depositLimitAlert.badge", "$1,000 max")}
+                        {t(
+                          "depositLimitAlert.badge",
+                          "$1,000 max. per account",
+                        )}
                       </span>
                     </div>
                     <div className="card-desc">
                       {t(
                         "depositLimitAlert.message",
-                        "Do not send more than $1,000 in a single deposit.",
+                        "You cannot exceed a total deposit of $1,000 on a single account.",
                       )}
                     </div>
                   </div>

@@ -31,6 +31,91 @@ import { useTranslation } from "react-i18next";
 import { TRADE_NAMESPACE } from "../../i18n";
 import DatePicker from "../../components/input/datePicker";
 import { formatDateInt } from "../../utils/utils";
+import { MdCalendarToday } from "react-icons/md";
+
+/** Row icon accents (rotating). Gold is reserved for “today” only. */
+const DAILY_INCOME_ROW_ACCENTS = [
+  "#25D07A",
+  "#22D3EE",
+  "#A78BFA",
+  "#F472B6",
+  "#38BDF8",
+  "#EAB308",
+];
+
+function parseReportDate(raw) {
+  if (raw == null || raw === "") return null;
+  if (raw instanceof Date) return isNaN(raw.getTime()) ? null : raw;
+  const d = new Date(raw);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+function isCalendarToday(date) {
+  const n = new Date();
+  return (
+    date.getFullYear() === n.getFullYear() &&
+    date.getMonth() === n.getMonth() &&
+    date.getDate() === n.getDate()
+  );
+}
+
+function formatDailyIncomeAmount(report) {
+  const n = Number(
+    report.amount ?? report.amountUsd ?? report.totalIncome ?? 0,
+  );
+  if (!Number.isFinite(n)) return "0.00";
+  return n.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
+function DailyIncomeCalendarIcon({ dayOfMonth, accent }) {
+  return (
+    <Box
+      aria-hidden
+      sx={{
+        position: "relative",
+        width: 52,
+        height: 52,
+        minWidth: 52,
+        padding: 0.425,
+        background: `${accent}2b`,
+        border: `1px solid ${accent}40`,
+        borderRadius: BORDER_RADIUS.XS,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <MdCalendarToday
+        size={"100%"}
+        color={accent}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      />
+      <Typography
+        sx={{
+          position: "absolute",
+          bottom: -5,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: accent,
+          fontWeight: 800,
+        }}
+      >
+        {dayOfMonth}
+      </Typography>
+    </Box>
+  );
+}
 
 const REPORT_TYPES = [
   { value: "", labelKey: "all" },
@@ -42,17 +127,40 @@ const REPORT_TYPES = [
 ];
 
 const ReportingPage = () => {
-  const { t } = useTranslation(TRADE_NAMESPACE);
+  const { t, i18n } = useTranslation(TRADE_NAMESPACE);
   const { type } = useLocation().state ?? {};
   const [reportType, setReportType] = useState(type ?? "");
 
-  const typeToLabel = (reportTypeValue) => {
-    const found = REPORT_TYPES.find((r) => r.value === reportTypeValue);
-    if (reportType === "DAILY_INCOME")
-      return t("rewardHub.reporting.type.DAILY_INCOME", "Daily Income");
-    if (found) return t(`rewardHub.reporting.type.${found.labelKey}`);
-    return t("rewardHub.reporting.type.other", "Income");
-  };
+  const typeToLabel = useCallback(
+    (reportTypeValue) => {
+      const found = REPORT_TYPES.find((r) => r.value === reportTypeValue);
+      if (found) return t(`rewardHub.reporting.type.${found.labelKey}`);
+      return t("rewardHub.reporting.type.other", "Income");
+    },
+    [t],
+  );
+
+  const formatDailyIncomeHeadingDate = useCallback(
+    (date) => {
+      if (!date) return "—";
+      const lang = i18n.language || "en";
+      const locale = lang.startsWith("zh")
+        ? "zh-CN"
+        : lang.startsWith("hi")
+          ? "hi-IN"
+          : lang.startsWith("es")
+            ? "es"
+            : lang.startsWith("fr")
+              ? "fr"
+              : "en-GB";
+      return date.toLocaleDateString(locale, {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+    },
+    [i18n.language],
+  );
 
   const PAGE_SIZE = 10;
   const [reports, setReports] = useState([]);
@@ -378,6 +486,123 @@ const ReportingPage = () => {
             >
               {t("rewardHub.reporting.noData", "No data")}
             </Typography>
+          ) : reportType === "DAILY_INCOME" ? (
+            reports.map((report, index) => {
+              const rowDate = parseReportDate(report.date);
+              const isToday = rowDate != null && isCalendarToday(rowDate);
+              const accent = isToday
+                ? AppColors.GOLD_PRIMARY
+                : DAILY_INCOME_ROW_ACCENTS[
+                    index % DAILY_INCOME_ROW_ACCENTS.length
+                  ];
+              const dayNum = rowDate ? rowDate.getDate() : "—";
+              const headingDate = formatDailyIncomeHeadingDate(rowDate);
+              const reportTypeLabel = typeToLabel("DAILY_INCOME");
+              const amountStr = formatDailyIncomeAmount(report);
+              const amountColor = isToday
+                ? AppColors.GOLD_PRIMARY
+                : AppColors.TXT_MAIN;
+
+              return (
+                <Box
+                  key={
+                    report.id ??
+                    report._id ??
+                    `${report.date}-${report.amount}-${index}`
+                  }
+                  sx={{
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1.5,
+                    py: 1.75,
+                    px: 1.75,
+                    borderRadius: BORDER_RADIUS.XS,
+                    bgcolor: "#090d16",
+                    border: isToday
+                      ? `1px solid ${AppColors.GOLD_PRIMARY}`
+                      : "1px solid rgba(255,255,255,0.06)",
+                    boxShadow: isToday
+                      ? "0 0 22px rgba(240, 185, 11, 0.22), inset 0 1px 0 rgba(255,255,255,0.05)"
+                      : undefined,
+                    transition: "box-shadow 0.2s ease, border-color 0.2s ease",
+                    ...(!isToday && {
+                      "&:hover": {
+                        borderColor: "rgba(255,255,255,0.1)",
+                        boxShadow: "0 4px 24px rgba(0,0,0,0.35)",
+                      },
+                    }),
+                  }}
+                >
+                  {isToday && (
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 10,
+                        right: 12,
+                        px: 1.1,
+                        py: 0.35,
+                        borderRadius: BORDER_RADIUS.XS,
+                        border: `1px solid ${AppColors.GOLD_PRIMARY}aa`,
+                        bgcolor: "rgba(240, 185, 11, 0.14)",
+                        color: AppColors.GOLD_PRIMARY,
+                        fontSize: 11,
+                        fontWeight: 700,
+                        letterSpacing: 0.35,
+                        lineHeight: 1.25,
+                        zIndex: 1,
+                      }}
+                    >
+                      {t("rewardHub.reporting.today", "Today")}
+                    </Box>
+                  )}
+                  <DailyIncomeCalendarIcon
+                    dayOfMonth={dayNum}
+                    accent={accent}
+                  />
+                  <Box
+                    sx={{
+                      flex: 1,
+                      minWidth: 0,
+                      pr: isToday ? 6.5 : 0,
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: AppColors.TXT_MAIN,
+                        fontWeight: 700,
+                        fontSize: FONT_SIZE.TITLE,
+                        lineHeight: 1.25,
+                        mb: 0.35,
+                      }}
+                    >
+                      {headingDate}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: AppColors.TXT_SUB,
+                        fontWeight: 400,
+                        fontSize: FONT_SIZE.BODY2,
+                        lineHeight: 1.35,
+                      }}
+                    >
+                      {reportTypeLabel}
+                    </Typography>
+                  </Box>
+                  <Typography
+                    sx={{
+                      color: amountColor,
+                      fontWeight: 700,
+                      fontSize: FONT_SIZE.TITLE,
+                      whiteSpace: "nowrap",
+                      alignSelf: "center",
+                    }}
+                  >
+                    {`+$${amountStr}`}
+                  </Typography>
+                </Box>
+              );
+            })
           ) : (
             reports.map((report, index) => (
               <Box
@@ -446,7 +671,7 @@ const ReportingPage = () => {
                         mb: 0.5,
                       }}
                     >
-                      { reportType === "DAILY_INCOME" ? report.date : report.date
+                      {report.date
                         ? formatDateInt(report.date)
                         : formatDateInt(new Date())}{" "}
                       {report.time ? `• ${report.time}` : ""}

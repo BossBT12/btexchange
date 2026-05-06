@@ -76,12 +76,11 @@
     "closeButton": "Close"
   },
   "depositLimitAlert": {
-    "title": "Before you deposit",
-    "subtitle": "Keep this limit in mind so your funds are credited without delays.",
-    "cardTitle": "Maximum per deposit",
-    "badge": "$1,000 max",
-    "message": "Do not send more than $1,000 in a single deposit.",
-    "cardFoot": "Larger amounts may need manual review or be returned.",
+    "title": "Deposit Guidelines",
+    "subtitle": "keep this limit in mind to avoid any issues during the deposit process.",
+    "cardTitle": "Maximum Allowed Deposit",
+    "badge": "$1,000 max. per account",
+    "message": "You cannot exceed a total deposit of $1,000 on a single account.",
     "closeButton": "Got it",
     "closeAriaLabel": "Close"
   },
@@ -679,6 +678,7 @@
       "endDate": "End Date",
       "loading": "Loading reports...",
       "noData": "No data",
+      "today": "Today",
       "type": {
         "all": "All",
         "LEVEL": "Level Income",

@@ -76,12 +76,11 @@
     "closeButton": "Cerrar"
   },
   "depositLimitAlert": {
-    "title": "Antes de depositar",
-    "subtitle": "Respete este límite para que sus fondos se acrediten sin demoras.",
-    "cardTitle": "Máximo por depósito",
-    "badge": "Máx. 1.000 $",
-    "message": "No envíe más de 1.000 $ en un solo depósito.",
-    "cardFoot": "Importes mayores pueden requerir revisión manual o ser devueltos.",
+    "title": "Guías de depósito",
+    "subtitle": "keep this limit in mind to avoid any issues during the deposit process.",
+    "cardTitle": "Máximo de depósito permitido",
+    "badge": "Máx. 1.000 $ por cuenta",
+    "message": "No puede exceder un depósito total de 1.000 $ en una sola cuenta.",
     "closeButton": "Entendido",
     "closeAriaLabel": "Cerrar"
   },
@@ -655,6 +654,7 @@
       "endDate": "Fecha de fin",
       "loading": "Cargando informes...",
       "noData": "Sin datos",
+      "today": "Hoy",
       "type": {
         "all": "Todos",
         "LEVEL": "Ingresos por nivel",
