@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -18,6 +18,7 @@ import {
   ArrowBackIosNew,
 } from "@mui/icons-material";
 import BTLoader from "../../components/Loader";
+import DepositLimitAlertModal from "../../components/DepositLimitAlertModal";
 import { AppColors } from "../../constant/appColors";
 import binDep from "../../assets/images/binDep.png";
 import polDep from "../../assets/images/polDep.png";
@@ -42,6 +43,10 @@ export default function DepositPage() {
 
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [depositLimitAlertOpen, setDepositLimitAlertOpen] = useState(true);
+  const closeDepositLimitAlert = useCallback(() => {
+    setDepositLimitAlertOpen(false);
+  }, []);
 
   const fetchDepositAddress = async (chain) => {
     try {
@@ -109,6 +114,10 @@ export default function DepositPage() {
         pb: 2,
       }}
     >
+      <DepositLimitAlertModal
+        open={depositLimitAlertOpen}
+        onClose={closeDepositLimitAlert}
+      />
       <Box
         sx={{
           display: "flex",

@@ -500,6 +500,12 @@ select:-webkit-autofill:active {
     margin-bottom: 22px;
   }
 
+  /* Single informational card on deposit limit alert (extra breath before CTA) */
+  .deposit-limit-alert__card {
+    margin-bottom: 20px;
+    cursor: default;
+  }
+
   /* ── TRADING CARD ── */
   .card-t {
     position: relative;

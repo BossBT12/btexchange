@@ -23,7 +23,7 @@
     "transfer": "Transferir",
     "stats": {
       "signUpQty": "Total de registros",
-      "participateQty": "Equipo activo",
+      "participateQty": "Equipo directo",
       "circulation": "Ingresos totales",
       "personal": "Ingresos por trading",
       "personalIncome": "Ingresos por trading",
@@ -74,6 +74,16 @@
     "tradeFoot": "Handeln Sie klug, wachsen Sie stetig",
     "rewardHubFoot": "Earn Hub | 1%–3% de rendimiento diario | Empiece pequeño, crezca rápido",
     "closeButton": "Cerrar"
+  },
+  "depositLimitAlert": {
+    "title": "Antes de depositar",
+    "subtitle": "Respete este límite para que sus fondos se acrediten sin demoras.",
+    "cardTitle": "Máximo por depósito",
+    "badge": "Máx. 1.000 $",
+    "message": "No envíe más de 1.000 $ en un solo depósito.",
+    "cardFoot": "Importes mayores pueden requerir revisión manual o ser devueltos.",
+    "closeButton": "Entendido",
+    "closeAriaLabel": "Cerrar"
   },
   "common": {
     "ok": "OK",

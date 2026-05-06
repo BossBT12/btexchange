@@ -23,7 +23,7 @@
     "transfer": "Transfer",
     "stats": {
       "signUpQty": "Total Register",
-      "participateQty": "Active Team",
+      "participateQty": "Direct Team",
       "circulation": "Total Income",
       "personal": "Trade income",
       "personalIncome": "Trade income",
@@ -74,6 +74,16 @@
     "tradeFoot": "Trade smart, grow steady.",
     "rewardHubFoot": "Earn Hub | 1%–3% Daily Returns | Start Small, Scale Fast",
     "closeButton": "Close"
+  },
+  "depositLimitAlert": {
+    "title": "Before you deposit",
+    "subtitle": "Keep this limit in mind so your funds are credited without delays.",
+    "cardTitle": "Maximum per deposit",
+    "badge": "$1,000 max",
+    "message": "Do not send more than $1,000 in a single deposit.",
+    "cardFoot": "Larger amounts may need manual review or be returned.",
+    "closeButton": "Got it",
+    "closeAriaLabel": "Close"
   },
   "common": {
     "ok": "OK",

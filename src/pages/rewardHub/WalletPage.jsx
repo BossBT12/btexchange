@@ -55,6 +55,7 @@ const AssetsPage = () => {
   const [telegramLink, setTelegramLink] = useState(null);
   const [statsSummary, setStatsSummary] = useState(null);
   const [depositChoiceOpen, setDepositChoiceOpen] = useState(false);
+  const [totalDirectTeamCount, setTotalDirectTeamCount] = useState(0);
   const navigate = useNavigate();
 
   const handleOpenLanguageMenu = (event) => {
@@ -73,15 +74,17 @@ const AssetsPage = () => {
   const fetchData = async () => {
     try {
       setIsLoadingWallet(true);
-      const [res1, res2, res3] = await Promise.all([
+      const [res1, res2, res3, res4] = await Promise.all([
         walletService.getWalletBalanceAndStats(),
         dashboardServices.getSocialMediaLinks(),
         userService.getStatsSummary(),
+        userService.downlineStats()
       ]);
       if (res1?.success) {
         setWalletStats(res1?.data ?? null);
         setTelegramLink(res2?.data?.telegramUrl ?? null);
         setStatsSummary(res3?.data ?? null);
+        setTotalDirectTeamCount(res4?.data?.totalDirectUser ?? 0);
       }
     } catch (error) {
       console.log("error: ", error);
@@ -526,7 +529,7 @@ const AssetsPage = () => {
                       textAlign: "center",
                     }}
                   >
-                    {formatNumber(statsSummary?.totalActiveTeamCount ?? 0, 0)}
+                    {formatNumber(totalDirectTeamCount ?? 0, 0)}
                   </Typography>
                 )}
               </Box>

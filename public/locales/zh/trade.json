@@ -23,7 +23,7 @@
     "transfer": "划转",
     "stats": {
       "signUpQty": "总注册数",
-      "participateQty": "活跃团队",
+      "participateQty": "直推团队",
       "circulation": "总收入",
       "personal": "交易收益",
       "personalIncome": "交易收益",
@@ -78,6 +78,16 @@
     "balancePlaceholder": "—",
     "balanceLine": "余额：{{amount}}",
     "closeButton": "关闭"
+  },
+  "depositLimitAlert": {
+    "title": "充值前须知",
+    "subtitle": "请遵守此限额，以便资金顺利到账。",
+    "cardTitle": "单笔最高充值",
+    "badge": "上限 1,000 美元",
+    "message": "单笔充值请勿超过 1,000 美元。",
+    "cardFoot": "超额可能需要人工审核或被退回。",
+    "closeButton": "知道了",
+    "closeAriaLabel": "关闭"
   },
   "common": {
     "ok": "确定",

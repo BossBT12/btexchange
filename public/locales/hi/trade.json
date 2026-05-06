@@ -23,7 +23,7 @@
     "transfer": "ट्रांसफर",
     "stats": {
       "signUpQty": "कुल पंजीकरण",
-      "participateQty": "सक्रिय टीम",
+      "participateQty": "डायरेक्ट टीम",
       "circulation": "कुल आय",
       "personal": "ट्रेड आय",
       "personalIncome": "ट्रेड आय",
@@ -74,6 +74,16 @@
     "tradeFoot": "समझदारी से ट्रेड करें, स्थिर रूप से बढ़ें",
     "rewardHubFoot": "Earn Hub | 1%–3% दैनिक रिटर्न | छोटे से शुरू करें, तेज़ी से बढ़ाएं",
     "closeButton": "बंद करें"
+  },
+  "depositLimitAlert": {
+    "title": "जमा करने से पहले",
+    "subtitle": "बिना देरी के जमा सुनिश्चित करने के लिए यह सीमा ध्यान रखें।",
+    "cardTitle": "प्रति जमा अधिकतम",
+    "badge": "अधिकतम 1,000 $",
+    "message": "एक जमा में 1,000 $ से अधिक न भेजें।",
+    "cardFoot": "अधिक राशि पर मैन्युअल समीक्षा लग सकती है या वापस की जा सकती है।",
+    "closeButton": "समझ गया",
+    "closeAriaLabel": "बंद करें"
   },
   "common": {
     "ok": "ठीक",
