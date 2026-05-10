@@ -182,7 +182,7 @@ export const copyToClipboard = async (text, setCopied) => {
 };
 
 export const disableZoomInspect = () => {
-  if (import.meta.env.VITE_ENVIRONMENT !== "production") return;
+  // if (import.meta.env.VITE_ENVIRONMENT !== "production") return;
   document.addEventListener("contextmenu", (e) => e.preventDefault());
   document.addEventListener(
     "keydown",
