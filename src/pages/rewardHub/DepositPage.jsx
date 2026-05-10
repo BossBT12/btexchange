@@ -477,7 +477,7 @@ export default function DepositPage() {
           >
             {t("rewardHub.deposit.shareButton", "Share address")}
           </Button>
-          <Typography
+          {/* <Typography
             variant="caption"
             sx={{ color: AppColors.TXT_SUB, textAlign: { xs: "center", md: "left" } }}
           >
@@ -501,7 +501,7 @@ export default function DepositPage() {
             >
               {t("rewardHub.deposit.verifyCta", "Verify transaction")}
             </Button>
-          </Typography>
+          </Typography> */}
         </Box>
       </Box>
     </Box>
