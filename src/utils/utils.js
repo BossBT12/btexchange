@@ -196,17 +196,17 @@ export const disableZoomInspect = () => {
         return;
       }
       // Block devtools shortcuts
-      // if (
-      //   e.key === "F12" ||
-      //   (e.ctrlKey && e.shiftKey && e.key === "I") ||
-      //   (e.ctrlKey && e.shiftKey && e.key === "J") ||
-      //   (e.ctrlKey && e.shiftKey && e.key === "C") ||
-      //   (e.ctrlKey && e.key === "U") ||
-      //   (e.metaKey && e.altKey && e.key === "i") ||
-      //   (e.metaKey && e.altKey && e.key === "j")
-      // ) {
-      //   e.preventDefault();
-      // }
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && e.key === "I") ||
+        (e.ctrlKey && e.shiftKey && e.key === "J") ||
+        (e.ctrlKey && e.shiftKey && e.key === "C") ||
+        (e.ctrlKey && e.key === "U") ||
+        (e.metaKey && e.altKey && e.key === "i") ||
+        (e.metaKey && e.altKey && e.key === "j")
+      ) {
+        e.preventDefault();
+      }
     },
     { passive: false }
   );
