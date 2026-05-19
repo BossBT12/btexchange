@@ -326,7 +326,7 @@ const AssetsPage = () => {
           {
             labelKey: "assets.options.telegramChannel",
             icon: Telegram,
-            path: "https://t.me/btexchange0",
+            path: "https://t.me/Btexchanges0",
             external: true,
           },
           {
