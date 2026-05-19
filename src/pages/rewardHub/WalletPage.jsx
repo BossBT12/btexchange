@@ -326,19 +326,19 @@ const AssetsPage = () => {
           {
             labelKey: "assets.options.telegramChannel",
             icon: Telegram,
-            path: telegramLink ?? "https://t.me/btexchange0",
+            path: "https://t.me/btexchange0",
             external: true,
           },
           {
             labelKey: "assets.options.telegramGroup",
             icon: Telegram,
-            path: telegramLink ?? "https://t.me/btexchange0",
+            path: "https://t.me/Btglobalchat",
             external: true,
           },
           {
             labelKey: "assets.options.customersupportTelegram",
             icon: SupportAgent,
-            path: telegramLink ?? "https://t.me/btexchange0",
+            path: "https://t.me/BtExchange02" ?? "https://t.me/btexchange0",
             external: true,
           },
           {
